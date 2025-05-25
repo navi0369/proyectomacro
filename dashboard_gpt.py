@@ -1699,5 +1699,5 @@ def responder_consulta(n_clicks, pregunta):
         return dcc.Markdown(response_text)
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run(debug=True)
 
