@@ -63,6 +63,7 @@ def add_hitos(
 
 # TASA DE CRECIMIENTO PARA UN SOLO COMPONENTE
 # graficos_utils.py  (versión con periodos = (vi, vf) )
+
 def add_period_growth_annotations_multi(
     ax,
     df: pd.DataFrame,
@@ -134,6 +135,7 @@ def add_period_growth_annotations_multi(
             )
 
 
+
 def add_cycle_means_multi(
     ax,
     cycle_stats: dict[str, dict[str, float]],
@@ -143,7 +145,8 @@ def add_cycle_means_multi(
     line_spacing: float,
     *,
     header_kwargs: dict | None = None,
-    text_kwargs: dict | None = None
+    text_kwargs: dict | None = None,
+    value_fmt: str = "{:,.0f}",
 ):
     """
     Anota en `ax` las medias por ciclo para múltiples componentes.
@@ -165,6 +168,9 @@ def add_cycle_means_multi(
         kwargs para el texto del título de cada ciclo.
     text_kwargs : dict, opcional
         kwargs base para el texto de cada media (el color se actualiza por componente).
+    value_fmt : str, opcional
+        Formato para representar el valor numérico
+        (default = "{:,.0f}"  →  sin decimales; usa p. ej. "{:,.2f}" para 2 decimales).
     """
     # valores por defecto
     header_kwargs = header_kwargs or {
@@ -186,7 +192,8 @@ def add_cycle_means_multi(
 
         # 2) Una línea por cada componente
         for i, comp in enumerate(stats):
-            val = int(round(stats[comp]))
+            raw_val = stats[comp]
+            val = value_fmt.format(raw_val)
             y = y_max*y0 - (i + 1) * line_spacing
             params = text_kwargs.copy()
             params['color'] = colors.get(comp, params.get('color'))
@@ -197,6 +204,7 @@ def add_cycle_means_multi(
                 fr"$\bar{{x}}_{{{abbr}}}$: {val}",
                 **params
             )
+
 
 
 # guarda esto en graficos_utils.py ────────────────────────────────────────────
