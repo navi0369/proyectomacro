@@ -8,6 +8,7 @@ import numpy as np
 load_dotenv()
 url = os.getenv("TURSO_DATABASE_URL")
 auth_token = os.getenv("TURSO_AUTH_TOKEN")
-conn = libsql.connect("db/proyectomacro.db", sync_url=url, auth_token=auth_token)
+db_path = "proyectomacro.db"
+conn = libsql.connect(db_path, sync_url=url, auth_token=auth_token)
 cursor = conn.cursor()
 conn.sync()
