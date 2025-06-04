@@ -1,0 +1,15 @@
+# jupytext.toml
+
+# Definimos para cada subcarpeta de src/ cómo mapea al
+# script .py en scripts/ usando formato percent (celda delimitada por "# %%").
+#
+# Sintaxis general:
+#   "ruta_origen//ipynb" = "ruta_destino//py:percent"
+
+[formats]
+# “notebooks//*.ipynb” significa “cualquier .ipynb dentro de notebooks/ o sus subcarpetas”
+# “scripts//*.py:percent” indica “genera el .py dentro de scripts/, usando formato percent”
+"notebooks//*.ipynb" = "scripts//*.py:percent"
+
+# Si hubiera más carpetas en src/, añade líneas análogas:
+# "src/otra_carpeta//*.ipynb" = "scripts/otra_carpeta//*.py:percent"
