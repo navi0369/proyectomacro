@@ -11,8 +11,17 @@ PERIODOS = [
     ("2006–Final", 2006, None)
 ]
 
-# Ruta a base de datos
-DB_PATH = "file:db/proyectomacro.db?mode=ro"
+# 1) Determino la carpeta raíz del proyecto (dos niveles arriba si estás
+#    guardando config.py en la raíz; aquí asumimos que config.py está
+#    como /…/Proyecto_macro/config.py).
+
+ROOT = os.path.abspath(os.path.dirname(__file__))  
+# os.path.dirname(__file__) → /home/navi/.../Proyecto_macro
+# abspath lo deja canónico.
+
+DB_PATH = os.path.join(ROOT, "db", "proyectomacro.db")
+# eso da "/home/navi/.../Proyecto_macro/db/proyectomacro.db"
+
 
 
 # -----------------------------

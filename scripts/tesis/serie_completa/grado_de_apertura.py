@@ -12,9 +12,11 @@
 #     language: python
 #     name: python3
 # ---
+
+# %%
 from config import DB_PATH
 from tesis import apply_mpl_style
-apply_mpl_style()
+apply_mpl_style() 
 
 # ─────────────────── Grado de Apertura Económica 1950-2022 ───────────────────
 import pandas as pd
@@ -46,7 +48,7 @@ os.makedirs(output_dir, exist_ok=True)
 
 # ── 2. Carga de tabla grado_de_apertura ──────────────────────────────────────
 query   = "SELECT * FROM grado_de_apertura"        # columnas: año, grado
-with sqlite3.connect(db_path) as conn:
+with sqlite3.connect(DB_PATH) as conn:
     df = pd.read_sql(query, conn, index_col='año')
 
 df.sort_index(inplace=True)        # asegura orden cronológico
