@@ -12,8 +12,10 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3, os
@@ -27,16 +29,9 @@ OUTPUT_DIR   = "../../../../assets/tesis/serie_completa/exportaciones"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # ── 2. Estilo profesional ─────────────────────────────────────────────────────
-plt.style.use("seaborn-v0_8-whitegrid")
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16, "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150, "savefig.bbox": "tight"
-})
 
 # ── 3. Carga de datos ─────────────────────────────────────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = pd.read_sql_query("SELECT * FROM exportaciones_tradicionales", conn)
 
 df.set_index("año", inplace=True)            # ajusta si tu tabla llega a 2024+

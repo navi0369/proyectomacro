@@ -12,8 +12,10 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3, os
@@ -31,15 +33,9 @@ RECESION_14_23   = slice(2014, 2024)   # Recesión
 OUTPUT_DIR = "../../../../assets/tesis/serie_completa/pib"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16, "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150, "savefig.bbox": "tight"
-})
 
 # ── 2. Carga de datos ────────────────────────────────────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = pd.read_sql_query("SELECT * FROM participacion_pib_ramas", conn)
 
 df.set_index("año", inplace=True)
@@ -143,7 +139,6 @@ plt.show()
 out_path
 
 
-# %%
 import seaborn as sns
 df_means = pd.DataFrame({
     #"Crisis 52–55":      avg_crisis_52_55,
@@ -182,7 +177,6 @@ out_file = os.path.join(OUTPUT_DIR, "tabla_promedios_ciclos_seaborn.png")
 fig.savefig(out_file)
 plt.show()
 
-# %%
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -195,19 +189,9 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 YEARS = slice(2016, 2024)  # 2018–2023 inclusive
 
 # ── Estilo ────────────────────────────────────────────────────────────────────
-plt.rcParams.update({
-    "font.family": "serif",
-    "font.size": 12,
-    "axes.titlesize": 14,
-    "axes.labelsize": 12,
-    "grid.linestyle": "--",
-    "lines.linewidth": 2,
-    "figure.dpi": 150,
-    "savefig.bbox": "tight"
-})
 
 # ── Carga y filtrado ──────────────────────────────────────────────────────────
-with sqlite3.connect("../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = pd.read_sql_query("SELECT * FROM participacion_pib_ramas", conn, index_col="año")
 
 # Seleccionar años 2018–2023
@@ -238,5 +222,3 @@ plt.show()
 
 
 
-# %%
-df

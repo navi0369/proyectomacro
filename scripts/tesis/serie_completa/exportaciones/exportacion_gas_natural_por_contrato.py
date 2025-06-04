@@ -12,14 +12,15 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 import pandas as pd
 import sys
 import matplotlib.pyplot as plt
 import sqlite3, os
-sys.path.append(os.path.abspath('../'))
-from graficos_utils import (
+from tesis.graficos_utils import (
     add_participation_cycle_boxes, add_cycle_means_multi, add_hitos,
     add_period_growth_annotations_multi, add_year_value_annotations
 )
@@ -27,13 +28,6 @@ from graficos_utils import (
 output_dir = "../../../../assets/tesis/serie_completa/exportaciones"
 os.makedirs(output_dir, exist_ok=True)
 
-plt.style.use("seaborn-v0_8-whitegrid")
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16,  "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150,     "savefig.bbox": "tight"
-})
 periods = {
     "Expansión 56-69":   slice(1956, 1969),
     "Recesión 70-81":    slice(1970, 1981),
@@ -48,7 +42,7 @@ periodos_growth = [
 ]
 
 # ── 2. Carga de datos ────────────────────────────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df_raw = pd.read_sql(
         "SELECT año, destino, monto FROM exportacion_gas_natural_contratos",
         conn
@@ -184,5 +178,3 @@ ax.legend(handles, [h.get_label() for h in handles],
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, "gas_natural_por_destino.png"), dpi=300)
 plt.show()
-
-

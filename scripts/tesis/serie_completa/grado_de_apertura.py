@@ -12,15 +12,16 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 # ─────────────────── Grado de Apertura Económica 1950-2022 ───────────────────
 import pandas as pd
 import sys
 import matplotlib.pyplot as plt
 import sqlite3, os
-sys.path.append(os.path.abspath('../'))
-from graficos_utils import add_hitos, add_period_growth_annotations_multi, add_cycle_means_multi, add_year_value_annotations
+from tesis.graficos_utils import add_hitos, add_period_growth_annotations_multi, add_cycle_means_multi, add_year_value_annotations
 
 # ── 0.  Tramos de ciclo (los mismos que usas en el resto de la tesis) ─────────
 EXPANSION_50_70   = slice(1950, 1970)   # Expansión
@@ -42,20 +43,8 @@ output_dir = "../../../assets/tesis/serie_completa"
 os.makedirs(output_dir, exist_ok=True)
 
 
-plt.style.use('seaborn-v0_8-whitegrid')
-plt.rcParams.update({
-    'font.family':  'serif',
-    'font.size':    12,
-    'axes.titlesize': 16,
-    'axes.labelsize': 14,
-    'grid.linestyle': '--',
-    'lines.linewidth': 2,
-    'figure.dpi':   150,
-    'savefig.bbox': 'tight',
-})
 
 # ── 2. Carga de tabla grado_de_apertura ──────────────────────────────────────
-db_path = '../../../db/proyectomacro.db'
 query   = "SELECT * FROM grado_de_apertura"        # columnas: año, grado
 with sqlite3.connect(db_path) as conn:
     df = pd.read_sql(query, conn, index_col='año')
@@ -167,7 +156,6 @@ plt.savefig(os.path.join(output_dir, "grado_de_apertura_1.png"))
 plt.show()
 
 
-# %%
 # ── 0.  Tramos de ciclo (los mismos que usas en el resto de la tesis) ─────────
 PERIODO_1 = slice(1950, 1984)   # Crisis
 PERIODO_2 = slice(1985, 2005)   # Expansión

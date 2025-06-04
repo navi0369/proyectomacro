@@ -12,14 +12,15 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 # ─────────────────────────────  PREPARACIÓN  ──────────────────────────────
 import sys, os, sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
-sys.path.append(os.path.abspath('../'))
-from graficos_utils import (
+from tesis.graficos_utils import (
     add_hitos, add_cycle_means_multi,
     add_year_value_annotations, add_period_growth_annotations_multi
 )
@@ -34,16 +35,9 @@ periods = {
 output_dir = "../../../../assets/tesis/serie_completa/minerales"
 os.makedirs(output_dir, exist_ok=True)
 
-plt.style.use("seaborn-v0_8-whitegrid")
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16,   "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150,      "savefig.bbox": "tight",
-})
 
 # 1. Datos ────────────────────────────────────────────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df_zinc = (pd.read_sql(
         "SELECT año, zinc_volumen, zinc_valor FROM exportaciones_minerales_totales "
         "WHERE año > 1991", conn)
@@ -72,7 +66,6 @@ cycle_stats = {
     nombre: df.loc[rango, cols_dual].mean().to_dict()
     for nombre, rango in periods.items()
 }
-print(cycle_stats)
 hitos_v       = {2000: "Crisis", 2006: "Expansión", 2014: "Recesión"}
 hitos_offset  = {yr: .60 for yr in hitos_v}
 
@@ -247,4 +240,3 @@ ax_v.legend(h1+h2, l1+l2, loc="upper left", fontsize=11)
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, "zinc_volumen_precio_dual_axis.png"), dpi=300)
 plt.show()
-

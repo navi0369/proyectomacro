@@ -12,13 +12,14 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3, os, sys
-sys.path.append(os.path.abspath('../'))
-from graficos_utils import (
+from tesis.graficos_utils import (
     add_hitos, add_cycle_means_multi,
     add_year_value_annotations, add_period_growth_annotations_multi
 )
@@ -34,16 +35,9 @@ RECESION_15_23    = slice(2015, 2023)   # Recesión
 output_dir = "../../../../assets/tesis/serie_completa/pib"
 os.makedirs(output_dir, exist_ok=True)
 
-plt.style.use('seaborn-v0_8-whitegrid')
-plt.rcParams.update({
-    'font.family':'serif', 'font.size':12,
-    'axes.titlesize':16,   'axes.labelsize':14,
-    'grid.linestyle':'--', 'lines.linewidth':2,
-    'figure.dpi':150,      'savefig.bbox':'tight'
-})
 
 # ── 2. Carga de datos ────────────────────────────────────────────────
-with sqlite3.connect('../../../../db/proyectomacro.db') as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = (pd.read_sql('SELECT * FROM pib_ramas', conn, index_col='año')
             .sort_index()) / 1000        # miles  → millones
 
@@ -252,7 +246,6 @@ plt.tight_layout()
 plt.savefig(os.path.join(output_dir, "pib_rama_de_actividad_1.png"))
 plt.show()
 
-# %%
 PERIODO_1 = slice(1950, 1984)   # Crisis
 PERIODO_2 = slice(1985, 2005)   # Expansión
 PERIODO_3 = slice(2006, 2022)   # Recesión

@@ -12,15 +12,16 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 # ───────────────────────────── IMPORTS ──────────────────────────────
 import sys, os, sqlite3
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-sys.path.append(os.path.abspath('../'))          # utilidades propias
-from graficos_utils import (
+from tesis.graficos_utils import (
     add_hitos, add_cycle_means_multi,
     add_year_value_annotations, add_period_growth_annotations_multi,
     add_participation_cycle_boxes
@@ -43,16 +44,9 @@ periods = {
 output_dir = "../../../../assets/tesis/serie_completa/minerales"
 os.makedirs(output_dir, exist_ok=True)
 
-plt.style.use('seaborn-v0_8-whitegrid')
-plt.rcParams.update({
-    'font.family': 'serif', 'font.size': 12,
-    'axes.titlesize': 16,   'axes.labelsize': 14,
-    'grid.linestyle': '--', 'lines.linewidth': 2,
-    'figure.dpi': 150,      'savefig.bbox': 'tight'
-})
 
 # ── 2. Carga de datos ──────────────────────────────────────────────
-with sqlite3.connect('../../../../db/proyectomacro.db') as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = (pd.read_sql(
                    "SELECT * FROM exportaciones_minerales_totales WHERE año > 1991",
                    conn)
@@ -165,4 +159,3 @@ ax.set_ylim(y_min*1.05, y_max*1.15)
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, "exportaciones_minerales_valores.png"))
 plt.show()
-

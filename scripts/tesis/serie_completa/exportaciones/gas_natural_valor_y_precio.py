@@ -12,8 +12,10 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 """
 Gas natural: Valor exportado vs. precio (1987-2023)
 Versión que usa *exclusivamente* los helpers de graficos_utils
@@ -26,8 +28,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # helpers propios
-sys.path.append(os.path.abspath('../'))
-from graficos_utils import (
+from tesis.graficos_utils import (
     add_hitos,
     add_cycle_means_multi,
     add_year_value_annotations,
@@ -39,16 +40,9 @@ from graficos_utils import (
 OUTPUT_DIR = "../../../../assets/tesis/serie_completa/exportaciones"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-plt.style.use("seaborn-v0_8-whitegrid")
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16,   "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150,      "savefig.bbox": "tight",
-})
 
 # ── 2. Carga de datos ────────────────────────────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = (pd.read_sql("SELECT año,valor,precio_usd_mpc FROM exportacion_gas_natural", conn,
                       index_col="año")
             .sort_index())              # 1987-2024
@@ -182,9 +176,8 @@ plt.savefig(os.path.join(OUTPUT_DIR,"gas_natural_valor_precio_dual_axis.png"),
 plt.show()
 
 
-# %%
 # ── 1. Nueva carga de datos (solo volumen) ───────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df_vol = (
         pd.read_sql(
             "SELECT año, volumen_MMMc FROM exportacion_gas_natural",
@@ -313,5 +306,3 @@ plt.savefig(
 plt.show()
 
 
-# %%
-df

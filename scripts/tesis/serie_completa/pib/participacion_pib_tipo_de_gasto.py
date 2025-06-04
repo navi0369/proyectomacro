@@ -12,8 +12,10 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3, os
@@ -32,15 +34,9 @@ RECESION_14_23    = slice(2014, 2024)   # Recesión
 OUTPUT_DIR = "../../../../assets/tesis/serie_completa/pib"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16, "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150, "savefig.bbox": "tight"
-})
 
 # ── 2. Carga de datos ───────────────────────────────────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = pd.read_sql_query("SELECT * FROM PIB_Real_Gasto", conn)
 
 df.set_index("año", inplace=True)
@@ -159,10 +155,8 @@ plt.tight_layout()
 out_path = os.path.join(OUTPUT_DIR, "participacion_pib_gasto.png")
 plt.savefig(out_path, dpi=300)
 plt.show()
-print(f"Imagen guardada en: {out_path}")
 
 
-# %%
 import seaborn as sns
 # ── 1. Agrupar promedios por ciclo en DataFrame ──────────────────────────────
 df_means = pd.DataFrame({
@@ -177,12 +171,6 @@ df_means = pd.DataFrame({
 }).round(1)
 
 # ── 2. Estilo y creación del heatmap ─────────────────────────────────────────
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16, "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150, "savefig.bbox": "tight"
-})
 
 fig, ax = plt.subplots(figsize=(12, 6))
 sns.heatmap(
@@ -208,5 +196,3 @@ plt.tight_layout()
 out_file = os.path.join(OUTPUT_DIR, "tabla_promedios_pib_gasto_seaborn.png")
 plt.savefig(out_file,dpi=300)
 plt.show()
-
-print(f"Heatmap de estadísticas guardado en: {out_file}")

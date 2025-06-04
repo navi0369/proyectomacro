@@ -12,14 +12,15 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3, os
 import sys
-sys.path.append(os.path.abspath('../'))          # utilidades propias
-from graficos_utils import (
+from tesis.graficos_utils import (
     add_hitos, add_cycle_means_multi,
     add_year_value_annotations, add_period_growth_annotations_multi,
     add_participation_cycle_boxes
@@ -34,18 +35,11 @@ RECESION_15_23    = slice(2015, 2023)   # Recesión
 # ── 1. Configuración general y salida ────────────────────────────────
 output_dir = "../../../../assets/tesis/serie_completa/pib"
 os.makedirs(output_dir, exist_ok=True)
-plt.style.use('seaborn-v0_8-whitegrid')
-plt.rcParams.update({
-    'font.family':'serif','font.size':12,
-    'axes.titlesize':16,'axes.labelsize':14,
-    'grid.linestyle':'--','lines.linewidth':2,
-    'figure.dpi':150,'savefig.bbox':'tight'
-})
 component_colors = {
     'pib_real_base_1990': '#1f77b4'
 }
 # ── 2. Carga de datos ────────────────────────────────────────────────
-with sqlite3.connect('../../../../db/proyectomacro.db') as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = pd.read_sql("SELECT * FROM pib_real_gasto", conn, index_col='año') / 1000
 
 # ── 3. Componentes y estadísticas ───────────────────────────────────
@@ -264,7 +258,6 @@ plt.show()
 
 
 
-# %%
 PERIODO_1 = slice(1950, 1984)   # Crisis
 PERIODO_2 = slice(1985, 2005)   # Expansión
 PERIODO_3 = slice(2006, 2023)   # Recesión
@@ -449,5 +442,3 @@ fig.text(
 plt.tight_layout()
 plt.savefig(os.path.join(output_dir, "pib_componentes_2.png"))
 plt.show()
-
-

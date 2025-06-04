@@ -12,20 +12,21 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 import pandas as pd
 import sys
 import matplotlib.pyplot as plt
 import sqlite3, os
-sys.path.append(os.path.abspath('../'))
-from graficos_utils import (
+from tesis.graficos_utils import (
     add_participation_cycle_boxes, add_cycle_means_multi, add_hitos,
     add_period_growth_annotations_multi, add_year_value_annotations
 )
 
 # ── 2. Carga de datos ────────────────────────────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = pd.read_sql(
         "SELECT *FROM exportaciones_no_tradicionales",
         conn
@@ -34,8 +35,6 @@ prod_cols = [c for c in df.columns if c not in ('año', 'total')]
 totales = df.set_index('año')[prod_cols].sum().sort_values(ascending=False)
 
 # Imprimimos top‐5
-print("Top 5 productos por valor total exportado (sin incluir 'total'):")
-print(totales.head(5))
 
 # ── 4. Gráfica de los 5 principales ────────────────────────────────
 fig, ax = plt.subplots(figsize=(8,4))
@@ -47,7 +46,6 @@ plt.xticks(rotation=45, ha="right")
 plt.tight_layout()
 plt.show()
 
-# %%
 """
 Exportaciones No Tradicionales: soya, ‘otros’ y castaña  
 (1992-2024, Millones USD) — gráfico con helpers de *graficos_utils*
@@ -58,8 +56,7 @@ import os, sqlite3, sys
 import pandas as pd
 import matplotlib.pyplot as plt
 
-sys.path.append(os.path.abspath('../'))          # ruta a graficos_utils.py
-from graficos_utils import (
+from tesis.graficos_utils import (
     add_hitos,
     add_cycle_means_multi,
     add_year_value_annotations,
@@ -71,16 +68,9 @@ from graficos_utils import (
 OUT = "../../../../assets/tesis/serie_completa/exportaciones"
 os.makedirs(OUT, exist_ok=True)
 
-plt.style.use("seaborn-v0_8-whitegrid")
-plt.rcParams.update({
-    "font.family":"serif", "font.size":12,
-    "axes.titlesize":16,   "axes.labelsize":14,
-    "grid.linestyle":"--", "lines.linewidth":2,
-    "figure.dpi":150,      "savefig.bbox":"tight",
-})
 
 # ── 2. Carga de datos ────────────────────────────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = (pd.read_sql("SELECT * FROM exportaciones_no_tradicionales",
                       conn, index_col="año")
             .sort_index())                 # 1992–2024
@@ -191,4 +181,3 @@ plt.tight_layout()
 plt.savefig(os.path.join(OUT, "exportaciones_no_tradicionales_soya_otros_castaña.png"),
             dpi=300)
 plt.show()
-

@@ -12,14 +12,15 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3, os
-sys.path.append(os.path.abspath('../'))
-from graficos_utils import add_hitos, add_cycle_means_multi, add_year_value_annotations, add_period_growth_annotations_multi
+from tesis.graficos_utils import add_hitos, add_cycle_means_multi, add_year_value_annotations, add_period_growth_annotations_multi
 
 
 # ── 0.  Tramos de ciclo (los mismos que usas en el resto de la tesis) ─────────
@@ -44,16 +45,9 @@ periods = {
 output_dir = "../../../assets/tesis/serie_completa"
 os.makedirs(output_dir, exist_ok=True)
 
-plt.style.use('seaborn-v0_8-whitegrid')
-plt.rcParams.update({
-    'font.family': 'serif', 'font.size': 12,
-    'axes.titlesize': 16,   'axes.labelsize': 14,
-    'grid.linestyle': '--', 'lines.linewidth': 2,
-    'figure.dpi': 150,      'savefig.bbox': 'tight'
-})
 
 # ── 2. Carga de datos ────────────────────────────────────────────────
-with sqlite3.connect('../../../db/proyectomacro.db') as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = pd.read_sql('SELECT * FROM balanza_comercial', conn, index_col='año').sort_index()
 
 # ── 3. estadísticas ─────────────────────────────────────────────
@@ -61,7 +55,6 @@ cycle_stats = {
     name: df.loc[period].mean().to_dict()
     for name, period in periods.items()
 }
-print(cycle_stats)
 
 # ── 4. Hitos, años clave, offsets ────────────────────────────────────
 hitos_v = {

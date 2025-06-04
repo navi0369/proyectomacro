@@ -12,8 +12,10 @@
 #     language: python
 #     name: python3
 # ---
+from config import DB_PATH
+from tesis import apply_mpl_style
+apply_mpl_style()
 
-# %%
 import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3, os
@@ -44,7 +46,7 @@ hitos_offset = {
     2014: (1.9, 0.05)
 }
 # ── 4. Cargar datos completos ────────────────────────────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+with sqlite3.connect(DB_PATH, uri=True) as conn:
     df = pd.read_sql_query(
         "SELECT * FROM exportaciones_tradicionales_no_tradicionales", conn
     ).set_index("año")
@@ -59,13 +61,6 @@ cycle_stats = {
 }
 
 # ── 6. Gráfico stacked bar ────────────────────────────────────────────────────
-plt.style.use("seaborn-v0_8-whitegrid")
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16, "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150, "savefig.bbox": "tight"
-})
 
 fig, ax = plt.subplots(figsize=(15, 7))
 pct.plot(kind="bar", stacked=True, ax=ax, width=0.8)
@@ -117,4 +112,3 @@ plt.show()
 
 # ── 10. Verificación ──────────────────────────────────────────────────────────
 assert abs(pct.sum(axis=1) - 100).max() < 1e-6, "Las participaciones no suman 100%"
-
