@@ -12,6 +12,15 @@ shopt -s globstar
 jupytext --set-formats "notebooks/analysis///ipynb,scripts/analysis///py:percent" "notebooks/analysis/**/*.ipynb"
 jupytext --set-formats "notebooks/tesis///ipynb,scripts/tesis///py:percent"         "notebooks/tesis/**/*.ipynb"
 # … repite para cada carpeta que quieras emparejar
+# 4.1) Define el emparejamiento para que cada script genere su .ipynb espejo
+jupytext --set-formats \
+  "notebooks/tesis/serie_completa/finanzas///ipynb,scripts/tesis/serie_completa/finanzas///py:percent" \
+  "scripts/tesis/serie_completa/finanzas/**/*.py"
+
+# 4.2) Sincroniza: crea/actualiza los .ipynb a partir de los .py
+jupytext --sync "scripts/tesis/serie_completa/finanzas/**/*.py"
+
+
 
 # 5. Cada vez que edites un .ipynb → regenerar .py
 jupytext --sync "notebooks/analysis/**/*.ipynb"
