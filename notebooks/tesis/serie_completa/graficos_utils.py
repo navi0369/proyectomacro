@@ -1,6 +1,241 @@
 import pandas as pd
 from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
+import sqlite3
+from pathlib import Path
+
+# graficos_utils.py
+
+def get_df(
+    sql: str,
+    conn_str: str,
+    *,
+    index_col: str | None = "año",
+    rename: dict[str, str] | None = None,
+    scale: dict[str, float] | None = None,
+    compute_sum: dict[str, list[str]] | None = None,
+    pivot: dict | None = None,
+    sort_index: bool = True,
+) -> pd.DataFrame:
+    """Execute a SQL query and return a cleaned ``DataFrame``.
+
+    Parameters
+    ----------
+    sql : str
+        SQL query to run against the SQLite database.
+    conn_str : str
+        Path to the SQLite database file.
+    index_col : str, optional
+        Column to use as index. If ``None`` the index is left untouched.
+    rename : dict[str, str], optional
+        Mapping of columns to rename ``{old: new}``.
+    scale : dict[str, float], optional
+        Multiplicative factors for columns ``{col: factor}``.
+    compute_sum : dict[str, list[str]], optional
+        New columns defined as the sum of other columns.
+    pivot : dict, optional
+        Parameters for ``DataFrame.pivot_table`` such as ``index``, ``columns``,
+        ``values``, ``aggfunc`` and ``fill_value``.
+    sort_index : bool, optional
+        Whether to sort the resulting ``DataFrame`` by the index column.
+
+    Returns
+    -------
+    pd.DataFrame
+        The processed DataFrame.
+    """
+
+    with sqlite3.connect(conn_str) as conn:
+        df = pd.read_sql(sql, conn)
+
+    if pivot:
+        df = df.pivot_table(
+            index=pivot.get("index"),
+            columns=pivot.get("columns"),
+            values=pivot.get("values"),
+            aggfunc=pivot.get("aggfunc", "sum"),
+            fill_value=pivot.get("fill_value", 0),
+        )
+
+    if rename:
+        df = df.rename(columns=rename)
+
+    if index_col and index_col in df.columns:
+        df = df.set_index(index_col)
+        if sort_index:
+            df = df.sort_index()
+
+    if scale:
+        for col, factor in scale.items():
+            if col in df.columns:
+                df[col] = df[col] * factor
+
+    if compute_sum:
+        for new_col, cols in compute_sum.items():
+            missing = [c for c in cols if c not in df.columns]
+            if not missing:
+                df[new_col] = df[cols].sum(axis=1)
+
+    return df
+
+
+def set_style() -> None:
+    """
+    Configura el estilo global de Matplotlib:
+    - theme: 'seaborn-v0_8-whitegrid'
+    - font_family: 'serif'
+    - font_size: 12
+    - dpi: 150
+    """
+    plt.style.use("seaborn-v0_8-whitegrid")
+    plt.rcParams.update({
+    'font.family':  'serif',
+    'font.size':    12,
+    'axes.titlesize': 16,
+    'axes.labelsize': 14,
+    'grid.linestyle': '--',
+    'lines.linewidth': 2,
+    'figure.dpi':   150,
+    'savefig.bbox': 'tight',
+    })
+
+
+def save_fig(
+    fig: plt.Figure,
+    fname: str,
+    base_dir: str = "assets",
+    fmt: str = "png",
+    dpi: int = 300
+) -> None:
+    """
+    Guarda una figura de Matplotlib en disco.
+
+    Parámetros
+    ----------
+    fig : matplotlib.figure.Figure
+        Figura a guardar.
+    fname : str
+        Ruta y nombre de archivo sin extensión (p.ej. 'tesis/grafico1').
+    base_dir : str
+        Directorio base donde guardar (crea subcarpetas si no existen).
+    fmt : str
+        Formato de archivo (p.ej. 'png', 'pdf').
+    dpi : int
+        Resolución de la imagen.
+    """
+    path = Path(base_dir) / f"{fname}.{fmt}"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path, dpi=dpi)
+    plt.close(fig)
+
+
+def cycle_stats(
+    df: pd.DataFrame,
+    periods: list[tuple[int, int]],
+    cols: list[str],
+    kind: str = "mean"
+) -> dict[str, dict[str, float]]:
+    """
+    Calcula estadísticas por ciclo para columnas dadas.
+
+    Parámetros
+    ----------
+    df : pd.DataFrame
+        DataFrame con índice de años.
+    periods : list of (int, int)
+        Lista de tuplas (inicio, fin) de periodos.
+    cols : list[str]
+        Columnas sobre las que calcular estadísticas.
+    kind : str
+        Tipo de estadística: 'mean', 'growth'.
+
+    Devuelve
+    --------
+    dict[str, dict[str, float]]
+        { 'vi-vf': {col: valor} } donde valor = media o tasa de crecimiento.
+    """
+    stats = {}
+    for vi, vf in periods:
+        key = f"{vi}-{vf}"
+        sub = df.loc[vi:vf, cols]
+        if kind == "mean":
+            stats[key] = sub.mean().to_dict()
+        elif kind == "growth":
+            stats[key] = ((sub.loc[vf] / sub.loc[vi] - 1) * 100).to_dict()
+    return stats
+
+
+def plot_dual_axis(
+    df: pd.DataFrame,
+    y1: str,
+    y2: str,
+    *,
+    title: str,
+    colors: dict[str, str],
+    periods: list[tuple[int, int]],
+    hitos: dict[str, dict],
+    out: str,
+    base_dir: str = "assets"
+) -> None:
+    """
+    Genera y guarda un gráfico con eje dual (y1 vs y2).
+
+    Parámetros
+    ----------
+    df : pd.DataFrame
+        DataFrame con índice de años y columnas y1, y2.
+    y1 : str
+        Nombre de la columna para el eje izquierdo.
+    y2 : str
+        Nombre de la columna para el eje derecho.
+    title : str
+        Título del gráfico.
+    colors : dict[str, str]
+        Colores para y1 y y2 {col: color_hex}.
+    periods : list of (int, int)
+        Periodos para anotaciones de ciclo.
+    hitos : dict[str, dict]
+        Diccionario con claves:
+        - 'labels': {año: etiqueta}
+        - 'offsets': {año: factor}
+        - 'cycle_txt_off': {periodo: (x, y_frac)}
+    out : str
+        Ruta y nombre de archivo (sin extensión) para guardar.
+    base_dir : str
+        Directorio base donde escribir la imagen.
+    """
+    fig, ax1 = plt.subplots(figsize=(12, 7))
+    ax2 = ax1.twinx()
+
+    ax1.plot(df.index, df[y1], label=y1, color=colors[y1])
+    ax2.plot(df.index, df[y2], label=y2, color=colors[y2])
+
+    add_hitos(ax1, df.index, hitos['labels'], hitos['offsets'])
+
+    stats = cycle_stats(df, periods, [y1, y2], kind="mean")
+    add_cycle_means_multi(
+        ax1,
+        stats,
+        hitos['cycle_txt_off'],
+        {y1: 'Y1', y2: 'Y2'},
+        colors,
+        line_spacing=df[y1].max() * 0.03,
+        value_fmt="{:.1f}"
+    )
+
+    ax1.set_title(title, fontweight="bold")
+    ax1.set_xlabel("Año")
+    ax1.set_ylabel(y1, color=colors[y1])
+    ax2.set_ylabel(y2, color=colors[y2])
+    ax1.tick_params(axis="x", rotation=45)
+
+    handles1, labels1 = ax1.get_legend_handles_labels()
+    handles2, labels2 = ax2.get_legend_handles_labels()
+    ax1.legend(handles1 + handles2, labels1 + labels2, loc="upper left")
+
+    fig.tight_layout()
+    save_fig(fig, out, base_dir=base_dir)
+
 # guarda esto en, por ejemplo, graficos_utils.py
 def add_hitos(
     ax,
