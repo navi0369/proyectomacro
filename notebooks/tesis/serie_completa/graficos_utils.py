@@ -3,8 +3,111 @@ from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import sqlite3
 from pathlib import Path
+from typing import Dict, List, Tuple
+import logging
 
+logger = logging.getLogger(__name__)
 # graficos_utils.py
+def adjust_cycles(
+    df: pd.DataFrame,
+    cycles: Dict[str, slice],
+) -> Dict[str, slice]:
+    """Devuelve un *nuevo* dict de ciclos recortado al rango de df.
+
+    Mantiene las claves originales cuando el slice no cambia; renombra
+    solo si el rango efectivo difiere del nominal.
+
+    Parámetros
+    ----------
+    df : pd.DataFrame
+        DataFrame con índice de años.
+    cycles : Dict[str, slice]
+        Diccionario con nombres de ciclos y sus rangos nominales.
+
+    Returns
+    -------
+    Dict[str, slice]
+        Diccionario con slices ajustados a [df.index.min(), df.index.max()].
+        Si el rango ajustado es distinto al original, la clave se actualiza para
+        reflejar el nuevo inicio y fin. Ciclos sin datos se omiten.
+    """
+    if df.empty:
+        raise ValueError("El DataFrame está vacío; no hay años para ajustar.")
+
+    min_year, max_year = int(df.index.min()), int(df.index.max())
+    cycles_adj: Dict[str, slice] = {}
+
+    for name, sl in cycles.items():
+        # Ajusta límites al rango disponible
+        start = max(sl.start, min_year)
+        stop = min(sl.stop, max_year)
+
+        if start <= stop:
+            # Caso 1: rango coincide con el definido
+            if start == sl.start and stop == sl.stop:
+                cycles_adj[name] = slice(start, stop)
+            else:
+                base = name.rsplit(" ", 1)[0]
+                yy_s = f"{start % 100:02d}"
+                yy_e = f"{stop  % 100:02d}"
+                new_key = f"{base} {yy_s}-{yy_e}"
+                cycles_adj[new_key] = slice(start, stop)
+        else:
+            logger.warning("Ciclo '%s' ignorado: sin datos en df", name)
+
+    return cycles_adj
+def align_plot_params(
+    df: pd.DataFrame,
+    cycles: Dict[str, slice],
+    hitos: Dict[int, str],
+    annotate_years: List[int],
+    periods: List[Tuple[int, int]],
+) -> Tuple[Dict[str, slice], Dict[int, str], List[int], List[Tuple[int, int]]]:
+    """Recorta diccionarios/listas para que coincidan con el rango temporal de *df*.
+
+    Evita ``KeyError`` cuando la tabla no cubre todo el horizonte definido en
+    ``config.py``.
+
+    Returns
+    -------
+    cycles_adj, hitos_adj, annotate_years_adj, periods_adj
+        Versiones *filtradas* y/o *recortadas* que encajan con el índice de
+        ``df``. Si un slice o periodo queda vacío se descarta.
+    """
+    if df.empty:
+        raise ValueError("El DataFrame está vacío, nada que alinear.")
+
+    min_year: int = int(df.index.min())
+    max_year: int = int(df.index.max())
+
+    # 1) Ciclos --------------------------------------------------------------
+    cycles_adj: Dict[str, slice] = {}
+    for name, sl in cycles.items():
+        start = max(sl.start, min_year)
+        stop = min(sl.stop, max_year)
+        if start <= stop:
+            cycles_adj[name] = slice(start, stop)
+        else:
+            logger.warning("Ciclo '%s' ignorado: sin datos en df", name)
+
+    # 2) Hitos ---------------------------------------------------------------
+    hitos_adj = {yr: lbl for yr, lbl in hitos.items() if min_year <= yr <= max_year}
+
+    # 3) Años de anotación ---------------------------------------------------
+    annotate_years_adj = [yr for yr in annotate_years if min_year <= yr <= max_year]
+
+    # 4) Periodos para tasas -------------------------------------------------
+    periods_adj: List[Tuple[int, int]] = []
+    for vi, vf in periods:
+        adj_vi = max(vi, min_year)
+        adj_vf = min(vf, max_year)
+        if adj_vi <= adj_vf:
+            periods_adj.append((adj_vi, adj_vf))
+        else:
+            logger.warning("Periodo %s-%s omitido: fuera de rango", vi, vf)
+
+    return cycles_adj, hitos_adj, annotate_years_adj, periods_adj
+
 
 def get_df(
     sql: str,
@@ -98,35 +201,6 @@ def set_style() -> None:
     'figure.dpi':   150,
     'savefig.bbox': 'tight',
     })
-
-
-def save_fig(
-    fig: plt.Figure,
-    fname: str,
-    base_dir: str = "assets",
-    fmt: str = "png",
-    dpi: int = 300
-) -> None:
-    """
-    Guarda una figura de Matplotlib en disco.
-
-    Parámetros
-    ----------
-    fig : matplotlib.figure.Figure
-        Figura a guardar.
-    fname : str
-        Ruta y nombre de archivo sin extensión (p.ej. 'tesis/grafico1').
-    base_dir : str
-        Directorio base donde guardar (crea subcarpetas si no existen).
-    fmt : str
-        Formato de archivo (p.ej. 'png', 'pdf').
-    dpi : int
-        Resolución de la imagen.
-    """
-    path = Path(base_dir) / f"{fname}.{fmt}"
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=dpi)
-    plt.close(fig)
 
 
 def cycle_stats(
@@ -424,7 +498,6 @@ def add_cycle_means_multi(
         x0, y0 = text_offsets[ciclo]
         # 1) Título del ciclo
         ax.text(x0, y_max*y0, ciclo, **header_kwargs)
-
         # 2) Una línea por cada componente
         for i, comp in enumerate(stats):
             raw_val = stats[comp]
