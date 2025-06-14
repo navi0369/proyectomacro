@@ -16,7 +16,7 @@ CYCLES_SIN_CRISIS = {
     "Expansión 50-70": slice(1950, 1970),
     "Recesión 71-84":  slice(1971, 1984),
     "Expansión 85-05": slice(1985, 2005),
-    "Acumulación 05-14": slice(2005, 2014),
+    "Expansión 06-14": slice(2006, 2014),
     "Recesión 15-22":  slice(2015, 2022),
 }
 CYCLES_PERIODOS= {
@@ -45,7 +45,8 @@ hitos_v_periodos = {
 }
 
 #anotaciones en la grafica
-anot_years = [1950,1971,1985, 2005, 2015,2022]
+annot_years_sin_crisis = [1950,1971,1985, 2005, 2015,2022]
+annot_years_periodos = [1950,1985,2006,2022]
 #anotaciones de tasas, sin crisis
 periodos_tasas_sin_crisis = [
     (1950, 1970),
@@ -53,6 +54,11 @@ periodos_tasas_sin_crisis = [
     (1985, 2005),
     (2005, 2014),
     (2015,2022)
+]
+periodos_tasas_periodos = [
+    (1950, 1984),
+    (1985, 2005),
+    (2006, 2022)
 ]
 
 
