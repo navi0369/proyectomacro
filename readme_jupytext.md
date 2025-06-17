@@ -27,3 +27,6 @@ jupytext --warn-only --sync "notebooks/**/*.ipynb"
 
 turso db shell proyectomacro .dump > proyectomacro.sql
 sqlite3 proyectomacro.db < proyectomacro.sql
+
+
+jupytext --update --to py:percent notebooks/tesis/serie_completa/**/*.ipynb
