@@ -15,7 +15,7 @@ jupytext --set-formats "notebooks/tesis///ipynb,scripts/tesis///py:percent"     
 
 # 5. Cada vez que edites un .ipynb → regenerar .py
 jupytext --sync "notebooks/analysis/**/*.ipynb"
-jupytext --sync "notebooks/tesis/**/*.ipynb"
+jupytext --sync "notebooks/tesis/serie_completa/**/*.ipynb"
 
 # 6. Cada vez que edites un .py → regenerar .ipynb
 jupytext --sync "scripts/analysis/**/*.py"
@@ -23,3 +23,7 @@ jupytext --sync "scripts/tesis/**/*.py"
 
 # 7. Para ignorar notebooks corruptos sin abortar
 jupytext --warn-only --sync "notebooks/**/*.ipynb"
+
+
+turso db shell proyectomacro .dump > proyectomacro.sql
+sqlite3 proyectomacro.db < proyectomacro.sql
