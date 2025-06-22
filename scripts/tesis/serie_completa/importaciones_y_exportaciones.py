@@ -66,7 +66,7 @@ print(cycle_stats)
 # ── 4. Hitos, años clave, offsets ────────────────────────────────────
 hitos_v = {
     1952: "Crisis", 1956: "Expansión", 1970: "Recesión",
-    1982: "Crisis", 1986: "Expansión", 2002: "Crisis",
+    1982: "Crisis", 1986: "Expansión", 2000: "Crisis",
     2006: "Expansión", 2014: "Recesión"
 }
 hitos_offset = {

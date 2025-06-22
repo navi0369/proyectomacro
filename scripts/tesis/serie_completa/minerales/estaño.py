@@ -19,43 +19,25 @@ import sys, os, sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath('../'))
-from graficos_utils import (
-    add_hitos, add_cycle_means_multi,
-    add_year_value_annotations, add_period_growth_annotations_multi
-)
+from graficos_utils import *
+from config import *
 
 # 0. Ciclos y carpetas
-periods = {
-    "Expansión 92-99": slice(1992, 1999),
-    "Crisis 00-05":    slice(2000, 2005),
-    "Expansión 06-13": slice(2006, 2013),
-    "Recesión 14-23":  slice(2014, 2023),
-}
 output_dir = "../../../../assets/tesis/serie_completa/minerales"
 os.makedirs(output_dir, exist_ok=True)
-
-plt.style.use("seaborn-v0_8-whitegrid")
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16,   "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150,      "savefig.bbox": "tight",
-})
+set_style()
 
 # 1. Datos ────────────────────────────────────────────────────────────────
-with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
-    df_estanio = (pd.read_sql(
-        "SELECT año, estaño_volumen, estaño_valor "
-        "FROM exportaciones_minerales_totales WHERE año > 1991", conn)
-        .set_index("año")
-        .sort_index()
-    )
-    df_precio = (pd.read_sql(
-        "SELECT año, estaño AS precio_usd_lf "
-        "FROM precio_oficial_minerales WHERE año > 1991", conn)
-        .set_index("año")
-        .sort_index()
-    )
+df_estanio = get_df(
+    sql="SELECT año, estaño_volumen, estaño_valor "
+        "FROM exportaciones_minerales_totales WHERE año > 1991",
+    conn_str="../../../../db/proyectomacro.db",
+)
+df_precio = get_df(
+    sql="SELECT año, estaño AS precio_usd_lf "
+        "FROM precio_oficial_minerales WHERE año > 1991",
+    conn_str="../../../../db/proyectomacro.db",
+)
 
 df = df_estanio.join(df_precio, how="inner")
 df["estanio_valor_musd"] = df["estaño_valor"] / 1_000        # miles → millones
@@ -66,9 +48,8 @@ cols   = ["estanio_valor_musd", "precio_usd_lf"]
 abbr   = {"estanio_valor_musd": "Valor", "precio_usd_lf": "Precio"}
 colors = {"estanio_valor_musd": "#4682b4", "precio_usd_lf": "#d62728"}  # azul acero + rojo
 
-cycle_stats = {n: df.loc[s, cols].mean().to_dict() for n, s in periods.items()}
-
-hitos_v      = {2000: "Crisis", 2006: "Expansión", 2014: "Recesión"}
+CYCLES=adjust_cycles(df,CYCLES)
+cycle_stats = {n: df.loc[s, cols].mean().to_dict() for n, s in CYCLES.items()}
 hitos_offset = {yr: .60 for yr in hitos_v}
 
 anot_years = [1992, 2000, 2006, 2014, 2023]
@@ -160,7 +141,7 @@ abbr_vol = {"estaño_volumen": "Vol", "precio_usd_lf": "P"}
 
 cycle_stats_vol = {
     n: df.loc[s, cols_vol].mean().to_dict()
-    for n, s in periods.items()
+    for n, s in CYCLES.items()
 }
 hitos_offset_v = {yr: .81 for yr in hitos_v}
 annotation_offsets_vol = {
@@ -199,7 +180,7 @@ ax_price.plot(df.index, df["precio_usd_lf"],
 
 # hitos ciclo
 add_hitos(ax_v, df.index, hitos_v, hitos_offset_v, line_kwargs={"lw":1})
-
+print(hitos_v)
 # espaciado 3 % del rango visible
 y_min, y_max = ax_v.get_ylim()
 line_spacing = (y_max - y_min) * 0.03

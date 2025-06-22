@@ -20,68 +20,32 @@ import sys
 import matplotlib.pyplot as plt
 import sqlite3, os
 sys.path.append(os.path.abspath('../'))
-from graficos_utils import add_hitos, add_period_growth_annotations_multi, add_cycle_means_multi, add_year_value_annotations
+from graficos_utils import *
+from config import *
 
-# ── 0.  Tramos de ciclo (los mismos que usas en el resto de la tesis) ─────────
-EXPANSION_50_70   = slice(1950, 1970)   # Expansión
-RECESION_71_84    = slice(1971, 1984)   # Recesión
-EXPANSION_85_05   = slice(1985, 2005)   # Expansión
-ACUMULACION_05_14 = slice(2005, 2014)   # Acumulación (expansión)
-RECESION_15_22    = slice(2015, 2022)   # Recesión
-
-periods = {
-    "Expansión 50-70":   slice(1950, 1970),
-    "Recesión 71-84":    slice(1971, 1984),
-    "Expansión 85-05":   slice(1985, 2005),
-    "Expansión 06-14": slice(2006, 2014),
-    "Recesión 15-22":    slice(2015, 2022),
-}
 
 # ── 1. Configuración general de la figura y salida ───────────────────────────
 output_dir = "../../../assets/tesis/serie_completa"
-os.makedirs(output_dir, exist_ok=True)
+os.makedirs(output_dir, exist_ok=True)  
 
-
-plt.style.use('seaborn-v0_8-whitegrid')
-plt.rcParams.update({
-    'font.family':  'serif',
-    'font.size':    12,
-    'axes.titlesize': 16,
-    'axes.labelsize': 14,
-    'grid.linestyle': '--',
-    'lines.linewidth': 2,
-    'figure.dpi':   150,
-    'savefig.bbox': 'tight',
-})
+set_style()
 
 # ── 2. Carga de tabla grado_de_apertura ──────────────────────────────────────
 db_path = '../../../db/proyectomacro.db'
 query   = "SELECT * FROM grado_de_apertura"        # columnas: año, grado
-with sqlite3.connect(db_path) as conn:
-    df = pd.read_sql(query, conn, index_col='año')
-
-df.sort_index(inplace=True)        # asegura orden cronológico
-df.rename(columns={'grado': 'GA'}, inplace=True)   # más corto
-
-
+df = get_df(query, db_path,rename={'grado':'GA'})
 
 # ── 3. Estadísticas por ciclo (medias) ───────────────────────────────────────
 cycle_stats = {
     name: df.loc[period].mean().to_dict()
-    for name, period in periods.items()
+    for name, period in CYCLES.items()
 }
 component_colors = {
     'GA': '#1f77b4'
 }
 
 # ── 4. Líneas verticales de hitos (mismos años que el gráfico de PIB) ───────
-hitos_v = {
-    1950: "Expansion",
-    1971: "Recesion",
-    1985: "Expansion",
-    2005: "Expansion",
-    2015: "Recesion"
-}
+
 annotation_offsets = {
     "GA": {
         1950: (-0.3,  3.0),
@@ -120,13 +84,7 @@ ax.plot(df.index, df['GA'], color='tab:blue', label='Grado de apertura (X+M)/PIB
 y_max = ax.get_ylim()[1]
 add_hitos(ax, df.index, hitos_v, hitos_offset)
 #anotaciones de tasas
-periodos = [
-    (1950, 1970),
-    (1971, 1984),
-    (1985, 2005),
-    (2005, 2014),
-    (2015,2022)
-]
+
 anot_years = [1950,1971,1985, 2005, 2015,2022]
 abbr_map = {
     "GA":"GA",
@@ -134,7 +92,7 @@ abbr_map = {
 columnas=["GA"]
 add_year_value_annotations(ax,df,anot_years,columnas,annotation_offsets,component_colors)
 add_period_growth_annotations_multi(
-    ax, df, periodos,
+    ax, df, periodos_tasas_sin_crisis,
     columnas,
     tasas_offsets,
     component_colors,
@@ -168,36 +126,22 @@ plt.show()
 
 
 # %%
-# ── 0.  Tramos de ciclo (los mismos que usas en el resto de la tesis) ─────────
-PERIODO_1 = slice(1950, 1984)   # Crisis
-PERIODO_2 = slice(1985, 2005)   # Expansión
-PERIODO_3 = slice(2006, 2022)   # Recesión
 
-periods = {
-    "1950-1984":   PERIODO_1,
-    "1985-2005":   PERIODO_2,
-    "2006-2022":   PERIODO_3,
-}
 # ── 3. Estadísticas por ciclo (medias) ───────────────────────────────────────
 cycle_stats = {
     name: df.loc[period].mean().to_dict()
-    for name, period in periods.items()
+    for name, period in CYCLES_PERIODOS.items()
 }
 component_colors = {
     'GA': '#1f77b4'
 }
 
-# ── 4. Líneas verticales de hitos (mismos años que el gráfico de PIB) ───────
-hitos_v = {
-    1950: "1950-1984",
-    1985: "1985-2005",
-    2006: "2006-2022",
-}
+
 annotation_offsets = {
     "GA": {
         1950: (-0.3,  3.0),
         1985: ( 1.0,  0),
-        2006: (0,  3.0),
+        2008: (0,  3.0),
     }
 }
 
@@ -208,7 +152,7 @@ hitos_offset = {
 tasas_offsets = {
     "1950-1985": (1958.3, 0.99),
     "1985-2006": (1992, 0.99),
-    "2006-2022": (2014, 0.99),
+    "2008-2022": (2014, 0.99),
 }
 means_offsets = {
     "1950-1984": (1958.3,  1.09),
@@ -221,10 +165,10 @@ fig, ax = plt.subplots(figsize=(14, 7))
 # Serie principal
 ax.plot(df.index, df['GA'], color='tab:blue', label='Grado de apertura (X+M)/PIB')
 y_max = ax.get_ylim()[1]
-add_hitos(ax, df.index, hitos_v, hitos_offset)
+add_hitos(ax, df.index, hitos_v_periodos, hitos_offset)
 #anotaciones de tasas
-periodos = [(1950,1985),(1985,2006),(2006,2022)]
-anot_years = [1950,1985,2006,2022]
+periodos = [(1950,1985),(1985,2006),(2008,2022)]
+anot_years = [1950,1985,2008,2022]
 abbr_map = {
     "GA":"GA",
 }

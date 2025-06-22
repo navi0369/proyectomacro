@@ -19,28 +19,12 @@ import sys, os, sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath('../'))
-from graficos_utils import (
-    add_hitos, add_cycle_means_multi,
-    add_year_value_annotations, add_period_growth_annotations_multi
-)
-
+from graficos_utils import *
+from config import *
 # 0. Ciclos y carpetas
-periods = {
-    "Expansión 92-99": slice(1992, 1999),
-    "Crisis 00-05":    slice(2000, 2005),
-    "Expansión 06-13": slice(2006, 2013),
-}
 output_dir = "../../../../assets/tesis/serie_completa/minerales"
 os.makedirs(output_dir, exist_ok=True)
-
-plt.style.use("seaborn-v0_8-whitegrid")
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16,   "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150,      "savefig.bbox": "tight",
-})
-
+set_style()
 # 1. Datos ────────────────────────────────────────────────────────────────
 with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
     df_oro = (pd.read_sql(
@@ -64,15 +48,15 @@ df.drop(columns="oro_valor", inplace=True)
 df_base = df.loc[:2023]
 df_price = df[["precio_usd_ot"]]
 # ───────────────────────  GRÁFICA DUAL AXIS (valor-precio) ───────────────────────
-cols     = ["oro_valor_musd", "precio_usd_ot"]
+cols_sectores     = ["oro_valor_musd", "precio_usd_ot"]
 abbr     = {"oro_valor_musd": "Valor", "precio_usd_ot": "Precio"}
 colors   = {"oro_valor_musd": "#1f77b4", "precio_usd_ot": "#c49b07"}   # azul + dorado
 #1f77b4
+CYCLES=adjust_cycles(df,CYCLES)
 cycle_stats = {
-    n: df.loc[s, cols].mean().to_dict()
-    for n, s in periods.items()
+    name: df.loc[period, cols_sectores].mean().to_dict()
+    for name, period in CYCLES.items()
 }
-hitos_v      = {2000: "Crisis", 2006: "Expansión", 2014: "Recesión"}
 hitos_offset = {yr: .80 for yr in hitos_v}
 
 anot_years = [1992, 2000, 2006, 2014,2023, 2025]
@@ -85,7 +69,7 @@ annotation_offsets = {
     },
 }
 # Defino dos listas de periodos:
-growth_periods = [(1992,2000),(2000,2006),(2006,2014)]
+growth_periods=adjust_periods(df,periodos_tasas)
 
 period_growth_offsets = {
     "1992-2000": (1995,0.78), "2000-2006":(2001,0.78),
@@ -143,7 +127,7 @@ add_year_value_annotations(
 # Tasa sólo para el eje izquierdo (valor, hasta 2024)
 add_period_growth_annotations_multi(
     ax_val, df, growth_periods,
-    cols,
+    cols_sectores,
     period_growth_offsets,
     colors,
     abbr,
@@ -200,10 +184,10 @@ colors_vol = {
     "precio_usd_ot": colors["precio_usd_ot"]   # dorado del primer gráfico
 }
 abbr_vol = {"oro_volumen": "Vol", "precio_usd_ot": "P"}
-
+CYCLES=adjust_cycles(df,CYCLES)
 cycle_stats_vol = {
-    n: df.loc[s, cols_vol].mean().to_dict()
-    for n, s in periods.items()
+    name: df.loc[period, cols_vol].mean().to_dict()
+    for name, period in CYCLES.items()
 }
 
 annotation_offsets_vol = {
@@ -228,7 +212,6 @@ cycle_text_offsets_vol = {
     "Expansión 06-13": (2008,0.97),
     "Recesión 14-24":  (2016,0.97),
 }
-
 fig_v, ax_v = plt.subplots(figsize=(13,8))
 ax_price_v  = ax_v.twinx()
 
@@ -341,4 +324,4 @@ plt.show()
 
 
 # %%
-df
+adjust_annot_years(df,annot_years_periodos)

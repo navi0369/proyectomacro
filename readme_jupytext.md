@@ -29,4 +29,4 @@ turso db shell proyectomacro .dump > proyectomacro.sql
 sqlite3 proyectomacro.db < proyectomacro.sql
 
 
-jupytext --update --to py:percent notebooks/tesis/serie_completa/**/*.ipynb
+jupytext --sync notebooks/tesis/serie_completa/exportaciones/*.ipynb
