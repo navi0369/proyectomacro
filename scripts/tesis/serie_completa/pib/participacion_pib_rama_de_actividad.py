@@ -17,7 +17,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3, os
-import numpy as np
+import numpy as np 
+
+sys.path.append(os.path.abspath('../'))
+from config import *
 # ── 1. Parámetros y rutas ────────────────────────────────────────────────────
 CRISIS_52_55     = slice(1952, 1955)   # Crisis
 EXPANSION_56_69  = slice(1956, 1969)   # Expansión
@@ -133,6 +136,79 @@ for yr, lbl in hitos_v.items():
             bbox=dict(facecolor="white", alpha=0.85, edgecolor="none"),
             zorder=6
         )
+MEAN_OFFSETS = {
+    CRISIS_52_55:      {'consumo_publico': (0.0, 12.0)},
+    EXPANSION_56_69:   {'consumo_publico': (0.0, 14.5)},
+    RECESION_70_81:    {'consumo_publico': (0.0, 14.5)},
+    CRISIS_82_85:      {'consumo_publico': (0.0, 12.0)},
+    EXPANSION_86_99:   {'consumo_publico': (0.0, 15.0)},
+    CRISIS_00_05:      {'consumo_publico': (0.0, 12.0)},
+    ACUMULACION_06_13: {'consumo_publico': (0.0, 12.0)},
+    RECESION_14_23:    {'consumo_publico': (0.0, 12.0)},
+}
+
+
+# 2️⃣  Componentes cuyos promedios NO quieres anotar
+SKIP_MEANS = {
+    CRISIS_52_55:      {'energia'},
+    EXPANSION_56_69:   {'energia'},
+    RECESION_70_81:    {'energia'},
+    CRISIS_82_85:      {'energia'},
+    EXPANSION_86_99:   {'energia'},
+    CRISIS_00_05:      {'energia'},
+    ACUMULACION_06_13: {'energia'},
+    RECESION_14_23:    {'energia'},
+}
+
+def annotate_cycle_means(
+    ax, data, cycle_slice, cols,
+    offsets=None, skip=None,
+    fmt="{val:.0f}", **text_kw
+):
+    sub = data.loc[cycle_slice, cols]
+    if sub.empty:
+        return
+
+    means = sub.mean()
+    start_idx = data.index.get_loc(sub.index[0])
+    end_idx   = data.index.get_loc(sub.index[-1])
+    x_mid     = (start_idx + end_idx) / 2
+
+    cum = 0
+    for col in cols:
+        # omitir si el usuario lo indica
+        if skip and col in skip.get(cycle_slice, set()):
+            cum += means[col]
+            continue
+
+        val = means[col]
+        dx, dy = (0, 0)
+        if offsets:
+            dx, dy = offsets.get(cycle_slice, {}).get(col, (0, 0))
+
+        ax.text(
+            x_mid + dx,
+            cum + val/2 + dy,
+            fmt.format(val=val),
+            ha="center", va="center",
+            zorder=6,
+            **text_kw
+        )
+        cum += val
+# ── 5.2 Medias por ciclo ─────────────────────────────────────────────
+# ── 5.2 Medias por ciclo (con offsets y skips) ────────────────────────────
+cycles = [
+    CRISIS_52_55, EXPANSION_56_69, RECESION_70_81, CRISIS_82_85,
+    EXPANSION_86_99, CRISIS_00_05, ACUMULACION_06_13, RECESION_14_23,
+]
+for ciclo in cycles:
+    annotate_cycle_means(
+        ax, pct, ciclo, cols,
+        offsets=MEAN_OFFSETS,
+        skip=SKIP_MEANS,
+        fontsize=13, color="black", fontweight="bold"
+    )
+
 
 # ── 6. Guardar y mostrar ────────────────────────────────────────────────────
 plt.tight_layout()
