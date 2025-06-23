@@ -30,3 +30,13 @@ sqlite3 proyectomacro.db < proyectomacro.sql
 
 
 jupytext --sync notebooks/tesis/serie_completa/exportaciones/*.ipynb
+
+touch notebooks/tesis/serie_completa/exportaciones/*.ipynb
+
+git log -1 ff3c2d0 \
+  --pretty=format:'### %h – %s (%ad)%n' \
+  --date=short \
+  --patch \
+  --no-color \
+  -- '*.py' \
+  > 2025-06-22.2.md
