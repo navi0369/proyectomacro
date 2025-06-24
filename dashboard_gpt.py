@@ -31,29 +31,173 @@ client = OpenAI()
 # -----------------------------
 # Cargar Datos en DataFrames
 # -----------------------------
-df_pib = pd.read_sql("SELECT * FROM PIB_Real_Gasto", conn)
-df_tasa = pd.read_sql("SELECT * FROM Tasa_Crecimiento_PIB", conn)
-df_precio_oficial = pd.read_sql("SELECT * FROM precio_oficial_minerales where año>1955", conn)
-df_produccion = pd.read_sql("SELECT * FROM produccion_minerales", conn)
-df_precio = pd.read_sql("SELECT * FROM precio_minerales", conn)
-df_balanza = pd.read_sql("SELECT * FROM Balanza_Comercial", conn)
-df_participacion = pd.read_sql("SELECT * FROM Participacion_PIB", conn)
-df_reservas = pd.read_sql("SELECT * FROM Reservas_oro_divisas", conn)
-df_exp_trad_no_trad = pd.read_sql("SELECT * FROM participacion_exp_trad_no_trad", conn)
-df_grado_de_apertura = pd.read_sql("SELECT * FROM grado_de_apertura", conn)
-df_participacion_x_m_pib = pd.read_sql("SELECT * FROM participacion_x_m_pib", conn)
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+_TABLE_NAMES = [row[0] for row in cursor.fetchall()]
 
-df_composicion_importaciones_uso_destino = pd.read_sql("SELECT * FROM composicion_importaciones_uso_destino", conn)
-df_exportaciones_totales = pd.read_sql("SELECT * FROM exportaciones_totales", conn)
-df_participacion_composicion_importaciones_uso_destino = pd.read_sql("SELECT * FROM participacion_composicion_importaciones_uso_destino", conn)
-df_participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos = pd.read_sql("SELECT * FROM participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos", conn)
-df_participacion_hidrocarburos_minerales_exportaciones_tradicionales = pd.read_sql("SELECT * FROM participacion_hidrocarburos_minerales_exportaciones_tradicionales", conn)
+# Diccionario con todos los DataFrames disponibles
+dfs = {name: pd.read_sql(f"SELECT * FROM {name}", conn) for name in _TABLE_NAMES}
 
-df_exportacion_gas_natural=pd.read_sql("SELECT * FROM exportacion_gas_natural", conn)
-df_exportacion_gas_natural_contratos= pd.read_sql("select * from exportacion_gas_natural_contratos",conn)
-df_exportaciones_minerales_totales=pd.read_sql("select * from exportaciones_minerales_totales", conn)
-df_operaciones_empresas_publicas=pd.read_sql("select * from operaciones_empresas_publicas", conn)
+# Variables de uso común para compatibilidad con el código previo
+df_pib = dfs.get("PIB_Real_Gasto")
+df_tasa = dfs.get("Tasa_Crecimiento_PIB")
+df_precio_oficial = dfs.get("precio_oficial_minerales")
+df_produccion = dfs.get("produccion_minerales")
+df_precio = dfs.get("precio_minerales")
+df_balanza = dfs.get("balanza_comercial")
+df_participacion = dfs.get("Participacion_PIB")
+df_reservas = dfs.get("Reservas_oro_divisas")
+df_exp_trad_no_trad = dfs.get("participacion_exp_trad_no_trad")
+df_grado_de_apertura = dfs.get("grado_de_apertura")
+df_participacion_x_m_pib = dfs.get("participacion_x_m_pib")
+df_composicion_importaciones_uso_destino = dfs.get("composicion_importaciones_uso_destino")
+df_exportaciones_totales = dfs.get("exportaciones_totales")
+df_participacion_composicion_importaciones_uso_destino = dfs.get("participacion_composicion_importaciones_uso_destino")
+df_participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos = dfs.get("participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos")
+df_participacion_hidrocarburos_minerales_exportaciones_tradicionales = dfs.get("participacion_hidrocarburos_minerales_exportaciones_tradicionales")
+df_exportacion_gas_natural = dfs.get("exportacion_gas_natural")
+df_exportacion_gas_natural_contratos = dfs.get("exportacion_gas_natural_contratos")
+df_exportaciones_minerales_totales = dfs.get("exportaciones_minerales_totales")
+df_operaciones_empresas_publicas = dfs.get("operaciones_empresas_publicas")
+df_balanza_de_pagos = dfs.get("balanza_de_pagos")
+df_consolidado_spnf = dfs.get("consolidado_spnf")
+df_deuda_externa_total = dfs.get("deuda_externa_total")
+df_deuda_interna = dfs.get("deuda_interna")
+df_inversion_publica_por_sectores = dfs.get("inversion_publica_por_sectores")
+df_inversion_publica_total = dfs.get("inversion_publica_total")
+df_exportaciones_tradicionales_no_tradicionales = dfs.get("exportaciones_tradicionales_no_tradicionales")
+df_flujo_divisas = dfs.get("flujo_divisas")
+df_pib_ramas = dfs.get("pib_ramas")
+df_exportaciones_tradicionales_hidrocarburos = dfs.get("exportaciones_tradicionales_hidrocarburos")
+df_exportaciones_tradicionales = dfs.get("exportaciones_tradicionales")
+df_participacion_pib_ramas = dfs.get("participacion_pib_ramas")
+df_exportaciones_no_tradicionales = dfs.get("exportaciones_no_tradicionales")
+df_exportaciones_por_pais_de_destino = dfs.get("exportaciones_por_pais_de_destino")
+df_inflacion_acumulada = dfs.get("inflacion_acumulada")
+df_inflacion_general_acumulada = dfs.get("inflacion_general_acumulada")
+df_cotizacion_oficial_dolar = dfs.get("cotizacion_oficial_dolar")
+df_mercado_laboral = dfs.get("mercado_laboral")
+df_pib_nominal_gasto = dfs.get("pib_nominal_gasto")
+df_deflactor_implicito_pib_gasto = dfs.get("deflactor_implicito_pib_gasto")
+df_oferta_total = dfs.get("oferta_total")
+df_demanda_total = dfs.get("demanda_total")
+df_vbp_sector_2006_2014 = dfs.get("vbp_sector_2006_2014")
+df_ingresos_nacionales = dfs.get("ingresos_nacionales")
+df_pobreza = dfs.get("pobreza")
+df_pobreza_extrema = dfs.get("pobreza_extrema")
+df_precio_petroleo_wti = dfs.get("precio_petroleo_wti")
+df_fuente_tablas = dfs.get("fuente_tablas")
 
+# Utilidades para construir las tabs de la nueva interfaz
+def table_tab(label, table_key):
+    df = dfs.get(table_key)
+    content = dbc.Container(create_table_card(label, df), fluid=True) if df is not None else html.Div("Datos no disponibles")
+    return dcc.Tab(label=label, style=tab_style, selected_style=tab_selected_style, children=[content])
+
+def create_main_layout():
+    return dbc.Container([
+        html.H1("Dashboard de Datos Macroeconómicos y Asistente IA", className="text-center my-4 text-primary", style={"fontFamily": "Arial, sans-serif"}),
+        dcc.Tabs(style=tabs_styles, children=[
+            dcc.Tab(label="Cuentas Nacionales / PIB", style=tab_style, selected_style=tab_selected_style, children=[
+                table_tab("Desagregación del PIB por ramas de actividad", "pib_ramas"),
+                table_tab("Participación de exportaciones e importaciones en el PIB", "participacion_x_m_pib"),
+                table_tab("Tasa de crecimiento anual del PIB", "Tasa_Crecimiento_PIB"),
+                table_tab("Participación del PIB por ramas de actividad", "participacion_pib_ramas"),
+                table_tab("PIB a precios corrientes por tipo de gasto", "pib_nominal_gasto"),
+                table_tab("Deflactor implícito del PIB por tipo de gasto", "deflactor_implicito_pib_gasto"),
+                table_tab("Oferta total y componentes", "oferta_total"),
+                table_tab("Demanda total y componentes", "demanda_total"),
+                table_tab("VBP por ramas de actividad económica", "vbp_sector_2006_2014")
+            ]),
+            dcc.Tab(label="Sector Externo / Balanza Comercial", style=tab_style, selected_style=tab_selected_style, children=[
+                table_tab("Flujo de Divisas del Sector Externo", "flujo_divisas"),
+                table_tab("Grado de Apertura Económica", "grado_de_apertura"),
+                table_tab("Reservas Internacionales de Oro y Divisas", "Reservas_oro_divisas")
+            ]),
+            dcc.Tab(label="Exportaciones", style=tab_style, selected_style=tab_selected_style, children=[
+                table_tab("Exportaciones Totales", "exportaciones_totales"),
+                table_tab("Volumen y Valor de Exportaciones de Minerales", "exportaciones_minerales_totales"),
+                table_tab("Exportaciones Tradicionales", "exportaciones_tradicionales"),
+                table_tab("Exportaciones Tradicionales y No Tradicionales", "exportaciones_tradicionales_no_tradicionales"),
+                table_tab("Participación de exportaciones tradicionales y no tradicionales", "participacion_exp_trad_no_trad"),
+                table_tab("Exportaciones tradicionales de hidrocarburos", "exportaciones_tradicionales_hidrocarburos"),
+                table_tab("Exportación de Gas Natural", "exportacion_gas_natural"),
+                table_tab("Exportación de Gas Natural por Contrato", "exportacion_gas_natural_contratos"),
+                table_tab("Participación del Gas Natural y Otros Hidrocarburos en exportaciones de hidrocarburos", "participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos"),
+                table_tab("Participación hidrocarburos vs minerales en exportaciones tradicionales", "participacion_hidrocarburos_minerales_exportaciones_tradicionales")
+            ]),
+            dcc.Tab(label="Importaciones", style=tab_style, selected_style=tab_selected_style, children=[
+                table_tab("Composición de importaciones por uso y destino", "composicion_importaciones_uso_destino"),
+                table_tab("Participación de la composición de importaciones por uso y destino", "participacion_composicion_importaciones_uso_destino"),
+                table_tab("Exportaciones No Tradicionales", "exportaciones_no_tradicionales")
+            ]),
+            dcc.Tab(label="Precios y Producción", style=tab_style, selected_style=tab_selected_style, children=[
+                table_tab("Precio real de minerales", "precio_minerales"),
+                table_tab("Precios oficiales de minerales principales", "precio_oficial_minerales"),
+                table_tab("Precio internacional del petróleo WTI", "precio_petroleo_wti"),
+                table_tab("Producción de minerales principales", "produccion_minerales"),
+                table_tab("Inflación acumulada", "inflacion_acumulada"),
+                table_tab("Cotización oficial del dólar", "cotizacion_oficial_dolar")
+            ]),
+            dcc.Tab(label="Sector Fiscal", style=tab_style, selected_style=tab_selected_style, children=[
+                table_tab("Consolidado de operaciones del SPNF", "consolidado_spnf"),
+                table_tab("Operaciones de empresas públicas", "operaciones_empresas_publicas"),
+                table_tab("Inversión pública total", "inversion_publica_total"),
+                table_tab("Inversión pública por sectores", "inversion_publica_por_sectores"),
+                table_tab("Ingresos Nacionales", "ingresos_nacionales")
+            ]),
+            dcc.Tab(label="Deuda", style=tab_style, selected_style=tab_selected_style, children=[
+                table_tab("Deuda externa total", "deuda_externa_total"),
+                table_tab("Deuda interna pública", "deuda_interna")
+            ]),
+            dcc.Tab(label="Empleo", style=tab_style, selected_style=tab_selected_style, children=[
+                table_tab("Mercado laboral", "mercado_laboral")
+            ]),
+            dcc.Tab(label="Asistente IA", style=tab_style, selected_style=tab_selected_style, children=[
+                dbc.Container([
+                    html.H3("Asistente de Consultas Macroeconómicas", className="text-center my-4 text-secondary"),
+                    dbc.Row([
+                        dbc.Col(
+                            dcc.Textarea(
+                                id="input_pregunta",
+                                placeholder=("Escribe tu consulta en lenguaje natural, por ejemplo:\n"
+                                             "- ¿Cuál fue el crecimiento del PIB en 2020?\n"
+                                             "- Muéstrame el gasto en consumo y formación de capital para el año 2015."),
+                                style={
+                                    "width": "100%",
+                                    "height": "120px",
+                                    "borderRadius": "5px",
+                                    "padding": "10px",
+                                    "fontFamily": "Arial, sans-serif",
+                                    "fontSize": "14px"
+                                }
+                            ), md=8
+                        )
+                    ], className="mb-3 justify-content-center"),
+                    dbc.Row([
+                        dbc.Col(
+                            dbc.Button("Consultar", id="btn_consultar", color="primary", size="lg", n_clicks=0),
+                            width="auto", className="text-center"
+                        )
+                    ], className="mb-3 justify-content-center"),
+                    dbc.Row([
+                        dbc.Col(
+                            html.Div(id="output_respuesta",
+                                     style={
+                                         "white-space": "pre-line",
+                                         "border": "1px solid #ddd",
+                                         "padding": "15px",
+                                         "borderRadius": "5px",
+                                         "backgroundColor": "#f8f9fa",
+                                         "fontFamily": "Arial, sans-serif",
+                                         "fontSize": "14px"
+                                     }),
+                            md=10
+                        )
+                    ], className="justify-content-center")
+                ], fluid=True)
+            ])
+        ])
+    ], fluid=True, style={"backgroundColor": "#e9ecef", "padding": "20px"})
 # -----------------------------
 # GRAFICAS
 # -----------------------------
@@ -250,7 +394,7 @@ valor_mineral_tabs = [
 # -----------------------------
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-app.layout = dbc.Container([
+old_layout = dbc.Container([
     html.H1("Dashboard de Datos Macroeconómicos y Asistente IA", 
             className="text-center my-4 text-primary", 
             style={"fontFamily": "Arial, sans-serif"}),
@@ -1654,8 +1798,11 @@ app.layout = dbc.Container([
             )
         ]
     )
+# Viejo layout no utilizado
 ], fluid=True, style={"backgroundColor": "#e9ecef", "padding": "20px"})
 
+# Nuevo layout simplificado
+app.layout = create_main_layout()
 
 # -----------------------------
 # Callback: Procesar Consulta del Asistente IA
