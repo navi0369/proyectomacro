@@ -251,7 +251,7 @@ def init_base_plot(
     ax.set_ylabel(ylabel, color='blue', fontsize=14)
     ax.set_xticks(df.index[::max(1, len(df)//31)])
     ax.tick_params(axis='x', rotation=45)
-    ax.legend(loc=legend_loc, ncol=legend_ncol, fontsize=12)
+    ax.legend(loc=legend_loc, ncol=legend_ncol, fontsize=13.2)
 
     fig.text(
         0.07, 0.005,
