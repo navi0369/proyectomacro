@@ -794,6 +794,336 @@ Registra el valor anual del stock de deuda interna manejada por el Tesoro Genera
 ## 📌 Fuente
 - UDAPE: https://dossier.udape.gob.bo/res/STOCK%20DE%20LA%20DEUDA%20PÚBLICA%20INTERNA%20DEL%20TESORO%20GENERAL%20DE%20LA%20NACIÓN  
 
+# Tabla: pobreza_extrema
+
+## 📌 Descripción de la Tabla `pobreza_extrema`
+Porcentaje anual de la población en situación de pobreza extrema en Bolivia (2007–2022).  
+
+### 📄 Columnas:
+| Columna             | Tipo    | Descripción                                   | Unidad      |
+|---------------------|---------|-----------------------------------------------|-------------|
+| `año`               | INTEGER | Año del registro                              | Año         |
+| `pobreza_extrema`   | REAL    | Porcentaje de población en pobreza extrema    | Porcentaje  |
+
+## 📌 Período y Unidades
+- **Período:** 2007 – 2022  
+- **Unidad base:** Porcentaje  
+
+## 📌 Fuente
+- INE: Encuesta de Hogares :contentReference[oaicite:16]{index=16}  
+
 ---
+
+# Tabla: pobreza
+
+## 📌 Descripción de la Tabla `pobreza`
+Porcentaje anual de la población en situación de pobreza general en Bolivia (2007–2022).  
+
+### 📄 Columnas:
+| Columna           | Tipo    | Descripción                               | Unidad      |
+|-------------------|---------|-------------------------------------------|-------------|
+| `año`             | INTEGER | Año del registro                          | Año         |
+| `pobreza`         | REAL    | Porcentaje de población en pobreza        | Porcentaje  |
+
+## 📌 Período y Unidades
+- **Período:** 2007 – 2022  
+- **Unidad base:** Porcentaje  
+
+## 📌 Fuente
+- INE: Encuesta de Hogares :contentReference[oaicite:17]{index=17}  
+
+---
+
+# Tabla: balanza_de_pagos
+
+## 📌 Descripción de la Tabla `balanza_de_pagos`
+Resumen anual de la balanza de pagos de Bolivia, con saldos de cuenta corriente, capital y financiera (1980–2023).  
+
+### 📄 Columnas:
+| Columna               | Tipo    | Descripción                                    | Unidad         |
+|-----------------------|---------|------------------------------------------------|----------------|
+| `año`                 | INTEGER | Año del registro                               | Año            |
+| `cuenta_corriente`    | REAL    | Saldo de la cuenta corriente                   | Millones USD   |
+| `cuenta_capital`      | REAL    | Saldo de la cuenta de capital                  | Millones USD   |
+| `cuenta_financiera`   | REAL    | Saldo de la cuenta financiera                  | Millones USD   |
+
+## 📌 Período y Unidades
+- **Período:** 1980 – 2023  
+- **Unidad base:** Millones de dólares (USD)  
+
+## 📌 Fuente
+- Banco Central de Bolivia: Estadísticas de Balanza de Pagos :contentReference[oaicite:18]{index=18}  
+
+---
+
+# Tabla: inflacion_general_acumulada
+
+## 📌 Descripción de la Tabla `inflacion_general_acumulada`
+Variación porcentual acumulada anual del Índice de Precios al Consumidor (diciembre a diciembre), serie general (1982–2024).  
+
+### 📄 Columnas:
+| Columna        | Tipo    | Descripción                                                 | Unidad     |
+|----------------|---------|-------------------------------------------------------------|------------|
+| `año`          | INTEGER | Año calendario                                              | Año        |
+| `inflacion`    | REAL    | Porcentaje acumulado anual del IPC                          | Porcentaje |
+
+## 📌 Período y Unidades
+- **Período:** 1982 – 2024  
+- **Unidad base:** Porcentaje  
+
+## 📌 Fuente
+- BCB (1982–1992) / INE (1993–2024) :contentReference[oaicite:19]{index=19}  
+
+---
+
+# Tabla: exportaciones_no_tradicionales
+
+## 📌 Descripción de la Tabla `exportaciones_no_tradicionales`
+Valor anual de exportaciones no tradicionales desagregadas por producto (1992–2024).  
+
+### 📄 Columnas:
+| Columna      | Tipo    | Descripción                                      | Unidad       |
+|--------------|---------|--------------------------------------------------|--------------|
+| `año`        | INTEGER | Año del registro                                 | Año          |
+| `soya`       | REAL    | Exportaciones de soya                            | Millones USD |
+| `otros`      | REAL    | Exportaciones de otros productos                 | Millones USD |
+| `castaña`    | REAL    | Exportaciones de castaña                         | Millones USD |
+
+## 📌 Período y Unidades
+- **Período:** 1992 – 2024  
+- **Unidad base:** Millones de dólares (USD)  
+
+## 📌 Fuente
+- INE: Estadísticas de Comercio Exterior   
+
+---
+
+# Tabla: exportaciones_por_pais_de_destino
+
+## 📌 Descripción de la Tabla `exportaciones_por_pais_de_destino`
+Serie anual de exportaciones de gas natural y minerales por país de destino (1992–2023).  
+
+### 📄 Columnas:
+| Columna       | Tipo    | Descripción                                      | Unidad       |
+|---------------|---------|--------------------------------------------------|--------------|
+| `año`         | INTEGER | Año del registro                                 | Año          |
+| `Argentina`   | REAL    | Exportaciones hacia Argentina                    | Millones USD |
+| `Brasil`      | REAL    | Exportaciones hacia Brasil                       | Millones USD |
+| `total`       | REAL    | Total de exportaciones por destino               | Millones USD |
+
+## 📌 Período y Unidades
+- **Período:** 1992 – 2023  
+- **Unidad base:** Millones de dólares (USD)  
+
+## 📌 Fuente
+- Base Proyectomacro (SQLite) :contentReference[oaicite:21]{index=21}  
+
+---
+
+# Tabla: inflacion_acumulada
+
+## 📌 Descripción de la Tabla `inflacion_acumulada`
+Variación porcentual acumulada anual del Índice de Precios al Consumidor (diciembre a diciembre) 1982–2024.  
+
+### 📄 Columnas:
+| Columna    | Tipo    | Descripción                                        | Unidad     |
+|------------|---------|----------------------------------------------------|------------|
+| `año`      | INTEGER | Año calendario                                     | Año        |
+| `inflacion`| REAL    | Variación porcentual acumulada del IPC             | Porcentaje |
+
+## 📌 Período y Unidades
+- **Período:** 1982 – 2024  
+- **Unidad base:** Porcentaje  
+
+## 📌 Fuente
+- BCB / INE :contentReference[oaicite:22]{index=22}  
+
+---
+
+# Tabla: cotizacion_oficial_dolar
+
+## 📌 Descripción de la Tabla `cotizacion_oficial_dolar`
+Serie histórica del tipo de cambio oficial (compra y venta) del dólar estadounidense (1958–2023).  
+
+### 📄 Columnas:
+| Columna           | Tipo    | Descripción                          | Unidad   |
+|-------------------|---------|--------------------------------------|----------|
+| `año`             | INTEGER | Año de referencia                    | Año      |
+| `oficial_compra`  | REAL    | Tipo de cambio oficial – compra      | Bs/USD   |
+| `oficial_venta`   | REAL    | Tipo de cambio oficial – venta       | Bs/USD   |
+
+## 📌 Período y Unidades
+- **Período:** 1958 – 2023  
+- **Unidad base:** Bolivianos por dólar  
+
+## 📌 Fuente
+- UDAPE: Cotización oficial mensual :contentReference[oaicite:23]{index=23}  
+
+---
+
+# Tabla: mercado_laboral
+
+## 📌 Descripción de la Tabla `mercado_laboral`
+Indicadores claves del mercado laboral boliviano: población, PEA, ocupados, desocupados e inactivos (1999–2017).  
+
+### 📄 Columnas:
+| Columna            | Tipo    | Descripción                                 | Unidad     |
+|--------------------|---------|---------------------------------------------|------------|
+| `año`              | INTEGER | Año de referencia                           | Año        |
+| `total_poblacion`  | INTEGER | Población total                             | Personas   |
+| `pea`              | INTEGER | Población económicamente activa             | Personas   |
+| `po`               | INTEGER | Ocupados                                    | Personas   |
+| `pd`               | INTEGER | Desocupados                                 | Personas   |
+| `pei`              | INTEGER | Población económicamente inactiva           | Personas   |
+
+## 📌 Período y Unidades
+- **Período:** 1999 – 2017  
+- **Unidad base:** Personas :contentReference[oaicite:24]{index=24}  
+
+---
+
+# Tabla: pib_nominal_gasto
+
+## 📌 Descripción de la Tabla `pib_nominal_gasto`
+Desglose anual del PIB nominal por tipo de gasto: consumo, inversión, exportaciones e importaciones (1950–2023).  
+
+### 📄 Columnas:
+| Columna                 | Tipo    | Descripción                                | Unidad                                   |
+|-------------------------|---------|--------------------------------------------|------------------------------------------|
+| `año`                   | INTEGER | Año del registro                           | Año                                      |
+| `consumo_publico`       | REAL    | Consumo del gobierno                       | Miles de Bs constantes de 1990          |
+| `consumo_hogares`       | REAL    | Consumo de hogares                         | Miles de Bs constantes de 1990          |
+| `formacion_capital_fijo`| REAL    | Formación bruta de capital fijo (FBCF)     | Miles de Bs constantes de 1990          |
+| `exportaciones`         | REAL    | Exportaciones de bienes y servicios        | Miles de Bs constantes de 1990          |
+| `importaciones`         | REAL    | Importaciones de bienes                    | Miles de Bs constantes de 1990          |
+| `pib_precios_mercado`   | REAL    | PIB a precios de mercado                   | Miles de Bs constantes de 1990          |
+
+## 📌 Período y Unidades
+- **Período:** 1950 – 2023  
+- **Unidad base:** Miles de bolivianos constantes de 1990  
+
+## 📌 Fuente
+- UDAPE: PIB a precios de mercado :contentReference[oaicite:25]{index=25}  
+
+---
+
+# Tabla: deflactor_implicito_pib_gasto
+
+## 📌 Descripción de la Tabla `deflactor_implicito_pib_gasto`
+Índices implícitos de precios del PIB por tipo de gasto (base 1990=100) (1980–2023).  
+
+### 📄 Columnas:
+| Columna                | Tipo    | Descripción                              | Unidad    |
+|------------------------|---------|------------------------------------------|-----------|
+| `año`                  | INTEGER | Año del registro                         | Año       |
+| `consumo_publico`      | REAL    | Índice implícito de consumo público      | Índice    |
+| `consumo_hogares`      | REAL    | Índice implícito de consumo de hogares   | Índice    |
+| `variacion_existencias`| REAL    | Índice implícito de variación existencias| Índice    |
+| `formacion_capital_fijo`| REAL   | Índice implícito de FBCF                 | Índice    |
+| `exportaciones`        | REAL    | Índice implícito de exportaciones        | Índice    |
+| `importaciones`        | REAL    | Índice implícito de importaciones        | Índice    |
+| `pib_precios_mercado`  | REAL    | Índice implícito del PIB                 | Índice    |
+
+## 📌 Período y Unidades
+- **Período:** 1980 – 2023  
+- **Unidad base:** Índice (1990 = 100)  
+
+## 📌 Fuente
+- UDAPE: Índices implícitos del PIB :contentReference[oaicite:26]{index=26}  
+
+---
+
+# Tabla: oferta_total
+
+## 📌 Descripción de la Tabla `oferta_total`
+Oferta total de la economía: producción bruta, importaciones y márgenes (1988–2023).  
+
+### 📄 Columnas:
+| Columna            | Tipo    | Descripción                                  | Unidad                                     |
+|--------------------|---------|----------------------------------------------|--------------------------------------------|
+| `año`              | INTEGER | Año del registro                             | Año                                        |
+| `oferta_total`     | REAL    | Oferta total a precios de mercado            | Miles de Bs constantes de 1990            |
+| `produccion_bruta` | REAL    | Valor Bruto de Producción (VBP)              | Miles de Bs constantes de 1990            |
+| `importaciones`    | REAL    | Importaciones                                 | Miles de Bs constantes de 1990            |
+| `derechos_imp`     | REAL    | Derechos de importación                      | Miles de Bs constantes de 1990            |
+| `impuestos_ind`    | REAL    | Impuestos indirectos                         | Miles de Bs constantes de 1990            |
+| `margenes_transp`  | REAL    | Márgenes de comercio y transporte            | Miles de Bs constantes de 1990            |
+
+## 📌 Período y Unidades
+- **Período:** 1988 – 2023  
+- **Unidad base:** Miles de bolivianos constantes de 1990  
+
+## 📌 Fuente
+- INE: Oferta y Demanda Total :contentReference[oaicite:27]{index=27}  
+
+---
+
+# Tabla: demanda_total
+
+## 📌 Descripción de la Tabla `demanda_total`
+Demanda total de la economía: consumo, inversión, existencias y exportaciones (1988–2023).  
+
+### 📄 Columnas:
+| Columna                    | Tipo    | Descripción                                  | Unidad                                     |
+|----------------------------|---------|----------------------------------------------|--------------------------------------------|
+| `anio`                     | INTEGER | Año del registro                             | Año                                        |
+| `demanda_total`            | REAL    | Demanda total                                | Miles de Bs constantes de 1990            |
+| `consumo_intermedio`       | REAL    | Consumo intermedio                           | Miles de Bs constantes de 1990            |
+| `consumo_final`            | REAL    | Consumo final                                | Miles de Bs constantes de 1990            |
+| `fbcf`                     | REAL    | Formación Bruta de Capital Fijo              | Miles de Bs constantes de 1990            |
+| `variacion_existencias`    | REAL    | Variación de existencias                     | Miles de Bs constantes de 1990            |
+| `exportaciones_bienes_serv`| REAL    | Exportaciones de bienes y servicios          | Miles de Bs constantes de 1990            |
+
+## 📌 Período y Unidades
+- **Período:** 1988 – 2023  
+- **Unidad base:** Miles de bolivianos constantes de 1990  
+
+## 📌 Fuente
+- INE: Oferta y Demanda Total :contentReference[oaicite:28]{index=28}  
+
+---
+
+# Tabla: vbp_sector_2006_2014
+
+## 📌 Descripción de la Tabla `vbp_sector_2006_2014`
+Valor Bruto de Producción por rama de actividad para 2006–2014.  
+
+### 📄 Columnas:
+| Columna               | Tipo    | Descripción                                 | Unidad                                     |
+|-----------------------|---------|---------------------------------------------|--------------------------------------------|
+| `año`                 | INTEGER | Año del registro                            | Año                                        |
+| *(35 columnas)*       | REAL    | VBP desagregado en 35 actividades           | Miles de Bs constantes de 1990            |
+
+## 📌 Período y Unidades
+- **Período:** 2006 – 2014  
+- **Unidad base:** Miles de bolivianos constantes de 1990  
+
+## 📌 Fuente
+- INE: Desagregación del PIB por ramas :contentReference[oaicite:29]{index=29}  
+
+---
+
+# Tabla: ingresos_nacionales
+
+## 📌 Descripción de la Tabla `ingresos_nacionales`
+Ingresos del gobierno central: coparticipación, regalías e impuestos especiales (2001–2023).  
+
+### 📄 Columnas:
+| Columna                     | Tipo    | Descripción                                     | Unidad             |
+|-----------------------------|---------|-------------------------------------------------|--------------------|
+| `año`                       | INTEGER | Año del registro                                | Año                |
+| `coparticipacion_tributaria`| REAL   | Recaudación por coparticipación tributaria      | Millones de BOB    |
+| `total_idh`                 | REAL   | Asignación del IDH                              | Millones de BOB    |
+| `total_hipc_ii`             | REAL   | Asignación HIPC II                              | Millones de BOB    |
+| `total_regalias_depart`     | REAL   | Regalías departamentales                        | Millones de BOB    |
+| `total_iehd`                | REAL   | Impuesto Especial a Hidrocarburos y Depósitos   | Millones de BOB    |
+
+## 📌 Período y Unidades
+- **Período:** 2001 – 2023  
+- **Unidad base:** Millones de bolivianos (BOB)  
+
+## 📌 Fuente
+- UDAPE: Ingresos Nacionales :contentReference[oaicite:30]{index=30}  
+
 
 > **Fin del documento**  
