@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 
 sys.path.append(os.path.abspath('../'))  # utilidades propias
 from graficos_utils import *
-from config import (
+from config import ( 
     # Con‑crisis
     CYCLES, annot_years, periodos_tasas, hitos_v,
     # Sin‑crisis
@@ -68,22 +68,22 @@ periodos             = adjust_periods(df, periodos_tasas)
 annotation_offsets   = {
     'total_idh': {
         2001: (0, -200),
-        2006: (0, -250),
-        2014: (0, -300),
+        2006: (-0.6, 200),
+        2014: (0, 300),
         2023: (0, -350),
     }
 }
 
 hitos_offset         = {a: 0.8 for a in hitos_v}
 medias_offsets       = {
-    'Crisis 01-05':    (2001, 1),
+    'Crisis 01-05':    (2003, 1),
     'Expansión 06-13': (2006, 1),
-    'Recesión 14-23':  (2014, 1),
+    'Recesión 14-23':  (2016, 1),
 }
 
 tasas_offsets = {
-    '2006-2014': (2010, 0.83),
-    '2014-2023': (2018, 0.65),
+    '2006-2014': (2006, 0.83),
+    '2014-2023': (2016, 0.83),
 }
 
 fig, ax = init_base_plot(
@@ -106,25 +106,22 @@ plt.show()
 plt.close()
 
 # %%
-df.loc[2006:2014,'total_idh'].mean()
-
-# %%
-df.loc[2015:2023,'total_idh'].mean()
+df.loc[2006:, 'total_idh'].sum()
 
 # %%
 # ============================================================
 # 3) TERCERA GRÁFICA — PERIODOS ESTRUCTURALES
 # ============================================================
-annotate_years_periodos = adjust_annot_years(df_idh, annot_years_periodos)
-cycles_stats_periodos   = {n: df_idh.loc[s, cols_componentes].mean().to_dict()
-                           for n, s in adjust_cycles(df_idh, CYCLES_PERIODOS).items()}
-periodos_periodos       = adjust_periods(df_idh, periodos_tasas_periodos)
+annotate_years_periodos = adjust_annot_years(df, annot_years_periodos)
+cycles_stats_periodos   = {n: df.loc[s, cols_componentes].mean().to_dict()
+                           for n, s in adjust_cycles(df, CYCLES_PERIODOS).items()}
+periodos_periodos       = adjust_periods(df, periodos_tasas_periodos)
 
 annotation_offsets_periodos = {
     'total_idh': {
         2001: (0, -200),
-        2006: (0, -250),
-        2022: (0, -320),
+        2006: (-0.5, 250),
+        2023: (0, -320),
     }
 }
 
@@ -135,25 +132,25 @@ medias_offsets_periodos     = {
 }
 
 tasas_offsets_periodos = {
-    '2006-2023': (2014, 0.65),
+    '2006-2023': (2006, 0.65),
 }
 # Gráfica
 fig, ax = init_base_plot(
-    df_idh, componentes, custom_colors,
+    df, componentes, custom_colors,
     "IDH (1985–2024) — Periodos Económicos",
-    "Año", "Puntos de IDH",
+    "Año", "Millones de bolivianos",
     source_text="Fuente: UDAPE"
 )
-add_hitos(ax, df_idh.index, hitos_v_periodos, hitos_offset_periodos,
+add_hitos(ax, df.index, hitos_v_periodos, hitos_offset_periodos,
           annotate_labels=tuple(), line_kwargs={'lw': 0.9})
 add_cycle_means_multi(ax, cycles_stats_periodos, medias_offsets_periodos,
                       abbr_map, custom_colors, line_spacing=ax.get_ylim()[1]*0.03)
-add_year_value_annotations(ax, df_idh, annotate_years_periodos, cols_componentes,
+add_year_value_annotations(ax, df, annotate_years_periodos, cols_componentes,
                            annotation_offsets_periodos, custom_colors, arrow_lw=0.5)
-add_period_growth_annotations_multi(ax, df_idh, periodos_periodos, cols_componentes,
+add_period_growth_annotations_multi(ax, df, periodos_periodos, cols_componentes,
                                     tasas_offsets_periodos, custom_colors, abbr_map)
 
-ax.set_ylim(-300, df_idh['total_idh'].max()*1.15)
+ax.set_ylim(-300, df['total_idh'].max()*1.15)
 plt.savefig(os.path.join(output_dir, "idh_periodos.png"))
 plt.show()
 plt.close()

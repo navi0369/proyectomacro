@@ -18,7 +18,7 @@
 # ─────────────────────────────────────────────────────────────
 import sys, os, sqlite3
 import numpy as np
-import pandas as pd
+import pandas as pd 
 import matplotlib.pyplot as plt
 
 sys.path.append(os.path.abspath('../'))  # utilidades propias
@@ -62,15 +62,15 @@ periodos       = adjust_periods(df_res, periodos_tasas)
 
 annotation_offsets = {
     'reservas_totales': {
-        1952: (0, -20),
-        1956: (0, -20),
-        1970: (0, -20),
-        1982: (0, -40),
-        1986: (0, -40),
-        2000: (0, -100),
-        2006: (0, -300),
-        2014: (0, -800),
-        2023: (0, -100),
+        1952: (0, 250),
+        1956: (0, 250),
+        1970: (0, 250),
+        1982: (0, 300),
+        1986: (0, 300),
+        2000: (0, 350),
+        2006: (1.9, -300),
+        2014: (0, 300),
+        2023: (0, -300),
     },
 }
 
@@ -79,18 +79,16 @@ medias_offsets = {
     'Expansión 56-69': (1956, 1),
     'Recesión 70-81': (1970, 1),
     'Expansión 86-99': (1986, 1),
-    'Crisis 00-05':    (2000, 1),
-    'Expansión 06-13': (2006, 1),
-    'Recesión 14-24':  (2014, 1),
+    'Expansión 06-13': (2006, 1.09),
+    'Recesión 14-23':  (2017, 1.09),
 }
 
 tasas_offsets  = {
-    '1956-1970': (1963, 0.83),
-    '1970-1982': (1976, 0.83),
-    '1986-2000': (1993, 0.83),
-    '2000-2006': (2003, 0.83),
-    '2006-2014': (2010, 0.83),
-    '2014-2023': (2018, 0.65),
+    '1956-1970': (1956, 0.83),
+    '1970-1986': (1970, 0.83),
+    '1986-2000': (1986, 0.83),
+    '2006-2014': (2006, 0.1),
+    '2014-2023': (2018, 0.83),
 }
 
 fig, ax = init_base_plot(
@@ -123,8 +121,8 @@ periodos_sin_crisis       = adjust_periods(df_res, periodos_tasas_sin_crisis)
 
 annotation_offsets_sin_crisis = {
     'reservas_totales': {
-        1956: (0, -250), 1970: (0, -250), 1986: (0, -270),
-        2006: (0, -320), 2014: (0, -350), 2023: (0, -380),
+        1950: (0, 350), 1971: (0, 350), 1985: (0, 370),
+        2005: (-2, 150), 2015: (2, 640), 2023: (0, -380),
     }
 }
 
@@ -133,16 +131,16 @@ medias_offsets_sin_crisis = {
     'Expansión 50-70': (1956, 1),
     'Recesión 71-84':  (1971, 1),
     'Expansión 85-05': (1986, 1),
-    'Expansión 06-14': (2006, 1),
-    'Recesión 15-23':  (2015, 1),
+    'Expansión 06-14': (2005, 1.09),
+    'Recesión 15-23':  (2016, 1.09),
 }
 
 tasas_offsets_sin_crisis  = {
     '1950-1970': (1956, 0.83),
-    '1971-1984': (1976, 0.83),
-    '1985-2005': (1993, 0.83),
-    '2006-2014': (2010, 0.83),
-    '2015-2022': (2018, 0.65),
+    '1971-1984': (1971, 0.83),
+    '1985-2005': (1986, 0.83),
+    '2006-2014': (2005, 0.1),
+    '2015-2023': (2016, 0.83),
 }
 
 fig, ax = init_base_plot(
@@ -155,7 +153,7 @@ add_hitos(ax, df_res.index, hitos_v_sin_crisis, hitos_offset_sin_crisis, line_kw
 add_cycle_means_multi(ax, cycles_stats_sin_crisis, medias_offsets_sin_crisis,
                       abbr_map, custom_colors, line_spacing=ax.get_ylim()[1]*0.03)
 add_year_value_annotations(ax, df_res, annotate_years_sin_crisis, cols_componentes,
-                           annotation_offsets_sin_crisis, custom_colors, arrow_lw=0.5)
+                           annotation_offsets_sin_crisis, custom_colors, arrow_lw=0.2)
 add_period_growth_annotations_multi(ax, df_res, periodos_sin_crisis, cols_componentes,
                                     tasas_offsets_sin_crisis, custom_colors, abbr_map)
 ax.set_ylim(-400, df_res['reservas_totales'].max()*1.15)
@@ -174,21 +172,21 @@ periodos_periodos       = adjust_periods(df_res, periodos_tasas_periodos)
 
 annotation_offsets_periodos = {
     'reservas_totales': {
-        1950: (0, -250), 1985: (0, -300), 2006: (0, -320), 2023: (0, -380),
+        1950: (0, -250), 1985: (0, -300), 2006: (-2, 150), 2023: (0, -380),
     }
 }
 
 hitos_offset_periodos   = {a: 0.8 for a in hitos_v_periodos}
 medias_offsets_periodos = {
-    'Intervensionismo-estatal 50-84': (1967, 1),
+    'Intervensionismo-estatal 50-84': (1957, 1),
     'Neoliberalismo 85-05':   (1986, 1),
-    'Neodesarrollismo 06-24': (2006, 1),
+    'Neodesarrollismo 06-23': (2006, 1.09),
 }
 
 tasas_offsets_periodos  = {
-    '1950-1984': (1967, 0.83),
-    '1985-2005': (1995, 0.83),
-    '2006-2023': (2014, 0.65),
+    '1950-1984': (1957, 0.83),
+    '1985-2005': (1986, 0.83),
+    '2006-2023': (2006, 1.01),
 }
 
 fig, ax = init_base_plot(

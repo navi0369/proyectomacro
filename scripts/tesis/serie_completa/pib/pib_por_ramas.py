@@ -157,7 +157,7 @@ add_participation_cycle_boxes(
     participation_offsets, abbr, custom_colors
 )
 
-plt.savefig(os.path.join(output_dir, "pib_rama_de_actividad_1.png"))
+
 plt.show()
 
 

@@ -48,147 +48,120 @@ plt.tight_layout()
 plt.show()
 
 # %%
-"""
-Exportaciones No Tradicionales: soya, ‘otros’ y castaña  
-(1992-2024, Millones USD) — gráfico con helpers de *graficos_utils*
-"""
-
-# ── 0. Imports ───────────────────────────────────────────────────────
-import os, sqlite3, sys
+# ───────────────────────── 0. IMPORTS Y CONFIGURACIÓN GLOBAL ─────────────────────────
+import os, sys, sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
 
-sys.path.append(os.path.abspath('../'))          # ruta a graficos_utils.py
-from graficos_utils import (
-    add_hitos,
-    add_cycle_means_multi,
-    add_year_value_annotations,
-    add_period_growth_annotations_multi,
-    add_participation_cycle_boxes,
-)
+# utilidades propias
+sys.path.append(os.path.abspath('../'))
+from graficos_utils import *
+from config import *          # CYCLES, hitos_v, annot_years, periodos_tasas …
 
-# ── 1. Configuración general ─────────────────────────────────────────
-OUT = "../../../../assets/tesis/serie_completa/exportaciones"
-os.makedirs(OUT, exist_ok=True)
+OUTPUT_DIR = f"../../../../assets/tesis/serie_completa/exportaciones"
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-plt.style.use("seaborn-v0_8-whitegrid")
-plt.rcParams.update({
-    "font.family":"serif", "font.size":12,
-    "axes.titlesize":16,   "axes.labelsize":14,
-    "grid.linestyle":"--", "lines.linewidth":2,
-    "figure.dpi":150,      "savefig.bbox":"tight",
-})
+set_style()                   # elimina rcParams manuales
 
-# ── 2. Carga de datos ────────────────────────────────────────────────
+# ───────────────────────────── 1. CARGA DE DATOS ─────────────────────────────
 with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
     df = (pd.read_sql("SELECT * FROM exportaciones_no_tradicionales",
                       conn, index_col="año")
-            .sort_index())                 # 1992–2024
+            .sort_index())
 
-# aseguramos nombres coherentes ↓ (ajusta si tus columnas difieren)
 df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
+df['total'] = df[['soya', 'otros', 'castaña']].sum(axis=1)
 
+# ──────────────── 2. DEFINICIÓN DE SERIES, COLORES Y ABREVIATURAS ────────────────
 series = [
-    ("soya",          "Soya"),
-    ("otros","Otros"),     # «otros_productos» en la base
-    ("castaña",       "Castaña"),
+    ("soya",    "Soya"),
+    ("otros",   "Otros"),
+    ("castaña", "Castaña"),
 ]
-cols  = [c for c,_ in series]
-cmap  = plt.get_cmap("tab10")
-colors= {col: cmap(i) for i,(col,_) in enumerate(series)}
-abbr  = {"soya":"Soy", "castaña":"Cas", "otros_productos":"Otr"}
+cols_series = [c for c, _ in series]
 
-# ── 3. Ciclos ────────────────────────────────────────────────────────
-periods_for_means=[
-    (1992, 1999),
-    (2000, 2005),
-    (2006, 2013),
-    (2014, 2024),
-]
-periods = [
-    (1992, 2000),    # sub-expansión 92-99
-    (2000, 2005),    # crisis
-    (2006, 2013),    # acumulación
-    (2014, 2024),    # recesión
-]
-cycle_stats = {f"{vi}-{vf}": df.loc[vi:vf, cols].mean().to_dict()
-               for vi,vf in periods_for_means}
-cycle_offsets = {
-    "1992-1999": (1996, 0.99),
-    "2000-2005": (2002, 0.99),
-    "2006-2013": (2009, 0.99),
-    "2014-2024": (2018, 0.99),
-}
+cmap   = plt.get_cmap("tab10")
+colors = {col: cmap(i) for i, (col, _) in enumerate(series)}
+abbr   = {"soya": "Soy", "otros": "Otr", "castaña": "Cas"}
 
-# ── 4. Hitos, valores y crecimientos ─────────────────────────────────
-hitos_v      = {2000: "Crisis", 2006: "Expansión", 2014: "Recesión"}
-hitos_offset = {a:0.5 for a in hitos_v}
+# ──────────────── 3. PREPARACIÓN DE CICLOS, ANOTACIONES Y PERÍODOS ────────────────
+cycles       = adjust_cycles(df, CYCLES)
+annot_years  = adjust_annot_years(df, annot_years)
+periodos     = adjust_periods(df, periodos_tasas)
+cycle_stats  = {name: df.loc[slc, cols_series].mean().to_dict()
+                for name, slc in cycles.items()}
 
-anot_years = [1992, 2000, 2006, 2014, 2024]
+# ──────────────── 4. OFFSETS Y POSICIONAMIENTOS ────────────────
+hitos_offsets = {año: 0.50 for año in hitos_v}
+
 annotation_offsets = {
-    "soya": {
-        1992:(0,112), 2000:(0,50), 2006:(0,50),
-        2014:(0.5,50), 2024:(1,50),
-    },
-    "otros": {
-        1992:(0,75),2000:(0,-60),2006:(0,-70),
-        2014:(-0.5,-50),2024:(0.5,-80),
-    },
-    "castaña": {
-        1992:(0,-40),  2000:(0,-50),  2006:(0,-50),
-        2014:(0,60),  2024:(0,60),
-    },
+    "soya":    {1992:(0,112), 2000:(0,50), 2006:(0,50),
+                2014:(0.5,50), 2024:(1,50)},
+    "otros":   {1992:(0,75), 2000:(0,-60), 2006:(0,-70),
+                2014:(-0.5,-50), 2024:(0.5,-80)},
+    "castaña": {1992:(0,-40), 2000:(0,-50), 2006:(0,-50),
+                2014:(0,60), 2024:(0,60)},
 }
 
-growth_periods = periods
-growth_offsets = {
+medias_offsets = {
+    "Expansión 92-99": (1996, 0.99),
+    "Crisis 00-05":    (2002, 0.99),
+    "Expansión 06-13": (2009, 0.99),
+    "Recesión 14-24":  (2018, 0.99),
+}
+
+tasas_offsets = {
     "1992-2000": (1996, 0.86),
-    "2000-2005": (2002, 0.86),
-    "2006-2013": (2009, 0.86),
+    "2000-2006": (2002, 0.86),
+    "2006-2014": (2009, 0.86),
     "2014-2024": (2018, 0.86),
 }
 
-# ── 5. Participación media (%) ───────────────────────────────────────
-components   = ["soya", "castaña"]
-total_col    = "total"       # en la tabla existe ‘total’
-part_offsets = {
-    "1992-2000": (1996, 0.7),
-    "2000-2005": (2002, 0.7),
-    "2006-2013": (2009, 0.7),
-    "2014-2024": (2018, 0.7),
+participation_offsets = {
+    "1992-2000": (1996, 0.70),
+    "2000-2005": (2002, 0.70),
+    "2006-2013": (2009, 0.70),
+    "2014-2024": (2018, 0.70),
 }
 
-# ── 6. Gráfico ───────────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(13,8))
-
-for col,label in series:
-    ax.plot(df.index, df[col], label=label, color=colors[col])
-
-# helpers
-add_hitos(ax, df.index, hitos_v, hitos_offset)
-add_cycle_means_multi(ax, cycle_stats, cycle_offsets,
-                      abbr, colors, line_spacing=df[cols[0]].max()*0.03)
-add_year_value_annotations(ax, df, anot_years,
-                           cols, annotation_offsets, colors, arrow_lw=0.6)
-add_period_growth_annotations_multi(ax, df, growth_periods,
-                                    cols, growth_offsets, colors, abbr)
-add_participation_cycle_boxes(
-    ax, df, growth_periods, components, total_col,
-    part_offsets, abbr_map=abbr,
-    colors={c: colors[c] for c in components}
+# ───────────────────────────── 5. GENERACIÓN DE LA GRÁFICA ─────────────────────────────
+fig, ax = init_base_plot(
+    df=df,
+    series=series,
+    colors=colors,
+    title="Exportaciones No Tradicionales: Soya, Otros y Castaña (1992–2024)",
+    xlabel="Año",
+    ylabel="Millones de USD",
+    source_text="Fuente: Base Proyectomacro",
 )
 
-# ── 7. Etiquetas y salida ────────────────────────────────────────────
-ax.set_title("Exportaciones No Tradicionales: Soya, ‘Otros’ y Castaña (1992-2024)",
-             fontweight="bold")
-ax.set_xlabel("Año")
-ax.set_ylabel("Millones de USD")
-ax.set_xticks(df.index[::max(1,len(df)//31)])
+add_hitos(ax, df.index, hitos_v, hitos_offsets)
+
+line_spacing = ax.get_ylim()[1] * 0.03
+add_cycle_means_multi(ax, cycle_stats, medias_offsets, abbr, colors, line_spacing)
+
+add_year_value_annotations(ax, df, annot_years, cols_series,
+                           annotation_offsets, colors, arrow_lw=0.6)
+
+add_period_growth_annotations_multi(
+    ax, df, periodos, cols_series, tasas_offsets, colors, abbr
+)
+
+participation_periods = [(1992,2000), (2000,2005), (2006,2013), (2014,2024)]
+add_participation_cycle_boxes(
+    ax, df, participation_periods, ["soya","castaña"], "total",
+    participation_offsets, abbr_map=abbr,
+    colors={c: colors[c] for c in ["soya","castaña"]}
+)
+
+# ───────────────────────────── 6. AJUSTES FINALES Y EXPORTACIÓN ─────────────────────────────
+ax.set_xticks(df.index[::max(1, len(df)//31)])
 ax.tick_params(axis="x", rotation=45)
-ax.legend(loc="upper left", fontsize=12)
+ax.legend(title="Producto", loc="upper left", fontsize=12)
 
 plt.tight_layout()
-plt.savefig(os.path.join(OUT, "exportaciones_no_tradicionales_soya_otros_castaña.png"),
+plt.savefig(os.path.join(OUTPUT_DIR, "exportaciones_no_tradicionales_soya_otros_castaña.png"),
             dpi=300)
 plt.show()
+
 

@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 
 sys.path.append(os.path.abspath('../'))  # utilidades propias
 from graficos_utils import *
-from config import (
+from config import ( 
     # Con‑crisis
     CYCLES, annot_years, periodos_tasas, hitos_v,
     # Sin‑crisis
@@ -70,8 +70,8 @@ periodos             = adjust_periods(df_di, periodos_tasas)
 # Offsets
 annotation_offsets = {
     'valor': {
-        1992: (0, 150), 2000: (0, 150), 2006: (0, 150),
-        2014: (0.5, 150), 2024: (1, 150),
+        1993: (0, 220), 2000: (-0.5, 250), 2006: (0, 350),
+        2014: (0.5, 250), 2022: (0, 250),
     }
 }
 hitos_offset         = {a: 0.8 for a in hitos_v}
@@ -83,9 +83,9 @@ medias_offsets       = {
 }
 tasas_offsets        = {
     '1993-2000': (1993, 0.83),
-    '2000-2006': (2003, 0.83),
-    '2006-2014': (2010, 0.83),
-    '2014-2022': (2018, 0.65),
+    '2000-2006': (2000, 0.83),
+    '2006-2014': (2006, 0.83),
+    '2014-2022': (2014, 0.83),
 }
 
 # Gráfica
@@ -122,19 +122,19 @@ periodos_sin_crisis       = adjust_periods(df_di, periodos_tasas_sin_crisis)
 # Offsets
 annotation_offsets_sin_crisis = {
     'valor': {
-        1993: (0, 500), 2005: (0, 500), 2015: (0, 500), 2022: (0, 500)
+        1993: (0, 500), 2005: (0, 400), 2015: (0, -320), 2022: (0, 300)
     }
 }
 hitos_offset_sin_crisis       = {a: 0.8 for a in hitos_v_sin_crisis}
 medias_offsets_sin_crisis     = {
-    'Expansión 93-05': (1993, 1),
+    'Expansión 93-05': (1998, 1),
     'Expansión 06-14': (2006, 1),
-    'Recesión 15-22':  (2014, 1),
+    'Recesión 15-22':  (2015, 1),
 }
 tasas_offsets_sin_crisis = {
-    '1993-2005': (1993, 1.05),
-    '2006-2014': (2006, 1.05),
-    '2015-2022': (2015, 1.05)
+    '1993-2005': (1998, 0.85),
+    '2006-2014': (2006, 0.85),
+    '2015-2022': (2015, 0.85),
 }
 
 # Gráfica
@@ -170,21 +170,21 @@ periodos_periodos       = adjust_periods(df_di, periodos_tasas_periodos)
 # Offsets
 annotation_offsets_periodos = {
     'valor': {
-        1993: (-1.5, 1),
-        2006: (0, 1),
-        2022: (0, 1),
+        1993: (0, 350),
+        2006: (0, -350),
+        2022: (0, 300),
     }
 }
 hitos_offset_periodos       = {a: 0.8 for a in hitos_v_periodos}
 medias_offsets_periodos     = {
-    'Neoliberalismo 93-05':    (1993, 1),
-    'Neodesarrollismo 06-22':  (2006, 1),
+    'Neoliberalismo 93-05':    (1995, 0.9),
+    'Neodesarrollismo 06-22':  (2008, 0.9),
 }
 # Tasas y participación específicas del resumen
 
 tasas_offsets_periodos = {
-    '1993-2005': (1995, 0.83),
-    '2006-2022': (2014, 0.65),
+    '1993-2005': (1995, 0.77),
+    '2006-2022': (2008, 0.77),
 }
 # Gráfica
 fig, ax = init_base_plot(

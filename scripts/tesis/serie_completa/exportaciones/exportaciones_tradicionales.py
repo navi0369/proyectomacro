@@ -14,156 +14,111 @@
 # ---
 
 # %%
-import sys
+# ───────────────────────── 0. IMPORTS Y CONFIGURACIÓN GENERAL ─────────────────────────
+import os, sys, sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
-import sqlite3, os
+
+# utilidades propias
 sys.path.append(os.path.abspath('../'))
-from graficos_utils import (
-    add_hitos, add_cycle_means_multi,
-    add_year_value_annotations, add_period_growth_annotations_multi, add_participation_cycle_boxes
-)
+from graficos_utils import *
+from config import *          # CYCLES, hitos_v, annot_years, periodos_tasas …
 
-# ── 0.  Tramos de ciclo ──────────────────────────────────────────────
-EXPANSION_86_99   = slice(1986, 1999)
-ACUMULACION_06_13 = slice(2006, 2013)
-RECESION_14_24    = slice(2014, 2024)
-
-periods = {
-    "Expansión 86-99": EXPANSION_86_99,
-    "Crisis 00-05": slice(2000, 2005),
-    "Expansión 06-13": ACUMULACION_06_13,
-    "Recesión 14-24":  RECESION_14_24,
-}
-
-# ── 1. Configuración general ─────────────────────────────────────────
-output_dir = "../../../../assets/tesis/serie_completa/exportaciones"
+# Configuración general
+output_dir = f"../../../../assets/tesis/serie_completa/exportaciones"
 os.makedirs(output_dir, exist_ok=True)
 
-plt.style.use('seaborn-v0_8-whitegrid')
-plt.rcParams.update({
-    'font.family': 'serif', 'font.size': 12,
-    'axes.titlesize': 16,   'axes.labelsize': 14,
-    'grid.linestyle': '--', 'lines.linewidth': 2,
-    'figure.dpi': 150,      'savefig.bbox': 'tight'
-})
+set_style()                   # reemplaza todos los rcParams manuales
 
-# ── 2. Carga de datos ────────────────────────────────────────────────
-with sqlite3.connect('../../../../db/proyectomacro.db') as conn:
-    df = (pd.read_sql('SELECT * FROM exportaciones_tradicionales', conn)
-            .set_index('año')
+# ───────────────────────────── 1. CARGA DE DATOS ─────────────────────────────
+with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
+    df = (pd.read_sql("SELECT * FROM exportaciones_tradicionales", conn)
+            .set_index("año")
             .sort_index())
-    df['total'] = df['minerales'] + df['hidrocarburos']
-# ── 3. Estadísticas por ciclo ────────────────────────────────────────
-cycle_stats = {
-    name: df.loc[period].mean().to_dict()
-    for name, period in periods.items()
-}
 
-# ── 4. Hitos, años clave, offsets ────────────────────────────────────
-hitos_v = {
-    1952: "Crisis", 1956: "Expansión", 1970: "Recesión",
-    1982: "Crisis", 1986: "Expansión", 2002: "Crisis",
-    2006: "Expansión", 2014: "Recesión"
-}
-hitos_offset = {a: 0.8 for a in hitos_v}          # igual que antes
-medias_offset = {
-    "Expansión 86-99": (1992, 0.86),
-    "Crisis 00-05": (2002, 1.0),
-    "Expansión 06-13": (2006, 1.0),
-    "Recesión 14-24":  (2016, 1.0),
-}
+df["total"] = df["minerales"] + df["hidrocarburos"]
 
-anot_years = [1992, 2000, 2006, 2014, 2024]
+# ──────────────── 2. COMPONENTES, COLORES Y ABREVIATURAS ────────────────
+componentes = [
+    ("minerales",    "Minerales"),
+    ("hidrocarburos","Hidrocarburos"),
+    ("total",        "Total tradicionales"),
+]
+cols_componentes = [c for c, _ in componentes]
+
+custom_colors = {'minerales': '#1f77b4', 'hidrocarburos': '#ff7f0e', 'total': '#2ca02c'}
+abbr = {"minerales":"Min", "hidrocarburos":"Hc", "total":"Tot"}
+
+# ──────────────── 3. PREPARACIÓN ────────────────
+CYCLES   = adjust_cycles(df, CYCLES)                  # usa definición global
+annotate_years = [1992, 2000, 2006, 2014, 2024]             # específicos
+periodos_componentes = adjust_periods(df, periodos_tasas)   # para growth-boxes
+cycles_stat  = {name: df.loc[slc, cols_componentes].mean().to_dict()
+                      for name, slc in CYCLES.items()}
+
+# ──────────────── 4. OFFSETS ────────────────
+hitos_offsets = {año: 0.80 for año in hitos_v}
+
 annotation_offsets = {
-    'minerales':     {
-        1992: (0, 300),
-        2000: (0, 350),
-        2006: (0, -650),
-        2014: (0, 300),
-        2024: (0, -300),
-    },
-    'hidrocarburos': {
-        1992: (0, -350),
-        2000: (0, -290),
-        2006: (0, -590),
-        2014: (0, 300),
-        2024: (0, -300),
-    },
-    'total':         {
-        1992: (0, 600),
-        2000: (0, 500),
-        2006: (0, 600),
-        2014: (0, 100),
-        2024: (0, -200),
-    }
+    "minerales":    {1992:(0,300), 2000:(0,350), 2006:(0,-650), 2014:(0,300), 2024:(0,-300)},
+    "hidrocarburos":{1992:(0,-350),2000:(0,-290),2006:(0,-590),2014:(0,300), 2024:(0,-300)},
+    "total":        {1992:(0,600), 2000:(0,500), 2006:(0,600), 2014:(0,100), 2024:(0,-200)},
 }
 
-annotation_tasas_offsets = {
-    "1992-1999": (1992, 0.70),
-    "2000-2005": (2002, 0.85),
-    "2006-2013": (2006, 0.85),
+medias_offsets = {
+    "Expansión 92-99": (1992, 0.9),
+    "Crisis 00-05":    (2002, 0.9),
+    "Expansión 06-13": (2006, 0.9),
+    "Recesión 14-24":  (2016, 1.00),
+}
+
+tasas_offsets = {
+    "1992-2000": (1992, 0.75),
+    "2000-2006": (2002, 0.75),
+    "2006-2014": (2006, 0.75),
     "2014-2024": (2016, 0.85),
 }
+
 participation_offsets = {
-    "1992-1999": (1992, 0.55),
-    "2000-2005": (2002, 0.7),
-    "2006-2013": (2006, 0.7),
+    "1992-2000": (1992, 0.60),
+    "2000-2006": (2002, 0.60),
+    "2006-2014": (2006, 0.60),
     "2014-2024": (2016, 0.16),
 }
 
-# ── 5. Gráfico ───────────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(15, 8))
+# ───────────────────────────── 5. GRÁFICA ─────────────────────────────
+fig, ax = init_base_plot(
+    df=df,
+    series=componentes,
+    colors=custom_colors,
+    title=f"Exportaciones Tradicionales: Minerales vs. Hidrocarburos ({df.index[0]}–{df.index[-1]})",
+    xlabel="Año",
+    ylabel="Millones de dólares (USD)",
+    source_text="Fuente: Base Proyectomacro",
+    legend_ncol=3
+)
 
-ax.plot(df.index, df['minerales'],
-        label='Minerales',    color='#1f77b4')
-ax.plot(df.index, df['hidrocarburos'],
-        label='Hidrocarburos', color='#ff7f0e')
+add_hitos(ax, df.index, hitos_v, hitos_offsets)
 
-ax.plot(df.index, df['total'],
-        label='Total tradicionales', color='#2ca02c')
+line_spacing = ax.get_ylim()[1] * 0.03
+add_cycle_means_multi(ax, cycles_stat, medias_offsets, abbr, custom_colors, line_spacing)
 
-# ── 6. Hitos ─────────────────────────────────────────────────────────
-add_hitos(ax, df.index, hitos_v, hitos_offset)
+add_year_value_annotations(ax, df, annotate_years, cols_componentes,
+                           annotation_offsets, custom_colors, arrow_lw=0.7)
 
-# ── 7. Anotaciones de medias, valores y tasas ────────────────────────
-abbr_map = {'minerales': 'Min', 'hidrocarburos': 'Hc', 'total': 'Tot'}
-component_colors = {'minerales': '#1f77b4', 'hidrocarburos': '#ff7f0e', 'total': '#2ca02c'}
-
-y_max = ax.get_ylim()[1]
-line_spacing = y_max * 0.03
-cols = ['minerales', 'hidrocarburos', 'total']
-
-add_cycle_means_multi(ax, cycle_stats, medias_offset,
-                      abbr_map, component_colors, line_spacing)
-
-add_year_value_annotations(ax, df, anot_years,
-                           cols, annotation_offsets, component_colors, arrow_lw=0.7)
-
-periodos = [(1992, 1999), (2000, 2005), (2006, 2013), (2014, 2024)]
-add_period_growth_annotations_multi(ax, df, periodos,
-    cols, annotation_tasas_offsets, component_colors, abbr_map)
+add_period_growth_annotations_multi(
+    ax, df, periodos_componentes, cols_componentes, tasas_offsets, custom_colors, abbr
+)
 
 add_participation_cycle_boxes(
-    ax,
-    df,
-    periodos,
-    ['minerales', 'hidrocarburos'],  # sólo minerales e hidrocarburos
-    'total',                   # columna total sobre la que se calcula %
-    participation_offsets,
-    abbr_map=abbr_map,
-    colors=component_colors
+    ax, df, periodos_componentes, ["minerales","hidrocarburos"], "total",
+    participation_offsets, abbr_map=abbr,
+    colors={c: custom_colors[c] for c in ["minerales","hidrocarburos"]}
 )
-# ── 8. Ajustes finales ───────────────────────────────────────────────
-ax.set_title(f"Exportaciones Tradicionales: Minerales vs. Hidrocarburos ({df.index[0]}–{df.index[-1]})",
-             fontweight='bold')
-ax.set_xlabel("Año")
-ax.set_ylabel("Millones de dólares")
-ax.set_xticks(df.index[::max(1, len(df)//31)])
-ax.tick_params(axis='x', rotation=45)
-ax.legend(loc='upper left', fontsize=12)
 
-plt.tight_layout()
-plt.savefig(os.path.join(output_dir, "exportaciones_tradicionales.png"))
+plt.savefig(os.path.join(output_dir, "exportaciones_tradicionales.png"), dpi=300)
 plt.show()
 
+
+# %%
+periodos
