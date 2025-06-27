@@ -40,3 +40,15 @@ git log -1 ff3c2d0 \
   --no-color \
   -- '*.py' \
   > 2025-06-22.2.md
+
+
+# Crea un archivo .ipynb vacío en cada subcarpeta de serie_completa
+for folder in deuda exportaciones IDH importaciones minerales pib reservas_internacionales; do
+  touch "notebooks/tesis/serie_completa/$folder/"*.ipynb
+done
+
+# Sincroniza con jupytext todos los .ipynb de cada subcarpeta de serie_completa
+
+for folder in deuda exportaciones IDH importaciones minerales pib reservas_internacionales; do
+  jupytext --sync "notebooks/tesis/serie_completa/$folder/"*.ipynb
+done
