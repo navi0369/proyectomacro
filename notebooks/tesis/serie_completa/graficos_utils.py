@@ -233,6 +233,7 @@ def init_base_plot(
     figsize: tuple[int,int]=(13,8),
     legend_loc: str="upper left",
     legend_ncol: int=3,
+    legend_fontsize: int=13.2,
     source_text: str="Fuente: Elaboración propia con datos de UDAPE"
 ):
     """
@@ -251,7 +252,7 @@ def init_base_plot(
     ax.set_ylabel(ylabel, color='blue', fontsize=14)
     ax.set_xticks(df.index[::max(1, len(df)//31)])
     ax.tick_params(axis='x', rotation=45)
-    ax.legend(loc=legend_loc, ncol=legend_ncol, fontsize=13.2)
+    ax.legend(loc=legend_loc, ncol=legend_ncol, fontsize=legend_fontsize)
 
     fig.text(
         0.07, 0.005,
