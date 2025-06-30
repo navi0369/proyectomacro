@@ -1,5 +1,14 @@
 import os
+from pathlib import Path
 
+#  ── Raíz del proyecto (donde está la carpeta db/, assets/, mi_paquete/, notebooks/, etc.)
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+#  ── Ruta a la base de datos
+DB_PATH = PROJECT_ROOT / "db" / "proyectomacro.db"
+
+#  ── Carpeta base de salida de gráficas
+ASSETS_DIR = PROJECT_ROOT / "assets" / "tesis"
 # config.py
 CYCLES_PARA_CRISIS = {
     "Crisis 50-58": slice(1950, 1960),

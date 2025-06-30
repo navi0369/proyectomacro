@@ -2626,4 +2626,120 @@ INSERT INTO ingresos_nacionales VALUES(2020,15363.9,7875.4,4912.3,0,2156.9,419.2
 INSERT INTO ingresos_nacionales VALUES(2021,14898.8,9132.5,3238.1,0,2041.8,486.3);
 INSERT INTO ingresos_nacionales VALUES(2022,17488.5,10379.5,4222.3,0,2689.3,197.4);
 INSERT INTO ingresos_nacionales VALUES(2023,16037.8,10505.4,3347.1,0,2114.4,70.9);
+CREATE TABLE IF NOT EXISTS ingresos_corrientes (
+año                       INT  PRIMARY KEY,
+ingresos_tributarios      REAL,
+ingresos_hidrocarburos    REAL,
+total_ingresos_corrientes REAL
+);
+INSERT INTO ingresos_corrientes VALUES(1990,1073,0,4438.3);
+INSERT INTO ingresos_corrientes VALUES(1991,1365.3,0,5789);
+INSERT INTO ingresos_corrientes VALUES(1992,1951.1,0,6630.4);
+INSERT INTO ingresos_corrientes VALUES(1993,2278.8,0,7202.3);
+INSERT INTO ingresos_corrientes VALUES(1994,2865.9,0,8499.5);
+INSERT INTO ingresos_corrientes VALUES(1995,3608.2,0,9670.1);
+INSERT INTO ingresos_corrientes VALUES(1996,4334.1,47.4,10405.6);
+INSERT INTO ingresos_corrientes VALUES(1997,5361.3,1223.4,11675.9);
+INSERT INTO ingresos_corrientes VALUES(1998,6622.7,2193.6,13683.4);
+INSERT INTO ingresos_corrientes VALUES(1999,6390.4,2231.8,14430.3);
+INSERT INTO ingresos_corrientes VALUES(2000,7031.2,2650.5,16043.4);
+INSERT INTO ingresos_corrientes VALUES(2001,6889.5,2718.7,15028.4);
+INSERT INTO ingresos_corrientes VALUES(2002,7448.5,2610.5,14410.6);
+INSERT INTO ingresos_corrientes VALUES(2003,8166.7,2831.2,16012.7);
+INSERT INTO ingresos_corrientes VALUES(2004,10800,3479.9,17954.2);
+INSERT INTO ingresos_corrientes VALUES(2005,12433.9,6904.7,22650.5);
+INSERT INTO ingresos_corrientes VALUES(2006,14812.2,11935.8,34121.6);
+INSERT INTO ingresos_corrientes VALUES(2007,16800.9,7782.1,43197.4);
+INSERT INTO ingresos_corrientes VALUES(2008,21385.9,2580.4,56857.6);
+INSERT INTO ingresos_corrientes VALUES(2009,19708.5,1847.3,55243.7);
+INSERT INTO ingresos_corrientes VALUES(2010,23018.5,2252.8,59994.9);
+INSERT INTO ingresos_corrientes VALUES(2011,29433.5,2432.2,74240.1);
+INSERT INTO ingresos_corrientes VALUES(2012,34198.1,2447.9,86736.8);
+INSERT INTO ingresos_corrientes VALUES(2013,39974,2891.3,103026.5);
+INSERT INTO ingresos_corrientes VALUES(2014,45279.4,3024.4,116530.6);
+INSERT INTO ingresos_corrientes VALUES(2015,47130,3076.8,108180.9);
+INSERT INTO ingresos_corrientes VALUES(2016,46338.5,3438.9,100341.2);
+INSERT INTO ingresos_corrientes VALUES(2017,46680.1,3268.8,103125.1);
+INSERT INTO ingresos_corrientes VALUES(2018,48673.3,3259,107056.5);
+INSERT INTO ingresos_corrientes VALUES(2019,47825.3,2585.3,106769);
+INSERT INTO ingresos_corrientes VALUES(2020,36564.9,2551,85375.2);
+INSERT INTO ingresos_corrientes VALUES(2021,42927.2,2509.9,99598.3);
+INSERT INTO ingresos_corrientes VALUES(2022,49455.1,2277.5,117588.9);
+INSERT INTO ingresos_corrientes VALUES(2023,50872.5,2059.1,109958.3);
+CREATE TABLE IF NOT EXISTS ingresos_tributarios (
+año                       INT   PRIMARY KEY,
+renta_interna             REAL,
+renta_aduanera            REAL,
+regalias_mineras          REAL,
+ingresos_tributarios_total REAL
+);
+INSERT INTO ingresos_tributarios VALUES(1990,867.6,188.8,16.5,1073);
+INSERT INTO ingresos_tributarios VALUES(1991,1157.5,195.8,12,1365.3);
+INSERT INTO ingresos_tributarios VALUES(1992,1687.8,252.1,11.1,1951.1);
+INSERT INTO ingresos_tributarios VALUES(1993,1986.8,279.9,12,2278.8);
+INSERT INTO ingresos_tributarios VALUES(1994,2495.1,370.8,0,2865.9);
+INSERT INTO ingresos_tributarios VALUES(1995,3179.9,411.9,16.3,3608.2);
+INSERT INTO ingresos_tributarios VALUES(1996,3852.9,455.8,25.3,4334.1);
+INSERT INTO ingresos_tributarios VALUES(1997,4718.6,584.4,58.3,5361.3);
+INSERT INTO ingresos_tributarios VALUES(1998,5859.3,715.4,48,6622.7);
+INSERT INTO ingresos_tributarios VALUES(1999,5718.6,629,42.7,6390.4);
+INSERT INTO ingresos_tributarios VALUES(2000,6328.6,653.3,49.3,7031.2);
+INSERT INTO ingresos_tributarios VALUES(2001,6283.4,564.7,41.4,6889.5);
+INSERT INTO ingresos_tributarios VALUES(2002,6812.5,588.3,47.8,7448.5);
+INSERT INTO ingresos_tributarios VALUES(2003,7557.3,558.9,50.4,8166.7);
+INSERT INTO ingresos_tributarios VALUES(2004,10057.4,659.6,83,10800);
+INSERT INTO ingresos_tributarios VALUES(2005,11529.6,784.2,120.1,12433.9);
+INSERT INTO ingresos_tributarios VALUES(2006,13506.7,897.8,407.6,14812.2);
+INSERT INTO ingresos_tributarios VALUES(2007,15167.4,1091.5,542.1,16800.9);
+INSERT INTO ingresos_tributarios VALUES(2008,19365.6,1332.1,688.2,21385.9);
+INSERT INTO ingresos_tributarios VALUES(2009,17980.7,1178.9,548.9,19708.5);
+INSERT INTO ingresos_tributarios VALUES(2010,20678.6,1544.9,795,23018.5);
+INSERT INTO ingresos_tributarios VALUES(2011,26144.2,2095.9,1193.4,29433.5);
+INSERT INTO ingresos_tributarios VALUES(2012,30914.1,2317,967,34198.1);
+INSERT INTO ingresos_tributarios VALUES(2013,36221.3,2710.2,1042.6,39974);
+INSERT INTO ingresos_tributarios VALUES(2014,41024.4,2952.4,1302.5,45279.4);
+INSERT INTO ingresos_tributarios VALUES(2015,43022.9,3119.3,987.8,47130);
+INSERT INTO ingresos_tributarios VALUES(2016,42443.4,2833.3,1061.7,46338.5);
+INSERT INTO ingresos_tributarios VALUES(2017,42398.3,3004.8,1277,46680.1);
+INSERT INTO ingresos_tributarios VALUES(2018,44333,3006.8,1333.5,48673.3);
+INSERT INTO ingresos_tributarios VALUES(2019,43421,3058.7,1345.6,47825.3);
+INSERT INTO ingresos_tributarios VALUES(2020,33527.3,2033.6,1004,36564.9);
+INSERT INTO ingresos_tributarios VALUES(2021,38446.6,2751.6,1729,42927.2);
+INSERT INTO ingresos_tributarios VALUES(2022,44327,3363.7,1764.4,49455.1);
+INSERT INTO ingresos_tributarios VALUES(2023,45566.2,3635.9,1670.4,50872.5);
+CREATE TABLE IF NOT EXISTS ingresos_hidrocarburos (
+año                          INT   PRIMARY KEY,
+idh                          REAL,   -- IVA e IT / IDH
+iehd                         REAL,
+regalias                     REAL,
+ingresos_hidrocarburos_total REAL
+);
+INSERT INTO ingresos_hidrocarburos VALUES(1996,0,47.4,0,47.4);
+INSERT INTO ingresos_hidrocarburos VALUES(1997,268.4,546.5,408.4,1223.4);
+INSERT INTO ingresos_hidrocarburos VALUES(1998,378.3,1092.6,722.6,2193.6);
+INSERT INTO ingresos_hidrocarburos VALUES(1999,410.6,1188.3,633,2231.8);
+INSERT INTO ingresos_hidrocarburos VALUES(2000,94.4,1358.2,1198,2650.5);
+INSERT INTO ingresos_hidrocarburos VALUES(2001,2,1302.9,1413.8,2718.7);
+INSERT INTO ingresos_hidrocarburos VALUES(2002,0,1310.1,1300.4,2610.5);
+INSERT INTO ingresos_hidrocarburos VALUES(2003,0,1068.3,1762.9,2831.2);
+INSERT INTO ingresos_hidrocarburos VALUES(2004,0,1146.9,2333,3479.9);
+INSERT INTO ingresos_hidrocarburos VALUES(2005,2321.3,1885.9,2697.5,6904.7);
+INSERT INTO ingresos_hidrocarburos VALUES(2006,5497.2,1999.8,4438.9,11935.8);
+INSERT INTO ingresos_hidrocarburos VALUES(2007,2290.2,2382.8,3109.1,7782.1);
+INSERT INTO ingresos_hidrocarburos VALUES(2008,0,2529.9,50.5,2580.4);
+INSERT INTO ingresos_hidrocarburos VALUES(2009,0,1794,53.3,1847.3);
+INSERT INTO ingresos_hidrocarburos VALUES(2010,0,2194.8,58,2252.8);
+INSERT INTO ingresos_hidrocarburos VALUES(2011,0,2432.2,0,2432.2);
+INSERT INTO ingresos_hidrocarburos VALUES(2012,0,2447.9,0,2447.9);
+INSERT INTO ingresos_hidrocarburos VALUES(2013,0,2776.5,114.7,2891.3);
+INSERT INTO ingresos_hidrocarburos VALUES(2014,0,2918.3,106.1,3024.4);
+INSERT INTO ingresos_hidrocarburos VALUES(2015,0,2995.7,81.1,3076.8);
+INSERT INTO ingresos_hidrocarburos VALUES(2016,0,3333.3,105.6,3438.9);
+INSERT INTO ingresos_hidrocarburos VALUES(2017,0,3187.9,81,3268.8);
+INSERT INTO ingresos_hidrocarburos VALUES(2018,0,3178.8,80.3,3259);
+INSERT INTO ingresos_hidrocarburos VALUES(2019,0,2504.4,80.9,2585.3);
+INSERT INTO ingresos_hidrocarburos VALUES(2020,0,2461.7,89.3,2551);
+INSERT INTO ingresos_hidrocarburos VALUES(2021,0,2433.5,76.4,2509.9);
+INSERT INTO ingresos_hidrocarburos VALUES(2022,0,2199.7,77.9,2277.5);
+INSERT INTO ingresos_hidrocarburos VALUES(2023,0,1986.3,72.8,2059.1);
 COMMIT;
