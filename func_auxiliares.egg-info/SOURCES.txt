@@ -1,0 +1,8 @@
+setup.py
+func_auxiliares/__init__.py
+func_auxiliares/config.py
+func_auxiliares/graficos_utils.py
+func_auxiliares.egg-info/PKG-INFO
+func_auxiliares.egg-info/SOURCES.txt
+func_auxiliares.egg-info/dependency_links.txt
+func_auxiliares.egg-info/top_level.txt

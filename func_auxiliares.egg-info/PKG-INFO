@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: func_auxiliares
+Version: 0.1.0
+Summary: Funciones utilitarias para graficas macro
+Author: Juan
+Requires-Python: >=3.8
+Dynamic: author
+Dynamic: requires-python
+Dynamic: summary
