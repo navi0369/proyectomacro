@@ -3,12 +3,92 @@ from matplotlib.lines import Line2D
 import matplotlib.pyplot as plt
 import sqlite3
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Sequence, Mapping, Set
 import logging
 import numpy as np
 logger = logging.getLogger(__name__)
 # graficos_utils.py
 
+def add_cycle_means_barras(
+    ax: plt.Axes,
+    index: Sequence[int],
+    cycle_slices: Mapping[str, slice],
+    cycle_stats: Mapping[str, Dict[str, float]],
+    cols: Sequence[str],
+    *,
+    offsets: Mapping[str, Dict[str, Tuple[float, float]]] | None = None,
+    skip:    Mapping[str, Set[str]] | None = None,
+    bar_width: float = 0.8,
+    fmt: str = "{val:.0f}",
+    text_kwargs: Dict | None = None
+) -> None:
+    """
+    Anota los promedios de `cycle_stats` sobre un gráfico de barras apiladas.
+
+    Parameters
+    ----------
+    ax : plt.Axes
+        El eje donde dibujar.
+    index : Sequence[int]
+        Índice de años (df.index.values).
+    cycle_slices : {nombre_ciclo: slice}
+        Permite calcular la posición horizontal (centro del ciclo).
+    cycle_stats : {nombre_ciclo: {col: media}}
+        Diccionario con las medias ya precalculadas.
+    cols : list[str]
+        Orden de columnas tal como se dibujaron en el bar-chart.
+    offsets : {nombre_ciclo: {col: (dx, dy)}}, opcional
+        Desplazamientos específicos por ciclo/columna.
+    skip : {nombre_ciclo: {col1, col2}}, opcional
+        Conjunto de columnas que NO se quieren anotar.
+    bar_width : float
+        Para centrar correctamente en la barra.
+    fmt : str
+        Formato de texto para la media.
+    text_kwargs : dict, opcional
+        kwargs adicionales para `ax.text`.
+    """
+    if text_kwargs is None:
+        text_kwargs = {
+            'fontsize': 13,
+            'color': 'black',
+            'ha': 'center',
+            'va': 'center',
+            'fontweight': 'bold',
+            'zorder': 6
+        }
+
+    for name, stats in cycle_stats.items():
+        if name not in cycle_slices:
+            # Estadística sin slice correspondiente → ignoro
+            continue
+
+        sl = cycle_slices[name]
+        # ---------------- coordenada X (centro del ciclo) ------------------
+        start_idx = index.index(sl.start)
+        end_idx   = index.index(sl.stop)
+        x_mid     = (start_idx + end_idx) / 2 + bar_width / 2        # centro
+
+        # ---------------- iterar columnas en orden de apilado -------------
+        cum = 0                                    # acumulado para stacked
+        for col in cols:
+            if skip and col in skip.get(name, set()):
+                cum += stats[col]
+                continue
+
+            val = stats[col]
+            dx, dy = (0.0, 0.0)
+            if offsets:
+                dx, dy = offsets.get(name, {}).get(col, (0.0, 0.0))
+
+            ax.text(
+                x_mid + dx,
+                cum + val/2 + dy,
+                fmt.format(val=val),
+                transform=ax.transData,
+                **text_kwargs
+            )
+            cum += val
 def adjust_cycles(df: pd.DataFrame, cycles: dict[str, slice]) -> dict[str, slice]:
     if df.empty:
         raise ValueError("DF vacío")
@@ -263,6 +343,86 @@ def init_base_plot(
     )
     plt.tight_layout()
     return fig, ax
+
+
+def add_hitos_barras(
+    ax: plt.Axes,
+    index: Sequence[int],
+    hitos_v: Dict[int, str],
+    hitos_offset: Dict[int, Tuple[float, float]],
+    hitos_text_x: Dict[int, float] = {},
+    *,
+    bar_width: float = 0.8,
+    annotate_labels: Tuple[str, ...] = ('Crisis', 'Expansión', 'Recesión', 'Transición'),
+    fallback_offset: Tuple[float, float] = (0.0, 0.82),
+    line_kwargs: Optional[Dict] = None,
+    text_kwargs: Optional[Dict] = None
+):
+    """
+    Dibuja verticales y etiquetas de hitos sobre un gráfico de barras.
+
+    Parameters
+    ----------
+    ax : plt.Axes
+    index : Sequence[int]
+        La secuencia de años (p.ej. df.index).
+    hitos_v : dict[int, str]
+        { año: etiqueta }.
+    hitos_offset : dict[int, (dx, dy)]
+        { año: (offset_x, offset_y_factor) }.
+    hitos_text_x : dict[int, float]
+        { año: offset_x_text } para ajustar la posición del texto.
+    bar_width : float
+        Ancho de barra (para centrar las líneas).
+    annotate_labels : tuple[str]
+        Qué etiquetas mostrar.
+    fallback_offset : (dx, dy)
+        Offset por defecto si un año no está en hitos_offset.
+    line_kwargs : dict
+        Parámetros para `ax.axvline`.
+    text_kwargs : dict
+        Parámetros para `ax.text`.
+    """
+    # defaults
+    lk = {'color':'black','linewidth':2.5,'linestyle':'-','zorder':10}
+    if line_kwargs:
+        lk.update(line_kwargs)
+
+    tk = {
+        'fontsize':12, 'color':'black',
+        'ha':'center','va':'bottom',
+        'rotation':0, 'zorder':6,
+        'bbox':{'facecolor':'white','alpha':0.85,'edgecolor':'none'}
+    }
+    if text_kwargs:
+        tk.update(text_kwargs)
+
+    # iterate over your hitos
+    for yr, lbl in hitos_v.items():
+        if yr not in index:
+            continue
+
+        # unpack offsets (dx in data‐coords, dy as fraction of y_max)
+        dx, dy = hitos_offset.get(yr, fallback_offset)
+
+        # compute the x position: bar index + half‐width + dx
+        pos = list(index).index(yr)
+        x = pos + bar_width/2 + dx
+
+        # vertical line
+        ax.axvline(x=x,**lk)
+
+        # label (only for requested labels)
+        if lbl in annotate_labels:
+            y_max = ax.get_ylim()[1]
+            dx_text = hitos_text_x.get(yr, 0)
+            ax.text(
+                x+dx_text,
+                y_max * dy,
+                lbl,
+                transform=ax.transData,
+                **tk
+            )
 
 
 # guarda esto en, por ejemplo, graficos_utils.py
