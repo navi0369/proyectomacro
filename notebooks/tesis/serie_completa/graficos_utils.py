@@ -8,6 +8,37 @@ import logging
 import numpy as np
 logger = logging.getLogger(__name__)
 # graficos_utils.py
+def update_dicts(
+    original: dict[str, slice],
+    rename_map: dict[str, str] = {},
+    rename_values: dict[str, slice] = {},
+    add_map:    dict[str, slice] = {}
+) -> dict[str, slice]:
+    """
+    Idempotentemente:
+      1) Renombra claves según rename_map,
+         y si rename_values[new_key] existe, usa ese slice en lugar del original.
+      2) Añade nuevos pares clave→slice de add_map.
+    """
+    out = original.copy()
+
+    # 1) Renombrar (y opcionalmente cambiar valor)
+    for old_key, new_key in rename_map.items():
+        if old_key in out and new_key not in out:
+            # Extraigo el slice antiguo...
+            val = out.pop(old_key)
+            # ...pero si hay override en rename_values, lo uso:
+            val = rename_values.get(new_key, val)
+            out[new_key] = val
+
+    # 2) Añadir nuevos periodos
+    for key, sl in add_map.items():
+        if key not in out:
+            out[key] = sl
+
+    return out
+
+
 
 def add_cycle_means_barras(
     ax: plt.Axes,
@@ -328,7 +359,7 @@ def init_base_plot(
         ax.plot(df.index, df[col], label=label, color=colors[col])
 
     ax.set_title(title, fontweight='bold', color='red')
-    ax.set_xlabel(xlabel, color='green',fontsize=17)
+    ax.set_xlabel(xlabel, color='green',fontsize=14)
     ax.set_ylabel(ylabel, color='blue', fontsize=14)
     ax.set_xticks(df.index[::max(1, len(df)//31)])
     ax.tick_params(axis='x', rotation=45)
@@ -343,6 +374,58 @@ def init_base_plot(
     )
     plt.tight_layout()
     return fig, ax
+def plot_stacked_bar(
+    data,
+    title: str,
+    output_path: str = None,
+    ylabel: str = "Participación (%)",
+    xlabel: str = "Año",
+    figsize: tuple = (14, 7),
+    legend_ncol: int = 6,
+    xtick_step: int = 2,
+    width: float = 0.8
+):
+    """
+    Genera un gráfico de barras apiladas donde cada columna suma 100%.
+
+    Parámetros:
+    - data: DataFrame indexado por año, con las series a graficar.
+    - title: Título del gráfico.
+    - output_path: Ruta (incluyendo nombre de archivo) para guardar la imagen (png).
+                   Si None, no guardará el archivo.
+    - ylabel, xlabel: Etiquetas de ejes.
+    - figsize: Tamaño de la figura (ancho, alto) en pulgadas.
+    - legend_ncol: Número de columnas de la leyenda.
+    - xtick_step: Paso entre etiquetas del eje X (ej. 2 muestra cada segunda etiqueta).
+    - width: Ancho de las barras (0 < width ≤ 1).
+    
+    Retorna:
+    - fig, ax: objetos de matplotlib para mayor personalización si se desea.
+    """
+    fig, ax = plt.subplots(figsize=figsize)
+    data.plot(kind="bar", stacked=True, ax=ax, width=width)
+
+    ax.set_ylabel(ylabel)
+    ax.set_xlabel(xlabel)
+    ax.set_title(title, fontweight="bold", pad=20)
+
+    ax.legend(
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.15),
+        ncol=legend_ncol,
+        fontsize=10,
+        frameon=False
+    )
+    fig.subplots_adjust(bottom=0.25, right=0.72)
+
+    # Ajuste de etiquetas X cada xtick_step
+    positions = np.arange(len(data.index))
+    ax.set_xticks(positions[::xtick_step])
+    ax.set_xticklabels(data.index[::xtick_step], rotation=45)
+
+    plt.tight_layout()
+    return fig, ax
+
 
 
 def add_hitos_barras(
@@ -353,7 +436,6 @@ def add_hitos_barras(
     hitos_text_x: Dict[int, float] = {},
     *,
     bar_width: float = 0.8,
-    annotate_labels: Tuple[str, ...] = ('Crisis', 'Expansión', 'Recesión', 'Transición'),
     fallback_offset: Tuple[float, float] = (0.0, 0.82),
     line_kwargs: Optional[Dict] = None,
     text_kwargs: Optional[Dict] = None
@@ -412,17 +494,15 @@ def add_hitos_barras(
         # vertical line
         ax.axvline(x=x,**lk)
 
-        # label (only for requested labels)
-        if lbl in annotate_labels:
-            y_max = ax.get_ylim()[1]
-            dx_text = hitos_text_x.get(yr, 0)
-            ax.text(
-                x+dx_text,
-                y_max * dy,
-                lbl,
-                transform=ax.transData,
-                **tk
-            )
+        y_max = ax.get_ylim()[1]
+        dx_text = hitos_text_x.get(yr, 0)
+        ax.text(
+            x+dx_text,
+            y_max * dy,
+            lbl,
+            transform=ax.transData,
+            **tk
+        )
 
 
 # guarda esto en, por ejemplo, graficos_utils.py

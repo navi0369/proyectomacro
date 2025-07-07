@@ -86,9 +86,9 @@ CYCLES_PERIODOS= {
 } 
 #hitos verticales hitos por periodo
 hitos_v_periodos = {
-    1952: "1952-1984",
-    1985: "1985-2005",
-    2006: "2006-2022",
+    1952: "Intervensionismo-estatal",
+    1985: "Neoliberalismo",
+    2006: "Neodesarrollismo",
 }
 annot_years_periodos = [1952,1985,2006,2022]
 #anotaciones de tasas con crisis

@@ -9,12 +9,36 @@ import numpy as np
 logger = logging.getLogger(__name__)
 # graficos_utils.py
 
-def compute_annot_years(ini: int, fin: int, extras: list[int] | None):
-    """Siempre retorna [ini, fin] más cualquier extra dentro de (ini,fin)."""
-    years = {ini, fin}
-    if extras:
-        years |= {y for y in extras if ini < y < fin}
-    return sorted(years)
+
+def update_dicts(
+    original: dict[str, slice],
+    rename_map: dict[str, str] = {},
+    rename_values: dict[str, slice] = {},
+    add_map:    dict[str, slice] = {}
+) -> dict[str, slice]:
+    """
+    Idempotentemente:
+      1) Renombra claves según rename_map,
+         y si rename_values[new_key] existe, usa ese slice en lugar del original.
+      2) Añade nuevos pares clave→slice de add_map.
+    """
+    out = original.copy()
+
+    # 1) Renombrar (y opcionalmente cambiar valor)
+    for old_key, new_key in rename_map.items():
+        if old_key in out and new_key not in out:
+            # Extraigo el slice antiguo...
+            val = out.pop(old_key)
+            # ...pero si hay override en rename_values, lo uso:
+            val = rename_values.get(new_key, val)
+            out[new_key] = val
+
+    # 2) Añadir nuevos periodos
+    for key, sl in add_map.items():
+        if key not in out:
+            out[key] = sl
+
+    return out
 
 def adjust_cycles(df: pd.DataFrame, cycles: dict[str, slice]) -> dict[str, slice]:
     if df.empty:
