@@ -8,7 +8,7 @@ import logging
 import numpy as np
 logger = logging.getLogger(__name__)
 # graficos_utils.py
-def update_dicts(
+def update_dict(
     original: dict[str, slice],
     rename_map: dict[str, str] = {},
     rename_values: dict[str, slice] = {},
@@ -345,7 +345,8 @@ def init_base_plot(
     legend_loc: str="upper left",
     legend_ncol: int=3,
     legend_fontsize: int=13.2,
-    source_text: str="Fuente: Elaboración propia con datos de UDAPE"
+    source_text: str="Fuente: Elaboración propia con datos de UDAPE",
+    notas: str | None = None 
 ):
     """
     Inicializa fig y ax con:
@@ -372,6 +373,18 @@ def init_base_plot(
         fontsize=12, color="black",
         transform=fig.transFigure
     )
+    if notas:
+    # calculamos una “altura” relativa al tamaño de la fuente de la nota
+        line_height = 0.018          # ≈ 2 % de la altura de la figura
+        nota_y = 0.005 - line_height # coloca la nota justo debajo de la fuente
+
+        fig.text(
+            0.07, nota_y,
+            notas,
+            ha="left", va="bottom",
+            fontsize=11.5, color="black",
+            transform=fig.transFigure,
+        )
     plt.tight_layout()
     return fig, ax
 def plot_stacked_bar(

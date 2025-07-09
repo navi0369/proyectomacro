@@ -12,10 +12,11 @@ ASSETS_DIR = PROJECT_ROOT / "assets" / "tesis"
 # config.py
 
 #constantes para la primera grafica
+
 PERIODOS_PARA_CRISIS = {
     "Crisis 50-60": (1950, 1960),
     "crisis 80-90": (1980, 1990),
-    "Crisis 14-24": (2014, 2024)
+    "Crisis 14-24": (2014, 2025)
 }
 CYCLES={
     "Crisis 52-55": slice(1952, 1955),
