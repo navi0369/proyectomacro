@@ -50,29 +50,39 @@ colors = {"estanio_valor_musd": "#4682b4", "precio_usd_lf": "#d62728"}  # azul a
 
 CYCLES=adjust_cycles(df,CYCLES)
 cycle_stats = {n: df.loc[s, cols].mean().to_dict() for n, s in CYCLES.items()}
+periodos=adjust_periods(df, periodos_tasas)
+annot_years = adjust_annot_years(df, annot_years)  # de config.py
 hitos_offset = {yr: .60 for yr in hitos_v}
 
-anot_years = [1992, 2000, 2006, 2014, 2023]
-annotation_offsets = {                     # ↙ ajusta tras ver la figura
+annotation_offsets = {
     "estanio_valor_musd": {
-        1992:(0,5), 2000:(0,-15), 2006:(0,-25),
-        2014:(-0.5,-25), 2023:(0,-10)
+        1992: (0,   5),    # antes 1992 → 1985
+        2001: (0,  -15),   # antes 2000 → 2001
+        2006: (0,  -25),
+        2014: (-0.5, -25),
+        2023: (0,  -10),   # antes 2023 stays
     },
     "precio_usd_lf": {
-        1992:(0,-0.3), 2000:(0.13,0.3), 2006:(-0.4,0.6),
-        2014:(0.5,0.3), 2023:(0.4,-2)
+        1992: (0,   -0.3),
+        2001: (0.13, 0.3),
+        2006: (-0.4, 0.6),
+        2014: (0.5,  0.3),
+        2023: (0.4, -2),
     },
 }
-growth_periods        = [(1992,2000),(2000,2006),(2006,2014),(2014,2023)]
+
 period_growth_offsets = {
-    "1992-2000": (1991,0.78), "2000-2006":(2001,0.78),
-    "2006-2014": (2008,0.89), "2014-2023":(2016,0.89)
+    "1992-2000": (1991, 0.78),  # antes "1992-2000"
+    "2001-2005": (2001, 0.78),  # antes "2000-2006"
+    "2006-2014": (2008, 0.89),
+    "2015-2023": (2016, 0.89),  # antes "2014-2023"
 }
+
 cycle_text_offsets = {
-    "Expansión 92-99": (1991,0.92),
-    "Crisis 00-05":    (2001,0.92),
-    "Expansión 06-13": (2008,0.98),
-    "Recesión 14-23":  (2016,0.98),
+    "Expansión 92-00":  (1991, 0.92),  # antes "Expansión 92-99"
+    "Transicion 01-05": (2001, 0.92),  # antes "Crisis 00-05"
+    "Expansión 06-14":  (2008, 0.98),
+    "Recesión 15-23":   (2016, 0.98),  # antes "Recesión 14-23"
 }
 
 fig, ax_val = plt.subplots(figsize=(13,8))
@@ -93,20 +103,20 @@ add_cycle_means_multi(
     value_fmt="{:,.1f}"
 )
 add_year_value_annotations(
-    ax_val, df, anot_years, ["estanio_valor_musd"],
+    ax_val, df, annot_years, ["estanio_valor_musd"],
     {"estanio_valor_musd": annotation_offsets["estanio_valor_musd"]},
     {"estanio_valor_musd": colors["estanio_valor_musd"]},
     arrow_lw=0.6
 )
 add_year_value_annotations(
-    ax_price, df, anot_years, ["precio_usd_lf"],
+    ax_price, df, annot_years, ["precio_usd_lf"],
     {"precio_usd_lf": annotation_offsets["precio_usd_lf"]},
     {"precio_usd_lf": colors["precio_usd_lf"]},
     arrow_lw=0.6,
     value_fmt="{:,.1f}"
 )
 add_period_growth_annotations_multi(
-    ax_val, df, growth_periods, cols,
+    ax_val, df, periodos, cols,
     period_growth_offsets, colors, abbr
 )
 
@@ -146,26 +156,35 @@ cycle_stats_vol = {
 hitos_offset_v = {yr: .81 for yr in hitos_v}
 annotation_offsets_vol = {
     "estaño_volumen": {
-        1992:(-0.6,-600), 2000:(0,100), 2006:(0,100),
-        2014:(0,120), 2023:(0,-350)
+        1992: (-0.6, -600),
+        2001: ( 0.0,  100),
+        2006: ( 0.0,  100),
+        2014: ( 0.0,  120),
+        2023: ( 0.0, -350),
     },
     "precio_usd_lf": {
-        1992:(0,-0.3), 2000:(0.15,0.4), 2006:(-0.4,0.6),
-        2014:(0.4,0.4), 2023:(0.4,-0.5)
-    }
+        1992: ( 0.0,  -0.3),
+        2001: ( 0.15,  0.4),
+        2006: (-0.4,   0.6),
+        2014: ( 0.4,   0.4),
+        2023: ( 0.4,  -0.5),
+    },
 }
 
 period_growth_offsets_vol = {
-    "1992-2000": (1995,0.90), "2000-2006":(2001,0.96),
-    "2006-2014": (2006.2,0.96), "2014-2023":(2016,0.96)
+    "1992-2000":  (1995.0, 0.90),
+    "2001-2005":  (2001.0, 0.96),
+    "2006-2014":  (2006.2, 0.96),
+    "2015-2023":  (2016.0, 0.96),
 }
 
 cycle_text_offsets_vol = {
-    "Expansión 92-99": (1995,0.95),
-    "Crisis 00-05":    (2001,1.00),
-    "Expansión 06-13": (2006.2,1.00),
-    "Recesión 14-23":  (2016,1.00),
+    "Expansión 92-00":    (1995.0, 0.95),
+    "Transicion 01-05":   (2001.0, 1.00),
+    "Expansión 06-14":    (2006.2, 1.00),
+    "Recesión 15-23":     (2016.0, 1.00),
 }
+
 
 fig_v, ax_v = plt.subplots(figsize=(13,8))
 ax_price = ax_v.twinx()
@@ -194,12 +213,12 @@ add_cycle_means_multi(
 
 # anotaciones de valores
 add_year_value_annotations(
-    ax_v, df, anot_years, ["estaño_volumen"],
+    ax_v, df, annot_years, ["estaño_volumen"],
     {"estaño_volumen": annotation_offsets_vol["estaño_volumen"]},
     {"estaño_volumen": colors_vol["estaño_volumen"]}, arrow_lw=0.6
 )
 add_year_value_annotations(
-    ax_price, df, anot_years, ["precio_usd_lf"],
+    ax_price, df, annot_years, ["precio_usd_lf"],
     {"precio_usd_lf": annotation_offsets_vol["precio_usd_lf"]},
     {"precio_usd_lf": colors_vol["precio_usd_lf"]}, arrow_lw=0.6,
     value_fmt="{:,.1f}"
@@ -207,7 +226,7 @@ add_year_value_annotations(
 
 # tasas de crecimiento
 add_period_growth_annotations_multi(
-    ax_v, df, growth_periods, cols_vol,
+    ax_v, df, periodos, cols_vol,
     period_growth_offsets_vol, colors_vol, abbr_vol,
     line_spacing_ratio=0.01
 )

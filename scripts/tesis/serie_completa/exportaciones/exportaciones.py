@@ -23,8 +23,7 @@ sys.path.append(os.path.abspath('../'))                 # utilidades propias
 from graficos_utils import *
 from config import *                                   # CYCLES, hitos_v, annot_years, periodos_tasas …
 
-INDICADOR  = "exportaciones_trad_vs_notrad"
-OUTPUT_DIR = f"../../../../assets/tesis/serie_completa/{INDICADOR}"
+OUTPUT_DIR = f"../../../../assets/tesis/serie_completa/exportaciones"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 set_style()                                            # estilo uniforme de toda la tesis
@@ -51,7 +50,8 @@ abbr   = {"tradicionales":"Trad", "no_tradicionales":"NoTrad", "exportaciones":"
 
 # ──────────────── 3. PREPARACIÓN DE CICLOS, ANOTACIONES Y PERÍODOS ────────────────
 cycles        = adjust_cycles(df, CYCLES)                       # de config.py
-annot_years   = [1982, 1986, 2000, 2006, 2014, 2024]
+annot_years   = adjust_annot_years(df, annot_years)  # de config.py
+annot_years.append(2022)
 periodos      = adjust_periods(df, periodos_tasas)              # para growth-arrows
 cycle_stats   = {n: df.loc[slice_, cols_componentes].mean().to_dict()
                  for n, slice_ in cycles.items()}
@@ -60,33 +60,51 @@ cycle_stats   = {n: df.loc[slice_, cols_componentes].mean().to_dict()
 hitos_offsets = {a:0.80 for a in hitos_v}
 
 annotation_offsets = {
-    "exportaciones":    {1982:(0,800),1986:(0,800),2000:(0,800),
-                         2006:(0,1000),2014:(0,400),2024:(0,-400)},
-    "tradicionales":    {1982:(0,400),1986:(0,400),2000:(0,900),
-                         2006:(0,-1500),2014:(-1,-1500),2024:(0,-400)},
-    "no_tradicionales": {1982:(0,-350),1986:(0,-350),2000:(0,-450),
-                         2006:(0,-500),2014:(0,-700),2024:(0,-500)},
+    "exportaciones": {
+        1982: (0, 800),
+        1985: (0, 800),
+        2001: (0, 800),
+        2006: (0, 1000),
+        2014: (-0.5, 400),
+        2022: (0, 400),
+        2024: (0, -400),
+    },
+    "tradicionales": {
+        1982: (0, 400),
+        1985: (0, 400),
+        2001: (0, 900),
+        2006: (0, -1500),
+        2014: (-1, -1800),
+        2022: (0, 200),
+        2024: (0, -400),
+    },
+    "no_tradicionales": {
+        1982: (0, -350),
+        1985: (0, -350),
+        2001: (0, -450),
+        2006: (0, -500),
+        2014: (0, -700),
+        2022: (0, 200),
+        2024: (0, -500),
+    },
 }
 
 medias_offsets = {
-    "Expansión 86-99": (1989, 1.05),
-    "Crisis 00-05":    (2000, 1.05),
-    "Expansión 06-13": (2006, 1.05),
-    "Recesión 14-24":  (2016, 1.05),
+    "Expansión 85-00":  (1989, 1.05),
+    "Expansión 06-14":  (2006, 1.05),
+    "Recesión 15-24":   (2015, 1.05),
 }
 
 tasas_offsets = {
-    "1986-2006": (1989, 0.91),
-    "2000-2005": (2000, 0.91),
+    "1985-2000": (1989, 0.91),
     "2006-2014": (2006, 0.91),
-    "2014-2024": (2016, 0.91),
+    "2015-2024": (2015, 0.91),
 }
 
 participation_offsets = {
-    "1986-2006": (1989, 0.77),
-    "2000-2005": (2000, 0.77),
+    "1985-2000": (1989, 0.77),
     "2006-2014": (2006, 0.77),
-    "2014-2024": (2016, 0.77),
+    "2015-2024": (2015, 0.77),
 }
 
 # ───────────────────────────── 5. GENERACIÓN DE LA GRÁFICA ─────────────────────────────
@@ -116,15 +134,14 @@ add_year_value_annotations(
 )
 
 # tasas de crecimiento por periodo
-periodos_growth = [(1986,2006),(2000,2005),(2006,2014),(2014,2024)]
 add_period_growth_annotations_multi(
-    ax, df, periodos_growth,
+    ax, df, periodos,
     cols_componentes, tasas_offsets, colors, abbr
 )
 
 # cuadros de participación
 add_participation_cycle_boxes(
-    ax, df, periodos_growth,
+    ax, df, periodos,
     ["tradicionales","no_tradicionales"],      # componentes parciales
     "exportaciones",                           # total
     participation_offsets,

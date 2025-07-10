@@ -64,40 +64,48 @@ cycle_stats  = {name: df.loc[slc].mean().to_dict() for name, slc in cycles.items
 # ──────────────── 4. OFFSETS Y POSICIONAMIENTOS ────────────────
 hitos_offsets = {año: 0.67 for año in hitos_v}
 
+# 1) Anotaciones de valores por serie (sin cambios en años internos)
 annotation_offsets = {
     "hidrocarburos": {
-        1992:(0,150), 2000:(0,150), 2006:(0,230),
-        2008:(0,150), 2014:(0,150), 2018:(0,150), 2024:(1,150),
+        1992: (0, 150), 2000: (0, 150), 2006: (0, 230),
+        2008: (0, 150), 2014: (0, 150), 2018: (0, 150), 2024: (1, 150),
     },
     "gas_natural": {
-        1992:(0,500), 2000:(0,500), 2006:(.5,-500),
-        2008:(0,-1000), 2014:(1.2,0), 2018:(0,-500), 2024:(0,-250),
+        1992: (0, 500), 2000: (0, 500), 2006: (0.5, -500),
+        2008: (0, -1000), 2014: (1.2, 0), 2018: (0, -500), 2024: (0, -250),
     },
     "otros_hidrocarburos": {
-        1992:(0,-220), 2000:(0,-220), 2006:(0,-220),
-        2008:(0,-220), 2014:(0,-320), 2018:(0,-220), 2024:(0,-220),
+        1992: (0, -220), 2000: (0, -220), 2006: (0, -220),
+        2008: (0, -220), 2014: (0, -320), 2018: (0, -220), 2024: (0, -220),
     },
 }
 
+# 2) Líneas verticales según hitos_v (se mantiene la comprensión)
+hitos_offset = {a: 0.8 for a in hitos_v}  # keys de hitos_v según config.py :contentReference[oaicite:0]{index=0}
+
+# 3) Posición de medias por ciclo (claves ajustadas a config.CYCLES)
+
 medias_offsets = {
-    "Expansión 92-99":  (1995, 0.85),
-    "Crisis 00-05":     (2001, 0.95),
-    "Expansión 06-13":  (2006, 0.95),
-    "Recesión 14-24":   (2018, 0.95),
+    "Expansión 92-00":    (1995, 0.85),   # antes "Expansión 92-99"
+    "Transicion 01-05":   (2001, 0.95),   # antes "Crisis 00-05"
+    "Expansión 06-14":    (2006, 0.95),   # antes "Expansión 06-13"
+    "Recesión 15-24":     (2018, 0.95),   # antes "Recesión 14-24"
 }
 
+# 4) Tasas de crecimiento anotadas (claves según periodos_tasas)
 tasas_offsets = {
-    "1992-2000": (1995, 0.70),
-    "2000-2006": (2001, 0.82),
+    "1992-2000": (1995, 0.70),   # antes "1992-2000"
+    "2001-2005": (2001, 0.82),   # antes "2000-2006"
     "2006-2014": (2006, 0.82),
-    "2014-2024": (2018, 0.82),
+    "2015-2024": (2018, 0.82),   # antes "2014-2024"
 }
 
+# 5) Participación promedio por periodo (mismas claves que arriba)
 participation_offsets = {
-    "1992-1999": (1995, 0.56),
-    "2000-2005": (2001, 0.68),
-    "2006-2013": (2006, 0.68),
-    "2014-2024": (2018, 0.68),
+    "1992-2000": (1995, 0.56),   # antes "1992-1999"
+    "2001-2005": (2001, 0.68),   # antes "2000-2005"
+    "2006-2014": (2006, 0.68),   # antes "2006-2013"
+    "2015-2024": (2018, 0.68),   # antes "2014-2024"
 }
 
 # ───────────────────────────── 5. GENERACIÓN DE LA GRÁFICA ─────────────────────────────
@@ -149,12 +157,11 @@ add_period_growth_annotations_multi(
 # 5.5 Cuadros de participación media
 components              = ["gas_natural", "otros_hidrocarburos"]
 total_col               = "hidrocarburos"
-participation_periods   = [(1992,1999), (2000,2005), (2006,2013), (2014,2024)]
 
 add_participation_cycle_boxes(
     ax,
     df,
-    participation_periods,
+    periodos,
     components,
     total_col,
     participation_offsets,

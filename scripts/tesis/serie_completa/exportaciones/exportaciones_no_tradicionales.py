@@ -77,6 +77,7 @@ series = [
     ("soya",    "Soya"),
     ("otros",   "Otros"),
     ("castaña", "Castaña"),
+    ("total",   "Total")
 ]
 cols_series = [c for c, _ in series]
 
@@ -87,6 +88,7 @@ abbr   = {"soya": "Soy", "otros": "Otr", "castaña": "Cas"}
 # ──────────────── 3. PREPARACIÓN DE CICLOS, ANOTACIONES Y PERÍODOS ────────────────
 cycles       = adjust_cycles(df, CYCLES)
 annot_years  = adjust_annot_years(df, annot_years)
+annot_years.append(2022)
 periodos     = adjust_periods(df, periodos_tasas)
 cycle_stats  = {name: df.loc[slc, cols_series].mean().to_dict()
                 for name, slc in cycles.items()}
@@ -95,33 +97,59 @@ cycle_stats  = {name: df.loc[slc, cols_series].mean().to_dict()
 hitos_offsets = {año: 0.50 for año in hitos_v}
 
 annotation_offsets = {
-    "soya":    {1992:(0,112), 2000:(0,50), 2006:(0,50),
-                2014:(0.5,50), 2024:(1,50)},
-    "otros":   {1992:(0,75), 2000:(0,-60), 2006:(0,-70),
-                2014:(-0.5,-50), 2024:(0.5,-80)},
-    "castaña": {1992:(0,-40), 2000:(0,-50), 2006:(0,-50),
-                2014:(0,60), 2024:(0,60)},
+    "soya": {
+        1992: (0, 212),
+        2001: (0,  50),
+        2006: (0,  50),
+        2014: (0.5,90),
+        2022: (0.5, 50),
+        2024: (1,  50),
+    },
+    "otros": {
+        1992: (0,  145),
+        2001: (0, -70),
+        2006: (0, -70),
+        2014: (-0.5, -70),
+        2022: (0.5, 90),
+        2024: (0.5, -80),
+    },
+    "castaña": {
+        1992: (0,  -70),
+        2001: (0,  -70),
+        2006: (0,  -80),
+        2014: (0,   60),
+        2022: (0,   60),
+        2024: (0,   60),
+    },
+    "total": {
+        1992: (0,  300),
+        2001: (0,  100),
+        2006: (0,  100),
+        2014: (0.5, 100),
+        2022: (0.5, 100),
+        2024: (1,   100),
+    }
 }
 
 medias_offsets = {
-    "Expansión 92-99": (1996, 0.99),
-    "Crisis 00-05":    (2002, 0.99),
-    "Expansión 06-13": (2009, 0.99),
-    "Recesión 14-24":  (2018, 0.99),
+    "Expansión 92-00":  (1995, 0.95),
+    "Transicion 01-05": (2001, 0.95),
+    "Expansión 06-14":  (2006, 0.95),
+    "Recesión 15-24":   (2016, 0.95),
 }
 
 tasas_offsets = {
-    "1992-2000": (1996, 0.86),
-    "2000-2006": (2002, 0.86),
-    "2006-2014": (2009, 0.86),
-    "2014-2024": (2018, 0.86),
+    "1992-2000": (1995, 0.79),
+    "2001-2005": (2001, 0.79),
+    "2006-2014": (2006, 0.79),
+    "2015-2024": (2016, 0.79),
 }
 
 participation_offsets = {
-    "1992-2000": (1996, 0.70),
-    "2000-2005": (2002, 0.70),
-    "2006-2013": (2009, 0.70),
-    "2014-2024": (2018, 0.70),
+    "1992-2000": (1995, 0.63),
+    "2001-2005": (2001, 0.63),
+    "2006-2014": (2006, 0.63),
+    "2015-2024": (2016, 0.63),
 }
 
 # ───────────────────────────── 5. GENERACIÓN DE LA GRÁFICA ─────────────────────────────
@@ -146,10 +174,8 @@ add_year_value_annotations(ax, df, annot_years, cols_series,
 add_period_growth_annotations_multi(
     ax, df, periodos, cols_series, tasas_offsets, colors, abbr
 )
-
-participation_periods = [(1992,2000), (2000,2005), (2006,2013), (2014,2024)]
 add_participation_cycle_boxes(
-    ax, df, participation_periods, ["soya","castaña"], "total",
+    ax, df, periodos, ["soya","castaña"], "total",
     participation_offsets, abbr_map=abbr,
     colors={c: colors[c] for c in ["soya","castaña"]}
 )
@@ -165,3 +191,5 @@ plt.savefig(os.path.join(OUTPUT_DIR, "exportaciones_no_tradicionales_soya_otros_
 plt.show()
 
 
+
+# %%

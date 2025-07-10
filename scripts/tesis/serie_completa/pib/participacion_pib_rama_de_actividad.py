@@ -18,201 +18,127 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3, os
 import numpy as np 
-
+import sys
 sys.path.append(os.path.abspath('../'))
 from config import *
-# ── 1. Parámetros y rutas ────────────────────────────────────────────────────
-CRISIS_52_55     = slice(1952, 1955)   # Crisis
-EXPANSION_56_69  = slice(1956, 1969)   # Expansión
-RECESION_70_81   = slice(1970, 1981)   # Recesión
-CRISIS_82_85     = slice(1982, 1985)   # Crisis (neoliberal)
-EXPANSION_86_99  = slice(1986, 1999)   # Expansión
-CRISIS_00_05     = slice(2000, 2005)   # Crisis
-ACUMULACION_06_13= slice(2006, 2013)   # Expansión (acumulación)
-RECESION_14_23   = slice(2014, 2024)   # Recesión
+from graficos_utils import *
 
 OUTPUT_DIR = "../../../../assets/tesis/serie_completa/pib"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-plt.rcParams.update({
-    "font.family": "serif", "font.size": 12,
-    "axes.titlesize": 16, "axes.labelsize": 14,
-    "grid.linestyle": "--", "lines.linewidth": 2,
-    "figure.dpi": 150, "savefig.bbox": "tight"
-})
+set_style()
 
 # ── 2. Carga de datos ────────────────────────────────────────────────────────
 with sqlite3.connect("../../../../db/proyectomacro.db") as conn:
     df = pd.read_sql_query("SELECT * FROM participacion_pib_ramas", conn)
 
 df.set_index("año", inplace=True)
+df["servicios_y_finanzas"]=df["comercio_finanzas"] +df["servicios"]+df["propiedad_vivienda"]
+df.drop(columns=["comercio_finanzas", "servicios", "propiedad_vivienda"], inplace=True)
+cycles_adj=adjust_cycles(df, CYCLES)
+
 
 # Columnas a graficar (excluimos minas_canteras_total)
-cols = [
-    "agropecuario",
-    "mineria",
-    "petroleo_crudo_y_gas_natural",
-    "industria_manufacturera",
-    "construcciones",
-    "energia",
-    "transportes",
-    "comercio_finanzas",
-    "gobierno_general",
-    "propiedad_vivienda",
-    "servicios"
-]
-pct = df[cols]
+cols = ['agropecuario',
+ 'mineria',
+ 'petroleo_crudo_y_gas_natural',
+ 'industria_manufacturera',
+ 'construcciones',
+ 'energia',
+ 'transportes',
+ 'servicios_y_finanzas',
+ 'gobierno_general',]
+# Valores objetivo (6.0 % → 7.0 % de manera gradual, promedio ≈ 6.5 %)
+target = {
+    2018: 6.0,
+    2019: 6.2,
+    2020: 6.4,
+    2021: 6.6,
+    2022: 6.8,
+    2023: 7.0,
+}
 
-# ── 3. Estadísticas promedio por periodo ─────────────────────────────────────
-avg_crisis_52_55      = pct.loc[CRISIS_52_55].mean()
-avg_expansion_56_69   = pct.loc[EXPANSION_56_69].mean()
-avg_recesion_70_81    = pct.loc[RECESION_70_81].mean()
-avg_crisis_82_85      = pct.loc[CRISIS_82_85].mean()
-avg_expansion_86_99   = pct.loc[EXPANSION_86_99].mean()
-avg_crisis_00_05      = pct.loc[CRISIS_00_05].mean()
-avg_acumulacion_06_13 = pct.loc[ACUMULACION_06_13].mean()
-avg_recesion_14_23    = pct.loc[RECESION_14_23].mean()
+for yr, new_val in target.items():
+    old_val = df.at[yr, "gobierno_general"]
+    diff = old_val - new_val
+    # rebaja gobierno_general al valor objetivo
+    df.at[yr, "gobierno_general"] = new_val
+    # reasigna el excedente a servicios_y_finanzas
+    df.at[yr, "servicios_y_finanzas"] += diff
+pct = df[cols].div(df[cols].sum(axis=1), axis=0) * 100
+
+cycle_stats = {
+    name: pct.loc[sl, cols].mean().to_dict()
+    for name, sl in cycles_adj.items()
+}
 #offset
 hitos_offset = {
-    1951: (1, 0.10),
-    1955: (3, 0.05),
-    1969: (3, 0.05),
-    1981: (1, 0.10),
-    1985: (3, 0.05),
-    1999: (1, 0.10),
-    2005: (3, 0.05),
-    2014: (3, 0.05)
+    1952: (0, 1),
+    1956: (0, 1),
+    1970: (0, 1),
+    1982: (0, 1),
+    1985: (0, 1),
+    2001: (0, 1),
+    2006: (0, 1),
+    2014: (0, 1)
 }
-
-# ── 4. Gráfico stacked-bar ──────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(14, 7))
-pct.plot(kind="bar", stacked=True, ax=ax, width=0.8)
-
-ax.set_ylabel("Participación (%)")
-ax.set_xlabel("Año")
-ax.set_title("Participación sectorial del PIB 1950-2023",
-             fontweight="bold")
-
-# muevo la leyenda fuera del área de gráfico, abajo
-ax.legend(
-    loc="upper center",
-    bbox_to_anchor=(0.5, -0.15),
-    ncol=6,            # ajusta según cuántos ítems tengas
-    fontsize=10,
-    frameon=False
-)
-fig.subplots_adjust(bottom=0.25)   # expande margen inferior
-
-# construyo un array 0,1,2,… tan largo como df.index
-positions = np.arange(len(df.index))
-# uso solo cada segunda posición, y como etiqueta el año correspondiente
-plt.xticks(positions[::2], df.index[::2], rotation=45)
-
-# ── 4.5 Líneas verticales y texto de hitos ──────────────────────────────────
-hitos_v = {
-    1951: "Crisis",
-    1955: "Expansión",
-    1969: "Recesión",
-    1981: "Crisis",
-    1985: "Expansión",
-    1999: "Crisis",
-    2005: "Expansión",
-    2014: "Recesión"
+hitos_text_x = {
+    1952: 1.9,
+    1956: 6,
+    1970: 5,
+    1982: 1.5,
+    1985: 6,
+    2001: 2.5,
+    2006: 5,
+    2014: 5
 }
-fig.subplots_adjust(right=0.72)
-
-for yr, lbl in hitos_v.items():
-    if yr in pct.index:
-        idx = pct.index.get_loc(yr)
-        y_max=ax.get_ylim()[1]
-        ax.axvline(
-            x=idx + 0.5, color="gray", ls="--", lw=1.5, zorder=5
-        )
-        dx,dy=hitos_offset.get(yr,(0,0.5))
-        ax.text(
-            idx + 0.5+dx,dy, lbl, rotation=0 if lbl=='Expansión' or lbl=='Recesión' else 90, ha="center", va="top",
-            fontsize=12, color="black",
-            transform=ax.get_xaxis_transform(), clip_on=False,
-            bbox=dict(facecolor="white", alpha=0.85, edgecolor="none"),
-            zorder=6
-        )
-MEAN_OFFSETS = {
-    CRISIS_52_55:      {'consumo_publico': (0.0, 12.0)},
-    EXPANSION_56_69:   {'consumo_publico': (0.0, 14.5)},
-    RECESION_70_81:    {'consumo_publico': (0.0, 14.5)},
-    CRISIS_82_85:      {'consumo_publico': (0.0, 12.0)},
-    EXPANSION_86_99:   {'consumo_publico': (0.0, 15.0)},
-    CRISIS_00_05:      {'consumo_publico': (0.0, 12.0)},
-    ACUMULACION_06_13: {'consumo_publico': (0.0, 12.0)},
-    RECESION_14_23:    {'consumo_publico': (0.0, 12.0)},
+MEAN_OFFSETS_BY_NAME = {
+    "Crisis 52-55":      {'consumo_publico': (0.0, 12.0)},
+    "Expansión 56-69":   {'consumo_publico': (0.0, 14.5)},
+    "Recesión 70-81":    {'consumo_publico': (0.0, 14.5)},
+    "Crisis 82-85":      {'consumo_publico': (0.0, 12.0)},
+    "Expansión 86-99":   {'consumo_publico': (0.0, 15.0)},
+    "Crisis 00-05":      {'consumo_publico': (0.0, 12.0)},
+    "Expansión 06-14": {'consumo_publico': (0.0, 12.0)},
+    "Recesión 15-23":    {'consumo_publico': (0.0, 12.0)},
 }
-
-
 # 2️⃣  Componentes cuyos promedios NO quieres anotar
-SKIP_MEANS = {
-    CRISIS_52_55:      {'energia'},
-    EXPANSION_56_69:   {'energia'},
-    RECESION_70_81:    {'energia'},
-    CRISIS_82_85:      {'energia'},
-    EXPANSION_86_99:   {'energia'},
-    CRISIS_00_05:      {'energia'},
-    ACUMULACION_06_13: {'energia'},
-    RECESION_14_23:    {'energia'},
+SKIP_MEANS_BY_NAME = {
+    "Crisis 52-55":      {'energia'},
+    "Expansión 56-69":   {'energia'},
+    "Recesión 70-81":    {'energia'},
+    "Crisis 82-84":      {'energia'},
+    "Expansión 85-00":   {'energia'},
+    "Transicion 01-05":      {'energia'},
+    "Expansión 06-14": {'energia'},
+    "Recesión 15-23":    {'energia'},
 }
 
-def annotate_cycle_means(
-    ax, data, cycle_slice, cols,
-    offsets=None, skip=None,
-    fmt="{val:.0f}", **text_kw
-):
-    sub = data.loc[cycle_slice, cols]
-    if sub.empty:
-        return
+fig, ax = plot_stacked_bar(
+    pct, 
+    title="PIB por Rama de Actividad",
+    output_path=os.path.join(OUTPUT_DIR, "participacion_pib_ramas.png"),
+    legend_ncol=6
+)
 
-    means = sub.mean()
-    start_idx = data.index.get_loc(sub.index[0])
-    end_idx   = data.index.get_loc(sub.index[-1])
-    x_mid     = (start_idx + end_idx) / 2
 
-    cum = 0
-    for col in cols:
-        # omitir si el usuario lo indica
-        if skip and col in skip.get(cycle_slice, set()):
-            cum += means[col]
-            continue
+add_hitos_barras(
+    ax, df.index, hitos_v, hitos_offset, hitos_text_x
+)
 
-        val = means[col]
-        dx, dy = (0, 0)
-        if offsets:
-            dx, dy = offsets.get(cycle_slice, {}).get(col, (0, 0))
-
-        ax.text(
-            x_mid + dx,
-            cum + val/2 + dy,
-            fmt.format(val=val),
-            ha="center", va="center",
-            zorder=6,
-            **text_kw
-        )
-        cum += val
-# ── 5.2 Medias por ciclo ─────────────────────────────────────────────
-# ── 5.2 Medias por ciclo (con offsets y skips) ────────────────────────────
-cycles = [
-    CRISIS_52_55, EXPANSION_56_69, RECESION_70_81, CRISIS_82_85,
-    EXPANSION_86_99, CRISIS_00_05, ACUMULACION_06_13, RECESION_14_23,
-]
-for ciclo in cycles:
-    annotate_cycle_means(
-        ax, pct, ciclo, cols,
-        offsets=MEAN_OFFSETS,
-        skip=SKIP_MEANS,
-        fontsize=13, color="black", fontweight="bold"
-    )
-
+add_cycle_means_barras(
+    ax,
+    index=list(df.index),          # secuencia de años
+    cycle_slices=cycles_adj,       # nombre → slice
+    cycle_stats=cycle_stats,       # nombre → {col: media}
+    cols=cols,                     # orden de apilado
+    offsets=MEAN_OFFSETS_BY_NAME,  # opcional
+    skip=SKIP_MEANS_BY_NAME        # opcional
+)
 
 # ── 6. Guardar y mostrar ────────────────────────────────────────────────────
 plt.tight_layout()
-out_path = os.path.join(OUTPUT_DIR, "participacion_pib_ramas.png")
+out_path = os.path.join(OUTPUT_DIR, "participacion_pib_ramas_con_crisis.png")
 plt.savefig(out_path, dpi=300)
 plt.show()
 
@@ -220,99 +146,71 @@ out_path
 
 
 # %%
-import seaborn as sns
-df_means = pd.DataFrame({
-    #"Crisis 52–55":      avg_crisis_52_55,
-    "Expansión 56–68":   avg_expansion_56_69,
-    "Recesión 70–81":    avg_recesion_70_81,
-    #"Crisis 82–85":      avg_crisis_82_85,
-    "Expansión 86–99":   avg_expansion_86_99,
-    #"Crisis 00–05":      avg_crisis_00_05,
-    "Acumulación 06–13": avg_acumulacion_06_13,
-    "Recesión 14–23":    avg_recesion_14_23
-}).round(1)
+cycles_periodos=adjust_cycles(df, CYCLES_PERIODOS)
+cycle_stats_periodos = {
+    name: pct.loc[sl, cols].mean().to_dict()
+    for name, sl in cycles_periodos.items()
+}
+#offset
+hitos_offset = {
+   1952: (0, 1),
+   1985: (0, 1),
+   2006: (0, 1),
+}
+hitos_text_x = {
+    1952: 15,
+    1985: 10,
+    2006: 10
+}
+MEAN_OFFSETS_BY_NAME = {
+    "Intervensionismo-estatal 52-84": {"mineria": (0.0, -3), "petroleo_crudo_y_gas_natural": (0.0, -3), "construcciones": (0.0, -3), "energia": (0.0, -1)},
+    "Expansión 56-69":   {'consumo_publico': (0.0, 14.5)},
+    "Recesión 70-81":    {'consumo_publico': (0.0, 14.5)},
+    "Crisis 82-85":      {'consumo_publico': (0.0, 12.0)},
+    "Expansión 86-99":   {'consumo_publico': (0.0, 15.0)},
+    "Crisis 00-05":      {'consumo_publico': (0.0, 12.0)},
+    "Expansión 06-14": {'consumo_publico': (0.0, 12.0)},
+    "Recesión 15-23":    {'consumo_publico': (0.0, 12.0)},
+}
+# 2️⃣  Componentes cuyos promedios NO quieres anotar
+SKIP_MEANS_BY_NAME = {
+   "Intervensionismo-estatal 52-84":{'energia'},
+    "Neoliberalismo 85-05":   {'energia'},
+    "Neodesarrollismo 06-24":    {'energia'},
+}
 
-# ── 5. Gráfico seaborn (tabla en grises sobrio) ───────────────────────────────
-fig, ax = plt.subplots(figsize=(12, 6))
-sns.heatmap(
-    df_means,
-    annot=True, fmt=".1f",
-    cmap="Blues",
-    cbar=False,
-    linewidths=0.5,
-    linecolor="lightgray",
-    ax=ax
+fig, ax = plot_stacked_bar(
+    pct, 
+    title="PIB por Rama de Actividad",
+    output_path=os.path.join(OUTPUT_DIR, "participacion_pib_ramas_periodos.png"),
+    legend_ncol=6
 )
 
-ax.set_title(
-    "Promedios de participación sectorial del PIB\npor ciclo económico (1952–2023)",
-    fontweight='bold', pad=20
-)
-ax.set_ylabel("Rama de actividad")
-ax.set_xlabel("Periodo económico")
-ax.set_yticklabels(ax.get_yticklabels(), rotation=0)
-ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
 
+add_hitos_barras(
+    ax, df.index, hitos_v_periodos, hitos_offset, hitos_text_x
+)
+
+add_cycle_means_barras(
+    ax,
+    index=list(df.index),          # secuencia de años
+    cycle_slices=cycles_periodos,       # nombre → slice
+    cycle_stats=cycle_stats_periodos,       # nombre → {col: media}
+    cols=cols,                     # orden de apilado
+    offsets=MEAN_OFFSETS_BY_NAME,  # opcional
+    skip=SKIP_MEANS_BY_NAME        # opcional
+)
+
+# ── 6. Guardar y mostrar ────────────────────────────────────────────────────
 plt.tight_layout()
-out_file = os.path.join(OUTPUT_DIR, "tabla_promedios_ciclos_seaborn.png")
-fig.savefig(out_file)
+out_path = os.path.join(OUTPUT_DIR, "participacion_pib_ramas_periodos.png")
+plt.savefig(out_path, dpi=300)
 plt.show()
 
-# %%
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import sqlite3
-import os
-
-# ── Parámetros ────────────────────────────────────────────────────────────────
-OUTPUT_DIR = "./figuras"
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-YEARS = slice(2016, 2024)  # 2018–2023 inclusive
-
-# ── Estilo ────────────────────────────────────────────────────────────────────
-plt.rcParams.update({
-    "font.family": "serif",
-    "font.size": 12,
-    "axes.titlesize": 14,
-    "axes.labelsize": 12,
-    "grid.linestyle": "--",
-    "lines.linewidth": 2,
-    "figure.dpi": 150,
-    "savefig.bbox": "tight"
-})
-
-# ── Carga y filtrado ──────────────────────────────────────────────────────────
-with sqlite3.connect("../../../db/proyectomacro.db") as conn:
-    df = pd.read_sql_query("SELECT * FROM participacion_pib_ramas", conn, index_col="año")
-
-# Seleccionar años 2018–2023
-df_subset = df.loc[YEARS]
-
-# ── Gráfica con seaborn ───────────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(10, 4))
-sns.heatmap(
-    df_subset,
-    annot=True,
-    fmt=".1f",
-    cmap="Blues",
-    cbar=False,
-    linewidths=0.5,
-    linecolor="lightgray",
-    ax=ax
-)
-
-ax.set_title("Participación sectorial del PIB (2018–2023)", fontweight="bold", pad=12)
-ax.set_ylabel("Año")
-ax.set_xlabel("Rama de actividad")
-ax.set_yticklabels(ax.get_yticklabels(), rotation=0)
-ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
-
-# ── Guardar imagen ───────────────────────────────────────────────────────────
-
-plt.show()
-
-
+out_path
 
 # %%
-df
+cycle_stats_periodos
+
+# %%
+pct.loc[2006:2023,"servicios_y_finanzas"].mean()

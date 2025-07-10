@@ -52,6 +52,7 @@ abbr = {"minerales":"Min", "hidrocarburos":"Hc", "total":"Tot"}
 # ──────────────── 3. PREPARACIÓN ────────────────
 CYCLES   = adjust_cycles(df, CYCLES)                  # usa definición global
 annotate_years = [1992, 2000, 2006, 2014, 2024]             # específicos
+annotate_years.append(2022)
 periodos_componentes = adjust_periods(df, periodos_tasas)   # para growth-boxes
 cycles_stat  = {name: df.loc[slc, cols_componentes].mean().to_dict()
                       for name, slc in CYCLES.items()}
@@ -60,31 +61,58 @@ cycles_stat  = {name: df.loc[slc, cols_componentes].mean().to_dict()
 hitos_offsets = {año: 0.80 for año in hitos_v}
 
 annotation_offsets = {
-    "minerales":    {1992:(0,300), 2000:(0,350), 2006:(0,-650), 2014:(0,300), 2024:(0,-300)},
-    "hidrocarburos":{1992:(0,-350),2000:(0,-290),2006:(0,-590),2014:(0,300), 2024:(0,-300)},
-    "total":        {1992:(0,600), 2000:(0,500), 2006:(0,600), 2014:(0,100), 2024:(0,-200)},
+    "minerales": {
+        1992: (0, 300),
+        2001: (0, 350),
+        2006: (0, -650),
+        2014: (0, 300),
+        2022: (0, 300),
+        2024: (0, -300),
+    },
+    "hidrocarburos": {
+        1992: (0, -200),
+        2001: (0, -290),
+        2006: (0, -590),
+        2014: (0, 300),
+        2022: (0, 300),
+        2024: (0, -300),
+    },
+    "total": {
+        1992: (0, 400),
+        2001: (0, 500),
+        2006: (0, 600),
+        2014: (0, 100),
+        2022: (0, 200),
+        2024: (0, -200),
+    },
 }
 
 medias_offsets = {
-    "Expansión 92-99": (1992, 0.9),
-    "Crisis 00-05":    (2002, 0.9),
-    "Expansión 06-13": (2006, 0.9),
-    "Recesión 14-24":  (2016, 1.00),
+    "Expansión 92-00":  (1992, 0.90),
+    "Transicion 01-05": (2001, 0.95),
+    "Expansión 06-14":  (2006, 0.95),
+    "Recesión 15-24":   (2016, 1.00),
 }
 
 tasas_offsets = {
     "1992-2000": (1992, 0.75),
-    "2000-2006": (2002, 0.75),
+    "2001-2005": (2001, 0.75),
     "2006-2014": (2006, 0.75),
-    "2014-2024": (2016, 0.85),
+    "2015-2024": (2016, 0.85),
 }
 
 participation_offsets = {
     "1992-2000": (1992, 0.60),
-    "2000-2006": (2002, 0.60),
+    "2001-2005": (2001, 0.60),
     "2006-2014": (2006, 0.60),
-    "2014-2024": (2016, 0.16),
+    "2015-2024": (2016, 0.16),
 }
+
+
+
+
+
+
 
 # ───────────────────────────── 5. GRÁFICA ─────────────────────────────
 fig, ax = init_base_plot(

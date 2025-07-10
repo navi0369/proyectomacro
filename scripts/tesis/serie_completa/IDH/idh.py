@@ -65,7 +65,7 @@ cycles_stats         = {n: df.loc[s, cols_componentes].mean().to_dict()
                         for n, s in adjust_cycles(df, CYCLES).items()}
 periodos             = adjust_periods(df, periodos_tasas)
 
-annotation_offsets   = {
+annotation_offsets = {
     'total_idh': {
         2001: (0, -200),
         2006: (-0.6, 200),
@@ -74,16 +74,16 @@ annotation_offsets   = {
     }
 }
 
-hitos_offset         = {a: 0.8 for a in hitos_v}
-medias_offsets       = {
-    'Crisis 01-05':    (2003, 1),
-    'Expansión 06-13': (2006, 1),
-    'Recesión 14-23':  (2016, 1),
+hitos_offset = {a: 0.8 for a in hitos_v}
+
+medias_offsets = {
+    'Expansión 06-14':     (2006, 1),   # antes "Expansión 06-13" → coincide con slice(2006,2014) :contentReference[oaicite:1]{index=1}
+    'Recesión 15-23':      (2016, 1),   # antes "Recesión 14-23" → ciclo “Recesión 15-24” :contentReference[oaicite:2]{index=2}
 }
 
 tasas_offsets = {
-    '2006-2014': (2006, 0.83),
-    '2014-2023': (2016, 0.83),
+    '2006-2014': (2006, 0.83),           # coincide con periodo (2006,2014) :contentReference[oaicite:3]{index=3}
+    '2015-2023': (2016, 0.83),           # antes "2014-2023" → periodo (2015,2022) :contentReference[oaicite:4]{index=4}
 }
 
 fig, ax = init_base_plot(

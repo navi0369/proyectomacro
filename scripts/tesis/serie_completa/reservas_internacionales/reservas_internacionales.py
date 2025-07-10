@@ -62,33 +62,37 @@ periodos       = adjust_periods(df_res, periodos_tasas)
 
 annotation_offsets = {
     'reservas_totales': {
-        1952: (0, 250),
-        1956: (0, 250),
-        1970: (0, 250),
-        1982: (0, 300),
-        1986: (0, 300),
-        2000: (0, 350),
+        1952: (0,   250),
+        1956: (0,   250),
+        1970: (0,   250),
+        1982: (0,   300),
+        1985: (0,   300),   # antes 1986 → 1985
+        2001: (0,   350),   # antes 2000 → 2001
         2006: (1.9, -300),
-        2014: (0, 300),
-        2023: (0, -300),
+        2014: (0,   300),
+        2023: (0,  -300),
     },
 }
 
-hitos_offset   = {a: 0.8 for a in hitos_v}
+# 2) Hitos verticales
+hitos_offset = {a: 0.8 for a in hitos_v}
+
+# 3) Posición de medias por ciclo (claves según CYCLES)
 medias_offsets = {
     'Expansión 56-69': (1956, 1),
-    'Recesión 70-81': (1970, 1),
-    'Expansión 86-99': (1986, 1),
-    'Expansión 06-13': (2006, 1.09),
-    'Recesión 14-23':  (2017, 1.09),
+    'Recesión 70-81':  (1970, 1),
+    'Expansión 85-00': (1986, 1),   # antes "Expansión 86-99"
+    'Expansión 06-14': (2006, 1.09),# antes "Expansión 06-13"
+    'Recesión 15-23':  (2017, 1.09),# antes "Recesión 14-23"
 }
 
-tasas_offsets  = {
-    '1956-1970': (1956, 0.83),
-    '1970-1986': (1970, 0.83),
-    '1986-2000': (1986, 0.83),
-    '2006-2014': (2006, 0.1),
-    '2014-2023': (2018, 0.83),
+# 4) Tasas de crecimiento anotadas por periodo (claves según periodos_tasas)
+tasas_offsets = {
+    '1956-1969': (1956, 0.83),  # antes "1956-1970"
+    '1970-1981': (1970, 0.83),  # antes "1970-1986"
+    '1985-2000': (1986, 0.83),  # antes "1986-2000"
+    '2006-2014': (2006, 0.10),
+    '2015-2023': (2018, 0.83),  # antes "2014-2023"
 }
 
 fig, ax = init_base_plot(
@@ -121,26 +125,31 @@ periodos_sin_crisis       = adjust_periods(df_res, periodos_tasas_sin_crisis)
 
 annotation_offsets_sin_crisis = {
     'reservas_totales': {
-        1950: (0, 350), 1971: (0, 350), 1985: (0, 370),
-        2005: (-2, 150), 2015: (2, 640), 2023: (0, -380),
+        1950: (0, 350),
+        1970: (0, 350),
+        1985: (0, 370),
+        2006: (-2, 150),
+        2014: (0, 540),
+        2023: (0, -380),
     }
 }
 
-hitos_offset_sin_crisis   = {a: 0.8 for a in hitos_v_sin_crisis}
+hitos_offset_sin_crisis = {y: 0.8 for y in hitos_v_sin_crisis}
+
 medias_offsets_sin_crisis = {
-    'Expansión 50-70': (1956, 1),
-    'Recesión 71-84':  (1971, 1),
+    'Expansión 56-69': (1956, 1),
+    'Recesión 70-84':  (1971, 1),
     'Expansión 85-05': (1986, 1),
-    'Expansión 06-14': (2005, 1.09),
-    'Recesión 15-23':  (2016, 1.09),
+    'Expansión 06-14': (2004, 1.09),
+    'Recesión 15-23':  (2015, 1.09),
 }
 
-tasas_offsets_sin_crisis  = {
-    '1950-1970': (1956, 0.83),
-    '1971-1984': (1971, 0.83),
+tasas_offsets_sin_crisis = {
+    '1956-1969': (1956, 0.83),
+    '1970-1984': (1971, 0.83),
     '1985-2005': (1986, 0.83),
-    '2006-2014': (2005, 0.1),
-    '2015-2023': (2016, 0.83),
+    '2006-2014': (2004, 0.99),
+    '2015-2023': (2015, 0.93),
 }
 
 fig, ax = init_base_plot(
@@ -158,7 +167,7 @@ add_period_growth_annotations_multi(ax, df_res, periodos_sin_crisis, cols_compon
                                     tasas_offsets_sin_crisis, custom_colors, abbr_map)
 ax.set_ylim(-400, df_res['reservas_totales'].max()*1.15)
 plt.savefig(os.path.join(output_dir, "reservas_sin_crisis.png"))
-plt.show()
+plt.show() 
 plt.close()
 
 # %%
@@ -166,27 +175,49 @@ plt.close()
 # 3) PERIODOS ESTRUCTURALES
 # ============================================================
 annotate_years_periodos = adjust_annot_years(df_res, annot_years_periodos)
+annotate_years_periodos.append(2014)
+
+
+CYCLES_PERIODOS = update_dict(
+    original       = CYCLES_PERIODOS,
+    rename_map     = {"Neodesarrollismo 06-24": "Expansión 06-14"},
+    rename_values  = {"Expansión 06-14": slice(2006, 2014)},
+    add_map        = {"Recesión 15-24":   slice(2015, 2024)},
+)
+
+
+
 cycles_stats_periodos   = {n: df_res.loc[s, cols_componentes].mean().to_dict()
                            for n, s in adjust_cycles(df_res, CYCLES_PERIODOS).items()}
+
+#periodos
 periodos_periodos       = adjust_periods(df_res, periodos_tasas_periodos)
+periodos_periodos = update_periods(
+    original       =periodos_periodos,
+    rename_map     = {(2006,2023):(2006,2014)},
+    add_list        = [(2014, 2023)] 
+)
+
 
 annotation_offsets_periodos = {
     'reservas_totales': {
-        1950: (0, -250), 1985: (0, -300), 2006: (-2, 150), 2023: (0, -380),
+        1950: (0, -250), 1985: (0, -300), 2006: (-2, 150), 2014:(3.5,-400),2023: (0, -380),
     }
 }
 
 hitos_offset_periodos   = {a: 0.8 for a in hitos_v_periodos}
 medias_offsets_periodos = {
-    'Intervensionismo-estatal 50-84': (1957, 1),
+    'Intervensionismo-estatal 52-84': (1957, 1),
     'Neoliberalismo 85-05':   (1986, 1),
-    'Neodesarrollismo 06-23': (2006, 1.09),
+    'Expansión 06-14': (2006, 1.09),
+    'Recesión 15-23':  (2017, 1.09),  # antes "Recesión 14-23"
 }
 
 tasas_offsets_periodos  = {
-    '1950-1984': (1957, 0.83),
+    '1952-1984': (1957, 0.83),
     '1985-2005': (1986, 0.83),
-    '2006-2023': (2006, 1.01),
+    '2006-2014': (2006, 1.01),
+    '2014-2023': (2018, 1.01), 
 }
 
 fig, ax = init_base_plot(
@@ -206,3 +237,6 @@ ax.set_ylim(-400, df_res['reservas_totales'].max()*1.15)
 plt.savefig(os.path.join(output_dir, "reservas_periodos.png"))
 plt.show()
 plt.close()
+
+# %%
+periodos_periodos

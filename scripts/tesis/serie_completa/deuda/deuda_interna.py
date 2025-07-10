@@ -70,23 +70,30 @@ periodos             = adjust_periods(df_di, periodos_tasas)
 # Offsets
 annotation_offsets = {
     'valor': {
-        1993: (0, 220), 2000: (-0.5, 250), 2006: (0, 350),
-        2014: (0.5, 250), 2022: (0, 250),
+        1993: (0,   220),
+        2001: (-0.5, 250),
+        2006: (0,   350),
+        2014: (0.5, 250),
+        2022: (0,   250),
     }
 }
-hitos_offset         = {a: 0.8 for a in hitos_v}
-medias_offsets       = {
-    'Expansión 93-99': (1993, 1),
-    'Crisis 00-05':    (2000, 1),
-    'Expansión 06-13': (2006, 1),
-    'Recesión 14-22':  (2014, 1),
+
+hitos_offset = {a: 0.8 for a in hitos_v}
+
+medias_offsets = {
+    'Expansión 93-00':  (1993, 1),
+    'Transicion 01-05': (2001, 1),
+    'Expansión 06-14':  (2006, 1),
+    'Recesión 15-22':   (2014, 1),
 }
-tasas_offsets        = {
+
+tasas_offsets = {
     '1993-2000': (1993, 0.83),
-    '2000-2006': (2000, 0.83),
+    '2001-2005': (2001, 0.83),
     '2006-2014': (2006, 0.83),
-    '2014-2022': (2014, 0.83),
+    '2015-2022': (2014, 0.83),
 }
+
 
 # Gráfica
 fig, ax = init_base_plot(
@@ -122,7 +129,7 @@ periodos_sin_crisis       = adjust_periods(df_di, periodos_tasas_sin_crisis)
 # Offsets
 annotation_offsets_sin_crisis = {
     'valor': {
-        1993: (0, 500), 2005: (0, 400), 2015: (0, -320), 2022: (0, 300)
+        1993: (0, 500), 2006: (0, 400), 2014: (0, 320), 2022: (0, 300)
     }
 }
 hitos_offset_sin_crisis       = {a: 0.8 for a in hitos_v_sin_crisis}

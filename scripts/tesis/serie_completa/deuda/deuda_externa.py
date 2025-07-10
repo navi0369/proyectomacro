@@ -68,38 +68,38 @@ custom_colors = {'deuda': '#1f77b4'}
 # ─────────────────────────────────────────────────────────────────────
 annotation_offsets = {
     'deuda': {
-        1952: (0, -400),
-        1956: (0, -400),
-        1970: (0, -400),
-        1982: (0, -600),
-        1986: (0, -600),
-        2000: (0, -450),
+        1952: (0,   -400),
+        1956: (0,   -400),
+        1970: (0,   -400),
+        1982: (0,   -600),
+        1985: (0,   -600),   # antes 1986 → 1985
+        2001: (0,   -450),   # antes 2000 → 2001
         2006: (-1.83, -250),
-        2014: (2, -200),
-        2020: (0, 300),
-    },
+        2014: (2,   -200),
+        2024: (0,    300),   # antes 2020 → 2023
+    }
 }
 
-hitos_offset = {a: 0.8 for a in hitos_v}
+# 2) Hitos verticales
+hitos_offset = {a: 0.8 for a in hitos_v}  # claves: 1952,1956,1970,1982,1985,2001,2006,2014 :contentReference[oaicite:0]{index=0}
 
+# 3) Posición de medias por ciclo (claves según CYCLES en config.py)
 medias_offsets = {
-    'Expansión 56-69':   (1956, 1),
-    'Recesión 70-81':    (1970, 1),
-    'Expansión 86-99':   (1986, 1),
-    #'Crisis 00-05':      (2000, 1),
-    'Expansión 06-13':   (2006, 1),
-    'Recesión 14-20':    (2014, 1.1),
+    'Expansión 56-69': (1956, 1),
+    'Recesión 70-81':  (1970, 1),
+    'Expansión 85-00': (1986, 1),   # antes "Expansión 86-99"
+    'Expansión 06-14': (2006, 1),   # antes "Expansión 06-13"
+    'Recesión 15-24':  (2014, 1.1), # antes "Recesión 14-20"
 }
 
+# 4) Tasas de crecimiento anotadas por periodo (claves según periodos_tasas)
 tasas_offsets = {
-    '1956-1970': (1956, 0.83),
-    '1970-1986': (1970, 0.83),
-    '1986-2000': (1986, 0.83),
-    #'2000-2006': (2003, 0.83),
+    '1956-1969': (1956, 0.83),  # antes "1956-1970"
+    '1970-1981': (1970, 0.83),  # antes "1970-1986"
+    '1985-2000': (1986, 0.83),  # antes "1986-2000"
     '2006-2014': (2006, 0.83),
-    '2014-2020': (2014, 0.2),
+    '2015-2024': (2014, 0.2),   # antes "2014-2020"
 }
-
 # ─────────────────────────────────────────────────────────────────────
 # Gráfica
 # ─────────────────────────────────────────────────────────────────────
@@ -107,7 +107,7 @@ fig, ax = init_base_plot(
     df,
     componentes,
     custom_colors,
-    "Deuda Externa Total de Bolivia (1951–2020)",
+    "Deuda Externa Total de Bolivia ",
     "Año",
     "Millones de dólares",
     source_text="Fuente: BCB (1951–1996), UDAPE (1996–2020)"
@@ -159,28 +159,31 @@ periodos_sin_crisis = adjust_periods(df, periodos_tasas_sin_crisis)
 # ─────────────────────────────────────────────────────────────────────
 annotation_offsets_sin_crisis = {
     'deuda': {
-        1951: (0, -30),
-        1971: (0, -350),
+        1956: (0, -30),
+        1970: (0, -350),
         1985: (0, -300),
-        2005: (1, 250),
-        2015: (2, -260),
-        2020: (0, 300),
+        2006: (1, 250),
+        2014: (2, -260),
+        2024: (0, 800),
     },
 }
+
 hitos_offset_sin_crisis = {y: 0.8 for y in hitos_v_sin_crisis}
+
 medias_offsets_sin_crisis = {
-    'Expansión 51-70':   (1956, 1),
-    'Recesión 71-84':    (1971, 1),
-    'Expansión 85-05':   (1986, 1),
-    'Expansión 06-14':   (2005, 1),
-    'Recesión 15-20':    (2014, 1.1),
+    'Expansión 56-69': (1956, 1),
+    'Recesión 70-84':  (1971, 1),
+    'Expansión 85-05': (1986, 1),
+    'Expansión 06-14': (2005, 1),
+    'Recesión 15-24':  (2014, 1.1),
 }
+
 tasas_offsets_sin_crisis = {
-    '1951-1970': (1956, 0.83),
-    '1971-1984': (1971, 0.83),
+    '1956-1969': (1956, 0.83),
+    '1970-1984': (1971, 0.83),
     '1985-2005': (1986, 0.83),
     '2006-2014': (2005, 0.83),
-    '2015-2020': (2014, 0.2),
+    '2015-2024': (2014, 0.20),
 }
 
 
@@ -191,7 +194,7 @@ fig, ax = init_base_plot(
     df,
     componentes,
     custom_colors,
-    "Deuda Externa Total sin Crisis (1951–2020)",
+    "Deuda Externa Total sin Crisis ",
     "Año",
     "Millones de dólares",
     source_text="Fuente: BCB (1951–1996), UDAPE (1996–2020)"
@@ -251,22 +254,35 @@ periodos_periodos = adjust_periods(df, periodos_tasas_periodos)
 # Offsets individuales para anotaciones por periodos
 annotation_offsets_periodos = {
     'deuda': {
-        1951: (0, -300),
+        1950: (0, -300),
         1985: (0, -300),
         2006: (-2, -250),
-        2020: (1.3, -1000),
+        2024: (1.3, -1000),
     }
 }
-hitos_offset_periodos = {y: 0.8 for y in hitos_v_periodos}
-medias_offsets_periodos = {
-    'Intervensionismo-estatal 51-84': (1964, 1),
-    'Neoliberalismo 85-05':           (1985, 1),
-    'Neodesarrollismo 06-20':         (2006, 1),
+
+hitos_offset_periodos = {
+    1952: 0.8,
+    1985: 0.8,
+    2006: 0.8,
 }
+
+medias_offsets_periodos = {
+    'Intervensionismo-estatal 52-84': (1964, 1),
+    'Neoliberalismo 85-05':           (1985, 1),
+    'Neodesarrollismo 06-24':         (2006, 1),
+}
+
 tasas_offsets_periodos = {
-    '1951-1984': (1964, 0.83),
+    '1952-1984': (1964, 0.83),
     '1985-2005': (1985, 0.83),
-    '2006-2020': (2006, 0.83),
+    '2006-2024': (2006, 0.83),
+}
+
+participation_offsets_periodos = {
+    '1952-1984': (1964, 0.8),
+    '1985-2005': (1985, 0.8),
+    '2006-2024': (2006, 0.8),
 }
 
 # ─────────────────────────────────────────────────────────────────────
@@ -276,7 +292,7 @@ fig, ax = init_base_plot(
     df,
     componentes,
     custom_colors,
-    "Deuda Externa Total por Periodo Económico (1951–2020)",
+    "Deuda Externa Total por Periodo Económico",
     "Año",
     "Millones de dólares",
     source_text="Fuente: BCB (1951–1996), UDAPE (1996–2020)"
@@ -316,4 +332,9 @@ add_period_growth_annotations_multi(
 
 plt.savefig(os.path.join(output_dir, "deuda_externa_total_periodos.png"))
 plt.show()
+
+
+# %%
+years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024]
+total_deuda_externa = [5736.2, 6331.2, 7001.6, 9146.9, 9911.7, 11007.4, 11901.0, 12697.7, 13300.3, 13588.4, 13345.4]
 
