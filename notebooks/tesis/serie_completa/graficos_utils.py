@@ -8,6 +8,34 @@ import logging
 import numpy as np
 logger = logging.getLogger(__name__)
 # graficos_utils.py
+
+
+from typing import List, Tuple, Dict
+
+Period = Tuple[int, int]
+
+def update_periods(
+    original: List[Period],
+    rename_map: Dict[Period, Period] = {},
+    add_list:    List[Period]       = []
+) -> List[Period]:
+    """
+    Idempotentemente:
+      1) Reemplaza cada tupla que aparezca en rename_map (old→new).
+      2) Añade al final las tuplas de add_list que no estuvieran ya.
+    No mutate la lista original; retorna una copia.
+    """
+    # 1) Aplico renombrados/reemplazos
+    updated = [ rename_map.get(p, p) for p in original ]
+    
+    # 2) Agrego nuevas tuplas si no existen
+    for p in add_list:
+        if p not in updated:
+            updated.append(p)
+    
+    return updated
+
+
 def update_dict(
     original: dict[str, slice],
     rename_map: dict[str, str] = {},
