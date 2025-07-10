@@ -43,12 +43,17 @@ git log -1 ff3c2d0 \
 
 
 # Crea un archivo .ipynb vacío en cada subcarpeta de serie_completa
-for folder in deuda exportaciones IDH importaciones minerales pib reservas_internacionales; do
-  touch "notebooks/tesis/serie_completa/$folder/"*.ipynb
+for dir in notebooks/tesis/serie_completa/*/; do
+  touch "${dir}"*.ipynb
 done
+# para actualizar una sola carpeta
+touch mi_carpeta/*.ipynb
 
 # Sincroniza con jupytext todos los .ipynb de cada subcarpeta de serie_completa
+for dir in notebooks/tesis/serie_completa/*/; do
+  jupytext --sync "${dir}"*.ipynb
+done
 
-for folder in deuda exportaciones IDH importaciones minerales pib reservas_internacionales; do
-  jupytext --sync "notebooks/tesis/serie_completa/$folder/"*.ipynb
+for dir in notebooks/tesis/*/; do
+  jupytext --sync "${dir}"*.ipynb
 done
