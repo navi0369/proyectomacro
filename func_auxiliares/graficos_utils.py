@@ -385,7 +385,7 @@ def init_base_plot(
     for col, label in series:
         ax.plot(df.index, df[col], label=label, color=colors[col])
 
-    ax.set_title(title, fontweight='bold', color='red')
+    ax.set_title(title, fontweight='bold', color='red', fontsize=17)
     ax.set_xlabel(xlabel, color='green',fontsize=14)
     ax.set_ylabel(ylabel, color='blue', fontsize=14)
     ax.set_xticks(df.index[::max(1, len(df)//31)])
