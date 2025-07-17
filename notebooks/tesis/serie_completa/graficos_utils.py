@@ -473,6 +473,107 @@ def plot_stacked_bar(
     plt.tight_layout()
     return fig, ax
 
+def init_dual_axis_plot(
+    df: pd.DataFrame,
+    left_series: list[tuple[str, str]],
+    right_series: list[tuple[str, str]],
+    colors: dict[str, str],
+    title: str,
+    xlabel: str,
+    left_ylabel: str,
+    right_ylabel: str,
+    figsize: tuple[int, int] = (13, 8),
+    legend_loc: str = "upper left",
+    legend_ncol: int = 2,
+    legend_fontsize: int = 12,
+    source_text: str = "Fuente: Elaboración propia",
+    notas: str | None = None
+):
+    """
+    Gráfica “dual axis” (dos ejes Y) reutilizando el mismo estilo
+    que `init_base_plot`.
+
+    Parámetros
+    ----------
+    df : DataFrame
+        Con índice en años y columnas suficientes para ambas listas.
+    left_series : list[(col, label)]
+        Series que se pintan en el eje Y izquierdo.
+    right_series : list[(col, label)]
+        Series que se pintan en el eje Y derecho.
+    colors : dict[col -> color]
+        Paleta para todas las series (tanto izquierda como derecha).
+    title, xlabel, left_ylabel, right_ylabel : str
+        Textos de títulos y ejes.
+    figsize, legend_loc, legend_ncol, legend_fontsize : estilos varios.
+    source_text : str
+        Pie de fuente.
+    notas : str | None
+        Texto opcional que aparece debajo de la fuente.
+
+    Devuelve
+    --------
+    fig, ax_left, ax_right
+    """
+
+    # 1) Figura y ejes (ax_left + ax_right)
+    fig, ax_left = plt.subplots(figsize=figsize)
+    ax_right = ax_left.twinx()
+
+    # 2) Traza series del eje izquierdo
+    for col, label in left_series:
+        ax_left.plot(df.index, df[col], label=label, color=colors[col])
+
+    # 3) Traza series del eje derecho
+    for col, label in right_series:
+        ax_right.plot(df.index, df[col], label=label, color=colors[col])
+
+    # 4) Títulos y ejes
+    ax_left.set_title(title, fontweight="bold", fontsize=17, color="red")
+    ax_left.set_xlabel(xlabel, fontsize=15)
+    ax_left.set_ylabel(left_ylabel, color="tab:blue", fontsize=14)
+    ax_right.set_ylabel(right_ylabel, color="tab:red", fontsize=14)
+
+    # 5) Estilo de ticks
+    ax_left.tick_params(axis="y", labelcolor="tab:blue")
+    ax_right.tick_params(axis="y", labelcolor="tab:red")
+    ax_left.set_xticks(df.index[::max(1, len(df)//31)])
+    ax_left.tick_params(axis="x", rotation=45)
+
+    # 6) Leyenda combinada (sin duplicados)
+    h_left, l_left = ax_left.get_legend_handles_labels()
+    h_right, l_right = ax_right.get_legend_handles_labels()
+    h_comb, l_comb = [], []
+    for h, l in zip(h_left + h_right, l_left + l_right):
+        if l not in l_comb:          # evita duplicados
+            h_comb.append(h)
+            l_comb.append(l)
+
+    ax_left.legend(
+        h_comb, l_comb,
+        loc=legend_loc,
+        ncol=legend_ncol,
+        fontsize=legend_fontsize
+    )
+
+    # 7) Pie de fuente
+    fig.text(
+        0.07, 0.005, source_text,
+        ha="left", va="bottom",
+        fontsize=11, transform=fig.transFigure
+    )
+
+    # 8) Nota opcional
+    if notas:
+        fig.text(
+            0.07, -0.02, notas,
+            ha="left", va="bottom",
+            fontsize=10.5, transform=fig.transFigure
+        )
+
+    plt.tight_layout()
+    return fig, ax_left, ax_right
+
 
 
 def add_hitos_barras(
