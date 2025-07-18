@@ -464,7 +464,7 @@ def plot_stacked_bar(
         fontsize=10,
         frameon=False
     )
-    fig.subplots_adjust(bottom=0.25, right=0.72)
+    fig.subplots_adjust(bottom=0.25)
 
     positions = np.arange(len(df.index))
     ax.set_xticks(positions[::xtick_step])

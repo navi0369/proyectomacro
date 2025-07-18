@@ -414,9 +414,9 @@ def init_base_plot(
     plt.tight_layout()
     return fig, ax
 def plot_stacked_bar(
-    data,
+    data: pd.DataFrame,
+    series: List[Tuple[str, str]], 
     title: str,
-    output_path: str = None,
     ylabel: str = "Participación (%)",
     xlabel: str = "Año",
     figsize: tuple = (14, 7),
@@ -425,28 +425,35 @@ def plot_stacked_bar(
     width: float = 0.8
 ):
     """
-    Genera un gráfico de barras apiladas donde cada columna suma 100%.
+    Gráfico de barras apiladas (100 %) con etiquetas personalizadas.
 
-    Parámetros:
-    - data: DataFrame indexado por año, con las series a graficar.
-    - title: Título del gráfico.
-    - output_path: Ruta (incluyendo nombre de archivo) para guardar la imagen (png).
-                   Si None, no guardará el archivo.
-    - ylabel, xlabel: Etiquetas de ejes.
-    - figsize: Tamaño de la figura (ancho, alto) en pulgadas.
-    - legend_ncol: Número de columnas de la leyenda.
-    - xtick_step: Paso entre etiquetas del eje X (ej. 2 muestra cada segunda etiqueta).
-    - width: Ancho de las barras (0 < width ≤ 1).
-    
-    Retorna:
-    - fig, ax: objetos de matplotlib para mayor personalización si se desea.
+    Parámetros
+    ----------
+    data : DataFrame
+        Indexado por año. Debe contener todas las columnas listadas en `series`.
+    series : list[tuple[str, str]]
+        Tuplas (nombre_columna, etiqueta_legible) que definen:
+        - orden de las capas.
+        - texto de la leyenda.
+    title, ylabel, xlabel, figsize, legend_ncol, xtick_step, width : ver antes.
+
+    Devuelve
+    --------
+    fig, ax : objetos matplotlib.
     """
-    fig, ax = plt.subplots(figsize=figsize)
-    data.plot(kind="bar", stacked=True, ax=ax, width=width)
+    # 1) Reordenamos y renombramos las columnas según `series`
+    cols, labels = zip(*series)                    # desempaca listas
+    df = data.loc[:, cols].copy()                  # respeta el orden
+    df.columns = labels                            # sustituye por etiquetas legibles
 
+    # 2) Graficamos
+    fig, ax = plt.subplots(figsize=figsize)
+    df.plot(kind="bar", stacked=True, ax=ax, width=width)
+
+    # 3) Decoración
     ax.set_ylabel(ylabel)
     ax.set_xlabel(xlabel)
-    ax.set_title(title, fontweight="bold", pad=20)
+    ax.set_title(title, fontweight="bold", pad=20, color="red", fontsize=17)
 
     ax.legend(
         loc="upper center",
@@ -455,12 +462,11 @@ def plot_stacked_bar(
         fontsize=10,
         frameon=False
     )
-    fig.subplots_adjust(bottom=0.25, right=0.72)
+    fig.subplots_adjust(bottom=0.25)
 
-    # Ajuste de etiquetas X cada xtick_step
-    positions = np.arange(len(data.index))
+    positions = np.arange(len(df.index))
     ax.set_xticks(positions[::xtick_step])
-    ax.set_xticklabels(data.index[::xtick_step], rotation=45)
+    ax.set_xticklabels(df.index[::xtick_step], rotation=45)
 
     plt.tight_layout()
     return fig, ax
