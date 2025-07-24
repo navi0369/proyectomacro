@@ -1,0 +1,472 @@
+# validation/rules.yml
+
+PIB_Real_Gasto:
+  index: "año"
+  value_cols:
+    - gastos_consumo
+    - formacion_capital
+    - exportacion_bienes_servicios
+    - importacion_bienes
+    - pib_real_base_1990
+    - consumo_privado
+    - consumo_publico
+
+pib_ramas:
+  index: "año"
+  value_cols:
+    - agropecuario
+    - minas_canteras_total
+    - mineria
+    - petroleo
+    - industria_manufacturera
+    - construcciones
+    - energia
+    - transportes
+    - comercio_finanzas
+    - gobierno_general
+    - propiedad_vivienda
+    - servicios
+    - derechos_imp
+    - pib_nominal
+    - pib_real
+
+Participacion_PIB:
+  index: "año"
+  value_cols:
+    - exportaciones_pib
+    - importaciones_pib
+
+tasa_crecimiento_pib:
+  index: "año"
+  value_cols:
+    - crecimiento
+
+participacion_x_m_pib:
+  index: "año"
+  value_cols:
+    - x
+    - m
+
+participacion_pib_ramas:
+  index: "año"
+  value_cols:
+    - agropecuario
+    - minas_canteras_total
+    - mineria
+    - petroleo_crudo_y_gas_natural
+    - industria_manufacturera
+    - construcciones
+    - energia
+    - transportes
+    - comercio_finanzas
+    - gobierno_general
+    - propiedad_vivienda
+    - servicios
+
+pib_nominal_gasto:
+  index: "año"
+  value_cols:
+    - gastos_consumo
+    - consumo_privado
+    - consumo_publico
+    - variacion_existencias
+    - formacion_capital
+    - exportacion_bienes_servicios
+    - importacion_bienes
+    - pib_a_precios_corrientes
+
+deflactor_implicito_pib_gasto:
+  index: "año"
+  value_cols:
+    - consumo_publico
+    - consumo_hogares
+    - variacion_existencias
+    - formacion_capital_fijo
+    - exportaciones
+    - importaciones
+    - pib_precios_mercado
+
+oferta_total:
+  index: "año"
+  value_cols:
+    - oferta_total
+    - produccion_bruta
+    - importaciones
+    - derechos_imp
+    - impuestos_ind
+    - margenes_transp
+
+demanda_total:
+  index: "año"
+  value_cols:
+    - demanda_total
+    - consumo_intermedio
+    - consumo_final
+    - fbcf
+    - variacion_existencias
+    - exportaciones_bienes_serv
+
+vbp_sector_2006_2014:
+  index: "año"
+  value_cols:
+    - productos_agricolas_no_industriales
+    - productos_agricolas_industriales
+    - coca
+    - productos_pecuarios
+    - silvicultura_caza_y_pesca
+    - petroleo_crudo_y_gas_natural
+    - minerales_metalicos_y_no_metalicos
+    - carnes_frescas_y_elaboradas
+    - productos_lacteos
+    - productos_de_molineria_y_panaderia
+    - azucar_y_confiteria
+    - productos_alimenticios_diversos
+    - bebidas
+    - tabaco_elaborado
+    - textiles_prendas_vestir_y_productos_del_cuero
+    - madera_y_productos_de_madera
+    - papel_y_productos_de_papel
+    - substancias_y_productos_quimicos
+    - productos_de_refinacion_del_petroleo
+    - productos_de_minerales_no_metalicos
+    - productos_basicos_de_metales
+    - productos_metalicos_maquinaria_y_equipo
+    - productos_manufacturados_diversos
+    - electricidad_gas_y_agua
+    - construccion
+    - comercio
+    - transporte_y_almacenamiento
+    - comunicaciones
+    - servicios_financieros
+    - servicios_a_las_empresas
+    - propiedad_de_vivienda
+    - servicios_comunales_sociales_y_personales
+    - restaurantes_y_hoteles
+    - servicios_domesticos
+    - servicios_de_la_administracion_publica
+
+balanza_comercial:
+  index: "año"
+  value_cols:
+    - exportaciones
+    - importaciones
+    - saldo_comercial
+
+flujo_divisas:
+  index: "año"
+  value_cols:
+    - ingreso_divisas
+    - egreso_divisas
+    - flujo_neto_divisas
+
+grado_de_apertura:
+  index: "año"
+  value_cols:
+    - grado
+
+Reservas_oro_divisas:
+  index: "año"
+  value_cols:
+    - reservas_totales
+
+venta_de_divisas_al_banco_central:
+  index: "año"
+  value_cols:
+    - exportaciones_reales
+    - divisas_vendidas
+
+exportaciones_totales:
+  index: "año"
+  value_cols:
+    - productos_tradicionales
+    - productos_no_tradicionales
+    - total_valor_oficial
+
+exportaciones_minerales_totales:
+  index: "año"
+  value_cols:
+    - estaño_volumen
+    - estaño_valor
+    - plomo_volumen
+    - plomo_valor
+    - zinc_volumen
+    - zinc_valor
+    - plata_volumen
+    - plata_valor
+    - wolfram_volumen
+    - wolfram_valor
+    - cobre_volumen
+    - cobre_valor
+    - antimonio_volumen
+    - antimonio_valor
+    - oro_volumen
+    - oro_valor
+
+exportaciones_tradicionales:
+  index: "año"
+  value_cols:
+    - minerales
+    - hidrocarburos
+
+exportaciones_tradicionales_no_tradicionales:
+  index: "año"
+  value_cols:
+    - tradicionales
+    - no_tradicionales
+
+participacion_exp_trad_no_trad:
+  index: "año"
+  value_cols:
+    - exp_trad
+    - exp_no_trad
+
+exportaciones_tradicionales_hidrocarburos:
+  index: "año"
+  value_cols:
+    - hidrocarburos
+    - gas_natural
+    - otros_hidrocarburos
+
+exportacion_gas_natural:
+  index: "año"
+  value_cols:
+    - volumen_MMMc
+    - volumen_MMPC
+    - precio_usd_MPC
+    - valor
+
+exportacion_gas_natural_contratos:
+  index: "año"
+  value_cols:
+    - contrato
+    - destino
+    - monto
+
+participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos:
+  index: "año"
+  value_cols:
+    - exportacion_gas
+    - otros_hidrocarburos
+
+participacion_hidrocarburos_minerales_exportaciones_tradicionales:
+  index: "año"
+  value_cols:
+    - minerales
+    - hidrocarburos
+
+composicion_importaciones_uso_destino:
+  index: "año"
+  value_cols:
+    - bienes_consumo
+    - materias_primas_productos_intermedios
+    - bienes_capital
+    - diversos
+    - total_valor_oficial_cif
+
+participacion_composicion_importaciones_uso_destino:
+  index: "año"
+  value_cols:
+    - bienes_consumo
+    - materias_primas_productos_intermedios
+    - bienes_capital
+    - diversos
+    - total_cif
+
+exportaciones_no_tradicionales:
+  index: "año"
+  value_cols:
+    - total
+    - castaña
+    - café
+    - cacao
+    - azúcar
+    - bebidas
+    - gomas
+    - cueros
+    - maderas
+    - algodón
+    - soya
+    - joyería
+    - joyería_con_oro_imp
+    - otros
+precio_minerales:
+  index: "año"
+  value_cols:
+    - Zinc
+    - Estaño
+    - Oro
+    - Plata
+    - Antimonio
+    - Plomo
+    - Wólfram
+    - Cobre
+
+precio_oficial_minerales:
+  index: "año"
+  value_cols:
+    - zinc
+    - estaño
+    - oro
+    - plata
+    - antimonio
+    - plomo
+    - wolfram
+    - cobre
+    - bismuto
+    - cadmio
+    - manganeso
+
+precio_petroleo_wti:
+  index: "año"
+  value_cols:
+    - precio
+
+produccion_minerales:
+  index: "año"
+  value_cols:
+    - zinc
+    - estaño
+    - oro
+    - plata
+    - antimonio
+    - plomo
+    - wolfram
+    - cobre
+
+inflacion_acumulada:
+  index: "año"
+  value_cols:
+    - inflacion
+
+cotizacion_oficial_dolar:
+  index: "año"
+  value_cols:
+    - oficial_compra
+    - oficial_venta
+
+poder_adquisitivo_coste_vida:
+  index: "año"
+  value_cols:
+    - billetes_publico
+    - depositos_publico
+    - poder_adquisitivo
+    - indice_poder
+    - indice_coste_vida
+
+cotizacion_dolar_mercado_libre:
+  index: "año"
+  value_cols:
+    - valor
+
+
+consolidado_spnf:
+  index: "año"
+  value_cols:
+    - ingresos_totales
+    - egresos_totales
+    - sup_o_def_global
+    - financiamiento
+    - sup_o_def_primario
+# :contentReference[oaicite:0]{index=0}
+
+operaciones_empresas_publicas:
+  index: "año"
+  value_cols:
+    - ingresos_totales
+    - egresos_totales
+    - resultado_fiscal_global
+# :contentReference[oaicite:1]{index=1}
+
+inversion_publica_total:
+  index: "año"
+  value_cols:
+    - valor
+# :contentReference[oaicite:2]{index=2}
+
+inversion_publica_por_sectores:
+  index: "año"
+  value_cols:
+    - extractivo
+    - apoyo_a_la_produccion
+    - infraestructura
+    - sociales
+    - total
+# :contentReference[oaicite:3]{index=3}
+
+ingresos_nacionales:
+  index: "año"
+  value_cols:
+    - ingresos_nacionales_total
+    - total_coparticipación_tributaria
+    - total_idh
+    - total_hipc_ii
+    - total_regalías_departamentales
+    - total_iehd
+# :contentReference[oaicite:4]{index=4} and :contentReference[oaicite:5]{index=5}
+
+ingresos_corrientes:
+  index: "año"
+  value_cols:
+    - ingresos_tributarios
+    - ingresos_hidrocarburos
+    - total_ingresos_corrientes
+# :contentReference[oaicite:6]{index=6}
+
+ingresos_tributarios:
+  index: "año"
+  value_cols:
+    - renta_interna
+    - renta_aduanera
+    - regalias_mineras
+    - impuesto_directo_hidrocarburos
+    - ingresos_tributarios_total
+# :contentReference[oaicite:7]{index=7}
+
+ingresos_hidrocarburos:
+  index: "año"
+  value_cols:
+    - idh
+    - iehd
+    - regalias
+    - ingresos_hidrocarburos_total
+# :contentReference[oaicite:8]{index=8}
+
+finanzas_publicas:
+  index: "año"
+  value_cols:
+    - ingresos_fiscales
+    - egresos_fiscales
+    - deficit
+    - conversion_deficit_usd
+    - cotizacion_dolar
+# :contentReference[oaicite:9]{index=9}
+
+deuda_externa_total:
+  index: "año"
+  value_cols:
+    - deuda
+# :contentReference[oaicite:0]{index=0}
+
+deuda_interna:
+  index: "año"
+  value_cols:
+    - valor
+# :contentReference[oaicite:1]{index=1}
+
+# validation/rules.yml — Empleo
+
+mercado_laboral:
+  index: "año"
+  value_cols:
+    - total_poblacion
+    - pent
+    - pet
+    - pea
+    - po
+    - pd
+    - cesantes
+    - aspirantes
+    - pei
+    - temporales
+    - permanentes
+# :contentReference[oaicite:2]{index=2}
