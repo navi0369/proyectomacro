@@ -560,7 +560,9 @@ def add_hitos(
     annotate_labels: tuple[str, ...] = ('Crisis',),
     fallback_offset: float = 0.82,
     line_kwargs: dict = None,
-    text_kwargs: dict = None
+    text_kwargs: dict = None,
+    vertical_labels: bool = True,
+    hitos_x_text: Optional[Dict[int, float]] = None,
 ):
     """
     Dibuja líneas verticales en los años de `hitos_v` sobre el Axes `ax`.
@@ -583,32 +585,50 @@ def add_hitos(
         kwargs para ax.axvline (color, ls, lw, zorder).
     text_kwargs : dict, opcional
         kwargs para ax.text (rotation, ha, va, fontsize, color, bbox, zorder).
+    vertical_labels : bool, opcional (True)
+        Si True, el texto se dibuja vertical (rotation=90).
+        Si False, horizontal (rotation=0). Solo aplica si 'rotation'
+        no se especifica en text_kwargs (no se sobreescribe al usuario).
+    hitos_x_text : dict[int, float], opcional
+        Desplazamiento horizontal del texto por año en coordenadas de datos.
+        Ej.: {2006: 0.3, 2014: -0.2}. Si no se da, se asume 0.0.
     """
-    default_lk = {
-        'color':'gray',
-        'linestyle':'--',
-        'linewidth':1.1,
-        'zorder':5
-    }
-    # valores por defecto
+     # kwargs por defecto para las líneas
+    default_lk = {'color': 'gray', 'linestyle': '--', 'linewidth': 1.1, 'zorder': 5}
     if line_kwargs:
         default_lk.update(line_kwargs)
     line_kwargs = default_lk
+
+    # kwargs por defecto para el texto
     if text_kwargs is None:
         text_kwargs = {
-            'rotation': 90, 'ha':'right', 'va':'top',
-            'fontsize':14, 'color':'#1f77b4',
-            'bbox':{'facecolor':'#f0f0f0','alpha':0.85,'edgecolor':'none'},
-            'zorder':6
+            'ha': 'right', 'va': 'top',
+            'fontsize': 14, 'color': '#1f77b4',
+            'bbox': {'facecolor': '#f0f0f0', 'alpha': 0.85, 'edgecolor': 'none'},
+            'zorder': 6
         }
+    # si el usuario NO definió rotation, aplicamos según vertical_labels
+    if 'rotation' not in text_kwargs:
+        text_kwargs = text_kwargs.copy()
+        text_kwargs['rotation'] = 90 if vertical_labels else 0
+
+    # dict de desplazamientos horizontales para el texto
+    hitos_x_text = hitos_x_text or {}
 
     for yr, lbl in hitos_v.items():
         if yr in index:
+            
+            # línea vertical en el año
             ax.axvline(x=yr, **line_kwargs)
+            if yr not in hitos_offset:
+                continue
+            # posición del texto
             y_max = ax.get_ylim()[1]
-            offset = hitos_offset.get(yr, fallback_offset)
+            y = y_max * hitos_offset.get(yr, fallback_offset)
+            x = yr + hitos_x_text.get(yr, 0.0)
+            # anotar solo si la etiqueta está listada
             if lbl in annotate_labels:
-                ax.text(yr, y_max * offset, lbl, **text_kwargs)
+                ax.text(x, y, lbl, **text_kwargs)
 
 # TASA DE CRECIMIENTO PARA UN SOLO COMPONENTE
 # graficos_utils.py  (versión con periodos = (vi, vf) )
@@ -937,3 +957,5 @@ def add_participation_cycle_boxes(
             kw = text_kwargs.copy()
             kw['color'] = colors.get(comp, kw.get('color'))
             ax.text(x0, y, txt, **kw)
+
+

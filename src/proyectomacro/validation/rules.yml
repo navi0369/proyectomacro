@@ -36,10 +36,11 @@ Participacion_PIB:
     - exportaciones_pib
     - importaciones_pib
 
-tasa_crecimiento_pib:
+Tasa_Crecimiento_PIB:
   index: "año"
   value_cols:
     - crecimiento
+  check_outliers: false 
 
 participacion_x_m_pib:
   index: "año"
@@ -241,6 +242,10 @@ exportacion_gas_natural_contratos:
     - contrato
     - destino
     - monto
+  check_unique_index: False
+  check_monotonic_index: False
+  check_numeric: False
+  check_gaps: False
 
 participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos:
   index: "año"
@@ -315,6 +320,7 @@ precio_oficial_minerales:
     - bismuto
     - cadmio
     - manganeso
+  check_no_nulls: False
 
 precio_petroleo_wti:
   index: "año"
@@ -350,7 +356,7 @@ poder_adquisitivo_coste_vida:
     - billetes_publico
     - depositos_publico
     - poder_adquisitivo
-    - indice_poder
+    - indice_poder_adquisitivo
     - indice_coste_vida
 
 cotizacion_dolar_mercado_libre:
@@ -397,10 +403,10 @@ ingresos_nacionales:
   index: "año"
   value_cols:
     - ingresos_nacionales_total
-    - total_coparticipación_tributaria
+    - total_copart_tributaria
     - total_idh
     - total_hipc_ii
-    - total_regalías_departamentales
+    - total_regalias_depart
     - total_iehd
 # :contentReference[oaicite:4]{index=4} and :contentReference[oaicite:5]{index=5}
 

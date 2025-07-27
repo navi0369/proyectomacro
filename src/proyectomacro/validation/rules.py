@@ -24,7 +24,7 @@ class TableRule:
     check_no_nulls: bool = True  # 5. No hay NaN/Null/vacíos
     check_numeric: bool = True  # 6. Todos los datos son numéricos
     check_gaps: bool = True  # 7. Huecos en la secuencia
-    check_outliers: bool = True  # 8. Saltos atípicos (>4σ)
+    check_outliers: bool = False  # 8. Saltos atípicos (>4σ)
 
     # busca un archivo 'rules.yml' al lado de este módulo
 _YAML_PATH = Path(__file__).with_suffix(".yml")

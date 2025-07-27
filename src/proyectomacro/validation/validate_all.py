@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Callable, Dict, List, Tuple
 
 import pandas as pd
+from fpdf import FPDF
 
 from . import validators
 from .validators import validate_df
@@ -72,23 +73,30 @@ def validate_database(db_path: str = DB_PATH) -> pd.DataFrame:
 
 
 def generate_report(results: pd.DataFrame, report_path: Path) -> None:
-    """Generate a markdown report summarizing *results* at *report_path*."""
-    lines = ["# Informe de Validación", ""]
-    for _, row in results.iterrows():
-        lines.append(f"## {row['table']}")
-        lines.append(f"- Estado: **{row['status']}**")
-        if row["error"]:
-            lines.append(f"- Error: {row['error']}")
-        if row["warnings"]:
-            lines.append("- Advertencias:")
-            for warn in row["warnings"]:
-                lines.append(f"  - {warn}")
-        lines.append("")
+    """Create a PDF report summarizing ``results`` at ``report_path``."""
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    pdf.cell(0, 10, "Informe de Validación", ln=True, align="C")
 
-    Path(report_path).write_text("\n".join(lines), encoding="utf-8")
+    for _, row in results.iterrows():
+        pdf.ln(5)
+        pdf.set_font("Arial", "B", 12)
+        pdf.cell(0, 10, row["table"], ln=True)
+
+        pdf.set_font("Arial", size=12)
+        pdf.cell(0, 10, f"Estado: {row['status']}", ln=True)
+        if row["error"]:
+            pdf.multi_cell(0, 10, f"Error: {row['error']}")
+        if row["warnings"]:
+            pdf.cell(0, 10, "Advertencias:", ln=True)
+            for warn in row["warnings"]:
+                pdf.multi_cell(0, 10, f"- {warn}")
+
+    pdf.output(str(report_path))
 
 
 if __name__ == "__main__":
     df_results = validate_database()
-    generate_report(df_results, Path("validation_report.md"))
+    generate_report(df_results, Path("validation_report.pdf"))
     print(df_results)
