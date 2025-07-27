@@ -49,7 +49,9 @@ def validate_df(df: pd.DataFrame, table: str) -> bool:
     # -----------------------------------------------------------------
     # 0. Colocar índice
     if rule.index not in df.columns and df.index.name != rule.index:
-        raise KeyError(f"{table}: no se encuentra la columna índice '{rule.index}'")
+        raise KeyError(
+            f"{table}: no se encuentra la columna índice '{rule.index}'"
+        )
 
     if df.index.name != rule.index:
         df = df.set_index(rule.index)
