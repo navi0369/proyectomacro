@@ -57,3 +57,6 @@ done
 for dir in notebooks/tesis/*/; do
   jupytext --sync "${dir}"*.ipynb
 done
+
+export PYTHONPATH=src          # opcional, si tu árbol no está en PYTHONPATH
+python -m proyectomacro.validation.validate_all

@@ -145,6 +145,15 @@ vbp_sector_2006_2014:
     - restaurantes_y_hoteles
     - servicios_domesticos
     - servicios_de_la_administracion_publica
+balanza_de_pagos:
+  index: año
+  value_cols:
+    - current_account
+    - capital_account
+    - errors_omissions
+    - bop_balance
+    - financing
+
 
 balanza_comercial:
   index: "año"

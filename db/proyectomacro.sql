@@ -1358,54 +1358,6 @@ INSERT INTO balanza_de_pagos VALUES(2020,-28.3,11.9,-955.4,-16.4,-971.7);
 INSERT INTO balanza_de_pagos VALUES(2021,871.2,3.4,-1461.8,874.6,-587.2);
 INSERT INTO balanza_de_pagos VALUES(2022,-183.6,4.1,-1337.4,-179.5,-1516.9);
 INSERT INTO balanza_de_pagos VALUES(2023,-1246.9,4,-1784.7,-1242.9,-3027.7);
-CREATE TABLE IF NOT EXISTS inflacion_general_acumulada (
-año INTEGER PRIMARY KEY,
-inflacion REAL
-);
-INSERT INTO inflacion_general_acumulada VALUES(1980,23.94);
-INSERT INTO inflacion_general_acumulada VALUES(1981,25.12);
-INSERT INTO inflacion_general_acumulada VALUES(1982,296.55);
-INSERT INTO inflacion_general_acumulada VALUES(1983,328.49);
-INSERT INTO inflacion_general_acumulada VALUES(1984,2177.23);
-INSERT INTO inflacion_general_acumulada VALUES(1985,8170.52);
-INSERT INTO inflacion_general_acumulada VALUES(1986,65.96);
-INSERT INTO inflacion_general_acumulada VALUES(1987,10.66);
-INSERT INTO inflacion_general_acumulada VALUES(1988,21.51);
-INSERT INTO inflacion_general_acumulada VALUES(1989,16.56);
-INSERT INTO inflacion_general_acumulada VALUES(1990,18.01);
-INSERT INTO inflacion_general_acumulada VALUES(1991,14.52);
-INSERT INTO inflacion_general_acumulada VALUES(1992,10.46);
-INSERT INTO inflacion_general_acumulada VALUES(1993,9.31);
-INSERT INTO inflacion_general_acumulada VALUES(1994,8.52);
-INSERT INTO inflacion_general_acumulada VALUES(1995,12.58);
-INSERT INTO inflacion_general_acumulada VALUES(1996,7.95);
-INSERT INTO inflacion_general_acumulada VALUES(1997,6.73);
-INSERT INTO inflacion_general_acumulada VALUES(1998,4.39);
-INSERT INTO inflacion_general_acumulada VALUES(1999,3.13);
-INSERT INTO inflacion_general_acumulada VALUES(2000,3.41);
-INSERT INTO inflacion_general_acumulada VALUES(2001,0.92);
-INSERT INTO inflacion_general_acumulada VALUES(2002,2.45);
-INSERT INTO inflacion_general_acumulada VALUES(2003,3.94);
-INSERT INTO inflacion_general_acumulada VALUES(2004,4.62);
-INSERT INTO inflacion_general_acumulada VALUES(2005,4.91);
-INSERT INTO inflacion_general_acumulada VALUES(2006,4.95);
-INSERT INTO inflacion_general_acumulada VALUES(2007,11.73);
-INSERT INTO inflacion_general_acumulada VALUES(2008,11.85);
-INSERT INTO inflacion_general_acumulada VALUES(2009,0.26);
-INSERT INTO inflacion_general_acumulada VALUES(2010,7.18);
-INSERT INTO inflacion_general_acumulada VALUES(2011,6.9);
-INSERT INTO inflacion_general_acumulada VALUES(2012,4.54);
-INSERT INTO inflacion_general_acumulada VALUES(2013,6.48);
-INSERT INTO inflacion_general_acumulada VALUES(2014,5.19);
-INSERT INTO inflacion_general_acumulada VALUES(2015,2.95);
-INSERT INTO inflacion_general_acumulada VALUES(2016,4);
-INSERT INTO inflacion_general_acumulada VALUES(2017,2.71);
-INSERT INTO inflacion_general_acumulada VALUES(2018,1.51);
-INSERT INTO inflacion_general_acumulada VALUES(2019,1.47);
-INSERT INTO inflacion_general_acumulada VALUES(2020,0.67);
-INSERT INTO inflacion_general_acumulada VALUES(2021,0.9);
-INSERT INTO inflacion_general_acumulada VALUES(2022,3.12);
-INSERT INTO inflacion_general_acumulada VALUES(2023,2.12);
 CREATE TABLE IF NOT EXISTS precio_petroleo_wti (
 año INTEGER PRIMARY KEY,
 precio REAL
@@ -1438,27 +1390,6 @@ INSERT INTO precio_petroleo_wti VALUES(2020,39.2275);
 INSERT INTO precio_petroleo_wti VALUES(2021,67.963333);
 INSERT INTO precio_petroleo_wti VALUES(2022,94.439167);
 INSERT INTO precio_petroleo_wti VALUES(2023,77.6875);
-CREATE TABLE IF NOT EXISTS fuente_tablas (
-tabla TEXT PRIMARY KEY,
-fuente TEXT
-, notas TEXT, moneda TEXT, unidad TEXT);
-INSERT INTO fuente_tablas VALUES('precio_petroleo_wti','https://dossier.udape.gob.bo/res/PRECIO%20INTERNACIONAL%20DEL%20PETR%C3%93LEO%20(WTI)',NULL,NULL,NULL);
-INSERT INTO fuente_tablas VALUES('consolidado_spnf','https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector',NULL,'Bolivianos','millones');
-INSERT INTO fuente_tablas VALUES('reservas_oro_divisas','https://datos.bancomundial.org/indicador/FI.RES.TOTL.CD?locations=BO',NULL,'Dólares','millones de dólares');
-INSERT INTO fuente_tablas VALUES('balanza_comercial','https://nube.ine.gob.bo/index.php/s/YmNagUYOHcty0fZ/download','INE - saldo comercial: comercio exterior según año',NULL,NULL);
-INSERT INTO fuente_tablas VALUES('balanza_de_pagos','https://dossier.udape.gob.bo/res/balanza%20de%20pagos','Desde el 2014 cambia el método de cálculo de la balanza de pagos',NULL,NULL);
-INSERT INTO fuente_tablas VALUES('inflacion_general_acumulada','https://dossier.udape.gob.bo/res/inflacion%20general',NULL,NULL,NULL);
-INSERT INTO fuente_tablas VALUES('pobreza','https://www.ine.gob.bo/index.php/estadisticas-economicas/encuestas-de-hogares/','Indicadores de pobreza según área. Son dos Excel que contienen todos los datos',NULL,NULL);
-INSERT INTO fuente_tablas VALUES('pobreza_extrema','https://www.ine.gob.bo/index.php/estadisticas-economicas/encuestas-de-hogares/','Indicadores de pobreza extrema según área. Son dos Excel que contienen todos los datos',NULL,NULL);
-INSERT INTO fuente_tablas VALUES('deuda_externa_total','https://dossier.udape.gob.bo/res/DEUDA%20P%C3%9ABLICA%20EXTERNA%20DE%20MEDIANO%20Y%20LARGO%20PLAZO%20SEG%C3%9AN%20ACREEDOR','Desde 1995 son datos de UDAPE.',NULL,NULL);
-INSERT INTO fuente_tablas VALUES('deuda_interna','https://dossier.udape.gob.bo/res/STOCK%20DE%20LA%20DEUDA%20P%C3%9ABLICA%20INTERNA%20DEL%20TESORO%20GENERAL%20DE%20LA%20NACI%C3%93N','2018 al 2022 datos preliminares','dolares','millones');
-INSERT INTO fuente_tablas VALUES('inversion_publica_total','https://dossier.udape.gob.bo/res/INVERSI%C3%93N%20P%C3%9ABLICA%20POR%20SECTORES','desde el 2018 datos preliminares','dolares','miles de dolares');
-INSERT INTO fuente_tablas VALUES('exportaciones_tradicionales_no_tradicionales','https://nube.ine.gob.bo/index.php/s/zUQc65wIGkw1KUy/download','2023 y 2024 datos preliminares. Desde el 80 hasta el 92 son registros de excel prueba.xls','dolares','millones');
-INSERT INTO fuente_tablas VALUES('flujo_divisas','https://dossier.udape.gob.bo/res/balanza%20cambiaria','ninguna','dolares','millones');
-INSERT INTO fuente_tablas VALUES('exportaciones_tradicionales_hidrocarburos','https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/','2023 y 2024 datos preliminares, el excel de los datos es exportaciones segun productos tradicionales y no tradicionales','dolares','millones');
-INSERT INTO fuente_tablas VALUES('exportaciones_tradicionales','https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/','2023 y 2024 datos preliminares','dolares','millones');
-INSERT INTO fuente_tablas VALUES('tasa_crecimiento_pib','db/Pruebas.xlsx','Crecimiento anual del PIB expresado en %; datos extraídos de hoja Excel',NULL,'porcentaje');
-INSERT INTO fuente_tablas VALUES('produccion_minerales','https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf','en caso de que la fuente no esta disponible el archivo esta en reports como informe mineria',NULL,'toneladas finas');
 CREATE TABLE IF NOT EXISTS operaciones_empresas_publicas (
 año INTEGER PRIMARY KEY,
 ingresos_totales REAL,
@@ -2197,7 +2128,7 @@ INSERT INTO inflacion_acumulada VALUES(2004,4.62);
 INSERT INTO inflacion_acumulada VALUES(2005,4.91);
 INSERT INTO inflacion_acumulada VALUES(2006,4.95);
 INSERT INTO inflacion_acumulada VALUES(2007,11.73);
-INSERT INTO inflacion_acumulada VALUES(2008,NULL);
+INSERT INTO inflacion_acumulada VALUES(2008,11.85);
 INSERT INTO inflacion_acumulada VALUES(2009,0.26);
 INSERT INTO inflacion_acumulada VALUES(2010,7.18);
 INSERT INTO inflacion_acumulada VALUES(2011,6.9);
@@ -2802,13 +2733,13 @@ INSERT INTO poder_adquisitivo_coste_vida VALUES(1961,413151,80908,494059,8317,11
 INSERT INTO poder_adquisitivo_coste_vida VALUES(1962,457103,98314,555417,9350,12540);
 INSERT INTO poder_adquisitivo_coste_vida VALUES(1963,537048,125419,662467,11152,12458);
 INSERT INTO poder_adquisitivo_coste_vida VALUES(1964,656231,141976,798207,13438,13778);
-CREATE TABLE IF NOT EXISTS agregados_monetarios (
-"año"               REAL,
-m0                  REAL,
-m1                  REAL,
-m2                  REAL,
-m3                  REAL,
-emision_monetaria   REAL
+CREATE TABLE IF NOT EXISTS "agregados_monetarios" (
+año               REAL,
+m0                REAL,
+m1                REAL,
+m2                REAL,
+m3                REAL,
+emision_monetaria REAL
 );
 INSERT INTO agregados_monetarios VALUES(1980,12,NULL,NULL,NULL,8.48);
 INSERT INTO agregados_monetarios VALUES(1981,13.27,NULL,NULL,NULL,9.21);
