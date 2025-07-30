@@ -476,3 +476,55 @@ mercado_laboral:
     - temporales
     - permanentes
 # :contentReference[oaicite:2]{index=2}
+# ─────────────────────────────
+# 9. Pobreza
+# ─────────────────────────────
+pobreza:
+  index: año
+  value_cols:
+    - fgt0_bol
+    - fgt1_bol
+    - fgt2_bol
+    - pop_total_bol
+    - pop_poor_bol
+    - fgt0_urb
+    - fgt1_urb
+    - fgt2_urb
+    - pop_total_urb
+    - pop_poor_urb
+    - fgt0_rur
+    - fgt1_rur
+    - fgt2_rur
+    - pop_total_rur
+    - pop_poor_rur
+
+pobreza_extrema:
+  index: año
+  value_cols:
+    - fgt0_urb
+    - fgt1_urb
+    - fgt2_urb
+    - pop_total_urb
+    - pop_extreme_urb
+    - fgt0_rur
+    - fgt1_rur
+    - fgt2_rur
+    - pop_total_rur
+    - pop_extreme_rur
+    - fgt0_bol
+    - fgt1_bol
+    - fgt2_bol
+    - pop_total_bol
+    - pop_extreme_bol
+
+# ─────────────────────────────
+# 10. Sector Monetario
+# ─────────────────────────────
+agregados_monetarios:
+  index: año
+  value_cols:
+    - m0
+    - m1
+    - m2
+    - m3
+    - emision_monetaria
