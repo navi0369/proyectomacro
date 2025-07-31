@@ -1,0 +1,10 @@
+setup.py
+func_auxiliares/__init__.py
+func_auxiliares/config.py
+func_auxiliares/graficos_utils.py
+proyecto_macro.egg-info/PKG-INFO
+proyecto_macro.egg-info/SOURCES.txt
+proyecto_macro.egg-info/dependency_links.txt
+proyecto_macro.egg-info/entry_points.txt
+proyecto_macro.egg-info/requires.txt
+proyecto_macro.egg-info/top_level.txt

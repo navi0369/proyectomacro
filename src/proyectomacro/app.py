@@ -2,7 +2,7 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import html, page_container, page_registry
-
+from func_auxiliares.config import ASSETS_DIR
 ########################################################################
 # 1. Crear la aplicación y habilitar Dash pages
 ########################################################################
@@ -10,7 +10,8 @@ app = dash.Dash(
     __name__,
     use_pages=True,                       # << activa el enrutamiento nativo
     external_stylesheets=[dbc.themes.BOOTSTRAP],
-    suppress_callback_exceptions=True     # por si hay callbacks en cada page
+    suppress_callback_exceptions=True,     # por si hay callbacks en cada page
+    assets_folder=str(ASSETS_DIR),         # carpeta de assets
 )
 server = app.server
 
@@ -71,7 +72,7 @@ app.layout = dbc.Container(
             ],
             className="h-100",
         ),
-    ],
+    ], 
     fluid=True,
 )
 

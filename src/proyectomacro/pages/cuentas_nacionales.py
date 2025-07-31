@@ -30,7 +30,7 @@ LABELS = {
     "pib_ramas":                     "1.1 Desagregación del PIB por ramas de actividad",
     "participacion_x_m_pib":         "1.2 Participación X/M en el PIB",
     "tasa_crecimiento_pib":          "1.3 Tasa de Crecimiento Anual del PIB",
-    "participacion_pib_ramas":       "1.5 Participación del PIB por ramas de actividad",
+    "participacion_pib_ramas":       "1.4 Participación del PIB por ramas de actividad",
     "pib_nominal_gasto":             "1.6 PIB a precios corrientes por tipo de gasto",
     "deflactor_implicito_pib_gasto": "1.7 Deflactor implícito del PIB por tipo de gasto",
     "oferta_total":                  "1.8 Oferta total y componentes",
@@ -41,7 +41,7 @@ LABELS = {
 # Construye una tarjeta por cada tabla
 cards = []
 for tbl in TABLAS:
-    link = f"/{tbl.replace('_','-')}"
+    link = f"/cuentas-nacionales/{tbl.replace('_','-')}"
     cards.append(
         dbc.Col(
             dbc.Card(

@@ -337,7 +337,8 @@ def get_df(
             missing = [c for c in cols if c not in df.columns]
             if not missing:
                 df[new_col] = df[cols].sum(axis=1)
-
+    numeric = df.select_dtypes(include="number").columns
+    df[numeric] = df[numeric].round(2)
     return df
 
 
