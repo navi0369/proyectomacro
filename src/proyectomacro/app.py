@@ -8,7 +8,7 @@ from func_auxiliares.config import ASSETS_DIR
 ########################################################################
 app = dash.Dash(
     __name__,
-    use_pages=True,                       # << activa el enrutamiento nativo
+    use_pages=True,                       # << activa el enrutamiento nativo 
     external_stylesheets=[dbc.themes.BOOTSTRAP],
     suppress_callback_exceptions=True,     # por si hay callbacks en cada page
     assets_folder=str(ASSETS_DIR),         # carpeta de assets

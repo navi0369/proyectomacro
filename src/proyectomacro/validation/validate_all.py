@@ -11,7 +11,7 @@ from fpdf import FPDF
 
 from . import validators
 from .validators import validate_df
-from config import DB_PATH
+from func_auxiliares.config import DB_PATH
 
 
 def list_tables(conn: sqlite3.Connection) -> List[str]:
