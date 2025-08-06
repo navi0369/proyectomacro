@@ -1,20 +1,21 @@
-# src/proyectomacro/pages/sector_externo.py
+# src/proyectomacro/pages/precios_produccion.py
 import dash
 from dash import html
 import dash_bootstrap_components as dbc
 
-
 from proyectomacro.config import load_pages_config
 from proyectomacro.page_utils import build_section_cards
 
-dash.register_page(__name__,
-    path="/sector-externo",
-    name="Sector Externo"
+
+dash.register_page(
+    __name__,
+    name="Precios y Producción",
+    path="/precios-produccion",
 )
 
 # 2. Cargar config y extraer datos de esta sección
 PAGES = load_pages_config()
-sec_cfg = PAGES["sector_externo"]
+sec_cfg = PAGES["precios_y_produccion"]
 
 # 'tablas' es un dict de tabla_id -> { tabla, label }
 # Construimos las listas que pide build_section_cards:

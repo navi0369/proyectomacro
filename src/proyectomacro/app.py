@@ -48,12 +48,11 @@ for sec in SECCIONES:
                 className="my-1",
             )
         )
-
 sidebar = dbc.Nav(
     nav_links,
     vertical=True,
     pills=True,
-    className="bg-light p-2",
+    className="bg-light p-2 sidebar",
 )
 
 ########################################################################

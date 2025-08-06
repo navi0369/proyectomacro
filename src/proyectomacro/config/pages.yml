@@ -1,0 +1,255 @@
+secciones:
+  cuentas_nacionales:
+    name: "Cuentas Nacionales"
+    path: "/cuentas-nacionales"
+    tablas:
+      pib_real_gasto:
+        tabla: "PIB_Real_Gasto"
+        label: "PIB real (base 1990) desagregado por componentes de gasto"
+      pib_ramas:
+        tabla: "pib_ramas"
+        label: "Desagregación del PIB por sectores económicos"
+      participacion_pib:
+        tabla: "Participacion_PIB"
+        label: "Participación de exportaciones e importaciones en el PIB"
+      tasa_crecimiento_pib:
+        tabla: "tasa_crecimiento_pib"
+        label: "Tasa de crecimiento anual del PIB"
+      participacion_x_m_pib:
+        tabla: "participacion_x_m_pib"
+        label: "Participación de X (exportaciones) y M (importaciones) en el PIB"
+      participacion_pib_ramas:
+        tabla: "participacion_pib_ramas"
+        label: "Participación del PIB por ramas de actividad"
+      pib_nominal_gasto:
+        tabla: "pib_nominal_gasto"
+        label: "PIB a precios corrientes por tipo de gasto"
+      deflactor_implicito_pib_gasto:
+        tabla: "deflactor_implicito_pib_gasto"
+        label: "Índices de precios implícitos del PIB por tipo de gasto"
+      oferta_total:
+        tabla: "oferta_total"
+        label: "Oferta total y componentes"
+      demanda_total:
+        tabla: "demanda_total"
+        label: "Demanda total y componentes"
+      vbp_sector_2006_2014:
+        tabla: "vbp_sector_2006_2014"
+        label: "VBP por ramas de actividad económica (2006–2014)"
+
+  sector_externo:
+    name: "Sector Externo"
+    path: "/sector-externo"
+    tablas:
+      balanza_comercial:
+        tabla: "balanza_comercial"
+        label: "Balanza comercial en millones de USD"
+      flujo_divisas:
+        tabla: "flujo_divisas"
+        label: "Flujo de divisas: ingresos, egresos y flujo neto"
+      grado_de_apertura:
+        tabla: "grado_de_apertura"
+        label: "Grado de apertura económica"
+      reservas_oro_divisas:
+        tabla: "Reservas_oro_divisas"
+        label: "Reservas internacionales de oro y divisas"
+      venta_de_divisas_al_banco_central:
+        tabla: "venta_de_divisas_al_banco_central"
+        label: "Valor real de exportaciones y divisas vendidas al BCB"
+  exportaciones:
+    name: "Exportaciones"
+    path: "/exportaciones"
+    tablas:
+      exportaciones_totales:
+        tabla: "exportaciones_totales"
+        label: "Exportaciones Totales"
+      exportaciones_minerales_totales:
+        tabla: "exportaciones_minerales_totales"
+        label: "Volumen y Valor de Exportaciones de Minerales"
+      exportaciones_tradicionales:
+        tabla: "exportaciones_tradicionales"
+        label: "Exportaciones Tradicionales"
+      exportaciones_tradicionales_no_tradicionales:
+        tabla: "exportaciones_tradicionales_no_tradicionales"
+        label: "Exportaciones Tradicionales y No Tradicionales"
+      participacion_exp_trad_no_trad:
+        tabla: "participacion_exp_trad_no_trad"
+        label: "Participación de Exportaciones Tradicionales y No Tradicionales"
+      exportaciones_tradicionales_hidrocarburos:
+        tabla: "exportaciones_tradicionales_hidrocarburos"
+        label: "Exportaciones Tradicionales de Hidrocarburos"
+      exportacion_gas_natural:
+        tabla: "exportacion_gas_natural"
+        label: "Exportación de Gas Natural"
+      exportacion_gas_natural_contratos:
+        tabla: "exportacion_gas_natural_contratos"
+        label: "Exportación de Gas Natural por Contrato"
+      participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos:
+        tabla: "participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos"
+        label: "Participación del Gas Natural y Otros Hidrocarburos en el Total de Exportaciones de Hidrocarburos"
+      participacion_hidrocarburos_minerales_exportaciones_tradicionales:
+        tabla: "participacion_hidrocarburos_minerales_exportaciones_tradicionales"
+        label: "Participación porcentual de hidrocarburos y minerales en exportaciones tradicionales"
+      exportaciones_no_tradicionales:
+        tabla: "exportaciones_no_tradicionales"
+        label: "Exportaciones No Tradicionales"
+  importaciones:
+    name: "Importaciones"
+    path: "/importaciones"
+    tablas:
+      composicion_importaciones_uso_destino:
+        tabla: "composicion_importaciones_uso_destino"
+        label: "Composición de Importaciones por Uso y Destino"
+      participacion_composicion_importaciones_uso_destino:
+        tabla: "participacion_composicion_importaciones_uso_destino"
+        label: "Participación de la Composición de Importaciones por Uso y Destino"
+  precios_y_produccion:
+    name: "Precios y Producción"
+    path: "/precios-produccion"
+    tablas:
+      precio_minerales:
+        tabla: "precio_minerales"
+        label: "Precio real de minerales"
+      precio_oficial_minerales:
+        tabla: "precio_oficial_minerales"
+        label: "Precios oficiales de minerales principales"
+      precio_petroleo_wti:
+        tabla: "precio_petroleo_wti"
+        label: "Precio internacional del petróleo WTI"
+      produccion_minerales:
+        tabla: "produccion_minerales"
+        label: "Producción de minerales principales"
+      inflacion_acumulada:
+        tabla: "inflacion_acumulada"
+        label: "Inflación acumulada"
+      cotizacion_oficial_dolar:
+        tabla: "cotizacion_oficial_dolar"
+        label: "Cotización oficial del dólar"
+      poder_adquisitivo_coste_vida:
+        tabla: "poder_adquisitivo_coste_vida"
+        label: "Poder Adquisitivo y Coste de la Vida"
+      cotizacion_dolar_mercado_libre:
+        tabla: "cotizacion_dolar_mercado_libre"
+        label: "Cotización del Dólar en Mercado Libre"
+
+
+
+
+
+
+
+
+  sector_fiscal:
+    name: "Sector Fiscal"
+    path: "/sector-fiscal"
+    tablas:
+      consolidado_spnf:
+        tabla: "consolidado_spnf"
+        label: "Consolidado de operaciones del SPNF"
+      operaciones_empresas_publicas:
+        tabla: "operaciones_empresas_publicas"
+        label: "Operaciones de empresas públicas"
+      inversion_publica_total:
+        tabla: "inversion_publica_total"
+        label: "Inversión pública total"
+      inversion_publica_por_sectores:
+        tabla: "inversion_publica_por_sectores"
+        label: "Inversión pública por sectores"
+      ingresos_nacionales:
+        tabla: "ingresos_nacionales"
+        label: "Ingresos Nacionales"
+      ingresos_corrientes:
+        tabla: "ingresos_corrientes"
+        label: "Ingresos Corrientes"
+      ingresos_tributarios:
+        tabla: "ingresos_tributarios"
+        label: "Ingresos Tributarios"
+      ingresos_hidrocarburos:
+        tabla: "ingresos_hidrocarburos"
+        label: "Ingresos por Hidrocarburos"
+      finanzas_publicas:
+        tabla: "finanzas_publicas"
+        label: "Evolución de las Finanzas Públicas"
+
+  deuda:
+    name: "Deuda"
+    path: "/deuda"
+    tablas:
+      deuda_externa_total:
+        tabla: "deuda_externa_total"
+        label: "Deuda externa total"
+      deuda_interna:
+        tabla: "deuda_interna"
+        label: "Deuda interna pública"
+
+  empleo:
+    name: "Empleo"
+    path: "/empleo"
+    tablas:
+      mercado_laboral:
+        tabla: "mercado_laboral"
+        label: "Indicadores del mercado laboral"
+
+  pobreza:
+    name: "Pobreza"
+    path: "/pobreza"
+    tablas:
+      pobreza:
+        tabla: "pobreza"
+        label: "Pobreza"
+      pobreza_extrema:
+        tabla: "pobreza_extrema"
+        label: "Pobreza extrema"
+
+  deuda:
+    name: "Deuda"
+    path: "/deuda"
+    tablas:
+      deuda_externa_total:
+        tabla: "deuda_externa_total"
+        label: "Deuda externa total"
+      deuda_interna:
+        tabla: "deuda_interna"
+        label: "Deuda interna pública"
+
+  empleo:
+    name: "Empleo"
+    path: "/empleo"
+    tablas:
+      mercado_laboral:
+        tabla: "mercado_laboral"
+        label: "Indicadores del mercado laboral"
+
+  pobreza:
+    name: "Pobreza"
+    path: "/pobreza"
+    tablas:
+      pobreza:
+        tabla: "pobreza"
+        label: "Pobreza"
+      pobreza_extrema:
+        tabla: "pobreza_extrema"
+        label: "Pobreza extrema"
+
+  sector_monetario:
+    name: "Sector Monetario"
+    path: "/sector-monetario"
+    tablas:
+      agregados_monetarios:
+        tabla: "agregados_monetarios"
+        label: "Agregados monetarios (M0–M3) y emisión monetaria"
+    tablas:
+      pobreza:
+        tabla: "pobreza"
+        label: "Pobreza"
+      pobreza_extrema:
+        tabla: "pobreza_extrema"
+        label: "Pobreza extrema"
+
+  sector_monetario:
+    name: "Sector Monetario"
+    path: "/sector-monetario"
+    tablas:
+      agregados_monetarios:
+        tabla: "agregados_monetarios"
+        label: "Agregados monetarios (M0–M3) y emisión monetaria"
