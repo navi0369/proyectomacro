@@ -1,4 +1,4 @@
-# src/proyectomacro/pages/cuentas_nacionales/pib_ramas.py
+# src/proyectomacro/pages/sector_externo/balanza_comercial.py
 import dash
 from dash import html, dcc, dash_table, callback, Input, Output, State, no_update
 import dash_bootstrap_components as dbc
@@ -14,8 +14,6 @@ from dash import MATCH, ALL
 from dash.exceptions import PreventUpdate
 import json
 from dash import callback_context
-
-
 
 table_styles = {
     "style_table": {"overflowX": "auto"},
@@ -37,13 +35,13 @@ table_styles = {
 
 dash.register_page(
     __name__,
-    path="/cuentas-nacionales/pib-ramas",
-    name="PIB por ramas",
-    title="PIB por ramas de actividad",
-    metadata={"section": "Cuentas Nacionales"},
+    path="/sector-externo/balanza-comercial",
+    name="Balanza Comercial",
+    title="Balanza Comercial de Bolivia",
+    metadata={"section": "Sector Externo"},
 )
 
-TABLE_ID = "pib_ramas"
+TABLE_ID = "balanza_comercial"
 
 # 1. Carga de datos segura ─────────────────────────────────────────────
 try:
@@ -58,52 +56,29 @@ else:
 
 images = list_table_image_groups(TABLE_ID) if not df.empty else {"Serie completa": [], "Crisis": []}
 
-# Metadatos usando la función auxiliar (recomendado)
+# Metadatos para balanza comercial
 metadata = create_metadata_helper(
-    nombre_descriptivo="Desagregación del PIB por sectores económicos",
-    periodo="1950–2022",
+    nombre_descriptivo="Balanza comercial: exportaciones, importaciones y saldo comercial",
+    periodo="1952–2023",
     unidades={
-        "PIB Total": "Miles de bolivianos constantes de 1990",
-        "Agricultura": "Miles de bolivianos constantes de 1990", 
-        "Minería": "Miles de bolivianos constantes de 1990",
-        "Industria": "Miles de bolivianos constantes de 1990"
+        "Exportaciones": "Millones de dólares estadounidenses",
+        "Importaciones": "Millones de dólares estadounidenses",
+        "Saldo Comercial": "Millones de dólares estadounidenses",
+        "Términos de Intercambio": "Índice (base 2005=100)"
     },
     fuentes=[
-        "Instituto Nacional de Estadística (INE) https://track.toggl.com/timer",
-        "Banco Central de Bolivia (BCB)",
-        "Archivo Excel db/pruebas.xlsx"
+        "Banco Central de Bolivia (BCB) https://www.bcb.gob.bo",
+        "Instituto Nacional de Estadística (INE) https://www.ine.gob.bo",
+        "Ministerio de Desarrollo Productivo y Economía Plural"
     ],
     notas=[
-        "Datos preliminares para 2019–2022",
-        "Base año 1990 = 100",
-        "Incluye revisiones metodológicas 2020"
+        "Datos preliminares para 2022–2023",
+        "Exportaciones incluyen reexportaciones",
+        "Importaciones CIF (Costo, Seguro y Flete)",
+        "Saldo comercial = Exportaciones - Importaciones"
     ]
 )
 
-# Alternativa: Metadatos construidos manualmente
-# metadata = {
-#     "Nombre descriptivo": "Desagregación del PIB por sectores económicos",
-#     "Período": "1950–2022",
-#     "Unidad": {
-#         "PIB Total": "Miles de bolivianos constantes de 1990",
-#         "Agricultura": "Miles de bolivianos constantes de 1990", 
-#         "Minería": "Miles de bolivianos constantes de 1990",
-#         "Industria": "Miles de bolivianos constantes de 1990"
-#     },
-#     "Fuente": [
-#         "Instituto Nacional de Estadística (INE)",
-#         "Banco Central de Bolivia (BCB)",
-#         "Archivo Excel db/pruebas.xlsx"
-#     ],
-#     "Notas": [
-#         "Datos preliminares para 2019–2022",
-#         "Base año 1990 = 100",
-#         "Incluye revisiones metodológicas 2020"
-#     ],
-#     "Estado de validación": "✅ OK",
-# }
-
- 
 # ──────────────────────────────────────────────────────────────────────
 # 3. Layout final
 # ──────────────────────────────────────────────────────────────────────
@@ -111,16 +86,16 @@ layout = dbc.Container([
     build_breadcrumb(
         crumbs=[
             {"label": "Inicio", "href": "/"},
-            {"label": "Cuentas Nacionales", "href": "/cuentas-nacionales"},
-            {"label": "PIB por ramas", "active": True},
+            {"label": "Sector Externo", "href": "/sector-externo"},
+            {"label": "Balanza Comercial", "active": True},
         ],
         status=metadata["Estado de validación"],
         badge_success_marker="✅"
     ),
 
-    # 2. header
+    # 2. Header
     build_header(
-        title="PIB por ramas de actividad",
+        title="Balanza Comercial",
         desc=metadata["Nombre descriptivo"],
         metadata=metadata,
         toggle_id=f"{TABLE_ID}-btn-toggle-meta",
@@ -130,22 +105,22 @@ layout = dbc.Container([
     # C. Alerta si hubo error de carga
     dbc.Alert(f"Error cargando datos: {load_error}", color="danger") if load_error else None,
 
-
     # E. Galería de imágenes
     build_image_gallery_card(
         groups=images,       # dict {"Serie completa": [...], "Crisis": [...]}
-        table_id=TABLE_ID,   # "pib_ramas"
+        table_id=TABLE_ID,   # "balanza_comercial"
         title="Galería de imágenes",
         initially_open=False,
         toggle_id=f"{TABLE_ID}-btn-toggle-img",
         collapse_id=f"{TABLE_ID}-img-panel",
     ),
-    # D. KPI + Tabla
-    # build_kpi_cards(df),
-    build_data_table(df, TABLE_ID, table_styles, page_size=10),
+
+    # D. Tabla de datos
+    build_data_table(df, TABLE_ID, table_styles, page_size=15),
+
     # G. Footer
     html.Hr(),
-    html.Small("Fuente original: Archivo Excel db/pruebas.xlsx – Última validación 2025-07-31"),
+    html.Small("Fuente original: Banco Central de Bolivia, Instituto Nacional de Estadística – Última validación 2025-08-07"),
 
 ], fluid=True, className="pt-2")
 
@@ -160,6 +135,7 @@ layout = dbc.Container([
 )
 def toggle_meta(n_clicks, is_open):
     return not is_open
+
 @callback(
     Output(f"{TABLE_ID}-img-panel", "is_open"),
     Input(f"{TABLE_ID}-btn-toggle-img", "n_clicks"),
