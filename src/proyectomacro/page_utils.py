@@ -79,15 +79,132 @@ def build_breadcrumb(
 #Header
 #-------------
 def build_metadata_panel(meta: dict) -> dbc.Card:
-    rows = [
-        dbc.Row(
-            [dbc.Col(html.Small(f"{k}:"), width=4),
-             dbc.Col(html.Small(v),       width=8)],
-            className="mb-1"
+    """
+    Construye un panel de metadatos que soporta valores simples y múltiples.
+    
+    Parameters
+    ----------
+    meta : dict
+        Diccionario de metadatos. Los valores pueden ser:
+        - str: valor simple
+        - list: múltiples valores que se mostrarán como lista
+        - dict: valores con etiquetas (ej: {"Columna1": "Unidad1", "Columna2": "Unidad2"})
+    
+    Returns
+    -------
+    dbc.Card
+    """
+    import re
+    def _make_link(text):
+        """Si el texto contiene una URL, retorna [texto, link]."""
+        url_pattern = r'(https?://\S+)'  # simple URL regex
+        match = re.search(url_pattern, text)
+        if match:
+            url = match.group(1)
+            label = text.replace(url, '').strip()
+            # Si solo es la URL, usarla como label
+            if not label:
+                label = url
+            return html.Span([
+                html.Span(label + ' ') if label else None,
+                html.A(url, href=url, target="_blank", style={"word-break": "break-all"})
+            ])
+        else:
+            return html.Small(text)
+
+    def _format_value(value):
+        if isinstance(value, str):
+            return _make_link(value)
+        elif isinstance(value, list):
+            if len(value) == 1:
+                return _make_link(value[0])
+            else:
+                items = [html.Li(_make_link(item)) for item in value]
+                return html.Ul(items, className="mb-0 ps-3")
+        elif isinstance(value, dict):
+            if len(value) == 1:
+                key, val = next(iter(value.items()))
+                return html.Small(f"{key}: {val}")
+            else:
+                items = [
+                    html.Li(html.Small(f"{k}: {v}")) 
+                    for k, v in value.items()
+                ]
+                return html.Ul(items, className="mb-0 ps-3")
+        else:
+            return html.Small(str(value))
+
+    rows = []
+    for k, v in meta.items():
+        formatted_value = _format_value(v)
+        rows.append(
+            dbc.Row(
+                [
+                    dbc.Col(html.Small(f"{k}:"), width=4, className="fw-bold"),
+                    dbc.Col(formatted_value, width=8)
+                ],
+                className="mb-1"
+            )
         )
-        for k, v in meta.items()
-    ]
+    
     return dbc.Card(dbc.CardBody(rows), className="mt-2")
+
+
+def create_metadata_helper(
+    nombre_descriptivo: str,
+    periodo: str,
+    unidades: dict | list | str,
+    fuentes: list | str,
+    notas: list | str = None,
+    estado_validacion: str = "✅ OK"
+) -> dict:
+    """
+    Función auxiliar para crear diccionarios de metadatos de forma consistente.
+    
+    Parameters
+    ----------
+    nombre_descriptivo : str
+        Descripción breve de la tabla/dataset
+    periodo : str
+        Rango temporal de los datos (ej: "1950-2022")
+    unidades : dict | list | str
+        Unidades de medida. Puede ser:
+        - str: una sola unidad para toda la tabla
+        - list: múltiples unidades
+        - dict: {"Columna": "Unidad"} para diferentes columnas
+    fuentes : list | str
+        Fuente(s) de los datos
+    notas : list | str, optional
+        Notas adicionales
+    estado_validacion : str
+        Estado de validación de los datos
+        
+    Returns
+    -------
+    dict
+        Diccionario formateado para usar con build_metadata_panel
+        
+    Examples
+    --------
+    >>> metadata = create_metadata_helper(
+    ...     nombre_descriptivo="PIB por ramas",
+    ...     periodo="1950-2022", 
+    ...     unidades={"PIB": "Miles Bs", "Agricultura": "Miles Bs"},
+    ...     fuentes=["INE", "BCB"]
+    ... )
+    """
+    metadata = {
+        "Nombre descriptivo": nombre_descriptivo,
+        "Período": periodo,
+        "Unidad": unidades,
+        "Fuente": fuentes if isinstance(fuentes, list) else [fuentes],
+        "Estado de validación": estado_validacion,
+    }
+    
+    if notas:
+        metadata["Notas"] = notas if isinstance(notas, list) else [notas]
+    
+    return metadata
 def build_header(
     title: str,
     desc: str,
