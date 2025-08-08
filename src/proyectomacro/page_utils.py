@@ -9,6 +9,70 @@ from .extract_data import load_validated_tables, list_table_image_groups
 from typing import Dict, List
 from .config_loader import get_table_metadata
 
+# ──────────────────────────────────────────────────────────────────────
+# Estilos predeterminados para tablas
+# ──────────────────────────────────────────────────────────────────────
+DEFAULT_TABLE_STYLES = {
+    "style_table": {"overflowX": "auto"},
+    "style_cell": {
+        "textAlign": "center",
+        "padding": "8px",
+        "minWidth": "100px",
+        "width": "100px",
+        "maxWidth": "180px",
+        "fontFamily": "Arial, sans-serif",
+        "fontSize": "14px",
+    },
+    "style_header": {
+        "backgroundColor": "#007BFF",
+        "fontWeight": "bold",
+        "color": "white",
+    },
+}
+
+def get_table_styles(custom_styles: Dict = None) -> Dict:
+    """
+    Retorna los estilos de tabla predeterminados, con opción de personalización.
+    
+    Parameters
+    ----------
+    custom_styles : dict, optional
+        Diccionario con estilos personalizados que se mezclarán con los predeterminados.
+        Permite sobrescribir cualquier estilo específico.
+        
+    Returns
+    -------
+    dict
+        Diccionario de estilos listo para usar con dash_table.DataTable
+        
+    Examples
+    --------
+    >>> # Usar estilos predeterminados
+    >>> styles = get_table_styles()
+    >>> 
+    >>> # Personalizar color del header
+    >>> styles = get_table_styles({
+    ...     "style_header": {"backgroundColor": "#28a745", "color": "white"}
+    ... })
+    >>> 
+    >>> # Personalizar solo el tamaño de fuente
+    >>> styles = get_table_styles({
+    ...     "style_cell": {"fontSize": "16px"}
+    ... })
+    """
+    styles = DEFAULT_TABLE_STYLES.copy()
+    
+    if custom_styles:
+        for key, value in custom_styles.items():
+            if key in styles and isinstance(styles[key], dict) and isinstance(value, dict):
+                # Mezclar diccionarios anidados (como style_cell, style_header)
+                styles[key] = {**styles[key], **value}
+            else:
+                # Sobrescribir completamente
+                styles[key] = value
+    
+    return styles
+
 def build_section_cards(tablas: list[str], labels: dict[str,str], base_path: str, cols_per_row: dict = None):
     """
     Genera una lista de dbc.Col(dbc.Card) para una sección:
@@ -414,7 +478,7 @@ def build_image_gallery_card(
 def build_data_table(
     df,
     table_id: str,
-    table_styles: dict,
+    table_styles: dict = None,
     page_size: int = 10
 ):
     """
@@ -426,8 +490,9 @@ def build_data_table(
         DataFrame ya indexado (con índice significativo, p.ej. 'año').
     table_id : str
         Identificador para el componente (se usa en id="{table_id}-table").
-    table_styles : dict
-        Diccionario con estilos base: style_table, style_cell, style_header.
+    table_styles : dict, opcional
+        Diccionario con estilos personalizados. Si es None, usa los estilos predeterminados.
+        Estructura esperada: {"style_table": {...}, "style_cell": {...}, "style_header": {...}}
     page_size : int, opcional
         Número de filas por página (por defecto 10).
 
@@ -435,6 +500,10 @@ def build_data_table(
     -------
     dash_table.DataTable
     """
+    # Usar estilos predeterminados si no se proporcionan personalizados
+    if table_styles is None:
+        table_styles = get_table_styles()
+    
     # Preparar datos y columnas
     data = df.reset_index().to_dict("records") if not df.empty else []
     columns = (

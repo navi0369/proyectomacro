@@ -34,7 +34,7 @@ secciones:
             "Minería": "Miles de bolivianos constantes de 1990"
             "Industria": "Miles de bolivianos constantes de 1990"
           fuentes:
-            - "Instituto Nacional de Estadística (INE) http://localhost:8050/cuentas-nacionales/pib-ramas"
+            - "Instituto Nacional de Estadística (INE)"
             - "Banco Central de Bolivia (BCB)"
             - "Archivo Excel db/pruebas.xlsx"
           notas:

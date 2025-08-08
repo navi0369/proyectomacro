@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 
 from proyectomacro.extract_data import list_table_image_groups
-from proyectomacro.page_utils import build_breadcrumb, build_header, build_image_gallery_card, build_data_table, create_metadata_helper, load_metadata_from_config
+from proyectomacro.page_utils import build_breadcrumb, build_header, build_image_gallery_card, build_data_table, create_metadata_helper, load_metadata_from_config, get_table_styles
 from func_auxiliares.graficos_utils import get_df
 from func_auxiliares.config import DB_PATH
 
@@ -15,25 +15,9 @@ from dash.exceptions import PreventUpdate
 import json
 from dash import callback_context
 
-
-
-table_styles = {
-    "style_table": {"overflowX": "auto"},
-    "style_cell": {
-        "textAlign": "center",
-        "padding": "8px",
-        "minWidth": "100px",
-        "width": "100px",
-        "maxWidth": "180px",
-        "fontFamily": "Arial, sans-serif",
-        "fontSize": "14px",
-    },
-    "style_header": {
-        "backgroundColor": "#007BFF",
-        "fontWeight": "bold",
-        "color": "white",
-    },
-}
+# Nota: Los estilos de tabla ahora están centralizados en page_utils.py
+# Si necesitas personalizar estilos específicos para esta tabla, usa:
+# table_styles = get_table_styles({"style_header": {"backgroundColor": "#custom-color"}})
 
 dash.register_page(
     __name__,
@@ -100,7 +84,7 @@ layout = dbc.Container([
     ),
     # D. KPI + Tabla
     # build_kpi_cards(df),
-    build_data_table(df, TABLE_ID, table_styles, page_size=10),
+    build_data_table(df, TABLE_ID, page_size=10),  # Usa estilos predeterminados
     # G. Footer
     html.Hr(),
     html.Small("Fuente original: Archivo Excel db/pruebas.xlsx – Última validación 2025-07-31"),
