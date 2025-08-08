@@ -121,7 +121,7 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"coste de vida ({nombre})",
+        title=f"COSTE DE VIDA ({nombre.upper()})",
         xlabel="Año",
         ylabel="Índice (base 1951=100)",
         source_text="Fuente: Elaboración propia",

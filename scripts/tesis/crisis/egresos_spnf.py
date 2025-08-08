@@ -96,7 +96,7 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"Egresos Totales SPNF ({nombre})",
+        title=f"EGRESOS TOTALES SPNF ({nombre.upper()})",
         xlabel="Año",
         ylabel="Millones de BOB",
         source_text="Fuente: UDAPE – Consolidado SPNF"

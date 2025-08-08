@@ -22,7 +22,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
- 
 
 from func_auxiliares.graficos_utils import (
     get_df, set_style, init_base_plot, add_year_value_annotations
@@ -35,12 +34,9 @@ from func_auxiliares.config import (
 # ─────────────────────────────────────────────────────────────────────
 # Configuración general
 # ─────────────────────────────────────────────────────────────────────
-# Carpeta de salida para las gráficas de importaciones en periodos de crisis
-output_dir = ASSETS_DIR / "crisis" / "importaciones"
-output_dir.mkdir(parents=True, exist_ok=True)
-
-# Aplica tu estilo corporativo
-set_style()
+output_dir = ASSETS_DIR / "crisis" / "tasa_crecimiento_pib"
+output_dir.mkdir(parents=True, exist_ok=True)      # crea la carpeta de salida
+set_style()                                        # aplica el estilo corporativo
 
 # ─────────────────────────────────────────────────────────────────────
 # Carga de datos
@@ -48,90 +44,93 @@ set_style()
 SQL = """
     SELECT
       año,
-      importaciones
-    FROM balanza_comercial
+      crecimiento
+    FROM tasa_crecimiento_pib
 """
 df = get_df(SQL, str(DB_PATH), index_col="año")
 
 # ─────────────────────────────────────────────────────────────────────
 # Componentes y parámetros de graficado
 # ─────────────────────────────────────────────────────────────────────
-componentes = [("importaciones", "Importaciones")]
-cols_componentes = [col for col, _ in componentes]
-colors = {"importaciones": "red"}
+componentes       = [("crecimiento", "Tasa de crecimiento del PIB")]
+cols_componentes  = [col for col, _ in componentes]
+colors            = {"crecimiento": "#d62728"}        # rojo “tabla-10”
 
-
+# Offsets iniciales (dx, dy). Ajusta tras ver la gráfica si alguna
+# etiqueta se cruza con otra.
 annotation_offsets = {
-    "importaciones": {
+    "crecimiento": {
         1950: (-0.2,  0),
-        1951: (0,  1.5),
-        1952: (0,  1),
-        1953: (0.2,  1),
-        1954: (0,  -1.5),
-        1955: (0,  1.3),
-        1956: (0,  1.3),
-        1957: (0,  1.3),
-        1958: (-0.2, -1.5),  
-        1959: (0,  2),
-        1960: (0,  1.3),
+        1951: (0,  -0.5),
+        1952: (0,  0.5),
+        1953: (0,  -0.5),
+        1954: (0.14,  -0.25),
+        1955: (0,  0.5),
+        1956: (0,  -0.5),
+        1957: (-0.1,  0.35),
+        1958: (0, 0.5),  
+        1959: (0,  -0.5),
+        1960: (0,  0.5),
 
 
-        1980: (0,  -10),   
-        1981: (0.3,  -20),
-        1982: (0.2,  16),
-        1983: (0.2,  10),
-        1984: (0,  -10),
-        1985: (0,  10),
-        1986: (0,  -10),
-        1987: (0, 10),   
-        1988: (0,  -10),
-        1989: (0.08,  -10),
-        1990: (0.2,  10),
+        1980: (0,  -0.25),   
+        1981: (0,  0.25),
+        1982: (0.1,  0.21),
+        1983: (0,  -0.25),
+        1984: (0,  0.2),
+        1985: (0,  0.2),
+        1986: (0,  -0.2),
+        1987: (0, 0.2),   
+        1988: (0,  -0.2),
+        1989: (0.1,  -0.2),
+        1990: (0,  0.2),
 
-        2014: (0,  150),  
-        2015: (0.2,  150),   
-        2016: (0, -130),   
-        2017: (0,  200),
-        2018: (0,  100),
-        2019: (0.2,  100),
-        2020: (0, -140),   
-        2022: (0,  100),
-        2023: (0.2,  130),
-        2024: (0,  -100),   
+        2014: (0,  0.2),  
+        2015: (0.1,  0.2),   
+        2016: (0, -0.3),   
+        2017: (0,  0.3),
+        2018: (0,  0.3),
+        2019: (0.1,  0.2),
+        2020: (0, -0.35),
+        2021: (0,  0.2),
+        2022: (0,  0.3),
+        2023: (0.1,  0.3),
+        2024: (0,  -0.3),
     }
 }
+
 # ─────────────────────────────────────────────────────────────────────
 # Generación de gráficas por subperíodo
 # ─────────────────────────────────────────────────────────────────────
 for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
     sub = df.loc[ini:fin]
-    if sub.empty:
-        continue
-    #si sub tiene solo 3 datos
-    if len(sub) < 3:
+    if sub.empty or len(sub) < 3:
         print(f"Subperíodo {nombre} tiene menos de 3 datos, omitiendo.")
         continue
-    years_to_annot = list(sub.index)  # Aquí tomas los años directamente del índice del DataFrame
+
+    years_to_annot = list(sub.index)
+
     fig, ax = init_base_plot(
         sub,
         series=componentes,
         colors=colors,
-        title=f"IMPORTACIONES ({nombre.upper()})",
+        title=f"TASA DE CRECIMIENTO DEL PIB ({nombre.upper()})",
         xlabel="Año",
-        ylabel="Millones USD",
-        source_text="Fuente: Elaboración propia con datos de la INE y Memorias del Banco Central",
+        ylabel="Variación % anual",
+        source_text="Fuente: Elaboración propia con datos de UDAPE / INE",
     )
+
     add_year_value_annotations(
         ax,
         sub,
-        years_to_annot,              # los años que quieres anotar
+        years_to_annot,
         cols_componentes,
         annotation_offsets,
         colors,
         arrow_lw=0.5,
     )
-    # Guardar la figura con nombre descriptivo
-    fig.savefig(output_dir / f"importaciones_{nombre}.png")
-    plt.show()  # Mostrar la figura en pantalla
+
+    fig.savefig(output_dir / f"tasa_crecimiento_pib_{nombre}.png")
+    plt.show()
     plt.close(fig)
 

@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 
 from func_auxiliares.graficos_utils import (
     get_df, set_style, init_base_plot,
-    add_year_value_annotations, compute_annot_years
+    add_year_value_annotations
 )
 from func_auxiliares.config import (
     DB_PATH, ASSETS_DIR,
@@ -102,7 +102,7 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"Tipo de cambio USD (oficial) ({nombre})",
+        title=f"TIPO DE CAMBIO USD (oficial) ({nombre})",
         xlabel="Año",
         ylabel="BOB por USD",
         source_text="Fuente: UDAPE – Cotización oficial"

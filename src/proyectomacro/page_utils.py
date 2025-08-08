@@ -1,12 +1,13 @@
 # page_factory.py
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional, Any
 
 import dash
 import dash_bootstrap_components as dbc
 from dash import html, dash_table, get_asset_url
-from extract_data import load_validated_tables, list_table_image_groups
+from .extract_data import load_validated_tables, list_table_image_groups
 from typing import Dict, List
+from .config_loader import get_table_metadata
 
 def build_section_cards(tablas: list[str], labels: dict[str,str], base_path: str, cols_per_row: dict = None):
     """
@@ -203,6 +204,49 @@ def create_metadata_helper(
     
     if notas:
         metadata["Notas"] = notas if isinstance(notas, list) else [notas]
+    
+    return metadata
+
+def load_metadata_from_config(table_id: str, estado_validacion: str = "✅ OK") -> Optional[Dict[str, Any]]:
+    """
+    Carga los metadatos de una tabla desde la configuración YAML.
+    
+    Parameters
+    ----------
+    table_id : str
+        ID de la tabla en la base de datos
+    estado_validacion : str
+        Estado de validación a agregar
+        
+    Returns
+    -------
+    dict | None
+        Diccionario de metadatos formateado o None si no se encuentra
+        
+    Examples
+    --------
+    >>> metadata = load_metadata_from_config("pib_ramas")
+    >>> if metadata is None:
+    ...     # Fallback a metadatos manuales
+    ...     metadata = create_metadata_helper(...)
+    """
+    yaml_metadata = get_table_metadata(table_id)
+    
+    if not yaml_metadata:
+        return None
+    
+    # Convertir del formato YAML al formato esperado por build_metadata_panel
+    metadata = {
+        "Nombre descriptivo": yaml_metadata.get("nombre_descriptivo", ""),
+        "Período": yaml_metadata.get("periodo", ""),
+        "Unidad": yaml_metadata.get("unidades", {}),
+        "Fuente": yaml_metadata.get("fuentes", []),
+        "Estado de validación": estado_validacion,
+    }
+    
+    # Agregar notas si existen
+    if yaml_metadata.get("notas"):
+        metadata["Notas"] = yaml_metadata["notas"]
     
     return metadata
 def build_header(

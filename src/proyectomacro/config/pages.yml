@@ -6,10 +6,42 @@ secciones:
       pib_real_gasto:
         tabla: "PIB_Real_Gasto"
         label: "PIB real (base 1990) desagregado por componentes de gasto"
+        metadata:
+          nombre_descriptivo: "PIB real desagregado por componentes de gasto"
+          periodo: "1950–2022"
+          unidades:
+            "Consumo privado": "Miles de bolivianos constantes de 1990"
+            "Consumo público": "Miles de bolivianos constantes de 1990"
+            "Formación de capital": "Miles de bolivianos constantes de 1990"
+            "Exportaciones netas": "Miles de bolivianos constantes de 1990"
+          fuentes:
+            - "Instituto Nacional de Estadística (INE)"
+            - "Banco Central de Bolivia (BCB)"
+            - "Archivo Excel db/pruebas.xlsx"
+          notas:
+            - "Datos preliminares para 2019–2022"
+            - "Base año 1990 = 100"
+            - "Exportaciones netas = Exportaciones - Importaciones"
       pib_ramas:
         tabla: "pib_ramas"
         label: "Desagregación del PIB por sectores económicos"
-      participacion_pib:
+        metadata:
+          nombre_descriptivo: "Desagregación del PIB por sectores económicos"
+          periodo: "1950–2022"
+          unidades:
+            "PIB Total": "Miles de bolivianos constantes de 1990"
+            "Agricultura": "Miles de bolivianos constantes de 1990"
+            "Minería": "Miles de bolivianos constantes de 1990"
+            "Industria": "Miles de bolivianos constantes de 1990"
+          fuentes:
+            - "Instituto Nacional de Estadística (INE) http://localhost:8050/cuentas-nacionales/pib-ramas"
+            - "Banco Central de Bolivia (BCB)"
+            - "Archivo Excel db/pruebas.xlsx"
+          notas:
+            - "Datos preliminares para 2019–2022"
+            - "Base año 1990 = 100"
+            - "Incluye revisiones metodológicas 2020"
+      participacion_pib: 
         tabla: "Participacion_PIB"
         label: "Participación de exportaciones e importaciones en el PIB"
       tasa_crecimiento_pib:

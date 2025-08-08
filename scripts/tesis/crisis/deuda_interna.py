@@ -90,7 +90,7 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"Deuda interna pública TGN ({nombre})",
+        title=f"DEUDA INTERNA PÚBLICA TGN({nombre.upper()})",
         xlabel="Año",
         ylabel="Millones USD",
         source_text="Fuente: Elaboración propia con datos de UDAPE",

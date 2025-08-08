@@ -125,7 +125,7 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"Finanzas Públicas ({nombre})",
+        title=f"FINANZAS PUBLICAS ({nombre.upper()})",
         xlabel="Año",
         ylabel="Millones de bolivianos",
         source_text="Fuente: Memorias del Banco Central de Bolivia"

@@ -19,13 +19,15 @@
 import sys, os
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
- 
+
+# Si aún no instalaste el paquete en editable, descomenta la siguiente línea:
+# sys.path.append(os.path.abspath('../'))
 
 from func_auxiliares.graficos_utils import (
-    get_df, set_style, init_base_plot, add_year_value_annotations
+    get_df, set_style, init_base_plot,
+    add_year_value_annotations
 )
 from func_auxiliares.config import (
     DB_PATH, ASSETS_DIR,
@@ -35,71 +37,51 @@ from func_auxiliares.config import (
 # ─────────────────────────────────────────────────────────────────────
 # Configuración general
 # ─────────────────────────────────────────────────────────────────────
-# Carpeta de salida para las gráficas de importaciones en periodos de crisis
-output_dir = ASSETS_DIR / "crisis" / "importaciones"
+output_dir = ASSETS_DIR / "crisis" / "exportaciones_minerales"
 output_dir.mkdir(parents=True, exist_ok=True)
 
-# Aplica tu estilo corporativo
 set_style()
 
 # ─────────────────────────────────────────────────────────────────────
 # Carga de datos
 # ─────────────────────────────────────────────────────────────────────
-SQL = """
-    SELECT
-      año,
-      importaciones
-    FROM balanza_comercial
-"""
-df = get_df(SQL, str(DB_PATH), index_col="año")
+# Datos manuales para exportaciones minerales (1951–1960)
+years = list(range(1951, 1961))
+valores_exportaciones_minerales = [
+    145.6,  # 1951
+    137.3,  # 1952
+    121.3,  # 1953
+    100.8,  # 1954
+     97.8,  # 1955
+     99.9,  # 1956
+     88.5,  # 1957
+     55.7,  # 1958
+     68.7,  # 1959
+     59.8   # 1960
+]
+df = pd.DataFrame(
+    {"exportaciones_minerales": valores_exportaciones_minerales},
+    index=years
+)
+df.index.name = "año"
 
 # ─────────────────────────────────────────────────────────────────────
 # Componentes y parámetros de graficado
 # ─────────────────────────────────────────────────────────────────────
-componentes = [("importaciones", "Importaciones")]
+componentes      = [("exportaciones_minerales", "Exportaciones minerales")]
 cols_componentes = [col for col, _ in componentes]
-colors = {"importaciones": "red"}
+colors           = {"exportaciones_minerales": "#1f77b4"}
 
-
+# Desplazamientos de anotaciones para “exportaciones_minerales”
 annotation_offsets = {
-    "importaciones": {
-        1950: (-0.2,  0),
-        1951: (0,  1.5),
-        1952: (0,  1),
-        1953: (0.2,  1),
-        1954: (0,  -1.5),
-        1955: (0,  1.3),
-        1956: (0,  1.3),
-        1957: (0,  1.3),
-        1958: (-0.2, -1.5),  
-        1959: (0,  2),
-        1960: (0,  1.3),
-
-
-        1980: (0,  -10),   
-        1981: (0.3,  -20),
-        1982: (0.2,  16),
-        1983: (0.2,  10),
-        1984: (0,  -10),
-        1985: (0,  10),
-        1986: (0,  -10),
-        1987: (0, 10),   
-        1988: (0,  -10),
-        1989: (0.08,  -10),
-        1990: (0.2,  10),
-
-        2014: (0,  150),  
-        2015: (0.2,  150),   
-        2016: (0, -130),   
-        2017: (0,  200),
-        2018: (0,  100),
-        2019: (0.2,  100),
-        2020: (0, -140),   
-        2022: (0,  100),
-        2023: (0.2,  130),
-        2024: (0,  -100),   
+    "exportaciones_minerales": {
+        1951: (0, 5),  1952: (0, 5),  1953: (0, 5),
+        1954: (0, 5),  1955: (0, 5),  1956: (0, 5),
+        1957: (0, 5),  1958: (0, 5),  1959: (0, 5),
+        1960: (0, 5),
     }
 }
+
 # ─────────────────────────────────────────────────────────────────────
 # Generación de gráficas por subperíodo
 # ─────────────────────────────────────────────────────────────────────
@@ -107,31 +89,32 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
     sub = df.loc[ini:fin]
     if sub.empty:
         continue
-    #si sub tiene solo 3 datos
     if len(sub) < 3:
         print(f"Subperíodo {nombre} tiene menos de 3 datos, omitiendo.")
         continue
-    years_to_annot = list(sub.index)  # Aquí tomas los años directamente del índice del DataFrame
+
+    years_to_annot = list(sub.index)
     fig, ax = init_base_plot(
         sub,
         series=componentes,
         colors=colors,
-        title=f"IMPORTACIONES ({nombre.upper()})",
+        title=f"EXPORTACIONES MINERALES {nombre.upper()}",
         xlabel="Año",
         ylabel="Millones USD",
-        source_text="Fuente: Elaboración propia con datos de la INE y Memorias del Banco Central",
+        source_text="Fuente: Memorias del banco central"
     )
+
     add_year_value_annotations(
         ax,
         sub,
-        years_to_annot,              # los años que quieres anotar
+        years_to_annot,
         cols_componentes,
         annotation_offsets,
         colors,
         arrow_lw=0.5,
     )
-    # Guardar la figura con nombre descriptivo
-    fig.savefig(output_dir / f"importaciones_{nombre}.png")
-    plt.show()  # Mostrar la figura en pantalla
+
+    fig.savefig(output_dir / f"exportaciones_minerales_{nombre}.png")
+    plt.show()
     plt.close(fig)
 

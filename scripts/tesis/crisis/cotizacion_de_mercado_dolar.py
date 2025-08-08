@@ -93,10 +93,10 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"Cotización dólar mercado libre ({nombre})",
+        title=f"COTIZACION DÓLAR MERCADO LIBRE",
         xlabel="Año",
         ylabel="Bolivianos por USD",
-        source_text="Fuente: Recopilación propia de precios de mercado"
+        source_text="Fuente: Recopilación propia con datos de memorias de la economia Boliviana"
     )
 
     add_year_value_annotations(
@@ -113,3 +113,5 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
     plt.show()
     plt.close(fig)
 
+
+# %%

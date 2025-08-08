@@ -25,7 +25,7 @@ import matplotlib.pyplot as plt
 
 
 from func_auxiliares.graficos_utils import (
-    get_df, set_style, init_base_plot, add_year_value_annotations, compute_annot_years
+    get_df, set_style, init_base_plot, add_year_value_annotations
 )
 from func_auxiliares.config import (
     DB_PATH, ASSETS_DIR,
@@ -118,10 +118,10 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"Exportaciones ({nombre})",
+        title=f"EXPORTACIONES ({nombre.upper()})",
         xlabel="Año",
         ylabel="Millones USD",
-        source_text="Fuente: Elaboración propia con datos de la INE",
+        source_text="Fuente: Elaboración propia con datos de la INE y Memorias del Banco Central de Bolivia",
     )
     # 4) y aquí pasas years_to_annot en lugar de la lista global
     add_year_value_annotations(

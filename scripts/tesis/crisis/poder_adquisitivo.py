@@ -125,7 +125,7 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"Poder adquisitivo y líquido ({nombre})",
+        title=f"PODER ADQUISITIVO Y BILLETES EN CIRCULACION ({nombre.upper()})",
         xlabel="Año",
         ylabel="Millones de bolivianos",
         source_text="Fuente: Memorias del Banco Central de Bolivia"

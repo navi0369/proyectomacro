@@ -111,7 +111,7 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"RESERVAS INTERNACIONALES ({nombre})",
+        title=f"RESERVAS INTERNACIONALES ({nombre.upper()})",
         xlabel="Año",
         ylabel="Millones USD",
         source_text="Fuente: Banco Mundial / BCB"

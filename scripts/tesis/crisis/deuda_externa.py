@@ -122,7 +122,7 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"DEUDA EXTERNA ({nombre})",
+        title=f"DEUDA EXTERNA ({nombre.upper()})",
         xlabel="Año",
         ylabel="Millones de USD",
         source_text="Fuente: BCB / INE"

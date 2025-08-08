@@ -51,7 +51,7 @@ SQL = """
     FROM inflacion_acumulada
 """
 df = get_df(SQL, str(DB_PATH), index_col="año")
-df.loc[2025, "inflacion"] = 23.96 # Asegura que 2025 no tenga datos
+df.loc[2025, "inflacion"] = 16.92 # Asegura que 2025 no tenga datos
 # ─────────────────────────────────────────────────────────────────────
 # Componentes y parámetros de graficado
 # ─────────────────────────────────────────────────────────────────────
@@ -111,7 +111,7 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
         sub,
         series=componentes,
         colors=colors,
-        title=f"Inflación acumulada ({nombre})",
+        title=f"INFLACION ACUMULADA ({nombre.upper()})",
         xlabel="Año",
         ylabel="Variación acumulada (%)",
         source_text="Fuente: BCB / INE",
@@ -133,6 +133,3 @@ for nombre, (ini, fin) in PERIODOS_PARA_CRISIS.items():
     plt.close(fig)
 
  
-
-# %%
-df

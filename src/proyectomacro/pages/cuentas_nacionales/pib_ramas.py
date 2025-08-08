@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 
 from proyectomacro.extract_data import list_table_image_groups
-from proyectomacro.page_utils import build_breadcrumb, build_header, build_image_gallery_card, build_data_table, create_metadata_helper
+from proyectomacro.page_utils import build_breadcrumb, build_header, build_image_gallery_card, build_data_table, create_metadata_helper, load_metadata_from_config
 from func_auxiliares.graficos_utils import get_df
 from func_auxiliares.config import DB_PATH
 
@@ -58,52 +58,10 @@ else:
 
 images = list_table_image_groups(TABLE_ID) if not df.empty else {"Serie completa": [], "Crisis": []}
 
-# Metadatos usando la función auxiliar (recomendado)
-metadata = create_metadata_helper(
-    nombre_descriptivo="Desagregación del PIB por sectores económicos",
-    periodo="1950–2022",
-    unidades={
-        "PIB Total": "Miles de bolivianos constantes de 1990",
-        "Agricultura": "Miles de bolivianos constantes de 1990", 
-        "Minería": "Miles de bolivianos constantes de 1990",
-        "Industria": "Miles de bolivianos constantes de 1990"
-    },
-    fuentes=[
-        "Instituto Nacional de Estadística (INE) https://track.toggl.com/timer",
-        "Banco Central de Bolivia (BCB)",
-        "Archivo Excel db/pruebas.xlsx"
-    ],
-    notas=[
-        "Datos preliminares para 2019–2022",
-        "Base año 1990 = 100",
-        "Incluye revisiones metodológicas 2020"
-    ]
-)
+# Metadatos: primero intentar cargar desde configuración YAML
+metadata = load_metadata_from_config(TABLE_ID)
 
-# Alternativa: Metadatos construidos manualmente
-# metadata = {
-#     "Nombre descriptivo": "Desagregación del PIB por sectores económicos",
-#     "Período": "1950–2022",
-#     "Unidad": {
-#         "PIB Total": "Miles de bolivianos constantes de 1990",
-#         "Agricultura": "Miles de bolivianos constantes de 1990", 
-#         "Minería": "Miles de bolivianos constantes de 1990",
-#         "Industria": "Miles de bolivianos constantes de 1990"
-#     },
-#     "Fuente": [
-#         "Instituto Nacional de Estadística (INE)",
-#         "Banco Central de Bolivia (BCB)",
-#         "Archivo Excel db/pruebas.xlsx"
-#     ],
-#     "Notas": [
-#         "Datos preliminares para 2019–2022",
-#         "Base año 1990 = 100",
-#         "Incluye revisiones metodológicas 2020"
-#     ],
-#     "Estado de validación": "✅ OK",
-# }
 
- 
 # ──────────────────────────────────────────────────────────────────────
 # 3. Layout final
 # ──────────────────────────────────────────────────────────────────────

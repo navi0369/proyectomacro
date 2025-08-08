@@ -113,7 +113,7 @@ add_cycle_means_multi(
 )
 
 # Etiquetas y formato
-ax.set_title("Bolivia: Grado de apertura económica (1950-2022)", fontweight='bold')
+ax.set_title("BOLIVIA: GRADO DE APERTURA ECONÓMICA (1950-2022)", fontweight='bold', color='red', fontsize=17)
 ax.set_xlabel("Año")
 ax.set_ylabel("% del PIB")
 ax.set_ylim(0, df['GA'].max()*1.25)
