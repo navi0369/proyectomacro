@@ -7,68 +7,168 @@ secciones:
         tabla: "PIB_Real_Gasto"
         label: "PIB real (base 1990) desagregado por componentes de gasto"
         metadata:
-          nombre_descriptivo: "PIB real desagregado por componentes de gasto"
-          periodo: "1950–2022"
+          nombre_descriptivo: "Esta tabla almacena el Producto Interno Bruto real desagregado por componentes de gasto para Bolivia, en base a bolivianos constantes de 1990, desde 1950 hasta 2023."
+          periodo: "1950 – 2023"
           unidades:
-            "Consumo privado": "Miles de bolivianos constantes de 1990"
-            "Consumo público": "Miles de bolivianos constantes de 1990"
-            "Formación de capital": "Miles de bolivianos constantes de 1990"
-            "Exportaciones netas": "Miles de bolivianos constantes de 1990"
+            "gastos_consumo": "Miles de bolivianos constantes de 1990"
+            "formacion_capital": "Miles de bolivianos constantes de 1990"
+            "exportacion_bienes_servicios": "Miles de bolivianos constantes de 1990"
+            "importacion_bienes": "Miles de bolivianos constantes de 1990"
+            "pib_real_base_1990": "Miles de bolivianos constantes de 1990"
+            "consumo_privado": "Miles de bolivianos constantes de 1990"
+            "consumo_publico": "Miles de bolivianos constantes de 1990"
           fuentes:
-            - "Instituto Nacional de Estadística (INE)"
-            - "Banco Central de Bolivia (BCB)"
-            - "Archivo Excel db/pruebas.xlsx"
-          notas:
-            - "Datos preliminares para 2019–2022"
-            - "Base año 1990 = 100"
-            - "Exportaciones netas = Exportaciones - Importaciones"
+            - "Archivo Excel: `reports/pruebas.xls`"
       pib_ramas:
         tabla: "pib_ramas"
         label: "Desagregación del PIB por sectores económicos"
         metadata:
-          nombre_descriptivo: "Desagregación del PIB por sectores económicos"
-          periodo: "1950–2022"
+          nombre_descriptivo: "Desagrega anualmente el PIB por ramas de actividad económica para analizar la contribución sectorial (1950–2022)."
+          periodo: "1950 – 2022"
           unidades:
-            "PIB Total": "Miles de bolivianos constantes de 1990"
-            "Agricultura": "Miles de bolivianos constantes de 1990"
-            "Minería": "Miles de bolivianos constantes de 1990"
-            "Industria": "Miles de bolivianos constantes de 1990"
+            "agropecuario": "Miles de bolivianos constantes de 1990"
+            "minas_canteras_total": "Miles de bolivianos constantes de 1990"
+            "mineria": "Miles de bolivianos constantes de 1990"
+            "petroleo": "Miles de bolivianos constantes de 1990"
+            "industria_manufacturera": "Miles de bolivianos constantes de 1990"
+            "construcciones": "Miles de bolivianos constantes de 1990"
+            "energia": "Miles de bolivianos constantes de 1990"
+            "transportes": "Miles de bolivianos constantes de 1990"
+            "comercio_finanzas": "Miles de bolivianos constantes de 1990"
+            "gobierno_general": "Miles de bolivianos constantes de 1990"
+            "propiedad_vivienda": "Miles de bolivianos constantes de 1990"
+            "servicios": "Miles de bolivianos constantes de 1990"
+            "derechos_imp": "Miles de bolivianos constantes de 1990"
+            "pib_nominal": "Miles de bolivianos constantes de 1990"
+            "pib_real": "Miles de bolivianos constantes de 1990"
           fuentes:
-            - "Instituto Nacional de Estadística (INE)"
-            - "Banco Central de Bolivia (BCB)"
-            - "Archivo Excel db/pruebas.xlsx"
-          notas:
-            - "Datos preliminares para 2019–2022"
-            - "Base año 1990 = 100"
-            - "Incluye revisiones metodológicas 2020"
-      participacion_pib: 
+            - "Archivo Excel: `db/pruebas.xlsx`"
+      participacion_pib:
         tabla: "Participacion_PIB"
         label: "Participación de exportaciones e importaciones en el PIB"
+        metadata:
+          nombre_descriptivo: "Almacena la participación de exportaciones e importaciones como porcentaje del PIB anual para medir su peso relativo en la actividad económica (1950–2023)."
+          periodo: "1950 – 2023"
+          unidades:
+            "exportaciones_pib": "Porcentaje"
+            "importaciones_pib": "Porcentaje"
+          fuentes:
+            - "Archivo Excel: `reports/pruebas.xls`"
       tasa_crecimiento_pib:
         tabla: "tasa_crecimiento_pib"
         label: "Tasa de crecimiento anual del PIB"
+        metadata:
+          nombre_descriptivo: "Registra la variación porcentual anual del PIB para evaluar el ritmo de crecimiento económico (1951–2024)."
+          periodo: "1951 – 2024"
+          unidades:
+            "crecimiento": "Porcentaje"
+          fuentes:
+            - "Archivo Excel: `db/pruebas.xlsx`"
       participacion_x_m_pib:
         tabla: "participacion_x_m_pib"
         label: "Participación de X (exportaciones) y M (importaciones) en el PIB"
+        metadata:
+          nombre_descriptivo: "Muestra la participación de exportaciones (X) e importaciones (M) como porcentaje del PIB, para medir su incidencia en la actividad económica (1950–2023)."
+          periodo: "1950 – 2023"
+          unidades:
+            "x": "Porcentaje"
+            "m": "Porcentaje"
+          fuentes:
+            - "Archivo Excel: `db/pruebas.xlsx`"
       participacion_pib_ramas:
         tabla: "participacion_pib_ramas"
         label: "Participación del PIB por ramas de actividad"
+        metadata:
+          nombre_descriptivo: "Almacena el porcentaje anual que representa cada rama de actividad económica sobre el PIB total. Incluye agregados calculados automáticamente (minas_canteras_total, comercio_finanzas) (1950–2023)."
+          periodo: "1950 – 2023"
+          unidades:
+            "agropecuario": "Porcentaje"
+            "minas_canteras_total": "Porcentaje"
+            "mineria": "Porcentaje"
+            "petroleo": "Porcentaje"
+            "industria_manufacturera": "Porcentaje"
+            "construcciones": "Porcentaje"
+            "energia": "Porcentaje"
+            "transportes": "Porcentaje"
+            "comercio_finanzas": "Porcentaje"
+            "gobierno_general": "Porcentaje"
+            "propiedad_vivienda": "Porcentaje"
+            "servicios": "Porcentaje"
+          fuentes:
+            - "Base SQLite “participacion.db” creado a partir de archivos Excel."
+            - "Cálculos de agregados:"
       pib_nominal_gasto:
         tabla: "pib_nominal_gasto"
         label: "PIB a precios corrientes por tipo de gasto"
+        metadata:
+          nombre_descriptivo: "Desglose anual del PIB nominal por tipo de gasto: consumo, inversión, exportaciones e importaciones (1950–2023)."
+          periodo: "1950 – 2023"
+          unidades:
+            "consumo_publico": "Miles de Bs constantes de 1990"
+            "consumo_hogares": "Miles de Bs constantes de 1990"
+            "formacion_capital_fijo": "Miles de Bs constantes de 1990"
+            "exportaciones": "Miles de Bs constantes de 1990"
+            "importaciones": "Miles de Bs constantes de 1990"
+            "pib_precios_mercado": "Miles de Bs constantes de 1990"
+          fuentes:
+            - "UDAPE: PIB a precios de mercado :contentReference[oaicite:25]{index=25}"
       deflactor_implicito_pib_gasto:
         tabla: "deflactor_implicito_pib_gasto"
         label: "Índices de precios implícitos del PIB por tipo de gasto"
+        metadata:
+          nombre_descriptivo: "Índices implícitos de precios del PIB por tipo de gasto (base 1990=100) (1980–2023)."
+          periodo: "1980 – 2023"
+          unidades:
+            "consumo_publico": "Índice"
+            "consumo_hogares": "Índice"
+            "variacion_existencias": "Índice"
+            "formacion_capital_fijo": "Índice"
+            "exportaciones": "Índice"
+            "importaciones": "Índice"
+            "pib_precios_mercado": "Índice"
+          fuentes:
+            - "UDAPE: Índices implícitos del PIB :contentReference[oaicite:26]{index=26}"
       oferta_total:
         tabla: "oferta_total"
         label: "Oferta total y componentes"
+        metadata:
+          nombre_descriptivo: "Oferta total de la economía: producción bruta, importaciones y márgenes (1988–2023)."
+          periodo: "1988 – 2023"
+          unidades:
+            "oferta_total": "Miles de Bs constantes de 1990"
+            "produccion_bruta": "Miles de Bs constantes de 1990"
+            "importaciones": "Miles de Bs constantes de 1990"
+            "derechos_imp": "Miles de Bs constantes de 1990"
+            "impuestos_ind": "Miles de Bs constantes de 1990"
+            "margenes_transp": "Miles de Bs constantes de 1990"
+          fuentes:
+            - "INE: Oferta y Demanda Total :contentReference[oaicite:27]{index=27}"
       demanda_total:
         tabla: "demanda_total"
         label: "Demanda total y componentes"
+        metadata:
+          nombre_descriptivo: "Demanda total de la economía: consumo, inversión, existencias y exportaciones (1988–2023)."
+          periodo: "1988 – 2023"
+          unidades:
+            "anio": "Año"
+            "demanda_total": "Miles de Bs constantes de 1990"
+            "consumo_intermedio": "Miles de Bs constantes de 1990"
+            "consumo_final": "Miles de Bs constantes de 1990"
+            "fbcf": "Miles de Bs constantes de 1990"
+            "variacion_existencias": "Miles de Bs constantes de 1990"
+            "exportaciones_bienes_serv": "Miles de Bs constantes de 1990"
+          fuentes:
+            - "INE: Oferta y Demanda Total :contentReference[oaicite:28]{index=28}"
       vbp_sector_2006_2014:
         tabla: "vbp_sector_2006_2014"
         label: "VBP por ramas de actividad económica (2006–2014)"
-
+        metadata:
+          nombre_descriptivo: "Valor Bruto de Producción por rama de actividad para 2006–2014."
+          periodo: "2006 – 2014"
+          unidades:
+            "*(35 columnas)*": "Miles de Bs constantes de 1990"
+          fuentes:
+            - "INE: Desagregación del PIB por ramas :contentReference[oaicite:29]{index=29}"
   sector_externo:
     name: "Sector Externo"
     path: "/sector-externo"
@@ -76,18 +176,56 @@ secciones:
       balanza_comercial:
         tabla: "balanza_comercial"
         label: "Balanza comercial en millones de USD"
+        metadata:
+          nombre_descriptivo: "Registra anualmente el valor de exportaciones, importaciones y saldo comercial de Bolivia (1949–2024)."
+          periodo: "1949 – 2024"
+          unidades:
+            "exportaciones": "Millones USD"
+            "importaciones": "Millones USD"
+            "saldo_comercial": "Millones USD"
+          fuentes:
+            - "INE: Memorias del Banco Central de Bolivia"
+            - "URL: https://nube.ine.gob.bo/index.php/s/nMPCP2wBQqnx7c1/download"
       flujo_divisas:
         tabla: "flujo_divisas"
         label: "Flujo de divisas: ingresos, egresos y flujo neto"
+        metadata:
+          nombre_descriptivo: "Registra anualmente los ingresos, egresos y flujo neto de divisas en Bolivia, para evaluar la balanza de transacciones internacionales (1985–2023)."
+          periodo: "1985 – 2023"
+          unidades:
+            "ingreso_divisas": "Millones USD"
+            "egreso_divisas": "Millones USD"
+            "flujo_neto_divisas": "Millones USD"
+          fuentes:
+            - "UDAPE: “Balanza cambiaria”"
+            - "URL: https://dossier.udape.gob.bo/res/balanza%20cambiaria"
       grado_de_apertura:
         tabla: "grado_de_apertura"
         label: "Grado de apertura económica"
+        metadata:
+          nombre_descriptivo: "Mide la apertura económica como la suma de exportaciones e importaciones en relación al PIB anual (1950–2022)."
+          periodo: "1950 – 2022"
+          unidades:
+            "grado": "Porcentaje"
+          fuentes:
+            - "Archivo Excel: `db/pruebas.xlsx`"
       reservas_oro_divisas:
         tabla: "Reservas_oro_divisas"
         label: "Reservas internacionales de oro y divisas"
+        metadata:
+          nombre_descriptivo: "Registra anualmente el volumen de reservas internacionales en oro y divisas, en millones de dólares (1950–2023)."
+          periodo: "1950 – 2023"
+          unidades:
+            "reservas_totales": "Millones USD"
+          fuentes:
+            - "Banco Mundial (1960–2023) / BCB (1950–1960)"
+            - "URL: https://datos.bancomundial.org/indicador/FI.RES.TOTL.CD?locations=BO"
       venta_de_divisas_al_banco_central:
         tabla: "venta_de_divisas_al_banco_central"
         label: "Valor real de exportaciones y divisas vendidas al BCB"
+        metadata:
+          nombre_descriptivo: "Valor real de exportaciones y divisas vendidas al BCB"
+          periodo: ""
   exportaciones:
     name: "Exportaciones"
     path: "/exportaciones"
@@ -95,36 +233,145 @@ secciones:
       exportaciones_totales:
         tabla: "exportaciones_totales"
         label: "Exportaciones Totales"
+        metadata:
+          nombre_descriptivo: "Registra el valor anual de exportaciones, desglosadas en productos tradicionales y no tradicionales, junto con su valor total (1980–2023)."
+          periodo: "1980 – 2023"
+          unidades:
+            "productos_tradicionales": "Millones USD"
+            "productos_no_tradicionales": "Millones USD"
+            "total_valor_oficial": "Millones USD"
+          fuentes:
+            - "INE: https://nube.ine.gob.bo/index.php/s/zUQc65wIGkw1KUy/download"
       exportaciones_minerales_totales:
         tabla: "exportaciones_minerales_totales"
         label: "Volumen y Valor de Exportaciones de Minerales"
+        metadata:
+          nombre_descriptivo: "Registra anualmente el volumen (en kilos finos) y el valor (en miles de dólares) de las exportaciones de minerales para evaluar la evolución del sector minero (1952–2023)."
+          periodo: "1952 – 2023"
+          unidades:
+            "estaño_volumen": "Kilos finos"
+            "estaño_valor": "Miles USD"
+            "plomo_volumen": "Kilos finos"
+            "plomo_valor": "Miles USD"
+            "zinc_volumen": "Kilos finos"
+            "zinc_valor": "Miles USD"
+            "plata_volumen": "Kilos finos"
+            "plata_valor": "Miles USD"
+            "wolfram_volumen": "Kilos finos"
+            "wolfram_valor": "Miles USD"
+            "cobre_volumen": "Kilos finos"
+            "cobre_valor": "Miles USD"
+            "antimonio_volumen": "Kilos finos"
+            "antimonio_valor": "Miles USD"
+            "oro_volumen": "Kilos finos"
+            "oro_valor": "Miles USD"
+          fuentes:
+            - "1952–1987: Informes del Banco Central de Bolivia"
+            - "1987–2023: UDAPE (https://dossier.udape.gob.bo/res/VOLUMEN%20Y%20VALOR%20DE%20EXPORTACIONES%20DE%20MINERALES)"
       exportaciones_tradicionales:
         tabla: "exportaciones_tradicionales"
         label: "Exportaciones Tradicionales"
+        metadata:
+          nombre_descriptivo: "Registra el valor anual de exportaciones tradicionales desglosadas en minerales e hidrocarburos (1992–2024)."
+          periodo: "1992 – 2024"
+          unidades:
+            "minerales": "Millones USD"
+            "hidrocarburos": "Millones USD"
+          fuentes:
+            - "INE: https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/"
       exportaciones_tradicionales_no_tradicionales:
         tabla: "exportaciones_tradicionales_no_tradicionales"
         label: "Exportaciones Tradicionales y No Tradicionales"
+        metadata:
+          nombre_descriptivo: "Desglosa anualmente las exportaciones en tradicionales y no tradicionales, para analizar su evolución y peso relativo (1980–2024)."
+          periodo: "1980 – 2024"
+          unidades:
+            "tradicionales": "Millones USD"
+            "no_tradicionales": "Millones USD"
+          fuentes:
+            - "INE: https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/"
       participacion_exp_trad_no_trad:
         tabla: "participacion_exp_trad_no_trad"
         label: "Participación de Exportaciones Tradicionales y No Tradicionales"
+        metadata:
+          nombre_descriptivo: "Almacena la participación porcentual de exportaciones tradicionales y no tradicionales para medir su peso en el total de exportaciones (1980–2023)."
+          periodo: "1980 – 2023"
+          unidades:
+            "exp_trad": "Porcentaje"
+            "exp_no_trad": "Porcentaje"
+          fuentes:
+            - "Archivo Excel: `db/pruebas.xlsx`"
       exportaciones_tradicionales_hidrocarburos:
         tabla: "exportaciones_tradicionales_hidrocarburos"
         label: "Exportaciones Tradicionales de Hidrocarburos"
+        metadata:
+          nombre_descriptivo: "Registra anualmente el valor de exportaciones de hidrocarburos, desglosando gas natural y otros hidrocarburos (1992–2024)."
+          periodo: "1992 – 2024"
+          unidades:
+            "hidrocarburos": "Millones USD"
+            "gas_natural": "Millones USD"
+            "otros_hidrocarburos": "Millones USD"
+          fuentes:
+            - "INE: https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/"
       exportacion_gas_natural:
         tabla: "exportacion_gas_natural"
         label: "Exportación de Gas Natural"
+        metadata:
+          nombre_descriptivo: "Registra el volumen, precio y valor anual de las exportaciones de gas natural, para analizar su evolución en el período 1987–2023."
+          periodo: "1987 – 2023"
+          unidades:
+            "volumen_MMMc": "Millones m³"
+            "volumen_MMPC": "Millones pies³"
+            "precio_usd_MPC": "USD por mil pies cúbicos"
+            "valor": "Miles USD"
+          fuentes:
+            - "UDAPE: https://dossier.udape.gob.bo/res/EXPORTACIÓN%20DE%20GAS%20NATURAL"
       exportacion_gas_natural_contratos:
         tabla: "exportacion_gas_natural_contratos"
         label: "Exportación de Gas Natural por Contrato"
+        metadata:
+          nombre_descriptivo: "Detalla las exportaciones de gas natural por contrato y destino (Argentina o Brasil) para el período 1992–2023."
+          periodo: "1992 – 2023"
+          unidades:
+            "contrato": "Texto"
+            "destino": "Texto"
+            "monto": "Millones USD"
+          fuentes:
+            - "UDAPE: https://dossier.udape.gob.bo/res/VALOR%20DE%20EXPORTACIÓN%20DE%20GAS%20NATURAL%20POR%20CONTRATO"
       participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos:
         tabla: "participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos"
         label: "Participación del Gas Natural y Otros Hidrocarburos en el Total de Exportaciones de Hidrocarburos"
+        metadata:
+          nombre_descriptivo: "Almacena la participación porcentual del gas natural y otros hidrocarburos en el total exportado de hidrocarburos (1980–2023)."
+          periodo: "1980 – 2023"
+          unidades:
+            "exportacion_gas": "Porcentaje"
+            "otros_hidrocarburos": "Porcentaje"
+          fuentes:
+            - "Archivo Excel: `db/pruebas.xlsx`"
       participacion_hidrocarburos_minerales_exportaciones_tradicionales:
         tabla: "participacion_hidrocarburos_minerales_exportaciones_tradicionales"
         label: "Participación porcentual de hidrocarburos y minerales en exportaciones tradicionales"
+        metadata:
+          nombre_descriptivo: "Registra la participación porcentual de hidrocarburos y minerales en las exportaciones tradicionales (1980–2023)."
+          periodo: "1980 – 2023"
+          unidades:
+            "minerales": "Porcentaje"
+            "hidrocarburos": "Porcentaje"
+          fuentes:
+            - "Archivo Excel: `db/pruebas.xlsx`"
       exportaciones_no_tradicionales:
         tabla: "exportaciones_no_tradicionales"
         label: "Exportaciones No Tradicionales"
+        metadata:
+          nombre_descriptivo: "Valor anual de exportaciones no tradicionales desagregadas por producto (1992–2024)."
+          periodo: "1992 – 2024"
+          unidades:
+            "soya": "Millones USD"
+            "otros": "Millones USD"
+            "castaña": "Millones USD"
+          fuentes:
+            - "INE: Estadísticas de Comercio Exterior"
   importaciones:
     name: "Importaciones"
     path: "/importaciones"
@@ -132,9 +379,31 @@ secciones:
       composicion_importaciones_uso_destino:
         tabla: "composicion_importaciones_uso_destino"
         label: "Composición de Importaciones por Uso y Destino"
+        metadata:
+          nombre_descriptivo: "Clasifica el valor anual de las importaciones según uso económico: bienes de consumo, materias primas/productos intermedios, bienes de capital y otros usos. Datos expresados en CIF frontera (1980–2024)."
+          periodo: "1980 – 2024"
+          unidades:
+            "bienes_consumo": "Millones USD (CIF)"
+            "materias_primas_productos_intermedios": "Millones USD (CIF)"
+            "bienes_capital": "Millones USD (CIF)"
+            "diversos": "Millones USD (CIF)"
+            "total_valor_oficial_cif": "Millones USD (CIF)"
+          fuentes:
+            - "INE: https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/importaciones-cuadros-estadisticos/"
       participacion_composicion_importaciones_uso_destino:
         tabla: "participacion_composicion_importaciones_uso_destino"
         label: "Participación de la Composición de Importaciones por Uso y Destino"
+        metadata:
+          nombre_descriptivo: "Almacena la participación porcentual de cada categoría de importaciones sobre el total CIF frontera (1980–2024)."
+          periodo: "1980 – 2024"
+          unidades:
+            "bienes_consumo": "Porcentaje"
+            "materias_primas_productos_intermedios": "Porcentaje"
+            "bienes_capital": "Porcentaje"
+            "diversos": "Porcentaje"
+            "total_cif": "Porcentaje"
+          fuentes:
+            - "Archivo Excel: `db/pruebas.xlsx`"
   precios_y_produccion:
     name: "Precios y Producción"
     path: "/precios-produccion"
@@ -142,35 +411,100 @@ secciones:
       precio_minerales:
         tabla: "precio_minerales"
         label: "Precio real de minerales"
+        metadata:
+          nombre_descriptivo: "Registra el precio anual de minerales principales expresado en USD según la unidad de medida específica (1980–2015)."
+          periodo: ""
+          unidades:
+            "Zinc": "USD (L.F.)"
+            "Estaño": "USD (L.F.)"
+            "Oro": "USD (O.T.)"
+            "Plata": "USD (O.T.)"
+            "Antimonio": "USD (T.M.F.)"
+            "Plomo": "USD (L.F.)"
+            "Wólfram": "USD (L.F.)"
+            "Cobre": "USD (L.F.)"
       precio_oficial_minerales:
         tabla: "precio_oficial_minerales"
         label: "Precios oficiales de minerales principales"
+        metadata:
+          nombre_descriptivo: "Registra el precio oficial anual de minerales principales en USD (1950–2024)."
+          periodo: "1950 – 2024"
+          unidades:
+            "zinc": "USD"
+            "estaño": "USD"
+            "oro": "USD"
+            "plata": "USD"
+            "antimonio": "USD"
+            "plomo": "USD"
+            "wolfram": "USD"
+            "cobre": "USD"
+            "bismuto": "USD"
+            "cadmio": "USD"
+            "manganeso": "USD"
+          fuentes:
+            - "1950–1980: Informes del Banco Central de Bolivia"
+            - "1980–2015: Ministerio de Minería y Metalurgia"
+            - "2015–2024: Ministerio de Minería y Metalurgia (Dossier 1980–2023)"
       precio_petroleo_wti:
         tabla: "precio_petroleo_wti"
         label: "Precio internacional del petróleo WTI"
+        metadata:
+          nombre_descriptivo: "Registra el precio anual del petróleo WTI en USD por barril (1996–2023)."
+          periodo: "1996 – 2023"
+          unidades:
+            "precio": "USD/barril"
+          fuentes:
+            - "UDAPE: https://dossier.udape.gob.bo/res/PRECIO%20INTERNACIONAL%20DEL%20PETR%C3%93LEO%20(WTI)"
       produccion_minerales:
         tabla: "produccion_minerales"
         label: "Producción de minerales principales"
+        metadata:
+          nombre_descriptivo: "Almacena la producción anual de minerales principales en toneladas finas para el período 1985–2021."
+          periodo: "1985 – 2021"
+          unidades:
+            "zinc": "Toneladas finas"
+            "estaño": "Toneladas finas"
+            "oro": "Toneladas finas"
+            "plata": "Toneladas finas"
+            "antimonio": "Toneladas finas"
+            "plomo": "Toneladas finas"
+            "wolfram": "Toneladas finas"
+            "cobre": "Toneladas finas"
+          fuentes:
+            - "Ministerio de Minería y Metalurgia: https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf"
       inflacion_acumulada:
         tabla: "inflacion_acumulada"
         label: "Inflación acumulada"
+        metadata:
+          nombre_descriptivo: "Variación porcentual acumulada anual del Índice de Precios al Consumidor (diciembre a diciembre) 1982–2024."
+          periodo: "1982 – 2024"
+          unidades:
+            "inflacion": "Porcentaje"
+          fuentes:
+            - "BCB / INE :contentReference[oaicite:22]{index=22}"
       cotizacion_oficial_dolar:
         tabla: "cotizacion_oficial_dolar"
         label: "Cotización oficial del dólar"
+        metadata:
+          nombre_descriptivo: "Serie histórica del tipo de cambio oficial (compra y venta) del dólar estadounidense (1958–2023)."
+          periodo: "1958 – 2023"
+          unidades:
+            "oficial_compra": "Bs/USD"
+            "oficial_venta": "Bs/USD"
+          fuentes:
+            - "UDAPE: Cotización oficial mensual :contentReference[oaicite:23]{index=23}"
       poder_adquisitivo_coste_vida:
         tabla: "poder_adquisitivo_coste_vida"
         label: "Poder Adquisitivo y Coste de la Vida"
+        metadata:
+          nombre_descriptivo: "Poder Adquisitivo y Coste de la Vida"
+          periodo: ""
       cotizacion_dolar_mercado_libre:
         tabla: "cotizacion_dolar_mercado_libre"
         label: "Cotización del Dólar en Mercado Libre"
-
-
-
-
-
-
-
-
+        metadata:
+          nombre_descriptivo: "Cotización del Dólar en Mercado Libre"
+          periodo: ""
   sector_fiscal:
     name: "Sector Fiscal"
     path: "/sector-fiscal"
@@ -178,31 +512,91 @@ secciones:
       consolidado_spnf:
         tabla: "consolidado_spnf"
         label: "Consolidado de operaciones del SPNF"
+        metadata:
+          nombre_descriptivo: "Registra las operaciones consolidadas del Sector Público No Financiero (SPNF): ingresos, egresos, superávit/deficit global y primario, y financiamiento, para el período 1990–2023."
+          periodo: "1990 – 2023"
+          unidades:
+            "ingresos_totales": "Millones BOB"
+            "egresos_totales": "Millones BOB"
+            "sup_o_def_global": "Millones BOB"
+            "financiamiento": "Millones BOB"
+            "sup_o_def_primario": "Millones BOB"
+          fuentes:
+            - "UDAPE: https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector"
       operaciones_empresas_publicas:
         tabla: "operaciones_empresas_publicas"
         label: "Operaciones de empresas públicas"
+        metadata:
+          nombre_descriptivo: "Registra los ingresos, egresos y resultado fiscal global de empresas públicas como porcentaje del PIB (1990–2020)."
+          periodo: "1990 – 2020"
+          unidades:
+            "ingresos_totales": "Porcentaje"
+            "egresos_totales": "Porcentaje"
+            "resultado_fiscal_global": "Porcentaje"
+          fuentes:
+            - "Excel interno (pendiente de fuente exacta en USB)"
       inversion_publica_total:
         tabla: "inversion_publica_total"
         label: "Inversión pública total"
+        metadata:
+          nombre_descriptivo: "Registra el monto anual de la inversión pública total en Bolivia, en miles de dólares (1990–2023)."
+          periodo: "1990 – 2023"
+          unidades:
+            "valor": "Miles USD"
+          fuentes:
+            - "UDAPE: https://dossier.udape.gob.bo/res/INVERSIÓN%20PÚBLICA%20POR%20SECTORES"
       inversion_publica_por_sectores:
         tabla: "inversion_publica_por_sectores"
         label: "Inversión pública por sectores"
+        metadata:
+          nombre_descriptivo: "Distribuye el monto anual de inversión pública entre sectores: extractivo, apoyo a la producción, infraestructura y sector social (1990–2014)."
+          periodo: "1990 – 2014"
+          unidades:
+            "extractivo": "Miles USD"
+            "apoyo_a_la_produccion": "Miles USD"
+            "infraestructura": "Miles USD"
+            "sociales": "Miles USD"
+            "total": "Miles USD"
+          fuentes:
+            - "UDAPE: https://dossier.udape.gob.bo/res/INVERSIÓN%20PÚBLICA%20POR%20SECTORES"
       ingresos_nacionales:
         tabla: "ingresos_nacionales"
         label: "Ingresos Nacionales"
+        metadata:
+          nombre_descriptivo: "Ingresos del gobierno central: coparticipación, regalías e impuestos especiales (2001–2023)."
+          periodo: "2001 – 2023"
+          unidades:
+            "coparticipacion_tributaria": "Millones de BOB"
+            "total_idh": "Millones de BOB"
+            "total_hipc_ii": "Millones de BOB"
+            "total_regalias_depart": "Millones de BOB"
+            "total_iehd": "Millones de BOB"
+          fuentes:
+            - "UDAPE: Ingresos Nacionales :contentReference[oaicite:30]{index=30}"
       ingresos_corrientes:
         tabla: "ingresos_corrientes"
         label: "Ingresos Corrientes"
+        metadata:
+          nombre_descriptivo: "Ingresos Corrientes"
+          periodo: ""
       ingresos_tributarios:
         tabla: "ingresos_tributarios"
         label: "Ingresos Tributarios"
+        metadata:
+          nombre_descriptivo: "Ingresos Tributarios"
+          periodo: ""
       ingresos_hidrocarburos:
         tabla: "ingresos_hidrocarburos"
         label: "Ingresos por Hidrocarburos"
+        metadata:
+          nombre_descriptivo: "Ingresos por Hidrocarburos"
+          periodo: ""
       finanzas_publicas:
         tabla: "finanzas_publicas"
         label: "Evolución de las Finanzas Públicas"
-
+        metadata:
+          nombre_descriptivo: "Evolución de las Finanzas Públicas"
+          periodo: ""
   deuda:
     name: "Deuda"
     path: "/deuda"
@@ -210,10 +604,24 @@ secciones:
       deuda_externa_total:
         tabla: "deuda_externa_total"
         label: "Deuda externa total"
+        metadata:
+          nombre_descriptivo: "Registra el monto anual de la deuda externa total de Bolivia en millones de dólares (1951–2020)."
+          periodo: "1951 – 2020"
+          unidades:
+            "deuda": "Millones USD"
+          fuentes:
+            - "1951–1996: Informes del Banco Central de Bolivia"
+            - "1996–2020: UDAPE (https://dossier.udape.gob.bo/res/DEUDA%20PÚBLICA%20EXTERNA%20DE%20MEDIANO)"
       deuda_interna:
         tabla: "deuda_interna"
         label: "Deuda interna pública"
-
+        metadata:
+          nombre_descriptivo: "Registra el valor anual del stock de deuda interna manejada por el Tesoro General de la Nación (1993–2022)."
+          periodo: "1993 – 2022"
+          unidades:
+            "valor": "Millones USD"
+          fuentes:
+            - "UDAPE: https://dossier.udape.gob.bo/res/STOCK%20DE%20LA%20DEUDA%20PÚBLICA%20INTERNA%20DEL%20TESORO%20GENERAL%20DE%20LA%20NACIÓN"
   empleo:
     name: "Empleo"
     path: "/empleo"
@@ -221,7 +629,15 @@ secciones:
       mercado_laboral:
         tabla: "mercado_laboral"
         label: "Indicadores del mercado laboral"
-
+        metadata:
+          nombre_descriptivo: "Indicadores claves del mercado laboral boliviano: población, PEA, ocupados, desocupados e inactivos (1999–2017)."
+          periodo: "1999 – 2017"
+          unidades:
+            "total_poblacion": "Personas"
+            "pea": "Personas"
+            "po": "Personas"
+            "pd": "Personas"
+            "pei": "Personas"
   pobreza:
     name: "Pobreza"
     path: "/pobreza"
@@ -229,40 +645,23 @@ secciones:
       pobreza:
         tabla: "pobreza"
         label: "Pobreza"
+        metadata:
+          nombre_descriptivo: "Porcentaje anual de la población en situación de pobreza general en Bolivia (2007–2022)."
+          periodo: "2007 – 2022"
+          unidades:
+            "pobreza": "Porcentaje"
+          fuentes:
+            - "INE: Encuesta de Hogares :contentReference[oaicite:17]{index=17}"
       pobreza_extrema:
         tabla: "pobreza_extrema"
         label: "Pobreza extrema"
-
-  deuda:
-    name: "Deuda"
-    path: "/deuda"
-    tablas:
-      deuda_externa_total:
-        tabla: "deuda_externa_total"
-        label: "Deuda externa total"
-      deuda_interna:
-        tabla: "deuda_interna"
-        label: "Deuda interna pública"
-
-  empleo:
-    name: "Empleo"
-    path: "/empleo"
-    tablas:
-      mercado_laboral:
-        tabla: "mercado_laboral"
-        label: "Indicadores del mercado laboral"
-
-  pobreza:
-    name: "Pobreza"
-    path: "/pobreza"
-    tablas:
-      pobreza:
-        tabla: "pobreza"
-        label: "Pobreza"
-      pobreza_extrema:
-        tabla: "pobreza_extrema"
-        label: "Pobreza extrema"
-
+        metadata:
+          nombre_descriptivo: "Porcentaje anual de la población en situación de pobreza extrema en Bolivia (2007–2022)."
+          periodo: "2007 – 2022"
+          unidades:
+            "pobreza_extrema": "Porcentaje"
+          fuentes:
+            - "INE: Encuesta de Hogares :contentReference[oaicite:16]{index=16}"
   sector_monetario:
     name: "Sector Monetario"
     path: "/sector-monetario"
@@ -270,18 +669,6 @@ secciones:
       agregados_monetarios:
         tabla: "agregados_monetarios"
         label: "Agregados monetarios (M0–M3) y emisión monetaria"
-    tablas:
-      pobreza:
-        tabla: "pobreza"
-        label: "Pobreza"
-      pobreza_extrema:
-        tabla: "pobreza_extrema"
-        label: "Pobreza extrema"
-
-  sector_monetario:
-    name: "Sector Monetario"
-    path: "/sector-monetario"
-    tablas:
-      agregados_monetarios:
-        tabla: "agregados_monetarios"
-        label: "Agregados monetarios (M0–M3) y emisión monetaria"
+        metadata:
+          nombre_descriptivo: "Agregados monetarios (M0–M3) y emisión monetaria"
+          periodo: ""

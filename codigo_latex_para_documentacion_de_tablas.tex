@@ -1,0 +1,2398 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{hyperref}
+\geometry{margin=2.5cm}
+
+\title{Informe sobre las tablas de La base de datos}
+\author{archivo:proyectomacro.db}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Cuentas Nacionales / PIB}
+
+
+\subsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{PIB\_Real\_Gasto}
+  \item \textbf{Nombre descriptivo:} PIB real (base 1990) desagregado por componentes de gasto
+\end{itemize}
+
+\subsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Datos anuales de consumo, inversión, exportaciones, importaciones y PIB real de Bolivia.
+  \item \textbf{Periodo:} 1950--2023
+  \item \textbf{Unidad base:} Miles de bolivianos constantes de 1990
+  \item \textbf{Fuente original:} Archivo Excel \texttt{reports/pruebas.xls}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{PIB\_Real\_Gasto}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                      & INTEGER & Año del registro \\
+\texttt{gastos\_consumo}          & REAL    & Consumo total (miles de Bs.\ 1990) \\
+\texttt{formacion\_capital}       & REAL    & Inversión (formación bruta de capital) \\
+\texttt{exportacion\_bienes\_servicios} & REAL & Exportaciones de bienes y servicios \\
+\texttt{importacion\_bienes}      & REAL    & Importaciones de bienes \\
+\texttt{pib\_real\_base\_1990}    & REAL    & PIB real (base 1990) \\
+\texttt{consumo\_privado}         & REAL    & Consumo privado \\
+\texttt{consumo\_publico}         & REAL    & Consumo público \\
+\end{longtable}
+
+\subsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+\newpage
+\subsection{Desagregación del PIB por ramas de actividad }
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{pib\_ramas}
+  \item \textbf{Nombre descriptivo:} Desagregación del PIB por sectores económicos
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Valores anuales del PIB clasificados por ramas de actividad, para analizar la contribución sectorial.
+  \item \textbf{Periodo:} 1950--2022
+  \item \textbf{Unidad base:} Miles de bolivianos constantes de 1990
+  \item \textbf{Fuente original:} Archivo Excel \texttt{db/pruebas.xlsx}
+  \item \textbf{Notas:} Datos preliminares para 2019–2022
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{pib\_ramas}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                      & INTEGER & Año del registro \\
+\texttt{agropecuario}             & REAL    & Actividad agropecuaria \\
+\texttt{minas\_canteras\_total}   & REAL    & Minería y petróleo (rubro 2 total) \\
+\texttt{mineria}                  & REAL    & Minería (rubro 2.1) \\
+\texttt{petroleo}                 & REAL    & Petróleo (rubro 2.2) \\
+\texttt{industria\_manufacturera}  & REAL    & Industria manufacturera (rubro 3) \\
+\texttt{construcciones}           & REAL    & Construcciones (rubro 4) \\
+\texttt{energia}                  & REAL    & Producción energética (rubro 5) \\
+\texttt{transportes}              & REAL    & Transportes (rubro 6) \\
+\texttt{comercio\_finanzas}       & REAL    & Comercio y finanzas (rubros 7–8) \\
+\texttt{gobierno\_general}        & REAL    & Gobierno general (rubro 9) \\
+\texttt{propiedad\_vivienda}      & REAL    & Propiedad de vivienda (rubro 10) \\
+\texttt{servicios}                & REAL    & Servicios (rubro 11) \\
+\texttt{derechos\_imp}            & REAL    & Derechos de importación / impuestos \\
+\texttt{pib\_nominal}             & REAL    & Producto Interno Bruto nominal \\
+\texttt{pib\_real}                & REAL    & Producto Interno Bruto real \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+
+
+\newpage
+\subsection{Participación de Exportaciones e Importaciones en el PIB }
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{Participacion\_PIB}
+  \item \textbf{Nombre descriptivo:} Participación de exportaciones e importaciones en el PIB
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Exportaciones e importaciones expresadas como porcentaje del PIB; mide el peso relativo de X y M en la actividad económica.
+  \item \textbf{Periodo:} 1950--2023
+  \item \textbf{Unidad base:} Porcentaje
+  \item \textbf{Fuente original:} Archivo Excel \texttt{reports/pruebas.xls}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{Participacion\_PIB}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                & INTEGER & Año del registro \\
+\texttt{exportaciones\_pib} & REAL    & Exportaciones como \% del PIB \\
+\texttt{importaciones\_pib} & REAL    & Importaciones como \% del PIB \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\subsection{Tasa de Crecimiento Anual del PIB}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{tasa\_crecimiento\_pib}
+  \item \textbf{Nombre descriptivo:} Tasa de crecimiento anual del Producto Interno Bruto
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Variación porcentual anual del PIB para evaluar el ritmo de crecimiento económico.
+  \item \textbf{Periodo:} 1951--2024
+  \item \textbf{Unidad base:} Porcentaje
+  \item \textbf{Fuente original:} Archivo Excel \texttt{db/pruebas.xlsx}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{tasa\_crecimiento\_pib}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}        & INTEGER & Año del registro \\
+\texttt{crecimiento} & REAL    & Tasa de crecimiento anual del PIB (\%) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\subsection{Participación de Exportaciones e Importaciones en el PIB (\texttt{participacion\_x\_m\_pib})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{participacion\_x\_m\_pib}
+  \item \textbf{Nombre descriptivo:} Participación de X (exportaciones) y M (importaciones) en el PIB
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Porcentaje que representan las exportaciones (X) y las importaciones (M) sobre el PIB anual, para medir su incidencia en la actividad económica.
+  \item \textbf{Periodo:} 1950--2023
+  \item \textbf{Unidad base:} Porcentaje
+  \item \textbf{Fuente original:} Archivo Excel \texttt{db/pruebas.xlsx}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{participacion\_x\_m\_pib}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año} & INTEGER & Año del registro \\
+\texttt{x}   & REAL    & Exportaciones como \% del PIB \\
+\texttt{m}   & REAL    & Importaciones como \% del PIB \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{exportaciones\_tradicionales\_hidrocarburos}
+  \item \textbf{Nombre descriptivo:} Exportaciones de hidrocarburos, gas natural y otros hidrocarburos
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Valores anuales de exportaciones de hidrocarburos, desglosados en gas natural y otros hidrocarburos, para evaluar su contribución al comercio exterior.
+  \item \textbf{Periodo:} 1992--2024
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:} INE — \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{exportaciones\_tradicionales\_hidrocarburos}}\\
+\toprule
+\textbf{Columna}             & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}             & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                  & INTEGER & Año del registro \\
+\texttt{hidrocarburos}        & REAL    & Total hidrocarburos (millones USD) \\
+\texttt{gas\_natural}         & REAL    & Gas natural (millones USD) \\
+\texttt{otros\_hidrocarburos} & REAL    & Otros hidrocarburos (millones USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\subsection{Participación del PIB por ramas de actividad\\
+\small(\texttt{participacion\_pib\_ramas})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{participacion\_pib\_ramas}
+  \item \textbf{Nombre descriptivo:} Porcentaje del PIB desagregado por ramas de actividad económica
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Porcentaje anual que representa cada rama de actividad sobre el Producto Interno Bruto.
+  \item \textbf{Periodo:} 1950--2023
+  \item \textbf{Unidad base:} Porcentaje (\%)
+  \item \textbf{Fuente original:} Base de datos SQLite (\texttt{participacion.db}) construido a partir de archivos Excel.
+  \item \textbf{Notas:}
+    \begin{itemize}
+      \item \texttt{minas\_canteras\_total} calculado como suma de \texttt{mineria} + \texttt{petroleo}.
+      \item \texttt{comercio\_finanzas} corresponde a la suma de:
+        \begin{itemize}
+          \item \texttt{comercio} (rubro 6)
+          \item \texttt{servicios\_financieros} (parte del rubro 8)
+          \item \texttt{servicios\_a\_empresas} (parte del rubro 8)
+          \item 
+          \texttt restaurantes\_y\_hoteles (rubro 10)
+        \end{itemize}
+      \item Valores provisionales marcados “(p)” para 2018–2023.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{participacion\_pib\_ramas}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                     & INTEGER & Año del registro (PK) \\
+\texttt{agropecuario}            & REAL    & Agricultura, silvicultura, caza y pesca (\% PIB) \\
+\texttt{minas\_canteras\_total}  & REAL    & Minería + petróleo (\% PIB) \\
+\texttt{mineria}                 & REAL    & Minerales metálicos y no metálicos (\% PIB) \\
+\texttt{petroleo\_crudo\_y\_gas\_natural}                & REAL    & Petróleo crudo y gas natural (\% PIB) \\
+\texttt{industria\_manufacturera}& REAL    & Industria manufacturera (\% PIB) \\
+\texttt{construcciones}          & REAL    & Construcción (\% PIB) \\
+\texttt{energia}                 & REAL    & Electricidad, gas y agua (\% PIB) \\
+\texttt{transportes}             & REAL    & Transporte, almacenamiento y comunicaciones \\
+\texttt{comercio\_finanzas}      & REAL    & Comercio y servicios financieros/empresas \\
+\texttt{gobierno\_general}       & REAL    & Gobierno general  \\
+\texttt{propiedad\_vivienda}     & REAL    & Propiedad de vivienda) \\
+\texttt{servicios}               & REAL    & Servicios comunales, sociales, personales y hoteles  \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+\begin{itemize}
+  \item Cálculo de agregados:
+    \begin{itemize}
+      \item \texttt{minas\_canteras\_total} = \texttt{mineria} + \texttt{petroleo}.
+      \item \texttt{comercio\_finanzas} = \texttt{comercio} + \texttt{servicios\_financieros} + \texttt{servicios\_a\_empresas}, excluyendo \texttt{propiedad\_vivienda}.
+    \end{itemize}
+  \item Inserción manual de valores porcentuales año a año a partir de fuentes Excel y estimados provisionales.
+\end{itemize}
+\subsection{PIB a precios corrientes por tipo de gasto}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{pib\_nominal\_gasto}
+  \item \textbf{Nombre descriptivo:} PIB a precios corrientes por tipo de gasto
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Valores anuales del PIB a precios corrientes desagregado por enfoque del gasto.
+  \item \textbf{Periodo:} 1980–2023
+  \item \textbf{Unidad base:} Miles de bolivianos
+  \item \textbf{Fuente original:} INE:\\
+    \url{https://nube.ine.gob.bo/index.php/s/Sx5vznBqGGGIuN2/download}
+  \item \textbf{Notas:} 2017 al 2023 datos preliminares
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{pib\_nominal\_gasto}}\\
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\hline
+año                            & INTEGER PRIMARY KEY & Año del registro \\
+gastos\_consumo                & REAL                & Consumo total (miles de bolivianos) \\
+consumo\_privado               & REAL                & Gasto de consumo final de los hogares e ISFLSH \\
+consumo\_publico               & REAL                & Gasto de consumo final de la administración pública \\
+variacion\_existencias         & REAL                & Variación de existencias \\
+formacion\_capital             & REAL                & Formación bruta de capital fijo \\
+exportacion\_bienes\_servicios & REAL                & Exportaciones de bienes y servicios \\
+importacion\_bienes            & REAL                & Importaciones de bienes y servicios \\
+pib\_a\_precios\_corrientes    & REAL                & PIB a precios de mercado \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Se agregó \texttt{gastos\_consumo}, que es la suma de \texttt{consumo\_privado} y \texttt{consumo\_publico}.
+\subsection{Deflactor implícito del PIB por tipo de gasto}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{deflactor\_implicito\_pib\_gasto}
+  \item \textbf{Nombre descriptivo:} Índices de precios implícitos del PIB por tipo de gasto
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Deflactor implícito del PIB desagregado por componentes de gasto (base 1990).
+  \item \textbf{Periodo:} 1980–2023
+  \item \textbf{Unidad base:} Índice (1990 = 100)
+  \item \textbf{Fuente original:} UDAPE:\\
+    \url{https://dossier.udape.gob.bo/res/DEFLACTOR%20IMPL%C3%8DCITO%20DEL%20PIB%20POR%20TIPO%20DE%20GASTO}
+  \item \textbf{Notas:} Datos preliminares 2017–2023; base en 1990.
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{deflactor\_implicito\_pib\_gasto}}\\
+\textbf{Columna}               & \textbf{Tipo}             & \textbf{Descripción}                                                  \\
+\hline
+año                            & INTEGER PRIMARY KEY       & Año de referencia                                                     \\
+consumo\_publico               & REAL                      & Deflactor de consumo público                                           \\
+consumo\_hogares               & REAL                      & Deflactor de consumo de los hogares e ISFLSH                           \\
+variacion\_existencias         & REAL                      & Deflactor de variación de existencias                                  \\
+formacion\_capital\_fijo       & REAL                      & Deflactor de formación bruta de capital fijo                           \\
+exportaciones                  & REAL                      & Deflactor de exportaciones de bienes y servicios                       \\
+importaciones                  & REAL                      & Deflactor de importaciones de bienes y servicios                       \\
+pib\_precios\_mercado          & REAL                      & Deflactor implícito del PIB a precios de mercado (índice)             \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\subsection{Oferta total y componentes}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{oferta\_total}
+  \item \textbf{Nombre descriptivo:} Oferta total y sus componentes (a precios de mercado)
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie anual de la oferta total de la economía boliviana, desglosada en producción bruta (VBP), importaciones y ajustes impositivos/logísticos.
+  \item \textbf{Periodo:} 1988–2023
+  \item \textbf{Unidad base:} Miles de bolivianos constantes de 1990
+  \item \textbf{Fuente original:} INE – Oferta total y demanda total\\
+        \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/producto-interno-bruto-anual/oferta-total-y-demanda-total/}
+  \item \textbf{Notas:} cifras preliminares etiquetadas “(p)” a partir de 2017
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{oferta\_total}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+año              & INTEGER PRIMARY KEY & Año del registro \\
+oferta\_total     & REAL                & Oferta total a precios de mercado \\
+produccion\_bruta & REAL                & Valor Bruto de la Producción (VBP) \\
+importaciones     & REAL                & Importaciones de bienes y servicios \\
+derechos\_imp     & REAL                & Derechos sobre importaciones \\
+impuestos\_ind    & REAL                & IVA, IT y otros impuestos indirectos \\
+margenes\_transp  & REAL                & Márgenes de comercialización y transporte \\
+\bottomrule
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+\begin{itemize}
+  \item Conversión manual de cifras con separador de miles “,” a números puros.
+  \item Tipado \texttt{REAL} para permitir promedios y tasas de crecimiento.
+  \item Valores preliminares (2017–2023) marcados con sufijo “p”.
+\end{itemize}
+
+\subsection{Demanda total y componentes}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{demanda\_total}
+  \item \textbf{Nombre descriptivo:} Demanda total y sus componentes (a precios de mercado)
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie anual de la demanda total de la economía boliviana, desglosada en consumo intermedio, consumo final, formación bruta de capital fijo, variación de existencias y exportaciones de bienes y servicios.
+  \item \textbf{Periodo:} 1988–2023
+  \item \textbf{Unidad base:} Miles de bolivianos constantes de 1990
+  \item \textbf{Fuente original:} INE – Oferta total y demanda total\\
+    \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/producto-interno-bruto-anual/oferta-total-y-demanda-total/}
+  \item \textbf{Notas:} cifras preliminares etiquetadas “(p)” a partir de 2017
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{demanda\_total}}\\
+\toprule
+\textbf{Columna}               & \textbf{Tipo}         & \textbf{Descripción}                                 \\
+\midrule
+anio                           & INTEGER PRIMARY KEY   & Año del registro                                     \\
+demanda\_total                 & REAL                  & Demanda total a precios de mercado                   \\
+consumo\_intermedio            & REAL                  & Consumo intermedio                                   \\
+consumo\_final                 & REAL                  & Consumo final                                        \\
+fbcf                           & REAL                  & Formación Bruta de Capital Fijo                      \\
+variacion\_existencias         & REAL                  & Variación de existencias                             \\
+exportaciones\_bienes\_serv    & REAL                  & Exportaciones de bienes y servicios                  \\
+\bottomrule
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+\begin{itemize}
+  \item Eliminación manual de separadores de miles (“,”) en cifras.
+  \item Tipado \texttt{REAL} para facilitar cálculos de tasas y promedios.
+  \item Valores preliminares marcados con sufijo “(p)”.
+\end{itemize}
+\subsection{VBP por ramas de actividad económica (\texttt{vbp\_sector\_2006\_2014})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{vbp\_sector\_2006\_2014}
+  \item \textbf{Nombre descriptivo:} Valor Bruto de Producción por rama de actividad económica, 2006--2014
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie anual del Valor Bruto de Producción (VBP) desagregado en 35 ramas de actividad económica, expresado en miles de bolivianos de 1990.
+  \item \textbf{Periodo:} 2006--2014
+  \item \textbf{Unidad base:} Miles de bolivianos constantes de 1990
+  \item \textbf{Fuente original:} INE – Matrices de insumo-producto\\
+    \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/matrices/matrices-de-insumo-producto/}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{vbp\_sector\_2006\_2014}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+\texttt{año}                                    & INTEGER PRIMARY KEY & Año \\
+\texttt{productos\_agricolas\_no\_industriales} & REAL                 & VBP \\
+\texttt{productos\_agricolas\_industriales}     & REAL                 & VBP \\
+\texttt{coca}                                   & REAL                 & VBP \\
+\texttt{productos\_pecuarios}                  & REAL                 & VBP \\
+\texttt{silvicultura\_caza\_y\_pesca}          & REAL                 & VBP \\
+\texttt{petroleo\_crudo\_y\_gas\_natural}       & REAL                 & VBP \\
+\texttt{minerales\_metalicos\_y\_no\_metalicos} & REAL                 & VBP \\
+\texttt{carnes\_frescas\_y\_elaboradas}        & REAL                 & VBP \\
+\texttt{productos\_lacteos}                    & REAL                 & VBP \\
+\texttt{productos\_de\_molineria\_y\_panaderia}& REAL                 & VBP \\
+\texttt{azucar\_y\_confiteria}                 & REAL                 & VBP \\
+\texttt{productos\_alimenticios\_diversos}      & REAL                 & VBP \\
+\texttt{bebidas}                               & REAL                 & VBP \\
+\texttt{tabaco\_elaborado}                     & REAL                 & VBP \\
+\texttt{textiles\_prendas\_vestir\_y\_productos\_del\_cuero} & REAL & VBP \\
+\texttt{madera\_y\_productos\_de\_madera}      & REAL                 & VBP \\
+\texttt{papel\_y\_productos\_de\_papel}        & REAL                 & VBP \\
+\texttt{substancias\_y\_productos\_quimicos}    & REAL                 & VBP \\
+\texttt{productos\_de\_refinacion\_del\_petroleo} & REAL               & VBP \\
+\texttt{productos\_de\_minerales\_no\_metalicos}& REAL                 & VBP \\
+\texttt{productos\_basicos\_de\_metales}       & REAL                 & VBP \\
+\texttt{productos\_metalicos\_maquinaria\_y\_equipo} & REAL            & VBP \\
+\texttt{productos\_manufacturados\_diversos}    & REAL                 & VBP \\
+\texttt{electricidad\_gas\_y\_agua}            & REAL                 & VBP \\
+\texttt{construccion}                          & REAL                 & VBP \\
+\texttt{comercio}                              & REAL                 & VBP \\
+\texttt{transporte\_y\_almacenamiento}         & REAL                 & VBP \\
+\texttt{comunicaciones}                        & REAL                 & VBP \\
+\texttt{servicios\_financieros}                & REAL                 & VBP \\
+\texttt{servicios\_a\_las\_empresas}           & REAL                 & VBP \\
+\texttt{propiedad\_de\_vivienda}               & REAL                 & VBP \\
+\texttt{servicios\_comunales\_sociales\_y\_personales} & REAL         & VBP \\
+\texttt{restaurantes\_y\_hoteles}              & REAL                 & VBP \\
+\texttt{servicios\_domesticos}                 & REAL                 & VBP \\
+\texttt{servicios\_de\_la\_administracion\_publica} & REAL            & VBP \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+
+\subsection{Balanza de Pagos (\texttt{balanza\_de\_pagos})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{balanza\_de\_pagos}
+  \item \textbf{Nombre descriptivo:} Balanza de pagos — resumen de cuentas principales
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Registro anual de las cinco partidas contables principales de la balanza de pagos boliviana: cuenta corriente, cuenta capital, errores y omisiones, saldo global y financiamiento.
+  \item \textbf{Periodo:} 1980--2023
+  \item \textbf{Unidad base:} Millones de dólares estadounidenses (USD)
+  \item \textbf{Fuente original:} \url{https://dossier.udape.gob.bo/res/balanza\%20de\%20pagos}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{balanza\_de\_pagos}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                & INTEGER & Año del registro \\
+\texttt{current\_account}   & REAL    & I.\ Cuenta corriente (1+2+3+4) \\
+\texttt{capital\_account}   & REAL    & II.\ Cuenta capital (1+2+3+4+5+6+7) \\
+\texttt{errors\_omissions}  & REAL    & III.\ Errores y omisiones \\
+\texttt{bop\_balance}       & REAL    & IV.\ Superávit o déficit de BdeP (I + II + III) \\
+\texttt{financing}          & REAL    & V.\ Financiamiento (1+2+3) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+\subsection{PIB per cápita (US\$ corrientes) — Bolivia}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{pib\_percapita}
+  \item \textbf{Nombre descriptivo:} PIB per cápita (US\$ a precios actuales)
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie anual del PIB per cápita de Bolivia en dólares corrientes (indicador del Banco Mundial NY.GDP.PCAP.CD).
+  \item \textbf{Periodo:} 1960--2024
+  \item \textbf{Unidad base:} US\$ corrientes por habitante
+  \item \textbf{Fuente original:} Banco Mundial, indicador \texttt{NY.GDP.PCAP.CD}. \url{https://datos.bancomundial.org/indicator/NY.GDP.PCAP.CD?locations=BOL}
+  \item \textbf{Notas:} Valores tal como los provee el Banco Mundial (sin ajustes locales). Posibles revisiones históricas; el dato de 2024 puede ser preliminar.
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{pib\_percapita}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}             & INTEGER & Año del registro \\
+\texttt{pib\_percapita}  & REAL    & PIB per cápita (US\$ corrientes) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+\begin{itemize}
+  \item Filtrado de la fila con \texttt{Country Code = BOL}.
+  \item Selección de columnas anuales 1960--2024 y pivoteo a formato \texttt{(año, pib\_percapita)}.
+  \item Conversión de tipos: \texttt{año} \textrightarrow{} INTEGER, \texttt{pib\_percapita} \textrightarrow{} REAL.
+  \item Sin imputación ni suavizado; se preservan los valores originales del Banco Mundial.
+\end{itemize}
+
+
+
+
+
+
+\newpage
+\section{Sector Externo / Balanza Comercial}
+
+\subsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{balanza\_comercial}
+  \item \textbf{Nombre descriptivo:} Balanza comercial en millones de USD
+\end{itemize}
+
+\subsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Registro anual del valor de exportaciones, importaciones y saldo comercial de Bolivia.
+  \item \textbf{Periodo:} 1949--2024
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:}
+    \begin{itemize}
+      \item \url{https://nube.ine.gob.bo/index.php/s/nMPCP2wBQqnx7c1/download}
+      \item Memorias del Banco Central de Bolivia
+    \end{itemize}
+  \item \textbf{Notas:} Los valores no fueron modificados.
+\end{itemize}
+
+\subsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{balanza\_comercial}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}              & INTEGER & Año del registro \\
+\texttt{exportaciones}    & REAL    & Valor de exportaciones (millones USD) \\
+\texttt{importaciones}    & REAL    & Valor de importaciones (millones USD) \\
+\texttt{saldo\_comercial} & REAL    & Exportaciones -- Importaciones (millones USD) \\
+\end{longtable}
+
+\subsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\subsection{Flujo de Divisas del Sector Externo (\texttt{flujo\_divisas})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{flujo\_divisas}
+  \item \textbf{Nombre descriptivo:} Flujo de divisas: ingresos, egresos y flujo neto
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Registra anualmente los ingresos y egresos de divisas en Bolivia, así como el flujo neto, para evaluar la balanza de transacciones internacionales.
+  \item \textbf{Periodo:} 1985--2023
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:} \url{https://dossier.udape.gob.bo/res/balanza%20cambiaria}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{flujo\_divisas}}\\
+\toprule
+\textbf{Columna}         & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}         & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}               & INTEGER & Año del registro \\
+\texttt{ingreso\_divisas}   & REAL    & Ingresos de divisas (millones USD) \\
+\texttt{egreso\_divisas}    & REAL    & Egresos de divisas (millones USD) \\
+\texttt{flujo\_neto\_divisas} & REAL    & Flujo neto (Ingresos – Egresos) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\subsection{Grado de Apertura Económica (\texttt{grado\_de\_apertura})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{grado\_de\_apertura}
+  \item \textbf{Nombre descriptivo:} Grado de apertura económica de Bolivia
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Indicador que mide la apertura económica como la suma de exportaciones e importaciones en relación al PIB anual.
+  \item \textbf{Periodo:} 1950--2022
+  \item \textbf{Unidad base:} Porcentaje
+  \item \textbf{Fuente original:} 
+    \begin{itemize}
+    \item Archivo Excel \texttt{db/pruebas.xlsx} 1960--2022 \\
+
+    Fuente que se utilizó para calcular los datos de 2023 y 2024\\
+    \item Banco Mundial, \url{https://datos.bancomundial.org/indicador/NY.GDP.MKTP.CD?end=2024&locations=BO&start=2016}
+    \item tabla: grado\_de\_apertura
+    \end{itemize}
+  \item \textbf{Notas:} desde para calcular los valores de 2023 se usaron los datos de la tabla balanza\_comercial (para obtener X y M) y los datos que el banco mundial proporciona sobre pib en dolares
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{grado\_de\_apertura}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}   & INTEGER & Año del registro \\
+\texttt{grado} & REAL    & Grado de apertura económica (\% del PIB) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+\newpage
+\subsection{Reservas Internacionales de Oro y Divisas (\texttt{Reservas\_oro\_divisas})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{Reservas\_oro\_divisas}
+  \item \textbf{Nombre descriptivo:} Reservas internacionales de oro y otras divisas
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Volumen anual de reservas internacionales en oro y divisas, expresado en millones de dólares.
+  \item \textbf{Periodo:} 1950--2023
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:}
+    \begin{itemize}
+      \item 1960--2023: Banco Mundial, \url{https://datos.bancomundial.org/indicador/FI.RES.TOTL.CD?locations=BO}
+      \item 1950--1960: Informes del Banco Central de Bolivia (páginas específicas pendientes)
+    \end{itemize}
+  \item \textbf{Notas:} Falta insertar detalles de informes y páginas exactas para 1950–1960.
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{Reservas\_oro\_divisas}}\\
+\toprule
+\textbf{Columna}       & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}       & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}             & INTEGER & Año del registro \\
+\texttt{reservas\_totales} & REAL    & Reservas totales en oro y divisas (millones USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Los datos originalmente estaban en unidades; se procesaron para convertirlos a millones de dólares.
+
+\subsection{Venta de Divisas al Banco Central\\
+\small(\texttt{venta\_de\_divisas\_al\_banco\_central})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{venta\_de\_divisas\_al\_banco\_central}
+  \item \textbf{Nombre descriptivo:} Valor real de las exportaciones y divisas vendidas al BCB
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie anual que compara el valor real de las exportaciones bolivianas con las divisas efectivamente vendidas al Banco Central de Bolivia (BCB), para analizar la disponibilidad de liquidez externa y su canalización hacia las reservas internacionales.
+  \item \textbf{Periodo:} 1947--1964
+  \item \textbf{Unidad base:} Millones de dólares (USD)
+  \item \textbf{Fuente original:}
+    \begin{itemize}
+      \item 1947--1951: \emph{Memoria del Banco Central de Bolivia, 1956}, págs.\ 69--71
+      \item 1952--1963: \emph{Memoria del Banco Central de Bolivia, 1953}, págs.\ 117 y 141
+      \item 1964: \emph{Memoria del Banco Central de Bolivia, 1954}, págs.\ 133 y 151
+    \end{itemize}
+  \item \textbf{Notas:} El año base del deflactor para \emph{exportaciones reales} no se especifica en la fuente original; se mantiene la denominación empleada en el cuadro.
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{venta\_de\_divisas\_al\_banco\_central}}\\
+\toprule
+\textbf{Columna}          & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}          & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                 & INTEGER & Año del registro \\
+\texttt{exportaciones\_reales} & REAL    & Valor real de las exportaciones (USD constantes) \\
+\texttt{divisas\_vendidas}     & REAL    & Divisas vendidas al BCB (USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+
+\newpage
+\section{Exportaciones}
+\subsection{Exportaciones Totales (\texttt{exportaciones\_totales})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{exportaciones\_totales}
+  \item \textbf{Nombre descriptivo:} Valor total de exportaciones tradicionales y no tradicionales
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Registro anual de exportaciones desagregadas entre productos tradicionales y no tradicionales, junto con su valor total oficial.
+  \item \textbf{Periodo:} 1980--2023
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:}
+    \begin{itemize}
+      \item 1980--1992: Archivo Excel \texttt{db/pruebas.xlsx}
+      \item 1992--2023: INE, \url{https://nube.ine.gob.bo/index.php/s/zUQc65wIGkw1KUy/download}
+    \end{itemize}
+  \item \textbf{Notas:} En INE aparece como exportaciones por producto, tradicionales y no tradicionales.
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{exportaciones\_totales}}\\
+\toprule
+\textbf{Columna}                      & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}                      & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                           & INTEGER & Año del registro \\
+\texttt{productos\_tradicionales}      & REAL    & Valor de exportaciones tradicionales (millones USD) \\
+\texttt{productos\_no\_tradicionales}   & REAL    & Valor de exportaciones no tradicionales (millones USD) \\
+\texttt{total\_valor\_oficial}         & REAL    & Suma oficial de todas las exportaciones (millones USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\subsection{Volumen y Valor de Exportaciones de Minerales (\texttt{exportaciones\_minerales\_totales})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{exportaciones\_minerales\_totales}
+  \item \textbf{Nombre descriptivo:} Volumen y valor de exportaciones de minerales
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Registra anualmente el volumen (en kilos finos) y el valor (en miles de dólares) de las exportaciones de minerales para evaluar la evolución del sector minero.
+  \item \textbf{Periodo:} 1952--2023
+  \item \textbf{Unidad base:} Volumen en kilos finos; valor en miles de dólares
+  \item \textbf{Fuente original:}
+    \begin{itemize}
+      \item 1952--1987: Informes del Banco Central de Bolivia
+      \item 1987--2023: UDAPE, \url{https://dossier.udape.gob.bo/res/VOLUMEN%20Y%20VALOR%20DE%20EXPORTACIONES%20DE%20MINERALES}
+    \end{itemize}
+  \item \textbf{Notas:} Datos preliminares para 2018--2023
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{exportaciones\_minerales\_totales}}\\
+\toprule
+\textbf{Columna}             & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}             & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                  & INTEGER & Año del registro \\
+\texttt{estaño\_volumen}      & REAL    & Volumen de estaño (kilos finos) \\
+\texttt{estaño\_valor}        & REAL    & Valor de estaño (miles USD) \\
+\texttt{plomo\_volumen}       & REAL    & Volumen de plomo (kilos finos) \\
+\texttt{plomo\_valor}         & REAL    & Valor de plomo (miles USD) \\
+\texttt{zinc\_volumen}        & REAL    & Volumen de zinc (kilos finos) \\
+\texttt{zinc\_valor}          & REAL    & Valor de zinc (miles USD) \\
+\texttt{plata\_volumen}       & REAL    & Volumen de plata (kilos finos) \\
+\texttt{plata\_valor}         & REAL    & Valor de plata (miles USD) \\
+\texttt{wolfram\_volumen}     & REAL    & Volumen de wólfram (kilos finos) \\
+\texttt{wolfram\_valor}       & REAL    & Valor de wólfram (miles USD) \\
+\texttt{cobre\_volumen}       & REAL    & Volumen de cobre (kilos finos) \\
+\texttt{cobre\_valor}         & REAL    & Valor de cobre (miles USD) \\
+\texttt{antimonio\_volumen}   & REAL    & Volumen de antimonio (kilos finos) \\
+\texttt{antimonio\_valor}     & REAL    & Valor de antimonio (miles USD) \\
+\texttt{oro\_volumen}         & REAL    & Volumen de oro (kilos finos) \\
+\texttt{oro\_valor}           & REAL    & Valor de oro (miles USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+\newpage
+\subsection{Exportaciones Tradicionales (\texttt{exportaciones\_tradicionales})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{exportaciones\_tradicionales}
+  \item \textbf{Nombre descriptivo:} Exportaciones tradicionales de minerales e hidrocarburos
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Registra el valor anual de las exportaciones tradicionales, desglosadas en minerales e hidrocarburos, para evaluar su participación en el comercio exterior.
+  \item \textbf{Periodo:} 1992--2024
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:} INE — \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/}
+  \item \textbf{Notas:} Datos preliminares para 2023 y 2024
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{exportaciones\_tradicionales}}\\
+
+\toprule
+\textbf{Columna}     & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}     & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}          & INTEGER & Año del registro \\
+\texttt{minerales}    & REAL    & Valor de exportaciones de minerales (millones USD) \\
+\texttt{hidrocarburos} & REAL   & Valor de exportaciones de hidrocarburos (millones USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\subsection{Exportaciones Tradicionales y No Tradicionales\\
+\small(\texttt{exportaciones\_tradicionales\_no\_tradicionales})}
+
+
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{exportaciones\_tradicionales\_no\_tradicionales}
+  \item \textbf{Nombre descriptivo:} Desglose de exportaciones tradicionales y no tradicionales
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Valor anual de exportaciones divididas en categorías tradicionales y no tradicionales, para analizar su evolución y peso relativo.
+  \item \textbf{Periodo:} 1980--2024
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:} INE — \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/}
+  \item \textbf{Notas:} Datos preliminares para 2023 y 2024
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{exportaciones\_tradicionales\_no\_tradicionales}}\\
+\toprule
+\textbf{Columna}              & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}              & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                  & INTEGER & Año del registro \\
+\texttt{tradicionales}        & REAL    & Exportaciones tradicionales (millones USD) \\
+\texttt{no\_tradicionales}    & REAL    & Exportaciones no tradicionales (millones USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\subsection{Participación de Exportaciones Tradicionales y No Tradicionales\\
+\small(\texttt{participacion\_exp\_trad\_no\_trad})}
+
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{participacion\_exp\_trad\_no\_trad}
+  \item \textbf{Nombre descriptivo:} Participación porcentual de exportaciones tradicionales y no tradicionales
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Porcentaje anual que representan las exportaciones tradicionales y no tradicionales sobre el total de exportaciones.
+  \item \textbf{Periodo:} 1980--2023
+  \item \textbf{Unidad base:} Porcentaje
+  \item \textbf{Fuente original:} Archivo Excel \texttt{db/pruebas.xlsx}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{participacion\_exp\_trad\_no\_trad}}\\
+\toprule
+\textbf{Columna}      & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}      & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}           & INTEGER & Año del registro \\
+\texttt{exp\_trad}     & REAL    & Exportaciones tradicionales (\% del total) \\
+\texttt{exp\_no\_trad} & REAL    & Exportaciones no tradicionales (\% del total) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\subsection{Exportaciones Tradicionales de Hidrocarburos\\
+\small(\texttt{exportaciones\_tradicionales\_hidrocarburos})}
+
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{exportaciones\_tradicionales\_hidrocarburos}
+  \item \textbf{Nombre descriptivo:} Exportaciones de hidrocarburos, gas natural y otros hidrocarburos
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Valores anuales de exportaciones de hidrocarburos, desglosados en gas natural y otros hidrocarburos, para evaluar su contribución al comercio exterior.
+  \item \textbf{Periodo:} 1992--2024
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:} INE — \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{exportaciones\_tradicionales\_hidrocarburos}}\\
+\toprule
+\textbf{Columna}             & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}             & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                  & INTEGER & Año del registro \\
+\texttt{hidrocarburos}        & REAL    & Total hidrocarburos (millones USD) \\
+\texttt{gas\_natural}         & REAL    & Gas natural (millones USD) \\
+\texttt{otros\_hidrocarburos} & REAL    & Otros hidrocarburos (millones USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\subsection{Exportación de Gas Natural\\
+\small(\texttt{exportacion\_gas\_natural})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{exportacion\_gas\_natural}
+  \item \textbf{Nombre descriptivo:} Volumen, precio y valor de exportación de gas natural
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Porcentaje anual de volumen (MMmc y MMPC), precio (USD por MPC) y valor (miles de USD) de las exportaciones de gas natural.
+  \item \textbf{Periodo:} 1987--2023
+  \item \textbf{Unidad base:}
+    \begin{itemize}
+      \item Volumen: Millones de metros cúbicos (MMmc) y Millones de pies cúbicos (MMPC)
+      \item Precio: Dólares por mil pie cúbico (USD/MPC)
+      \item Valor: Miles de dólares (miles USD)
+    \end{itemize}
+  \item \textbf{Fuente original:} UDAPE \url{https://dossier.udape.gob.bo/res/EXPORTACIÓN%20DE%20GAS%20NATURAL}
+  \item \textbf{Notas:} Datos preliminares para 2021–2023
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{exportacion\_gas\_natural}}\\
+\toprule
+\textbf{Columna}      & \textbf{Tipo} & \textbf{Descripción}                              \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}      & \textbf{Tipo} & \textbf{Descripción}                              \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}           & INTEGER & Año del registro                                       \\
+\texttt{volumen\_MMMc} & REAL    & Volumen en millones de metros cúbicos (MMmc)           \\
+\texttt{volumen\_MMPC} & REAL    & Volumen en millones de pies cúbicos (MMPC)             \\
+\texttt{precio\_usd\_MPC} & REAL & Precio en USD por mil pie cúbico (USD/MPC)             \\
+\texttt{valor}         & REAL    & Valor en miles de dólares                              \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.  
+
+
+
+\newpage
+\subsection{Exportación de Gas Natural por Contrato\\
+\small(\texttt{exportacion\_gas\_natural\_contratos})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{exportacion\_gas\_natural\_contratos}
+  \item \textbf{Nombre descriptivo:} Exportación de gas natural detallada por contrato
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Valor anual de exportación de gas natural desglosado por contrato y destino, para analizar obligaciones y volúmenes por mercado.
+  \item \textbf{Periodo:} 1992--2023
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:} \url{https://dossier.udape.gob.bo/res/VALOR%20DE%20EXPORTACI%C3%93N%20DE%20GAS%20NATURAL%20POR%20CONTRATO}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{exportacion\_gas\_natural\_contratos}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}      & INTEGER & Año del registro \\
+\texttt{contrato} & TEXT    & Nombre del contrato de exportación \\
+\texttt{destino}  & TEXT    & Destino del gas (Argentina o Brasil) \\
+\texttt{monto}    & REAL    & Valor exportado (millones USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\subsection{Participación del Gas Natural y Otros Hidrocarburos en el Total de Exportaciones de Hidrocarburos\\
+\small(\texttt{participacion\_gas\_hidrocarburos\_total\_exportaciones\_hidrocarburos})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{participacion\_gas\_hidrocarburos\_total\_exportaciones\_hidrocarburos}
+  \item \textbf{Nombre descriptivo:} Participación porcentual del gas natural y otros hidrocarburos en el total exportado de hidrocarburos
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Porcentaje anual que representan las exportaciones de gas natural y de otros hidrocarburos sobre el total de exportaciones de hidrocarburos.
+  \item \textbf{Periodo:} 1980--2023
+  \item \textbf{Unidad base:} Porcentaje
+  \item \textbf{Fuente original:} Archivo Excel \texttt{db/pruebas.xlsx}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{participacion\_gas\_hidrocarburos\_total\_exportaciones\_hidrocarburos}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año} & INTEGER & Año del registro \\
+\texttt{exportacion\_gas} & REAL & Gas natural (\% del total de hidrocarburos) \\
+\texttt{otros\_hidrocarburos} & REAL & Otros hidrocarburos (\% del total de hidrocarburos) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+\newpage
+\subsection[Participación Hidrocarburos vs Minerales]{%
+  Participación de Hidrocarburos y Minerales en Exportaciones Tradicionales\\
+  {\small(\texttt{participacion\_hidrocarburos\_minerales\_exportaciones\_tradicionales})}%
+}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{participacion\_hidrocarburos\_minerales\_exportaciones\_tradicionales}
+  \item \textbf{Nombre descriptivo:} Participación porcentual de hidrocarburos y minerales en exportaciones tradicionales
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Porcentaje anual que representan las exportaciones de hidrocarburos y de minerales dentro del total de exportaciones tradicionales.
+  \item \textbf{Periodo:} 1980--2023
+  \item \textbf{Unidad base:} Porcentaje
+  \item \textbf{Fuente original:} Archivo Excel \texttt{db/pruebas.xlsx}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{participacion\_hidrocarburos\_minerales\_exportaciones\_tradicionales}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}          & INTEGER & Año del registro \\
+\texttt{minerales}    & REAL    & Exportaciones de minerales (\% del total tradicional) \\
+\texttt{hidrocarburos}& REAL    & Exportaciones de hidrocarburos (\% del total tradicional) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\subsection{Exportaciones No Tradicionales}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{exportaciones\_no\_tradicionales}
+  \item \textbf{Nombre descriptivo:} Exportaciones No Tradicionales de Bolivia
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+   \item \textbf{Descripción:} Serie histórica anual de las exportaciones no tradicionales de Bolivia, desagregada por producto, en millones de dólares.
+  \item \textbf{Periodo:} 1992--2024
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:} \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/}
+  \item \textbf{Notas:} 2023 y 2024 datos preliminares
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{tu}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                   & INTEGER PRIMARY KEY & Año del registro \\
+\texttt{total}                 & REAL                & Total exportaciones no tradicionales (millones de dólares) \\
+\texttt{castaña}               & REAL                & Exportaciones de castaña \\
+\texttt{café}                  & REAL                & Exportaciones de café \\
+\texttt{cacao}                 & REAL                & Exportaciones de cacao \\
+\texttt{azúcar}                & REAL                & Exportaciones de azúcar \\
+\texttt{bebidas}               & REAL                & Exportaciones de bebidas \\
+\texttt{gomas}                 & REAL                & Exportaciones de gomas \\
+\texttt{cueros}                & REAL                & Exportaciones de cueros \\
+\texttt{maderas}               & REAL                & Exportaciones de maderas \\
+\texttt{algodón}               & REAL                & Exportaciones de algodón \\
+\texttt{soya}                  & REAL                & Exportaciones de soya \\
+\texttt{joyería}               & REAL                & Exportaciones de joyería \\
+\texttt{joyería\_con\_oro\_imp} & REAL                & Exportaciones de joyería con oro importado \\
+\texttt{otros}                 & REAL                & Exportaciones de otros productos \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\section{Importaciones}
+
+\subsection{Composición de Importaciones por Uso y Destino}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{composicion\_importaciones\_uso\_destino}
+  \item \textbf{Nombre descriptivo:} Distribución de importaciones según uso o destino económico
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Clasifica el valor anual de las importaciones por bienes de consumo, materias primas/productos intermedios, bienes de capital y otros usos, en valor CIF frontera.
+  \item \textbf{Periodo:} 1980--2024
+  \item \textbf{Unidad base:} Valor CIF frontera (millones de dólares)
+  \item \textbf{Fuente original:}
+    \begin{itemize}
+      \item 1980--1992: Archivo Excel \texttt{db/pruebas.xlsx}
+      \item 1992--2024: INE, \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/importaciones-cuadros-estadisticos/}
+    \end{itemize}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{composicion\_importaciones\_uso\_destino}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                                        & INTEGER & Año del registro \\
+\texttt{bienes\_consumo}                            & REAL    & Bienes de consumo (millones USD) \\
+\texttt{materias\_primas\_productos\_intermedios}   & REAL    & Materias primas / productos intermedios (millones USD) \\
+\texttt{bienes\_capital}                            & REAL    & Bienes de capital (millones USD) \\
+\texttt{diversos}                                    & REAL    & Otros usos (millones USD) \\
+\texttt{total\_valor\_oficial\_cif}                 & REAL    & Total valor oficial CIF (millones USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+\newpage
+\subsection{Participación de la Composición de Importaciones por Uso y Destino}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{participacion\_composicion\_importaciones\_uso\_destino}
+  \item \textbf{Nombre descriptivo:} Participación porcentual de categorías de importaciones sobre el total CIF
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Porcentaje anual de bienes de consumo, materias primas/productos intermedios, bienes de capital y otros usos en el total de importaciones valor CIF frontera.
+  \item \textbf{Periodo:} 1980--2024
+  \item \textbf{Unidad base:} Porcentaje
+  \item \textbf{Fuente original:} Archivo Excel \texttt{db/pruebas.xlsx}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{participacion\_composicion\_importaciones\_uso\_destino}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                                          & INTEGER & Año del registro \\
+\texttt{bienes\_consumo}                              & REAL    & Bienes de consumo (\% del total CIF) \\
+\texttt{materias\_primas\_productos\_intermedios}     & REAL    & Materias primas/productos intermedios (\% del total CIF) \\
+\texttt{bienes\_capital}                              & REAL    & Bienes de capital (\% del total CIF) \\
+\texttt{diversos}                                     & REAL    & Otros usos (\% del total CIF) \\
+\texttt{total\_cif}                                   & REAL    & Total importaciones CIF (porcentaje, siempre 100\%) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+
+
+\section{Precios y Producción}
+
+\subsection{Precio real de minerales}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{precio\_minerales}
+  \item \textbf{Nombre descriptivo:} Precios de minerales principales
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Precio anual de minerales principales expresado en USD según unidad de medida de cada columna.
+  \item \textbf{Periodo:} 1980 a 2015
+  \item \textbf{Unidad base:} USD
+  \item \textbf{Fuente original:} MINISTRO DE MINERÍA Y METALURGIA:\\
+    \url{https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf}
+  \item \textbf{Notas:} ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{precio\_minerales}}\\
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\hline
+año         & INTEGER PRIMARY KEY & Año del registro \\
+Zinc        & REAL                & Precio del Zinc (Libras Finas -- L.F) \\
+Estaño      & REAL                & Precio del Estaño (Libras Finas -- L.F) \\
+Oro         & REAL                & Precio del Oro (Onzas Troy -- O.T.) \\
+Plata       & REAL                & Precio de la Plata (Onzas Troy -- O.T.) \\
+Antimonio   & REAL                & Precio del Antimonio (Toneladas Métricas) \\
+Plomo       & REAL                & Precio del Plomo (Libras Finas -- L.F) \\
+Wólfram     & REAL                & Precio del Wólfram (Libras Finas) \\
+Cobre       & REAL                & Precio del Cobre (Libras Finas -- L.F) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+\subsection{Precios oficiales de minerales principales}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{precio\_oficial\_minerales}
+  \item \textbf{Nombre descriptivo:} Precios oficiales de minerales principales
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Precio oficial anual de minerales principales en USD.
+  \item \textbf{Periodo:} 1950 a 2023
+  \item \textbf{Unidad base:} USD
+  \item \textbf{Fuente original:}
+    \begin{itemize}
+      \item 1950–1980: Informes del Banco Central de Bolivia
+      \item 1980–2015: Ministerio de Minería y Metalurgia\\
+        \url{https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf}
+      \item 2015–2023: Ministerio de Minería y Metalurgia\\
+        \url{https://mineria.gob.bo/documentos/dossier_1980_2023.pdf}\\
+        \small{(pendiente insertar referencias de página específicas)}
+    \end{itemize}
+  \item \textbf{Notas:} ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{Columnas de \texttt{precio\_oficial\_minerales}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Precio en USD por}\\
+\midrule
+año       & INTEGER PRIMARY KEY & Año del registro \\
+zinc      & REAL                & libra fina (L.F.) \\
+estaño    & REAL                & libra fina (L.F.) \\
+oro       & REAL                & onza troy (O.T.) \\
+plata     & REAL                & onza troy (O.T.) \\
+antimonio & REAL                & tonelada métrica fina (T.M.F.) \\
+plomo     & REAL                & libra fina (L.F.) \\
+wolfram   & REAL                & libra fina (U.L.F.) \\
+cobre     & REAL                & libra fina (L.F.) \\
+bismuto   & REAL                & libra fina (L.F.) \\
+cadmio    & REAL                & libra fina (L.F.) \\
+manganeso & REAL                & libra fina (U.L.F.) \\
+\bottomrule
+\end{longtable}
+
+
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\subsection{Precio internacional del petróleo WTI}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{precio\_petroleo\_wti}
+  \item \textbf{Nombre descriptivo:} Precio internacional del petróleo WTI
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Precio anual del petróleo WTI en dólares por barril.
+  \item \textbf{Periodo:} 1996 a 2023
+  \item \textbf{Unidad base:} Dólares por barril
+  \item \textbf{Fuente original:} UDAPE:\\
+    \url{https://dossier.udape.gob.bo/res/PRECIO%20INTERNACIONAL%20DEL%20PETR%C3%93LEO%20(WTI)}
+  \item \textbf{Notas:} ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{precio\_petroleo\_wti}}\\
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\hline
+año    & INTEGER PRIMARY KEY & Año del registro \\
+precio & REAL                & Precio del petróleo WTI (USD por barril) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+\subsection{Producción de minerales principales}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{produccion\_minerales}
+  \item \textbf{Nombre descriptivo:} Producción de minerales principales
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Producción anual de minerales principales en toneladas finas.
+  \item \textbf{Periodo:} 1985 a 2021
+  \item \textbf{Unidad base:} Toneladas finas
+  \item \textbf{Fuente original:} Ministerio de Minería y Metalurgia:\\
+    \url{https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf}
+  \item \textbf{Notas:} ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{produccion\_minerales}}\\
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\hline
+año        & INTEGER PRIMARY KEY & Año del registro \\
+zinc       & REAL                & Producción de Zinc (toneladas finas) \\
+estaño     & REAL                & Producción de Estaño (toneladas finas) \\
+oro        & REAL                & Producción de Oro (toneladas finas) \\
+plata      & REAL                & Producción de Plata (toneladas finas) \\
+antimonio  & REAL                & Producción de Antimonio (toneladas finas) \\
+plomo      & REAL                & Producción de Plomo (toneladas finas) \\
+wolfram    & REAL                & Producción de Wólfram (toneladas finas) \\
+cobre      & REAL                & Producción de Cobre (toneladas finas) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Se reconvirtieron algunas series para expresarlas en toneladas finas según especificación de fuente.
+\subsection{Inflación acumulada}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{inflacion\_acumulada}
+  \item \textbf{Nombre descriptivo:} Variación porcentual acumulada anual del Índice de Precios al Consumidor (Diciembre a diciembre)
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie histórica de la variación porcentual acumulada anual del IPC para Bolivia.
+  \item \textbf{Periodo:} 1982–2024
+  \item \textbf{Unidad base:} Porcentaje
+  \item \textbf{Fuente original:}
+    \begin{itemize}
+      \item Banco Central de Bolivia (1982–1992): \texttt{reports/inflacion\_acumulada/}
+      \item INE (1993–2007): \url{https://nube.ine.gob.bo/index.php/s/LzucAyViXN7ikbL/download}
+      \item INE (2009–2017): \url{https://nube.ine.gob.bo/index.php/s/kVGgyqtobYRsZwv/download}
+      \item INE (2018–2024): \url{https://nimbus.ine.gob.bo/index.php/s/KDwe4CYNtL4GPfq/download}
+    \end{itemize}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{inflacion\_acumulada}}\\
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\hline
+año       & INTEGER PRIMARY KEY & Año calendario \\
+inflacion & REAL                & Variación porcentual acumulada (Diciembre a diciembre) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\subsection{Cotización oficial del dólar}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{cotizacion\_oficial\_dolar}
+  \item \textbf{Nombre descriptivo:} Tipo de cambio oficial del dólar estadounidense
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie histórica del tipo de cambio oficial (compra y venta) del dólar estadounidense.
+  \item \textbf{Periodo:} 1958–2023
+  \item \textbf{Unidad base:} Bolivianos por dólar
+  \item \textbf{Fuente original:} UDAPE – Cotización oficial del dólar:\\
+    \url{https://dossier.udape.gob.bo/res/COTIZACI%C3%93N%20MENSUAL%20OFICIAL%20Y%20PARALELA%20DEL%20D%C3%93LAR%20NORTEAMERICANO}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{cotizacion\_oficial\_dolar}}\\
+\textbf{Columna}           & \textbf{Tipo}       & \textbf{Descripción}                                  \\
+\hline
+año                        & INTEGER PRIMARY KEY & Año de referencia                                     \\
+oficial\_compra            & REAL                & Tipo de cambio oficial (compra)                       \\
+oficial\_venta             & REAL                & Tipo de cambio oficial (venta)                        \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+\subsection{Poder Adquisitivo y Coste de la Vida\\
+\small(\texttt{poder\_adquisitivo\_coste\_vida})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{poder\_adquisitivo\_coste\_vida}
+  \item \textbf{Nombre descriptivo:} Poder adquisitivo de la población y coste de la vida
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Mide anualmente la liquidez disponible (efectivo\,+\,depósitos) en millones de bolivianos, junto con dos índices base 100 en 1951: uno de poder adquisitivo y otro de coste de la vida.
+  \item \textbf{Periodo:} 1951--1964
+  \item \textbf{Unidad base:} 
+    \begin{itemize}
+      \item Billetes, depósitos y poder adquisitivo: millones de bolivianos  
+      \item Índices: base 100 = 1951
+    \end{itemize}
+  \item \textbf{Fuente original:} \emph{Memorias del Banco Central de Bolivia} (años 1956, 1963 y 1964)  
+    \begin{itemize}
+      \item 1951--1956 en “Memoria BCB, 1956” (pp.\,69--71)  
+      \item 1957--1963 en “Memoria BCB, 1963”  
+      \item 1964 en “Memoria BCB, 1964” (pp.\,133, 151)
+    \end{itemize}
+  \item \textbf{Notas:} Se omiten las columnas de incremento anual.
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{poder\_adquisitivo\_coste\_vida}}\\
+\toprule
+\textbf{Columna}          & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}          & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                   & INTEGER & Año del registro \\
+\texttt{billetes\_publico}     & REAL    & Efectivo en poder del público (millones Bs) \\
+\texttt{depositos\_publico}    & REAL    & Depósitos a la vista del público (millones Bs) \\
+\texttt{poder\_adquisitivo}    & REAL    & Suma de billetes y depósitos (millones Bs) \\
+\texttt{indice\_poder\_adquisitivo}         & REAL    & Índice de poder adquisitivo (base 100=1951) \\
+\texttt{indice\_coste\_vida}    & REAL    & Índice de coste de la vida (base 100=1951) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+\subsection{Cotización del Dólar en Mercado Libre\\
+\small(\texttt{cotizacion\_dolar\_mercado\_libre})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{cotizacion\_dolar\_mercado\_libre}
+  \item \textbf{Nombre descriptivo:} Cotización del boliviano en relación al dólar (Mercado Libre)
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Valor anual de cuántos bolivianos cuesta un dólar estadounidense en el Mercado Libre al cierre de cada año (diciembre).
+  \item \textbf{Periodo:} 1950--1960
+  \item \textbf{Unidad base:} Bolivianos por dólar (Bs/USD)
+  \item \textbf{Fuente original:} Banco Central de Bolivia — \emph{El Trimestre Económico}, Cuadro 2
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{cotizacion\_dolar\_mercado\_libre}}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}    & INTEGER & Año del registro (diciembre) \\
+\texttt{valor}  & REAL    & Cotización (Bs por USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+
+
+
+
+
+\section{Sector Fiscal}
+
+\subsection{Consolidado de operaciones del SPNF}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{consolidado\_spnf}
+  \item \textbf{Nombre descriptivo:} Consolidado de operaciones del Sector Público No Financiero (SPNF)
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Operaciones consolidadas del SPNF: ingresos, egresos, superávit/deficit global y primario, y financiamiento.
+  \item \textbf{Periodo:} 1990 a 2023
+  \item \textbf{Unidad base:} Millones de bolivianos
+  \item \textbf{Fuente original:} UDAPE:\\
+    \url{https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector}
+  \item \textbf{Notas:} ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{consolidado\_spnf}}\\
+\textbf{Columna}           & \textbf{Tipo} & \textbf{Descripción}                                           \\
+\hline
+año                        & INTEGER PRIMARY KEY & Año del registro                                         \\
+ingresos\_totales          & REAL                & Ingresos totales del SPNF (Millones de BOB)              \\
+egresos\_totales           & REAL                & Egresos totales del SPNF (Millones de BOB)               \\
+sup\_o\_def\_global        & REAL                & Superávit o déficit global (Millones de BOB)             \\
+financiamiento             & REAL                & Financiamiento neto (Millones de BOB)                    \\
+sup\_o\_def\_primario      & REAL                & Superávit o déficit primario (Millones de BOB)           \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\subsection{Operaciones de empresas públicas}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{operaciones\_empresas\_publicas}
+  \item \textbf{Nombre descriptivo:} Operaciones de empresas públicas
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Ingresos, egresos y resultado fiscal global de empresas públicas como porcentaje del PIB.
+  \item \textbf{Periodo:} 1990 a 2020
+  \item \textbf{Unidad base:} \% del PIB
+  \item \textbf{Fuente original:} Pendiente (Excel en USB)
+  \item \textbf{Notas:} la fuente pendiente se encuentra en un Excel en el USB
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{operaciones\_empresas\_publicas}}\\
+\textbf{Columna}                & \textbf{Tipo} & \textbf{Descripción}                                         \\
+\hline
+año                             & INTEGER PRIMARY KEY & Año del registro                               \\
+ingresos\_totales               & REAL                & Ingresos totales de empresas públicas (\% PIB) \\
+egresos\_totales                & REAL                & Egresos totales de empresas públicas (\% PIB)  \\
+resultado\_fiscal\_global       & REAL                & Resultado fiscal global (\% PIB)               \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\subsection{Inversión pública total}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{inversion\_publica\_total}
+  \item \textbf{Nombre descriptivo:} Inversión pública total
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Monto anual de la inversión pública total en miles de dólares.
+  \item \textbf{Periodo:} 1990 a 2023
+  \item \textbf{Unidad base:} Miles de dólares
+  \item \textbf{Fuente original:} UDAPE:\\
+    \url{https://dossier.udape.gob.bo/res/INVERSI%C3%93N%20P%C3%9ABLICA%20POR%20SECTORES}
+  \item \textbf{Notas:} Datos preliminares desde 2018
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{inversion\_publica\_total}}\\
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\hline
+año    & INTEGER PRIMARY KEY & Año del registro \\
+valor  & REAL NOT NULL       & Inversión pública total (miles de USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\subsection{Inversión pública por sectores}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{inversion\_publica\_por\_sectores}
+  \item \textbf{Nombre descriptivo:} Inversión pública por sectores
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Distribución anual de la inversión pública entre sectores en miles de dólares.
+  \item \textbf{Periodo:} 1990 a 2014
+  \item \textbf{Unidad base:} Miles de dólares
+  \item \textbf{Fuente original:} UDAPE:\\
+    \url{https://dossier.udape.gob.bo/res/INVERSI%C3%93N%20P%C3%9ABLICA%20POR%20SECTORES}
+  \item \textbf{Notas:} No se agregaron registros posteriores a 2014, pues la estructura de columnas cambia drásticamente.
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{inversion\_publica\_por\_sectores}}\\
+\textbf{Columna}                   & \textbf{Tipo} & \textbf{Descripción}                                        \\
+\hline
+año                                & INTEGER PRIMARY KEY & Año del registro                              \\
+extractivo                         & REAL                & Inversión en sector extractivo (miles de USD) \\
+apoyo\_a\_la\_produccion           & REAL                & Inversión en apoyo a la producción (miles de USD) \\
+infraestructura                    & REAL                & Inversión en infraestructura (miles de USD)    \\
+sociales                           & REAL                & Inversión en sector social (miles de USD)      \\
+total                              & REAL                & Inversión pública total (miles de USD)         \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+\subsection{Ingresos Nacionales}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{ingresos\_nacionales}
+  \item \textbf{Nombre descriptivo:} Ingresos Nacionales
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Totales anuales de transferencias estatales: coparticipación tributaria, IDH, HIPC II, regalías departamentales e IEHD.
+  \item \textbf{Periodo:} 2001–2023 (proyecciones 2020(p)–2023(p))
+  \item \textbf{Unidad base:} Millones de bolivianos
+  \item \textbf{Fuente original:} UDAPE – Dossier: Ingresos por IDH, IEHD, regalías, coparticipación y HIPC II:\\
+    \url{https://dossier.udape.gob.bo/res/BOLIVIA%20RESUMEN:%20INGRESOS%20POR%20IDH,%20IEHD,%20REGALÍAS,%20COPARTICIPACIÓN%20Y%20HIPC%20II}
+  \item \textbf{Notas:} Los sufijos “(p)” indican datos preliminares o proyectados.
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{ingresos\_nacionales}}\\
+\textbf{Columna}                       & \textbf{Tipo}       & \textbf{Descripción}     \\
+\hline
+año                                    & INTEGER PRIMARY KEY & Año                      \\
+ingresos\_nacionales\_total            & REAL                & Total ingresos           \\
+total\_copart\_tributaria     & REAL                & Copart. tributaria       \\
+total\_idh                             & REAL                & IDH total                \\
+total\_hipc\_ii                        & REAL                & HIPC II                  \\
+total\_regalias\_depart       & REAL                & Regalías dept.           \\
+total\_iehd                            & REAL                & IEHD                     \\
+\end{longtable}
+
+
+\subsubsection*{4. Procesamiento aplicado}
+\begin{itemize}
+  \item Uniformización de nombres de columnas y manejo de indicadores preliminares “(p)”.
+\end{itemize}
+
+\subsection{Ingresos Corrientes}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{ingresos\_corrientes}
+  \item \textbf{Nombre descriptivo:} Ingresos corrientes del SPNF
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Desagregación de los ingresos corrientes del Sector Público No Financiero en ingresos tributarios e impuestos sobre hidrocarburos, con su total.
+  \item \textbf{Periodo:} 1990–2023 (proyecciones 2019(p)–2023(p))
+  \item \textbf{Unidad base:} Millones de bolivianos
+  \item \textbf{Fuente original:} UDAPE – Consolidado de operaciones del SPNF:\\
+    \url{https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector}
+  \item \textbf{Notas:} Los sufijos “(p)” indican datos preliminares o proyectados.
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{ingresos\_corrientes}}\\
+\textbf{Columna}                    & \textbf{Tipo} & \textbf{Descripción}                                                      \\
+\hline
+año                                 & INTEGER PRIMARY KEY & Año del registro                                                  \\
+ingresos\_tributarios               & REAL                & Ingresos tributarios del SPNF (Millones de BOB)                    \\
+ingresos\_hidrocarburos             & REAL                & Impuestos directos a los hidrocarburos (Millones de BOB)           \\
+total\_ingresos\_corrientes         & REAL                & Suma de ingresos tributarios e hidrocarburos (Millones de BOB)     \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+\begin{itemize}
+  \item Extracción y limpieza de los datos originales de UDAPE.
+  \item Conversión de comas miles a puntos decimales para tipo \texttt{REAL}.
+  \item Cálculo explícito de la columna \texttt{total\_ingresos\_corrientes}.
+\end{itemize}
+
+\subsection{Ingresos Tributarios}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{ingresos\_tributarios}
+  \item \textbf{Nombre descriptivo:} Ingresos tributarios del SPNF
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Desglose de los ingresos tributarios del Sector Público No Financiero en renta interna, renta aduanera y regalías mineras, con su total consolidado.
+  \item \textbf{Periodo:} 1990–2023 (proyecciones 2019(p)–2023(p))
+  \item \textbf{Unidad base:} Millones de bolivianos
+  \item \textbf{Fuente original:} UDAPE – Consolidado de operaciones del SPNF:\\
+    \url{https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector} \\
+    UDAPE-Bolivia resumen: ingresos por idh, iehd, regalías, coparticipación y hipc II: \\
+    \url{https://dossier.udape.gob.bo/res/BOLIVIA%20RESUMEN:%20INGRESOS%20POR%20IDH,%20IEHD,%20REGALÍAS,%20COPARTICIPACIÓN%20Y%20HIPC%20II}
+  \item \textbf{Notas:} Los sufijos “(p)” indican datos preliminares o proyectados.\\
+    La columna impuesto\_directo\_hidrocarburos fue extraida de bolivia resumen: ingresos por idh
+  
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{ingresos\_tributarios}}\\
+\textbf{Columna}                     & \textbf{Tipo} & \textbf{Descripción}                                                              \\
+\hline
+año                                  & INTEGER PK & Año del registro                                                    \\
+renta\_interna                       & REAL                & Renta interna (Millones de BOB)                                     \\
+renta\_aduanera                      & REAL                & Renta aduanera (Millones de BOB)                                    \\
+regalias\_mineras                    & REAL                & Regalías mineras (Millones de BOB)                                  \\
+impuesto\_directo\_hidrocarburos     & REAL                  & IDH (Millones de BOB)
+    \\
+ingresos\_tributarios\_total         & REAL                & (Millones de BOB)                    \\
+
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+\begin{itemize}
+  \item Limpieza de separadores de miles (coma → punto decimal).
+  \item Cálculo y verificación de la columna \texttt{ingresos\_tributarios\_total} como suma de los componentes.
+\end{itemize}
+\subsection{Ingresos por Hidrocarburos}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{ingresos\_hidrocarburos}
+  \item \textbf{Nombre descriptivo:} Ingresos por hidrocarburos (IDH, IEHD y Regalías)
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Desglose anual de los ingresos fiscales provenientes del sector hidrocarburos: Impuesto Directo a los Hidrocarburos (IDH), Impuesto Especial a los Hidrocarburos y Derivados (IEHD) y regalías, junto con su total consolidado.
+  \item \textbf{Periodo:} 1996–2023 (proyecciones 2019(p)–2023(p))
+  \item \textbf{Unidad base:} Millones de bolivianos
+  \item \textbf{Fuente original:} UDAPE – Consolidado de operaciones del SPNF:\\
+    \url{https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector}
+  \item \textbf{Notas:}
+    \begin{enumerate}
+      \item Desde junio de 2005 se recauda el Impuesto Directo a los Hidrocarburos (IDH) según la Nueva Ley de Hidrocarburos.
+      \item Los sufijos “(p)” indican datos preliminares o proyectados.
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{ingresos\_hidrocarburos}}\\
+\textbf{Columna}                     & \textbf{Tipo} & \textbf{Descripción}                                               \\
+\hline
+año                                  & INTEGER PRIMARY KEY & Año del registro                                    \\
+idh                                  & REAL                & Impuesto Directo a los Hidrocarburos (Millones BOB) \\
+iehd                                 & REAL                & Impuesto Especial a los Hidrocarburos y Derivados (Millones BOB) \\
+regalias                             & REAL                & Regalías sobre hidrocarburos (Millones BOB)         \\
+ingresos\_hidrocarburos\_total       & REAL                & Total ingresos por hidrocarburos (Millones BOB)     \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+\begin{itemize}
+  \item Conversión de valores a formato numérico (\texttt{REAL}), eliminando separadores de miles.
+  \item Cálculo de \texttt{ingresos\_hidrocarburos\_total} como suma de IDH, IEHD y regalías.
+  \item Marcado de filas preliminares “(p)” de acuerdo con la fuente.
+\end{itemize}
+\subsection{Evolución de las Finanzas Públicas\\
+\small(\texttt{finanzas\_publicas})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{finanzas\_publicas}
+  \item \textbf{Nombre descriptivo:} Evolución de recaudaciones, egresos y déficit fiscal
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Registra anualmente los ingresos fiscales totales, los egresos fiscales, el déficit (o superávit), y su conversión a dólares junto al tipo de cambio oficial al cierre de cada año.
+  \item \textbf{Periodo:} 1947--1964
+  \item \textbf{Unidad base:}
+    \begin{itemize}
+      \item Ingresos, egresos y déficit: millones de bolivianos (Bs)  
+      \item Conversión del déficit a USD: millones de dólares (USD)  
+      \item Cotización del dólar: bolivianos por dólar (Bs/USD)
+    \end{itemize}
+  \item \textbf{Fuente original:} \emph{Memoria del Banco Central de Bolivia}, ediciones 1956, 1963 y 1964  
+    \begin{itemize}
+      \item 1947–1953: “Memoria BCB, 1956”, pág.\ 78  
+      \item 1954–1960: “Memoria BCB, 1963”  
+      \item 1961–1964: “Memoria BCB, 1964”, págs.\ 160–162
+    \end{itemize}
+  \item \textbf{Notas:}
+    \begin{itemize}
+      \item El signo negativo en \texttt{deficit} y \texttt{conversion\_deficit\_usd} indica déficit; sin signo.  
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{finanzas\_publicas}}\\
+\toprule
+\textbf{Columna}                 & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna}                 & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{año}                      & INTEGER & Año del registro \\
+\texttt{ingresos\_fiscales}       & REAL    & Recaudaciones fiscales totales (millones Bs) \\
+\texttt{egresos\_fiscales}        & REAL    & Gasto público total (millones Bs) \\
+\texttt{deficit}                  & REAL    & Déficit (negativo) o superávit (positivo) en Bs \\
+\texttt{conversion\_deficit\_usd} & REAL    & Déficit/superávit convertido a USD (millones USD) \\
+\texttt{cotizacion\_dolar}        & REAL    & Tipo de cambio oficial (Bs por USD al 31-XII) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+
+\section{Deuda}
+
+\subsection{Deuda externa total}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{deuda\_externa\_total}
+  \item \textbf{Nombre descriptivo:} Deuda externa total
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Monto anual de la deuda externa total de Bolivia.
+  \item \textbf{Periodo:} 1951 a 2024
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:}
+  \begin{itemize}
+    \item 1951-1989: Memorias del banco central
+    \item 1990–2018: UDAPE
+        \url{https://dossier.udape.gob.bo/res/DEUDA%20P%C3%9ABLICA%20EXTERNA%20DE%20MEDIANO}
+    \item 2019–2024: Banco Central de Bolivia: Deuda externa pública por acreedor\\
+      \url{https://www.bcb.gob.bo/webdocs/publicacionesbcb/2025/06/36/%C3%8Dndice%20Boletin%20del%20Sector%20Externo%202024.pdf}
+  \end{itemize}
+  \item \textbf{Notas:}
+  \begin{itemize}
+    \item Para 2020: No considera el instrumento de Financiamiento Rápido (IFR) del FMI debido a que esta operación vulneró los procedimientos establecidos en la Constitución Política del Estado para la contratación de deuda pública externa (artículo 158 y 322).
+    \item Desde 2022 hasta 2024: Datos preliminares.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{deuda\_externa\_total}}\\
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\hline
+año    & INTEGER PRIMARY KEY & Año del registro \\
+deuda  & REAL                & Deuda externa total (Millones de USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\subsection{Deuda interna pública}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{deuda\_interna}
+  \item \textbf{Nombre descriptivo:} Stock de deuda interna del Tesoro General de la Nación
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Valor anual del stock de deuda interna manejada por el Tesoro General de la Nación.
+  \item \textbf{Periodo:} 1993 a 2022
+  \item \textbf{Unidad base:} Millones de dólares
+  \item \textbf{Fuente original:} UDAPE:\\
+    \url{https://dossier.udape.gob.bo/res/STOCK%20DE%20LA%20DEUDA%20P%C3%9ABLICA%20INTERNA%20DEL%20TESORO%20GENERAL%20DE%20LA%20NACI%C3%93N}
+  \item \textbf{Notas:} ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{deuda\_interna}}\\
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción} \\
+\hline
+año    & INTEGER PRIMARY KEY & Año del registro \\
+valor  & REAL NOT NULL       & Stock de deuda interna (Millones de USD) \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+
+
+
+
+\section{Empleo}
+\subsection{Mercado laboral}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{mercado\_laboral}
+  \item \textbf{Nombre descriptivo:} Indicadores del mercado laboral
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie anual de principales indicadores del mercado laboral en Bolivia.
+  \item \textbf{Periodo:} 1999–2017
+  \item \textbf{Unidad base:} Personas
+  \item \textbf{Fuente original:}  
+    INE – Empleo:\\  
+    \url{https://nube.ine.gob.bo/index.php/s/9nY0sTnKJK42cDM/download}
+  \item \textbf{Notas:} Ninguna
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{mercado\_laboral}}\\
+\textbf{Columna}            & \textbf{Tipo}             & \textbf{Descripción}                                       \\
+\hline
+año                         & INTEGER PRIMARY KEY       & Año de referencia                                          \\
+total\_poblacion            & INTEGER                   & Población total (todas las personas)                       \\
+pent                        & INTEGER                   & Población en Edad de No Trabajar (PENT)                    \\
+pet                         & INTEGER                   & Población en Edad de Trabajar (PET)                        \\
+pea                         & INTEGER                   & Población Económicamente Activa (PEA)                      \\
+po                          & INTEGER                   & Ocupados                                                   \\
+pd                          & INTEGER                   & Desocupados                                                \\
+cesantes                    & INTEGER                   & Cesantes                                                   \\
+aspirantes                  & INTEGER                   & Aspirantes                                                 \\
+pei                         & INTEGER                   & Población Económicamente Inactiva (PEI)                    \\
+temporales                  & INTEGER                   & Inactivos temporales                                       \\
+permanentes                 & INTEGER                   & Inactivos permanentes                                      \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguno.
+
+\newpage
+\section{Pobreza}
+\subsection{Pobreza \small(\texttt{pobreza})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{pobreza}
+  \item \textbf{Nombre descriptivo:} Indicadores de pobreza (FGT) y población por ámbito (Bolivia, urbano, rural)
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie anual de indicadores Foster–Greer–Thorbecke (FGT0 incidencia, FGT1 brecha, FGT2 severidad) y tamaños poblacionales total y pobre, reportados para el total nacional (Bolivia), área urbana y área rural.
+  \item \textbf{Periodo:} 2005--2023
+  \item \textbf{Unidad base:} 
+    \begin{itemize}
+      \item \textbf{FGT0/FGT1/FGT2:} Porcentaje (\%).
+      \item \textbf{Población total / Población pobre:} Personas.
+    \end{itemize}
+  \item \textbf{Fuente original:} INE – Encuestas de Hogares: \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/encuestas-de-hogares/}
+  \item \textbf{Notas:}
+    \begin{enumerate}
+      \item FGT0: incidencia (proporción de personas en pobreza); FGT1: brecha promedio respecto a la línea de pobreza; FGT2: severidad (pondera más las brechas grandes).
+      \item FGT en \% (0–100). \texttt{pop\_poor\_*} $\leq$ \texttt{pop\_total\_*}.
+        \item en el excel original no se proporcionan datos para 2010
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{pobreza}}\\
+\textbf{Columna}   & \textbf{Tipo}        & \textbf{Descripción / Unidad} \\
+\hline
+\texttt{año}             & INTEGER PRIMARY KEY & Año del registro \\
+\texttt{fgt0\_bol}       & REAL                & Incidencia de pobreza (FGT0), Bolivia [\%] \\
+\texttt{fgt1\_bol}       & REAL                & Brecha de pobreza (FGT1), Bolivia [\%] \\
+\texttt{fgt2\_bol}       & REAL                & Severidad de pobreza (FGT2), Bolivia [\%] \\
+\texttt{pop\_total\_bol} & INTEGER             & Población total, Bolivia [personas] \\
+\texttt{pop\_poor\_bol}  & INTEGER             & Población en pobreza, Bolivia [personas] \\
+\texttt{fgt0\_urb}       & REAL                & Incidencia de pobreza (FGT0), Urbano [\%] \\
+\texttt{fgt1\_urb}       & REAL                & Brecha de pobreza (FGT1), Urbano [\%] \\
+\texttt{fgt2\_urb}       & REAL                & Severidad de pobreza (FGT2), Urbano [\%] \\
+\texttt{pop\_total\_urb} & INTEGER             & Población total, Urbano [personas] \\
+\texttt{pop\_poor\_urb}  & INTEGER             & Población en pobreza, Urbano [personas] \\
+\texttt{fgt0\_rur}       & REAL                & Incidencia de pobreza (FGT0), Rural [\%] \\
+\texttt{fgt1\_rur}       & REAL                & Brecha de pobreza (FGT1), Rural [\%] \\
+\texttt{fgt2\_rur}       & REAL                & Severidad de pobreza (FGT2), Rural [\%] \\
+\texttt{pop\_total\_rur} & INTEGER             & Población total, Rural [personas] \\
+\texttt{pop\_poor\_rur}  & INTEGER             & Población en pobreza, Rural [personas] \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguna
+
+\subsection{Pobreza extrema \small(\texttt{pobreza\_extrema})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{pobreza\_extrema}
+  \item \textbf{Nombre descriptivo:} Indicadores de pobreza extrema (FGT) y población por ámbito (Bolivia, urbano, rural)
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie anual de indicadores Foster--Greer--Thorbecke para \emph{pobreza extrema}: FGT0 (incidencia), FGT1 (brecha) y FGT2 (severidad), junto con población total y población en pobreza extrema, para el total nacional (Bolivia), área urbana y área rural.
+  \item \textbf{Periodo:} 2005--2023 
+  \item \textbf{Unidad base:}
+    \begin{itemize}
+      \item \textbf{FGT0/FGT1/FGT2:} Porcentaje (\%).
+      \item \textbf{Población total / Población en pobreza extrema:} Personas.
+    \end{itemize}
+  \item \textbf{Fuente original:} INE -- Encuestas de Hogares:\; \url{https://www.ine.gob.bo/index.php/estadisticas-economicas/encuestas-de-hogares/}
+  \item \textbf{Notas:}
+    \begin{enumerate}
+      \item FGT0: proporción de personas en pobreza extrema; FGT1: brecha promedio respecto a la línea de pobreza extrema; FGT2: severidad (mayor peso a brechas grandes).
+      \item Los indicadores FGT se expresan en el rango 0--100\,\%.
+      \item Para 2010 no existe dato oficial reportado por INE; el registro se deja nulo y se documenta la discontinuidad.
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{pobreza\_extrema}}\\
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción / Unidad} \\
+\hline
+\texttt{año}                & INTEGER PRIMARY KEY & Año del registro \\
+\texttt{fgt0\_urb}          & REAL                & Incidencia de pobreza extrema (FGT0), Urbano [\%] \\
+\texttt{fgt1\_urb}          & REAL                & Brecha de pobreza extrema (FGT1), Urbano [\%] \\
+\texttt{fgt2\_urb}          & REAL                & Severidad de pobreza extrema (FGT2), Urbano [\%] \\
+\texttt{pop\_total\_urb}    & INTEGER             & Población total, Urbano [personas] \\
+\texttt{pop\_extreme\_urb}  & INTEGER             & Población en pobreza extrema, Urbano [personas] \\
+\texttt{fgt0\_rur}          & REAL                & Incidencia de pobreza extrema (FGT0), Rural [\%] \\
+\texttt{fgt1\_rur}          & REAL                & Brecha de pobreza extrema (FGT1), Rural [\%] \\
+\texttt{fgt2\_rur}          & REAL                & Severidad de pobreza extrema (FGT2), Rural [\%] \\
+\texttt{pop\_total\_rur}    & INTEGER             & Población total, Rural [personas] \\
+\texttt{pop\_extreme\_rur}  & INTEGER             & Población en pobreza extrema, Rural [personas] \\
+\texttt{fgt0\_bol}          & REAL                & Incidencia de pobreza extrema (FGT0), Bolivia [\%] \\
+\texttt{fgt1\_bol}          & REAL                & Brecha de pobreza extrema (FGT1), Bolivia [\%] \\
+\texttt{fgt2\_bol}          & REAL                & Severidad de pobreza extrema (FGT2), Bolivia [\%] \\
+\texttt{pop\_total\_bol}    & INTEGER             & Población total, Bolivia [personas] \\
+\texttt{pop\_extreme\_bol}  & INTEGER             & Población en pobreza extrema, Bolivia [personas] \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+Ninguna
+
+\section{Sector Monetario}
+
+\subsection{Agregados monetarios y emisión \small(\texttt{agregados\_monetarios})}
+
+\subsubsection*{1. Listado}
+\begin{itemize}
+  \item \textbf{Nombre de tabla:} \texttt{agregados\_monetarios}
+  \item \textbf{Nombre descriptivo:} Agregados monetarios (M0, M1, M2, M3) y emisión monetaria
+\end{itemize}
+
+\subsubsection*{2. Estructura}
+\begin{itemize}
+  \item \textbf{Descripción:} Serie anual de la base monetaria (M0), agregados monetarios (M1, M2, M3) y emisión monetaria para Bolivia. Los valores son niveles (stocks) anuales.
+  \item \textbf{Periodo:} 
+    \begin{itemize}
+      \item Agregados monetarios y emisión monetaria: 1980--2022
+      \item M0, M1, M2 y M3: 1990--2022
+    \end{itemize}
+  \item \textbf{Unidad base:} Miles de bolivianos (BOB).
+  \item \textbf{Fuente original:} UDAPE — Dossier Monetaria:
+    \begin{itemize}
+      \item \emph{Base monetaria por origen y destino}
+      \item \emph{Variables monetarias}
+      \item \url{https://dossier.udape.gob.bo/res/monetaria}
+    \end{itemize}
+  \item \textbf{Notas:}
+    \begin{itemize}
+      \item Donde no existe dato oficial, el registro se deja en \texttt{NULL} (p.\,ej., M1--M3 antes de 1990).
+      \item Definiciones operativas: $M0=B=C+R$; $M1=C+D$; $M2=M1+F$; $M3=M2+G$; \emph{Emisión} $E=C+CB$.
+      \item Series construidas con promedios anuales (renglón \emph{PROMEDIO} en las tablas mensuales UDAPE/BCB).
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{3. Esquema de la tabla}
+\begin{longtable}{@{}lll@{}}
+\caption{\raggedright Columnas de \texttt{agregados\_monetarios}}\\
+\textbf{Columna} & \textbf{Tipo} & \textbf{Descripción / Unidad} \\
+\hline
+\texttt{año}               & REAL & Año del registro (AAAA) \\
+\texttt{m0}                & REAL & Base monetaria, miles de BOB \\
+\texttt{m1}                & REAL & Agregado M1, miles de BOB \\
+\texttt{m2}                & REAL & Agregado M2, miles de BOB \\
+\texttt{m3}                & REAL & Agregado M3, miles de BOB \\
+\texttt{emision\_monetaria}& REAL & Emisión monetaria ($E$), miles de BOB \\
+\end{longtable}
+
+\subsubsection*{4. Procesamiento aplicado}
+\begin{itemize}
+  \item Extracción desde tablas UDAPE; selección del renglón \emph{PROMEDIO} anual.
+  \item Limpieza de separadores de miles y conversión a numérico.
+  \item Alineación por año; inserción de \texttt{NULL} en ausencias (especialmente M1--M3 antes de 1990).
+\end{itemize}
+
+
+\end{document}
