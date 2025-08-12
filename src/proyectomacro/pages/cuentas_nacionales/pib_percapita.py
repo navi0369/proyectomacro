@@ -1,4 +1,4 @@
-# src/proyectomacro/pages/precios_y_producción/produccion_minerales.py
+# src/proyectomacro/pages/cuentas_nacionales/pib_percapita.py
 import dash
 from dash import html, dcc, dash_table, callback, Input, Output, State, no_update
 import dash_bootstrap_components as dbc
@@ -17,13 +17,13 @@ from dash import callback_context
 
 dash.register_page(
     __name__,
-    path="/precios-y-produccion/produccion-minerales",
-    name="Producción de minerales principales",
-    title="Producción de minerales principales",
-    metadata={"section": "Precios y Producción"},
+    path="/cuentas-nacionales/pib-percapita",
+    name="PIB per cápita (US$ corrientes)",
+    title="PIB per cápita (US$ corrientes)",
+    metadata={"section": "Cuentas Nacionales"},
 )
 
-TABLE_ID = "produccion_minerales"
+TABLE_ID = "pib_percapita"
 
 # 1. Carga de datos segura ─────────────────────────────────────────────
 try:
@@ -38,9 +38,19 @@ else:
 
 images = list_table_image_groups(TABLE_ID) if not df.empty else {"Serie completa": [], "Crisis": []}
 
-# Metadatos: cargar desde configuración YAML
+# Metadatos: primero intentar cargar desde configuración YAML
 metadata = load_metadata_from_config(TABLE_ID)
 
+# Si no se encuentran en YAML, usar valores por defecto (fallback)
+if metadata is None:
+    metadata = {
+        "Nombre descriptivo": "PIB per cápita (US$ corrientes)",
+        "Período": "N/A",
+        "Unidad": "N/A",
+        "Fuente": ["Pendiente de configuración"],
+        "Estado de validación": "⚠️ Sin metadatos",
+        "Notas": ["Metadatos pendientes de configuración en pages.yml"]
+    }
 
 # ──────────────────────────────────────────────────────────────────────
 # Layout final
@@ -49,8 +59,8 @@ layout = dbc.Container([
     build_breadcrumb(
         crumbs=[
             {"label": "Inicio", "href": "/"},
-            {"label": "Precios y Producción", "href": "/precios-produccion"},
-            {"label": "Producción de minerales princi...", "active": True},
+            {"label": "Cuentas Nacionales", "href": "/cuentas-nacionales"},
+            {"label": "PIB per cápita", "active": True},
         ],
         status=metadata["Estado de validación"],
         badge_success_marker="✅"
@@ -58,7 +68,7 @@ layout = dbc.Container([
 
     # Header
     build_header(
-        title="Producción de minerales principales",
+        title="PIB per cápita (US$ corrientes)",
         desc=metadata["Nombre descriptivo"],
         metadata=metadata,
         toggle_id=f"{TABLE_ID}-btn-toggle-meta",

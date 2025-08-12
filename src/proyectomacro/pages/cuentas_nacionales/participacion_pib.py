@@ -17,7 +17,7 @@ from dash import callback_context
 
 dash.register_page(
     __name__,
-    path="/cuentas-nacionales/participacion-pib",
+    path="/cuentas-nacionales/Participacion-PIB",
     name="Participación de exportaciones e importaciones en el PIB",
     title="Participación de exportaciones e importaciones en el PIB",
     metadata={"section": "Cuentas Nacionales"},

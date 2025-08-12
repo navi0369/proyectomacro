@@ -9,14 +9,7 @@ secciones:
         metadata:
           nombre_descriptivo: "PIB real (base 1990) desagregado por componentes de gasto - Datos anuales de consumo, inversión, exportaciones, importaciones y PIB real de Bolivia"
           periodo: "1950 – 2023"
-          unidades:
-            "gastos_consumo": "Miles de bolivianos constantes de 1990"
-            "formacion_capital": "Miles de bolivianos constantes de 1990"
-            "exportacion_bienes_servicios": "Miles de bolivianos constantes de 1990"
-            "importacion_bienes": "Miles de bolivianos constantes de 1990"
-            "pib_real_base_1990": "Miles de bolivianos constantes de 1990"
-            "consumo_privado": "Miles de bolivianos constantes de 1990"
-            "consumo_publico": "Miles de bolivianos constantes de 1990"
+          unidad: "Miles de bolivianos constantes de 1990"
           fuentes:
             - "Archivo Excel reports/pruebas.xls"
 
@@ -26,22 +19,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Desagregación del PIB por sectores económicos - Valores anuales del PIB clasificados por ramas de actividad, para analizar la contribución sectorial"
           periodo: "1950 – 2022"
-          unidades:
-            "agropecuario": "Miles de bolivianos constantes de 1990"
-            "minas_canteras_total": "Miles de bolivianos constantes de 1990"
-            "mineria": "Miles de bolivianos constantes de 1990"
-            "petroleo": "Miles de bolivianos constantes de 1990"
-            "industria_manufacturera": "Miles de bolivianos constantes de 1990"
-            "construcciones": "Miles de bolivianos constantes de 1990"
-            "energia": "Miles de bolivianos constantes de 1990"
-            "transportes": "Miles de bolivianos constantes de 1990"
-            "comercio_finanzas": "Miles de bolivianos constantes de 1990"
-            "gobierno_general": "Miles de bolivianos constantes de 1990"
-            "propiedad_vivienda": "Miles de bolivianos constantes de 1990"
-            "servicios": "Miles de bolivianos constantes de 1990"
-            "derechos_imp": "Miles de bolivianos constantes de 1990"
-            "pib_nominal": "Miles de bolivianos constantes de 1990"
-            "pib_real": "Miles de bolivianos constantes de 1990"
+          unidad: "Miles de bolivianos constantes de 1990"
           fuentes:
             - "Archivo Excel db/pruebas.xlsx"
 
@@ -51,9 +29,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Exportaciones e importaciones expresadas como porcentaje del PIB - mide el peso relativo de X y M en la actividad económica"
           periodo: "1950 – 2023"
-          unidades:
-            "exportaciones_pib": "Porcentaje"
-            "importaciones_pib": "Porcentaje"
+          unidad: "Porcentaje"
           fuentes:
             - "Archivo Excel reports/pruebas.xls"
 
@@ -63,8 +39,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Variación porcentual anual del PIB para evaluar el ritmo de crecimiento económico"
           periodo: "1951 – 2024"
-          unidades:
-            "crecimiento": "Porcentaje"
+          unidad: "Porcentaje"
           fuentes:
             - "Archivo Excel db/pruebas.xlsx"
 
@@ -74,9 +49,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Porcentaje que representan las exportaciones (X) y las importaciones (M) sobre el PIB anual, para medir su incidencia en la actividad económica"
           periodo: "1950 – 2023"
-          unidades:
-            "x": "Porcentaje"
-            "m": "Porcentaje"
+          unidad: "Porcentaje"
           fuentes:
             - "Archivo Excel db/pruebas.xlsx"
 
@@ -86,19 +59,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Porcentaje anual que representa cada rama de actividad sobre el Producto Interno Bruto"
           periodo: "1950 – 2023"
-          unidades:
-            "agropecuario": "Porcentaje del PIB"
-            "minas_canteras_total": "Porcentaje del PIB"
-            "mineria": "Porcentaje del PIB"
-            "petroleo_crudo_y_gas_natural": "Porcentaje del PIB"
-            "industria_manufacturera": "Porcentaje del PIB"
-            "construcciones": "Porcentaje del PIB"
-            "energia": "Porcentaje del PIB"
-            "transportes": "Porcentaje del PIB"
-            "comercio_finanzas": "Porcentaje del PIB"
-            "gobierno_general": "Porcentaje del PIB"
-            "propiedad_vivienda": "Porcentaje del PIB"
-            "servicios": "Porcentaje del PIB"
+          unidad: "Porcentaje del PIB"
           fuentes:
             - "Base de datos SQLite (participacion.db) construido a partir de archivos Excel"
 
@@ -108,15 +69,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Valores anuales del PIB a precios corrientes desagregado por enfoque del gasto"
           periodo: "1980 – 2023"
-          unidades:
-            "gastos_consumo": "Miles de bolivianos"
-            "consumo_privado": "Miles de bolivianos"
-            "consumo_publico": "Miles de bolivianos"
-            "variacion_existencias": "Miles de bolivianos"
-            "formacion_capital": "Miles de bolivianos"
-            "exportacion_bienes_servicios": "Miles de bolivianos"
-            "importacion_bienes": "Miles de bolivianos"
-            "pib_a_precios_corrientes": "Miles de bolivianos"
+          unidad: "Miles de bolivianos"
           fuentes:
             - "INE: https://nube.ine.gob.bo/index.php/s/Sx5vznBqGGGIuN2/download"
 
@@ -126,14 +79,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Índices de precios implícitos del PIB desagregado por componentes de gasto (base 1990)"
           periodo: "1980 – 2023"
-          unidades:
-            "consumo_publico": "Índice (1990 = 100)"
-            "consumo_hogares": "Índice (1990 = 100)"
-            "variacion_existencias": "Índice (1990 = 100)"
-            "formacion_capital_fijo": "Índice (1990 = 100)"
-            "exportaciones": "Índice (1990 = 100)"
-            "importaciones": "Índice (1990 = 100)"
-            "pib_precios_mercado": "Índice (1990 = 100)"
+          unidad: "Índice (1990 = 100)"
           fuentes:
             - "UDAPE: https://dossier.udape.gob.bo/res/DEFLACTOR%20IMPL%C3%8DCITO%20DEL%20PIB%20POR%20TIPO%20DE%20GASTO"
 
@@ -143,13 +89,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Serie anual de la oferta total de la economía boliviana, desglosada en producción bruta (VBP), importaciones y ajustes impositivos/logísticos"
           periodo: "1988 – 2023"
-          unidades:
-            "oferta_total": "Miles de bolivianos constantes de 1990"
-            "produccion_bruta": "Miles de bolivianos constantes de 1990"
-            "importaciones": "Miles de bolivianos constantes de 1990"
-            "derechos_imp": "Miles de bolivianos constantes de 1990"
-            "impuestos_ind": "Miles de bolivianos constantes de 1990"
-            "margenes_transp": "Miles de bolivianos constantes de 1990"
+          unidad: "Miles de bolivianos constantes de 1990"
           fuentes:
             - "INE – Oferta total y demanda total https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/producto-interno-bruto-anual/oferta-total-y-demanda-total/"
 
@@ -159,13 +99,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Serie anual de la demanda total de la economía boliviana, desglosada en consumo intermedio, consumo final, formación bruta de capital fijo, variación de existencias y exportaciones de bienes y servicios"
           periodo: "1988 – 2023"
-          unidades:
-            "demanda_total": "Miles de bolivianos constantes de 1990"
-            "consumo_intermedio": "Miles de bolivianos constantes de 1990"
-            "consumo_final": "Miles de bolivianos constantes de 1990"
-            "fbcf": "Miles de bolivianos constantes de 1990"
-            "variacion_existencias": "Miles de bolivianos constantes de 1990"
-            "exportaciones_bienes_serv": "Miles de bolivianos constantes de 1990"
+          unidad: "Miles de bolivianos constantes de 1990"
           fuentes:
             - "INE – Oferta total y demanda total https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/producto-interno-bruto-anual/oferta-total-y-demanda-total/"
 
@@ -175,14 +109,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Valor Bruto de Producción (VBP) desagregado en 35 ramas de actividad económica, expresado en miles de bolivianos de 1990"
           periodo: "2006 – 2014"
-          unidades:
-            "productos_agricolas_no_industriales": "Miles de bolivianos constantes de 1990"
-            "productos_agricolas_industriales": "Miles de bolivianos constantes de 1990"
-            "coca": "Miles de bolivianos constantes de 1990"
-            "productos_pecuarios": "Miles de bolivianos constantes de 1990"
-            "silvicultura_caza_y_pesca": "Miles de bolivianos constantes de 1990"
-            "petroleo_crudo_y_gas_natural": "Miles de bolivianos constantes de 1990"
-            "minerales_metalicos_y_no_metalicos": "Miles de bolivianos constantes de 1990"
+          unidad: "Miles de bolivianos constantes de 1990"
           fuentes:
             - "INE – Matrices de insumo-producto https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/matrices/matrices-de-insumo-producto/"
 
@@ -192,12 +119,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Registro anual de las cinco partidas contables principales de la balanza de pagos boliviana: cuenta corriente, cuenta capital, errores y omisiones, saldo global y financiamiento"
           periodo: "1980 – 2023"
-          unidades:
-            "current_account": "Millones de dólares estadounidenses (USD)"
-            "capital_account": "Millones de dólares estadounidenses (USD)"
-            "errors_omissions": "Millones de dólares estadounidenses (USD)"
-            "bop_balance": "Millones de dólares estadounidenses (USD)"
-            "financing": "Millones de dólares estadounidenses (USD)"
+          unidad: "Millones de dólares estadounidenses (USD)"
           fuentes:
             - "https://dossier.udape.gob.bo/res/balanza%20de%20pagos"
 
@@ -207,8 +129,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Serie anual del PIB per cápita de Bolivia en dólares corrientes (indicador del Banco Mundial NY.GDP.PCAP.CD)"
           periodo: "1960 – 2024"
-          unidades:
-            "pib_percapita": "US$ corrientes por habitante"
+          unidad: "US$ corrientes por habitante"
           fuentes:
             - "Banco Mundial, indicador NY.GDP.PCAP.CD. https://datos.bancomundial.org/indicator/NY.GDP.PCAP.CD?locations=BOL"
 
@@ -222,10 +143,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Registro anual del valor de exportaciones, importaciones y saldo comercial de Bolivia"
           periodo: "1949 – 2024"
-          unidades:
-            "exportaciones": "Millones de dólares"
-            "importaciones": "Millones de dólares"
-            "saldo_comercial": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "https://nube.ine.gob.bo/index.php/s/nMPCP2wBQqnx7c1/download"
             - "Memorias del Banco Central de Bolivia"
@@ -236,10 +154,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Registra anualmente los ingresos y egresos de divisas en Bolivia, así como el flujo neto, para evaluar la balanza de transacciones internacionales"
           periodo: "1985 – 2023"
-          unidades:
-            "ingreso_divisas": "Millones de dólares"
-            "egreso_divisas": "Millones de dólares"
-            "flujo_neto_divisas": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "https://dossier.udape.gob.bo/res/balanza%20cambiaria"
 
@@ -249,8 +164,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Indicador que mide la apertura económica como la suma de exportaciones e importaciones en relación al PIB anual"
           periodo: "1950 – 2022"
-          unidades:
-            "grado": "Porcentaje del PIB"
+          unidad: "Porcentaje del PIB"
           fuentes:
             - "Archivo Excel db/pruebas.xlsx 1960–2022"
             - "Banco Mundial, https://datos.bancomundial.org/indicador/NY.GDP.MKTP.CD?end=2024&locations=BO&start=2016"
@@ -261,8 +175,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Volumen anual de reservas internacionales en oro y divisas, expresado en millones de dólares"
           periodo: "1950 – 2023"
-          unidades:
-            "reservas_totales": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "1960–2023: Banco Mundial, https://datos.bancomundial.org/indicador/FI.RES.TOTL.CD?locations=BO"
             - "1950–1960: Informes del Banco Central de Bolivia"
@@ -291,10 +204,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Registro anual de exportaciones desagregadas entre productos tradicionales y no tradicionales, junto con su valor total oficial"
           periodo: "1980 – 2023"
-          unidades:
-            "productos_tradicionales": "Millones de dólares"
-            "productos_no_tradicionales": "Millones de dólares"
-            "total_valor_oficial": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "1980–1992: Archivo Excel db/pruebas.xlsx"
             - "1992–2023: INE, https://nube.ine.gob.bo/index.php/s/zUQc65wIGkw1KUy/download"
@@ -332,9 +242,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Registra el valor anual de las exportaciones tradicionales, desglosadas en minerales e hidrocarburos, para evaluar su participación en el comercio exterior"
           periodo: "1992 – 2024"
-          unidades:
-            "minerales": "Millones de dólares"
-            "hidrocarburos": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "INE — https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/"
 
@@ -344,9 +252,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Valor anual de exportaciones divididas en categorías tradicionales y no tradicionales, para analizar su evolución y peso relativo"
           periodo: "1980 – 2024"
-          unidades:
-            "tradicionales": "Millones de dólares"
-            "no_tradicionales": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "INE — https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/"
 
@@ -356,9 +262,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Porcentaje anual que representan las exportaciones tradicionales y no tradicionales sobre el total de exportaciones"
           periodo: "1980 – 2023"
-          unidades:
-            "exp_trad": "Porcentaje del total"
-            "exp_no_trad": "Porcentaje del total"
+          unidad: "Porcentaje del total"
           fuentes:
             - "Archivo Excel db/pruebas.xlsx"
 
@@ -368,10 +272,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Valores anuales de exportaciones de hidrocarburos, desglosados en gas natural y otros hidrocarburos, para evaluar su contribución al comercio exterior"
           periodo: "1992 – 2024"
-          unidades:
-            "hidrocarburos": "Millones de dólares"
-            "gas_natural": "Millones de dólares"
-            "otros_hidrocarburos": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "INE — https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/"
 
@@ -395,8 +296,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Valor anual de exportación de gas natural desglosado por contrato y destino, para analizar obligaciones y volúmenes por mercado"
           periodo: "1992 – 2023"
-          unidades:
-            "monto": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "https://dossier.udape.gob.bo/res/VALOR%20DE%20EXPORTACI%C3%93N%20DE%20GAS%20NATURAL%20POR%20CONTRATO"
 
@@ -406,9 +306,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Porcentaje anual que representan las exportaciones de gas natural y de otros hidrocarburos sobre el total de exportaciones de hidrocarburos"
           periodo: "1980 – 2023"
-          unidades:
-            "exportacion_gas": "Porcentaje del total de hidrocarburos"
-            "otros_hidrocarburos": "Porcentaje del total de hidrocarburos"
+          unidad: "Porcentaje del total de hidrocarburos"
           fuentes:
             - "Archivo Excel db/pruebas.xlsx"
 
@@ -418,9 +316,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Porcentaje anual que representan las exportaciones de hidrocarburos y de minerales dentro del total de exportaciones tradicionales"
           periodo: "1980 – 2023"
-          unidades:
-            "minerales": "Porcentaje del total tradicional"
-            "hidrocarburos": "Porcentaje del total tradicional"
+          unidad: "Porcentaje del total tradicional"
           fuentes:
             - "Archivo Excel db/pruebas.xlsx"
 
@@ -430,21 +326,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Serie histórica anual de las exportaciones no tradicionales de Bolivia, desagregada por producto, en millones de dólares"
           periodo: "1992 – 2024"
-          unidades:
-            "total": "Millones de dólares"
-            "castaña": "Millones de dólares"
-            "café": "Millones de dólares"
-            "cacao": "Millones de dólares"
-            "azúcar": "Millones de dólares"
-            "bebidas": "Millones de dólares"
-            "gomas": "Millones de dólares"
-            "cueros": "Millones de dólares"
-            "maderas": "Millones de dólares"
-            "algodón": "Millones de dólares"
-            "soya": "Millones de dólares"
-            "joyería": "Millones de dólares"
-            "joyería_con_oro_imp": "Millones de dólares"
-            "otros": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/"
 
@@ -458,12 +340,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Clasifica el valor anual de las importaciones por bienes de consumo, materias primas/productos intermedios, bienes de capital y otros usos, en valor CIF frontera"
           periodo: "1980 – 2024"
-          unidades:
-            "bienes_consumo": "Millones de dólares (valor CIF frontera)"
-            "materias_primas_productos_intermedios": "Millones de dólares (valor CIF frontera)"
-            "bienes_capital": "Millones de dólares (valor CIF frontera)"
-            "diversos": "Millones de dólares (valor CIF frontera)"
-            "total_valor_oficial_cif": "Millones de dólares (valor CIF frontera)"
+          unidad: "Millones de dólares (valor CIF frontera)"
           fuentes:
             - "1980–1992: Archivo Excel db/pruebas.xlsx"
             - "1992–2024: INE, https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/importaciones-cuadros-estadisticos/"
@@ -474,12 +351,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Porcentaje anual de bienes de consumo, materias primas/productos intermedios, bienes de capital y otros usos en el total de importaciones valor CIF frontera"
           periodo: "1980 – 2024"
-          unidades:
-            "bienes_consumo": "Porcentaje del total CIF"
-            "materias_primas_productos_intermedios": "Porcentaje del total CIF"
-            "bienes_capital": "Porcentaje del total CIF"
-            "diversos": "Porcentaje del total CIF"
-            "total_cif": "Porcentaje (siempre 100%)"
+          unidad: "Porcentaje del total CIF"
           fuentes:
             - "Archivo Excel db/pruebas.xlsx"
 
@@ -534,8 +406,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Precio anual del petróleo WTI en dólares por barril"
           periodo: "1996 – 2023"
-          unidades:
-            "precio": "Dólares por barril"
+          unidad: "Dólares por barril"
           fuentes:
             - "UDAPE: https://dossier.udape.gob.bo/res/PRECIO%20INTERNACIONAL%20DEL%20PETR%C3%93LEO%20(WTI)"
 
@@ -545,15 +416,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Producción anual de minerales principales en toneladas finas"
           periodo: "1985 – 2021"
-          unidades:
-            "zinc": "Toneladas finas"
-            "estaño": "Toneladas finas"
-            "oro": "Toneladas finas"
-            "plata": "Toneladas finas"
-            "antimonio": "Toneladas finas"
-            "plomo": "Toneladas finas"
-            "wolfram": "Toneladas finas"
-            "cobre": "Toneladas finas"
+          unidad: "Toneladas finas"
           fuentes:
             - "Ministerio de Minería y Metalurgia: https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf"
 
@@ -563,8 +426,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Variación porcentual acumulada anual del Índice de Precios al Consumidor (Diciembre a diciembre) - Serie histórica de la variación porcentual acumulada anual del IPC para Bolivia"
           periodo: "1982 – 2024"
-          unidades:
-            "inflacion": "Porcentaje"
+          unidad: "Porcentaje"
           fuentes:
             - "Banco Central de Bolivia (1982–1992): reports/inflacion_acumulada/"
             - "INE (1993–2007): https://nube.ine.gob.bo/index.php/s/LzucAyViXN7ikbL/download"
@@ -577,9 +439,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Serie histórica del tipo de cambio oficial (compra y venta) del dólar estadounidense"
           periodo: "1958 – 2023"
-          unidades:
-            "oficial_compra": "Bolivianos por dólar"
-            "oficial_venta": "Bolivianos por dólar"
+          unidad: "Bolivianos por dólar"
           fuentes:
             - "UDAPE – Cotización oficial del dólar: https://dossier.udape.gob.bo/res/COTIZACI%C3%93N%20MENSUAL%20OFICIAL%20Y%20PARALELA%20DEL%20D%C3%93LAR%20NORTEAMERICANO"
 
@@ -606,8 +466,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Valor anual de cuántos bolivianos cuesta un dólar estadounidense en el Mercado Libre al cierre de cada año (diciembre)"
           periodo: "1950 – 1960"
-          unidades:
-            "valor": "Bolivianos por dólar (Bs/USD)"
+          unidad: "Bolivianos por dólar (Bs/USD)"
           fuentes:
             - "Banco Central de Bolivia — El Trimestre Económico, Cuadro 2"
 
@@ -621,12 +480,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Operaciones consolidadas del SPNF: ingresos, egresos, superávit/deficit global y primario, y financiamiento"
           periodo: "1990 – 2023"
-          unidades:
-            "ingresos_totales": "Millones de bolivianos"
-            "egresos_totales": "Millones de bolivianos"
-            "sup_o_def_global": "Millones de bolivianos"
-            "financiamiento": "Millones de bolivianos"
-            "sup_o_def_primario": "Millones de bolivianos"
+          unidad: "Millones de bolivianos"
           fuentes:
             - "UDAPE: https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector"
 
@@ -636,10 +490,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Ingresos, egresos y resultado fiscal global de empresas públicas como porcentaje del PIB"
           periodo: "1990 – 2020"
-          unidades:
-            "ingresos_totales": "Porcentaje del PIB"
-            "egresos_totales": "Porcentaje del PIB"
-            "resultado_fiscal_global": "Porcentaje del PIB"
+          unidad: "Porcentaje del PIB"
           fuentes:
             - "Pendiente (Excel en USB)"
 
@@ -649,8 +500,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Monto anual de la inversión pública total en miles de dólares"
           periodo: "1990 – 2023"
-          unidades:
-            "valor": "Miles de dólares"
+          unidad: "Miles de dólares"
           fuentes:
             - "UDAPE: https://dossier.udape.gob.bo/res/INVERSI%C3%93N%20P%C3%9ABLICA%20POR%20SECTORES"
 
@@ -660,12 +510,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Distribución anual de la inversión pública entre sectores en miles de dólares"
           periodo: "1990 – 2014"
-          unidades:
-            "extractivo": "Miles de dólares"
-            "apoyo_a_la_produccion": "Miles de dólares"
-            "infraestructura": "Miles de dólares"
-            "sociales": "Miles de dólares"
-            "total": "Miles de dólares"
+          unidad: "Miles de dólares"
           fuentes:
             - "UDAPE: https://dossier.udape.gob.bo/res/INVERSI%C3%93N%20P%C3%9ABLICA%20POR%20SECTORES"
 
@@ -675,13 +520,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Totales anuales de transferencias estatales: coparticipación tributaria, IDH, HIPC II, regalías departamentales e IEHD"
           periodo: "2001 – 2023"
-          unidades:
-            "ingresos_nacionales_total": "Millones de bolivianos"
-            "total_copart_tributaria": "Millones de bolivianos"
-            "total_idh": "Millones de bolivianos"
-            "total_hipc_ii": "Millones de bolivianos"
-            "total_regalias_depart": "Millones de bolivianos"
-            "total_iehd": "Millones de bolivianos"
+          unidad: "Millones de bolivianos"
           fuentes:
             - "UDAPE – Dossier: Ingresos por IDH, IEHD, regalías, coparticipación y HIPC II: https://dossier.udape.gob.bo/res/BOLIVIA%20RESUMEN:%20INGRESOS%20POR%20IDH,%20IEHD,%20REGALÍAS,%20COPARTICIPACIÓN%20Y%20HIPC%20II"
 
@@ -691,10 +530,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Desagregación de los ingresos corrientes del Sector Público No Financiero en ingresos tributarios e impuestos sobre hidrocarburos, con su total"
           periodo: "1990 – 2023"
-          unidades:
-            "ingresos_tributarios": "Millones de bolivianos"
-            "ingresos_hidrocarburos": "Millones de bolivianos"
-            "total_ingresos_corrientes": "Millones de bolivianos"
+          unidad: "Millones de bolivianos"
           fuentes:
             - "UDAPE – Consolidado de operaciones del SPNF: https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector"
 
@@ -704,12 +540,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Desglose de los ingresos tributarios del Sector Público No Financiero en renta interna, renta aduanera y regalías mineras, con su total consolidado"
           periodo: "1990 – 2023"
-          unidades:
-            "renta_interna": "Millones de bolivianos"
-            "renta_aduanera": "Millones de bolivianos"
-            "regalias_mineras": "Millones de bolivianos"
-            "impuesto_directo_hidrocarburos": "Millones de bolivianos"
-            "ingresos_tributarios_total": "Millones de bolivianos"
+          unidad: "Millones de bolivianos"
           fuentes:
             - "UDAPE – Consolidado de operaciones del SPNF: https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector"
             - "UDAPE-Bolivia resumen: ingresos por idh, iehd, regalías, coparticipación y hipc II: https://dossier.udape.gob.bo/res/BOLIVIA%20RESUMEN:%20INGRESOS%20POR%20IDH,%20IEHD,%20REGALÍAS,%20COPARTICIPACIÓN%20Y%20HIPC%20II"
@@ -720,11 +551,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Desglose anual de los ingresos fiscales provenientes del sector hidrocarburos: Impuesto Directo a los Hidrocarburos (IDH), Impuesto Especial a los Hidrocarburos y Derivados (IEHD) y regalías, junto con su total consolidado"
           periodo: "1996 – 2023"
-          unidades:
-            "idh": "Millones de bolivianos"
-            "iehd": "Millones de bolivianos"
-            "regalias": "Millones de bolivianos"
-            "ingresos_hidrocarburos_total": "Millones de bolivianos"
+          unidad: "Millones de bolivianos"
           fuentes:
             - "UDAPE – Consolidado de operaciones del SPNF: https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector"
 
@@ -755,8 +582,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Monto anual de la deuda externa total de Bolivia"
           periodo: "1951 – 2024"
-          unidades:
-            "deuda": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "1951-1989: Memorias del banco central"
             - "1990–2018: UDAPE https://dossier.udape.gob.bo/res/DEUDA%20P%C3%9ABLICA%20EXTERNA%20DE%20MEDIANO"
@@ -768,8 +594,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Valor anual del stock de deuda interna manejada por el Tesoro General de la Nación"
           periodo: "1993 – 2022"
-          unidades:
-            "valor": "Millones de dólares"
+          unidad: "Millones de dólares"
           fuentes:
             - "UDAPE: https://dossier.udape.gob.bo/res/STOCK%20DE%20LA%20DEUDA%20P%C3%9ABLICA%20INTERNA%20DEL%20TESORO%20GENERAL%20DE%20LA%20NACI%C3%93N"
 
@@ -783,18 +608,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Serie anual de principales indicadores del mercado laboral en Bolivia"
           periodo: "1999 – 2017"
-          unidades:
-            "total_poblacion": "Personas"
-            "pent": "Personas"
-            "pet": "Personas"
-            "pea": "Personas"
-            "po": "Personas"
-            "pd": "Personas"
-            "cesantes": "Personas"
-            "aspirantes": "Personas"
-            "pei": "Personas"
-            "temporales": "Personas"
-            "permanentes": "Personas"
+          unidad: "Personas"
           fuentes:
             - "INE – Empleo: https://nube.ine.gob.bo/index.php/s/9nY0sTnKJK42cDM/download"
 
@@ -862,12 +676,7 @@ secciones:
         metadata:
           nombre_descriptivo: "Serie anual de la base monetaria (M0), agregados monetarios (M1, M2, M3) y emisión monetaria para Bolivia. Los valores son niveles (stocks) anuales"
           periodo: "1980 – 2022"
-          unidades:
-            "m0": "Miles de bolivianos (BOB)"
-            "m1": "Miles de bolivianos (BOB)"
-            "m2": "Miles de bolivianos (BOB)"
-            "m3": "Miles de bolivianos (BOB)"
-            "emision_monetaria": "Miles de bolivianos (BOB)"
+          unidad: "Miles de bolivianos (BOB)"
           fuentes:
             - "UDAPE — Dossier Monetaria: Base monetaria por origen y destino"
             - "UDAPE — Dossier Monetaria: Variables monetarias"

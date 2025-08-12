@@ -222,7 +222,7 @@ def create_metadata_helper(
     periodo: str,
     unidades: dict | list | str,
     fuentes: list | str,
-    notas: list | str = None,
+    notas: list | str | None = None,
     estado_validacion: str = "✅ OK"
 ) -> dict:
     """
@@ -301,11 +301,22 @@ def load_metadata_from_config(table_id: str, estado_validacion: str = "✅ OK") 
     if not yaml_metadata:
         return None
     
+    # Manejar ambos formatos de unidades:
+    # 1. unidad: "valor" (formato optimizado)
+    # 2. unidades: {"columna": "unidad"} (formato detallado)
+    unidades_data = None
+    if "unidad" in yaml_metadata:
+        # Formato simple: unidad: "Miles de bolivianos"
+        unidades_data = yaml_metadata["unidad"]
+    elif "unidades" in yaml_metadata:
+        # Formato detallado: unidades: {"col1": "unidad1", "col2": "unidad2"}
+        unidades_data = yaml_metadata["unidades"]
+    
     # Convertir del formato YAML al formato esperado por build_metadata_panel
     metadata = {
         "Nombre descriptivo": yaml_metadata.get("nombre_descriptivo", ""),
         "Período": yaml_metadata.get("periodo", ""),
-        "Unidad": yaml_metadata.get("unidades", {}),
+        "Unidad": unidades_data or {},
         "Fuente": yaml_metadata.get("fuentes", []),
         "Estado de validación": estado_validacion,
     }
@@ -480,7 +491,7 @@ def build_image_gallery_card(
 def build_data_table(
     df,
     table_id: str,
-    table_styles: dict = None,
+    table_styles: dict = {},
     page_size: int = 10
 ):
     """
