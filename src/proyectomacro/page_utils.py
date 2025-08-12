@@ -30,7 +30,9 @@ DEFAULT_TABLE_STYLES = {
     },
 }
 
-def get_table_styles(custom_styles: Dict = None) -> Dict:
+def get_table_styles(
+    custom_styles: Optional[Dict[str, Dict[str, Any]]] = None,
+) -> Dict[str, Dict[str, Any]]:
     """
     Retorna los estilos de tabla predeterminados, con opción de personalización.
     
@@ -543,4 +545,4 @@ def build_data_table(
         style_cell_conditional=[
             {"if": {"column_id": df.index.name or "año"}, "textAlign": "left", "fontWeight": "600"},
         ],
-    )
+    ) 
