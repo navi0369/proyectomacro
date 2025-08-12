@@ -1,1129 +1,1746 @@
-# Tabla: PIB_Real_Gasto
-
-## 📌 Descripción de la Tabla `PIB_Real_Gasto`
-Esta tabla almacena el Producto Interno Bruto real desagregado por componentes de gasto para Bolivia, en base a bolivianos constantes de 1990, desde 1950 hasta 2023.
-
-### 📄 Columnas:
-| Columna                   | Tipo    | Descripción                                              | Unidad                                  |
-|---------------------------|---------|----------------------------------------------------------|-----------------------------------------|
-| `año`                     | INTEGER | Año del registro                                         | Año                                     |
-| `gastos_consumo`          | REAL    | Consumo total                                            | Miles de bolivianos constantes de 1990  |
-| `formacion_capital`       | REAL    | Formación bruta de capital                               | Miles de bolivianos constantes de 1990  |
-| `exportacion_bienes_servicios` | REAL    | Exportaciones de bienes y servicios                       | Miles de bolivianos constantes de 1990  |
-| `importacion_bienes`      | REAL    | Importaciones de bienes                                   | Miles de bolivianos constantes de 1990  |
-| `pib_real_base_1990`      | REAL    | PIB real (base 1990)                                      | Miles de bolivianos constantes de 1990  |
-| `consumo_privado`         | REAL    | Consumo privado                                           | Miles de bolivianos constantes de 1990  |
-| `consumo_publico`         | REAL    | Consumo público                                           | Miles de bolivianos constantes de 1990  |
-
-## 📌 Período y Unidades
-- **Período:** 1950 – 2023  
-- **Unidad base:** Miles de bolivianos constantes de 1990  
-
-## 📌 Fuente
-- Archivo Excel: `reports/pruebas.xls`  
-
----
-
-# Tabla: pib_ramas
+# Cuentas Nacionales / PIB
 
-## 📌 Descripción de la Tabla `pib_ramas`
-Desagrega anualmente el PIB por ramas de actividad económica para analizar la contribución sectorial (1950–2022).
-
-### 📄 Columnas:
-| Columna                   | Tipo    | Descripción                                                                    | Unidad                                  |
-|---------------------------|---------|--------------------------------------------------------------------------------|-----------------------------------------|
-| `año`                     | INTEGER | Año del registro                                                               | Año                                     |
-| `agropecuario`            | REAL    | Actividad agropecuaria                                                         | Miles de bolivianos constantes de 1990  |
-| `minas_canteras_total`    | REAL    | Minería y petróleo (suma de minería + petróleo)                                 | Miles de bolivianos constantes de 1990  |
-| `mineria`                 | REAL    | Minería                                                                         | Miles de bolivianos constantes de 1990  |
-| `petroleo`                | REAL    | Petróleo                                                                        | Miles de bolivianos constantes de 1990  |
-| `industria_manufacturera` | REAL    | Industria manufacturera                                                         | Miles de bolivianos constantes de 1990  |
-| `construcciones`          | REAL    | Construcciones                                                                  | Miles de bolivianos constantes de 1990  |
-| `energia`                 | REAL    | Producción energética (electricidad, gas y agua)                                | Miles de bolivianos constantes de 1990  |
-| `transportes`             | REAL    | Transportes, almacenamiento y comunicaciones                                     | Miles de bolivianos constantes de 1990  |
-| `comercio_finanzas`       | REAL    | Comercio y finanzas (rubros 7–8)                                                | Miles de bolivianos constantes de 1990  |
-| `gobierno_general`        | REAL    | Gobierno general                                                                 | Miles de bolivianos constantes de 1990  |
-| `propiedad_vivienda`      | REAL    | Propiedad de vivienda                                                            | Miles de bolivianos constantes de 1990  |
-| `servicios`               | REAL    | Servicios (comunales, sociales, personales, hoteles)                             | Miles de bolivianos constantes de 1990  |
-| `derechos_imp`            | REAL    | Derechos de importación / Impuestos                                              | Miles de bolivianos constantes de 1990  |
-| `pib_nominal`             | REAL    | Producto Interno Bruto nominal                                                   | Miles de bolivianos constantes de 1990  |
-| `pib_real`                | REAL    | Producto Interno Bruto real                                                      | Miles de bolivianos constantes de 1990  |
-
-## 📌 Período y Unidades
-- **Período:** 1950 – 2022  
-- **Unidad base:** Miles de bolivianos constantes de 1990  
-
-## 📌 Fuente
-- Archivo Excel: `db/pruebas.xlsx`  
-
----
-
-# Tabla: Participacion_PIB
-
-## 📌 Descripción de la Tabla `Participacion_PIB`
-Almacena la participación de exportaciones e importaciones como porcentaje del PIB anual para medir su peso relativo en la actividad económica (1950–2023).
-
-### 📄 Columnas:
-| Columna               | Tipo   | Descripción                          | Unidad    |
-|-----------------------|--------|--------------------------------------|-----------|
-| `año`                 | INTEGER| Año del registro                     | Año       |
-| `exportaciones_pib`   | REAL   | Exportaciones como % del PIB         | Porcentaje|
-| `importaciones_pib`   | REAL   | Importaciones como % del PIB         | Porcentaje|
-
-## 📌 Período y Unidades
-- **Período:** 1950 – 2023  
-- **Unidad base:** Porcentaje  
-
-## 📌 Fuente
-- Archivo Excel: `reports/pruebas.xls`  
-
----
-
-# Tabla: tasa_crecimiento_pib
-
-## 📌 Descripción de la Tabla `tasa_crecimiento_pib`
-Registra la variación porcentual anual del PIB para evaluar el ritmo de crecimiento económico (1951–2024).
-
-### 📄 Columnas:
-| Columna      | Tipo    | Descripción                                            | Unidad    |
-|--------------|---------|--------------------------------------------------------|-----------|
-| `año`        | INTEGER | Año del registro                                       | Año       |
-| `crecimiento`| REAL    | Tasa de crecimiento anual del PIB (%)                  | Porcentaje|
-
-## 📌 Período y Unidades
-- **Período:** 1951 – 2024  
-- **Unidad base:** Porcentaje  
-
-## 📌 Fuente
-- Archivo Excel: `db/pruebas.xlsx`  
-
----
-
-# Tabla: participacion_x_m_pib
-
-## 📌 Descripción de la Tabla `participacion_x_m_pib`
-Muestra la participación de exportaciones (X) e importaciones (M) como porcentaje del PIB, para medir su incidencia en la actividad económica (1950–2023).
-
-### 📄 Columnas:
-| Columna  | Tipo    | Descripción                  | Unidad    |
-|----------|---------|------------------------------|-----------|
-| `año`    | INTEGER | Año del registro             | Año       |
-| `x`      | REAL    | Exportaciones como % del PIB | Porcentaje|
-| `m`      | REAL    | Importaciones como % del PIB | Porcentaje|
-
-## 📌 Período y Unidades
-- **Período:** 1950 – 2023  
-- **Unidad base:** Porcentaje  
-
-## 📌 Fuente
-- Archivo Excel: `db/pruebas.xlsx`  
-
----
-
-# Tabla: participacion_pib_ramas
+## 1. Listado
 
-## 📌 Descripción de la Tabla `participacion_pib_ramas`
-Almacena el porcentaje anual que representa cada rama de actividad económica sobre el PIB total. Incluye agregados calculados automáticamente (minas_canteras_total, comercio_finanzas) (1950–2023).
+- **Nombre de tabla:** `PIB_Real_Gasto`
+- **Nombre descriptivo:** PIB real (base 1990) desagregado por componentes de gasto
 
-### 📄 Columnas:
-| Columna                   | Tipo    | Descripción                                                         | Unidad    |
-|---------------------------|---------|---------------------------------------------------------------------|-----------|
-| `año`                     | INTEGER | Año del registro                                                    | Año       |
-| `agropecuario`            | REAL    | Agricultura, silvicultura, caza y pesca (% PIB)                    | Porcentaje|
-| `minas_canteras_total`    | REAL    | Minería + Petróleo (% PIB)                                          | Porcentaje|
-| `mineria`                 | REAL    | Minerales metálicos y no metálicos (% PIB)                          | Porcentaje|
-| `petroleo`                | REAL    | Petróleo crudo y gas natural (% PIB)                                | Porcentaje|
-| `industria_manufacturera` | REAL    | Industria manufacturera (% PIB)                                      | Porcentaje|
-| `construcciones`          | REAL    | Construcción (% PIB)                                                 | Porcentaje|
-| `energia`                 | REAL    | Electricidad, gas y agua (% PIB)                                     | Porcentaje|
-| `transportes`             | REAL    | Transporte, almacenamiento y comunicaciones (% PIB)                  | Porcentaje|
-| `comercio_finanzas`       | REAL    | Comercio y servicios financieros/empresas (% PIB)                    | Porcentaje|
-| `gobierno_general`        | REAL    | Gobierno general (% PIB)                                             | Porcentaje|
-| `propiedad_vivienda`      | REAL    | Propiedad de vivienda (% PIB)                                        | Porcentaje|
-| `servicios`               | REAL    | Servicios comunales, sociales, personales y hoteles (% PIB)         | Porcentaje|
+## 2. Estructura
 
-## 📌 Período y Unidades
-- **Período:** 1950 – 2023  
-- **Unidad base:** Porcentaje  
+- **Descripción:** Datos anuales de consumo, inversión, exportaciones, importaciones y PIB real de Bolivia.
+- **Periodo:** 1950--2023
+- **Unidad base:** Miles de bolivianos constantes de 1990
+- **Fuente original:** Archivo Excel `reports/pruebas.xls`
+- **Notas:** Ninguna
 
-## 📌 Fuente
-- Base SQLite “participacion.db” creado a partir de archivos Excel.  
-- Cálculos de agregados:  
-  - `minas_canteras_total = mineria + petroleo`  
-  - `comercio_finanzas = comercio + servicios_financieros + servicios_a_empresas + restaurantes_y_hoteles`  
+## 3. Esquema de la tabla
 
----
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `gastos_consumo` | REAL | Consumo total (miles de Bs. 1990) |
+| `formacion_capital` | REAL | Inversión (formación bruta de capital) |
+| `exportacion_bienes_servicios` | REAL | Exportaciones de bienes y servicios |
+| `importacion_bienes` | REAL | Importaciones de bienes |
+| `pib_real_base_1990` | REAL | PIB real (base 1990) |
+| `consumo_privado` | REAL | Consumo privado |
+| `consumo_publico` | REAL | Consumo público |
 
-# Tabla: balanza_comercial
+## 4. Procesamiento aplicado
 
-## 📌 Descripción de la Tabla `balanza_comercial`
-Registra anualmente el valor de exportaciones, importaciones y saldo comercial de Bolivia (1949–2024).
+Ninguno.
+## Desagregación del PIB por ramas de actividad
 
-### 📄 Columnas:
-| Columna           | Tipo    | Descripción                                       | Unidad            |
-|-------------------|---------|---------------------------------------------------|-------------------|
-| `año`             | INTEGER | Año del registro                                  | Año               |
-| `exportaciones`   | REAL    | Valor de exportaciones                            | Millones USD      |
-| `importaciones`   | REAL    | Valor de importaciones                            | Millones USD      |
-| `saldo_comercial` | REAL    | Exportaciones − Importaciones                     | Millones USD      |
+### 1. Listado
 
-## 📌 Período y Unidades
-- **Período:** 1949 – 2024  
-- **Unidad base:** Millones de dólares (USD)  
+- **Nombre de tabla:** `pib_ramas`
+- **Nombre descriptivo:** Desagregación del PIB por sectores económicos
 
-## 📌 Fuente
-- INE: Memorias del Banco Central de Bolivia  
-- URL: https://nube.ine.gob.bo/index.php/s/nMPCP2wBQqnx7c1/download  
+### 2. Estructura
 
----
+- **Descripción:** Valores anuales del PIB clasificados por ramas de actividad, para analizar la contribución sectorial.
+- **Periodo:** 1950--2022
+- **Unidad base:** Miles de bolivianos constantes de 1990
+- **Fuente original:** Archivo Excel `db/pruebas.xlsx`
+- **Notas:** Datos preliminares para 2019–2022
 
-# Tabla: flujo_divisas
+### 3. Esquema de la tabla
 
-## 📌 Descripción de la Tabla `flujo_divisas`
-Registra anualmente los ingresos, egresos y flujo neto de divisas en Bolivia, para evaluar la balanza de transacciones internacionales (1985–2023).
-
-### 📄 Columnas:
-| Columna             | Tipo    | Descripción                                | Unidad         |
-|---------------------|---------|--------------------------------------------|----------------|
-| `año`               | INTEGER | Año del registro                           | Año            |
-| `ingreso_divisas`   | REAL    | Ingresos de divisas                        | Millones USD   |
-| `egreso_divisas`    | REAL    | Egresos de divisas                         | Millones USD   |
-| `flujo_neto_divisas`| REAL    | Ingresos − Egresos                         | Millones USD   |
-
-## 📌 Período y Unidades
-- **Período:** 1985 – 2023  
-- **Unidad base:** Millones de dólares (USD)  
-
-## 📌 Fuente
-- UDAPE: “Balanza cambiaria”  
-- URL: https://dossier.udape.gob.bo/res/balanza%20cambiaria  
-
----
-
-# Tabla: grado_de_apertura
-
-## 📌 Descripción de la Tabla `grado_de_apertura`
-Mide la apertura económica como la suma de exportaciones e importaciones en relación al PIB anual (1950–2022).
-
-### 📄 Columnas:
-| Columna | Tipo    | Descripción                                     | Unidad    |
-|---------|---------|-------------------------------------------------|-----------|
-| `año`   | INTEGER | Año del registro                                | Año       |
-| `grado` | REAL    | (Exportaciones + Importaciones) / PIB (%)       | Porcentaje|
-
-## 📌 Período y Unidades
-- **Período:** 1950 – 2022  
-- **Unidad base:** Porcentaje  
-
-## 📌 Fuente
-- Archivo Excel: `db/pruebas.xlsx`  
-
----
-
-# Tabla: Reservas_oro_divisas
-
-## 📌 Descripción de la Tabla `Reservas_oro_divisas`
-Registra anualmente el volumen de reservas internacionales en oro y divisas, en millones de dólares (1950–2023).
-
-### 📄 Columnas:
-| Columna            | Tipo    | Descripción                              | Unidad         |
-|--------------------|---------|------------------------------------------|----------------|
-| `año`              | INTEGER | Año del registro                         | Año            |
-| `reservas_totales` | REAL    | Reservas totales en oro y divisas        | Millones USD   |
-
-## 📌 Período y Unidades
-- **Período:** 1950 – 2023  
-- **Unidad base:** Millones de dólares (USD)  
-
-## 📌 Fuente
-- Banco Mundial (1960–2023) / BCB (1950–1960)  
-- URL: https://datos.bancomundial.org/indicador/FI.RES.TOTL.CD?locations=BO  
-
----
-
-# Tabla: exportaciones_totales
-
-## 📌 Descripción de la Tabla `exportaciones_totales`
-Registra el valor anual de exportaciones, desglosadas en productos tradicionales y no tradicionales, junto con su valor total (1980–2023).
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `agropecuario` | REAL | Actividad agropecuaria |
+| `minas_canteras_total` | REAL | Minería y petróleo (rubro 2 total) |
+| `mineria` | REAL | Minería (rubro 2.1) |
+| `petroleo` | REAL | Petróleo (rubro 2.2) |
+| `industria_manufacturera` | REAL | Industria manufacturera (rubro 3) |
+| `construcciones` | REAL | Construcciones (rubro 4) |
+| `energia` | REAL | Producción energética (rubro 5) |
+| `transportes` | REAL | Transportes (rubro 6) |
+| `comercio_finanzas` | REAL | Comercio y finanzas (rubros 7–8) |
+| `gobierno_general` | REAL | Gobierno general (rubro 9) |
+| `propiedad_vivienda` | REAL | Propiedad de vivienda (rubro 10) |
+| `servicios` | REAL | Servicios (rubro 11) |
+| `derechos_imp` | REAL | Derechos de importación / impuestos |
+| `pib_nominal` | REAL | Producto Interno Bruto nominal |
+| `pib_real` | REAL | Producto Interno Bruto real |
 
-### 📄 Columnas:
-| Columna                      | Tipo    | Descripción                                | Unidad         |
-|------------------------------|---------|--------------------------------------------|----------------|
-| `año`                        | INTEGER | Año del registro                           | Año            |
-| `productos_tradicionales`    | REAL    | Valor de exportaciones tradicionales       | Millones USD   |
-| `productos_no_tradicionales` | REAL    | Valor de exportaciones no tradicionales    | Millones USD   |
-| `total_valor_oficial`        | REAL    | Suma oficial de todas las exportaciones    | Millones USD   |
-
-## 📌 Período y Unidades
-- **Período:** 1980 – 2023  
-- **Unidad base:** Millones de dólares (USD)  
-
-## 📌 Fuente
-- INE: https://nube.ine.gob.bo/index.php/s/zUQc65wIGkw1KUy/download  
-
----
+### 4. Procesamiento aplicado
 
-# Tabla: exportaciones_minerales_totales
+Ninguno.
+## Participación de Exportaciones e Importaciones en el PIB
 
-## 📌 Descripción de la Tabla `exportaciones_minerales_totales`
-Registra anualmente el volumen (en kilos finos) y el valor (en miles de dólares) de las exportaciones de minerales para evaluar la evolución del sector minero (1952–2023).
+### 1. Listado
 
-### 📄 Columnas:
-| Columna          | Tipo    | Descripción                                | Unidad                  |
-|------------------|---------|--------------------------------------------|-------------------------|
-| `año`            | INTEGER | Año del registro                           | Año                     |
-| `estaño_volumen` | REAL    | Volumen de estaño                           | Kilos finos             |
-| `estaño_valor`   | REAL    | Valor de estaño                             | Miles USD               |
-| `plomo_volumen`  | REAL    | Volumen de plomo                            | Kilos finos             |
-| `plomo_valor`    | REAL    | Valor de plomo                              | Miles USD               |
-| `zinc_volumen`   | REAL    | Volumen de zinc                             | Kilos finos             |
-| `zinc_valor`     | REAL    | Valor de zinc                               | Miles USD               |
-| `plata_volumen`  | REAL    | Volumen de plata                            | Kilos finos             |
-| `plata_valor`    | REAL    | Valor de plata                              | Miles USD               |
-| `wolfram_volumen`| REAL    | Volumen de wólfram                          | Kilos finos             |
-| `wolfram_valor`  | REAL    | Valor de wólfram                            | Miles USD               |
-| `cobre_volumen`  | REAL    | Volumen de cobre                            | Kilos finos             |
-| `cobre_valor`    | REAL    | Valor de cobre                              | Miles USD               |
-| `antimonio_volumen` | REAL    | Volumen de antimonio                       | Kilos finos             |
-| `antimonio_valor`   | REAL    | Valor de antimonio                         | Miles USD               |
-| `oro_volumen`    | REAL    | Volumen de oro                              | Kilos finos             |
-| `oro_valor`      | REAL    | Valor de oro                                | Miles USD               |
+- **Nombre de tabla:** `Participacion_PIB`
+- **Nombre descriptivo:** Participación de exportaciones e importaciones en el PIB
 
-## 📌 Período y Unidades
-- **Período:** 1952 – 2023  
-- **Unidades:**  
-  - Volumen en kilos finos  
-  - Valor en miles de dólares (USD)  
+### 2. Estructura
 
-## 📌 Fuente
-- 1952–1987: Informes del Banco Central de Bolivia  
-- 1987–2023: UDAPE (https://dossier.udape.gob.bo/res/VOLUMEN%20Y%20VALOR%20DE%20EXPORTACIONES%20DE%20MINERALES)  
+- **Descripción:** Exportaciones e importaciones expresadas como porcentaje del PIB; mide el peso relativo de X y M en la actividad económica.
+- **Periodo:** 1950--2023
+- **Unidad base:** Porcentaje
+- **Fuente original:** Archivo Excel `reports/pruebas.xls`
+- **Notas:** Ninguna
 
----
+### 3. Esquema de la tabla
 
-# Tabla: exportaciones_tradicionales
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `exportaciones_pib` | REAL | Exportaciones como % del PIB |
+| `importaciones_pib` | REAL | Importaciones como % del PIB |
 
-## 📌 Descripción de la Tabla `exportaciones_tradicionales`
-Registra el valor anual de exportaciones tradicionales desglosadas en minerales e hidrocarburos (1992–2024).
-
-### 📄 Columnas:
-| Columna    | Tipo    | Descripción                                      | Unidad         |
-|------------|---------|--------------------------------------------------|----------------|
-| `año`      | INTEGER | Año del registro                                 | Año            |
-| `minerales`| REAL    | Valor de exportaciones de minerales              | Millones USD   |
-| `hidrocarburos` | REAL | Valor de exportaciones de hidrocarburos        | Millones USD   |
+### 4. Procesamiento aplicado
 
-## 📌 Período y Unidades
-- **Período:** 1992 – 2024  
-- **Unidad base:** Millones de dólares (USD)  
+Ninguno.
+## Tasa de Crecimiento Anual del PIB
 
-## 📌 Fuente
-- INE: https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/  
+### 1. Listado
 
----
+- **Nombre de tabla:** `tasa_crecimiento_pib`
+- **Nombre descriptivo:** Tasa de crecimiento anual del Producto Interno Bruto
 
-# Tabla: exportaciones_tradicionales_no_tradicionales
-
-## 📌 Descripción de la Tabla `exportaciones_tradicionales_no_tradicionales`
-Desglosa anualmente las exportaciones en tradicionales y no tradicionales, para analizar su evolución y peso relativo (1980–2024).
+### 2. Estructura
 
-### 📄 Columnas:
-| Columna         | Tipo    | Descripción                                   | Unidad         |
-|-----------------|---------|-----------------------------------------------|----------------|
-| `año`           | INTEGER | Año del registro                              | Año            |
-| `tradicionales` | REAL    | Exportaciones tradicionales                   | Millones USD   |
-| `no_tradicionales` | REAL | Exportaciones no tradicionales               | Millones USD   |
+- **Descripción:** Variación porcentual anual del PIB para evaluar el ritmo de crecimiento económico.
+- **Periodo:** 1951--2024
+- **Unidad base:** Porcentaje
+- **Fuente original:** Archivo Excel `db/pruebas.xlsx`
+- **Notas:** Ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `crecimiento` | REAL | Tasa de crecimiento anual del PIB (%) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Participación de Exportaciones e Importaciones en el PIB (`participacion_x_m_pib`)
 
-## 📌 Período y Unidades
-- **Período:** 1980 – 2024  
-- **Unidad base:** Millones de dólares (USD)  
+### 1. Listado
 
-## 📌 Fuente
-- INE: https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/  
+- **Nombre de tabla:** `participacion_x_m_pib`
+- **Nombre descriptivo:** Participación de X (exportaciones) y M (importaciones) en el PIB
 
----
+### 2. Estructura
 
-# Tabla: participacion_exp_trad_no_trad
+- **Descripción:** Porcentaje que representan las exportaciones (X) y las importaciones (M) sobre el PIB anual, para medir su incidencia en la actividad económica.
+- **Periodo:** 1950--2023
+- **Unidad base:** Porcentaje
+- **Fuente original:** Archivo Excel `db/pruebas.xlsx`
+- **Notas:** Ninguna
 
-## 📌 Descripción de la Tabla `participacion_exp_trad_no_trad`
-Almacena la participación porcentual de exportaciones tradicionales y no tradicionales para medir su peso en el total de exportaciones (1980–2023).
+### 3. Esquema de la tabla
 
-### 📄 Columnas:
-| Columna       | Tipo    | Descripción                                    | Unidad    |
-|---------------|---------|------------------------------------------------|-----------|
-| `año`         | INTEGER | Año del registro                               | Año       |
-| `exp_trad`    | REAL    | Exportaciones tradicionales (% del total)      | Porcentaje|
-| `exp_no_trad` | REAL    | Exportaciones no tradicionales (% del total)   | Porcentaje|
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `x` | REAL | Exportaciones como % del PIB |
+| `m` | REAL | Importaciones como % del PIB |
 
-## 📌 Período y Unidades
-- **Período:** 1980 – 2023  
-- **Unidad base:** Porcentaje  
+### 4. Procesamiento aplicado
+
+Ninguno.
+### 1. Listado
+
+- **Nombre de tabla:** `exportaciones_tradicionales_hidrocarburos`
+- **Nombre descriptivo:** Exportaciones de hidrocarburos, gas natural y otros hidrocarburos
 
-## 📌 Fuente
-- Archivo Excel: `db/pruebas.xlsx`  
+### 2. Estructura
+
+- **Descripción:** Valores anuales de exportaciones de hidrocarburos, desglosados en gas natural y otros hidrocarburos, para evaluar su contribución al comercio exterior.
+- **Periodo:** 1992--2024
+- **Unidad base:** Millones de dólares
+- **Fuente original:** INE — https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/
+- **Notas:** Ninguna
 
----
+### 3. Esquema de la tabla
 
-# Tabla: exportaciones_tradicionales_hidrocarburos
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `hidrocarburos` | REAL | Total hidrocarburos (millones USD) |
+| `gas_natural` | REAL | Gas natural (millones USD) |
+| `otros_hidrocarburos` | REAL | Otros hidrocarburos (millones USD) |
 
-## 📌 Descripción de la Tabla `exportaciones_tradicionales_hidrocarburos`
-Registra anualmente el valor de exportaciones de hidrocarburos, desglosando gas natural y otros hidrocarburos (1992–2024).
+### 4. Procesamiento aplicado
 
-### 📄 Columnas:
-| Columna          | Tipo    | Descripción                                   | Unidad         |
-|------------------|---------|-----------------------------------------------|----------------|
-| `año`            | INTEGER | Año del registro                              | Año            |
-| `hidrocarburos`  | REAL    | Total de exportaciones de hidrocarburos       | Millones USD   |
-| `gas_natural`    | REAL    | Exportaciones de gas natural                  | Millones USD   |
-| `otros_hidrocarburos`| REAL| Exportaciones de otros hidrocarburos          | Millones USD   |
+Ninguno.
+## Participación del PIB por ramas de actividad
 
-## 📌 Período y Unidades
-- **Período:** 1992 – 2024  
-- **Unidad base:** Millones de dólares (USD)  
+(`participacion_pib_ramas`)}
+### 1. Listado
 
-## 📌 Fuente
-- INE: https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/  
+- **Nombre de tabla:** `participacion_pib_ramas`
+- **Nombre descriptivo:** Porcentaje del PIB desagregado por ramas de actividad económica
+
+### 2. Estructura
+
+- **Descripción:** Porcentaje anual que representa cada rama de actividad sobre el Producto Interno Bruto.
+- **Periodo:** 1950--2023
+- **Unidad base:** Porcentaje (%)
+- **Fuente original:** Base de datos SQLite (`participacion.db`) construido a partir de archivos Excel.
+- **Notas:**
+  - `minas_canteras_total` calculado como suma de `mineria` + `petroleo`.
+  - `comercio_finanzas` corresponde a la suma de:
+  - `comercio` (rubro 6)
+  - `servicios_financieros` (parte del rubro 8)
+  - `servicios_a_empresas` (parte del rubro 8)
+  -  texttt restaurantes_y_hoteles (rubro 10)
+  - Valores provisionales marcados “(p)” para 2018–2023.
 
----
+### 3. Esquema de la tabla
 
-# Tabla: exportacion_gas_natural
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro (PK) |
+| `agropecuario` | REAL | Agricultura, silvicultura, caza y pesca (% PIB) |
+| `minas_canteras_total` | REAL | Minería + petróleo (% PIB) |
+| `mineria` | REAL | Minerales metálicos y no metálicos (% PIB) |
+| `petroleo_crudo_y_gas_natural` | REAL | Petróleo crudo y gas natural (% PIB) |
+| `industria_manufacturera` | REAL | Industria manufacturera (% PIB) |
+| `construcciones` | REAL | Construcción (% PIB) |
+| `energia` | REAL | Electricidad, gas y agua (% PIB) |
+| `transportes` | REAL | Transporte, almacenamiento y comunicaciones |
+| `comercio_finanzas` | REAL | Comercio y servicios financieros/empresas |
+| `gobierno_general` | REAL | Gobierno general |
+| `propiedad_vivienda` | REAL | Propiedad de vivienda) |
+| `servicios` | REAL | Servicios comunales, sociales, personales y hoteles |
 
-## 📌 Descripción de la Tabla `exportacion_gas_natural`
-Registra el volumen, precio y valor anual de las exportaciones de gas natural, para analizar su evolución en el período 1987–2023.
+### 4. Procesamiento aplicado
 
-### 📄 Columnas:
-| Columna         | Tipo  | Descripción                                                     | Unidad                        |
-|-----------------|-------|-----------------------------------------------------------------|-------------------------------|
-| `año`           | INTEGER | Año del registro                                              | Año                           |
-| `volumen_MMMc`  | REAL  | Volumen en millones de metros cúbicos (MMmc)                   | Millones m³                   |
-| `volumen_MMPC`  | REAL  | Volumen en millones de pies cúbicos (MMPC)                     | Millones pies³                |
-| `precio_usd_MPC`| REAL  | Precio en USD por mil pies cúbicos (USD/MPC)                   | USD por mil pies cúbicos      |
-| `valor`         | REAL  | Valor de las exportaciones de gas natural                       | Miles USD                     |
+- Cálculo de agregados:
+  - `minas_canteras_total` = `mineria` + `petroleo`.
+  - `comercio_finanzas` = `comercio` + `servicios_financieros` + `servicios_a_empresas`, excluyendo `propiedad_vivienda`.
+- Inserción manual de valores porcentuales año a año a partir de fuentes Excel y estimados provisionales.
 
-## 📌 Período y Unidades
-- **Período:** 1987 – 2023  
-- **Unidades:**  
-  - Volumen: Millones m³ y millones pies³  
-  - Precio: USD/MPC  
-  - Valor: Miles USD  
+## PIB a precios corrientes por tipo de gasto
 
-## 📌 Fuente
-- UDAPE: https://dossier.udape.gob.bo/res/EXPORTACIÓN%20DE%20GAS%20NATURAL  
+### 1. Listado
 
----
+- **Nombre de tabla:** `pib_nominal_gasto`
+- **Nombre descriptivo:** PIB a precios corrientes por tipo de gasto
 
-# Tabla: exportacion_gas_natural_contratos
+### 2. Estructura
 
-## 📌 Descripción de la Tabla `exportacion_gas_natural_contratos`
-Detalla las exportaciones de gas natural por contrato y destino (Argentina o Brasil) para el período 1992–2023.
+- **Descripción:** Valores anuales del PIB a precios corrientes desagregado por enfoque del gasto.
+- **Periodo:** 1980–2023
+- **Unidad base:** Miles de bolivianos
+- **Fuente original:** INE: https://nube.ine.gob.bo/index.php/s/Sx5vznBqGGGIuN2/download
+- **Notas:** 2017 al 2023 datos preliminares
 
-### 📄 Columnas:
-| Columna   | Tipo    | Descripción                                                 | Unidad         |
-|-----------|---------|-------------------------------------------------------------|----------------|
-| `año`     | INTEGER | Año del registro                                            | Año            |
-| `contrato`| TEXT    | Nombre del contrato de exportación                          | Texto          |
-| `destino` | TEXT    | Destino del gas (Argentina o Brasil)                        | Texto          |
-| `monto`   | REAL    | Valor de exportación por contrato                           | Millones USD   |
+### 3. Esquema de la tabla
 
-## 📌 Período y Unidades
-- **Período:** 1992 – 2023  
-- **Unidad base:** Millones de dólares (USD)  
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| gastos_consumo | REAL | Consumo total (miles de bolivianos) |
+| consumo_privado | REAL | Gasto de consumo final de los hogares e ISFLSH |
+| consumo_publico | REAL | Gasto de consumo final de la administración pública |
+| variacion_existencias | REAL | Variación de existencias |
+| formacion_capital | REAL | Formación bruta de capital fijo |
+| exportacion_bienes_servicios | REAL | Exportaciones de bienes y servicios |
+| importacion_bienes | REAL | Importaciones de bienes y servicios |
+| pib_a_precios_corrientes | REAL | PIB a precios de mercado |
 
-## 📌 Fuente
-- UDAPE: https://dossier.udape.gob.bo/res/VALOR%20DE%20EXPORTACIÓN%20DE%20GAS%20NATURAL%20POR%20CONTRATO  
+### 4. Procesamiento aplicado
 
----
+Se agregó `gastos_consumo`, que es la suma de `consumo_privado` y `consumo_publico`.
+## Deflactor implícito del PIB por tipo de gasto
 
-# Tabla: participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos
+### 1. Listado
 
-## 📌 Descripción de la Tabla `participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos`
-Almacena la participación porcentual del gas natural y otros hidrocarburos en el total exportado de hidrocarburos (1980–2023).
+- **Nombre de tabla:** `deflactor_implicito_pib_gasto`
+- **Nombre descriptivo:** Índices de precios implícitos del PIB por tipo de gasto
 
-### 📄 Columnas:
-| Columna             | Tipo    | Descripción                                                      | Unidad    |
-|---------------------|---------|------------------------------------------------------------------|-----------|
-| `año`               | INTEGER | Año del registro                                                 | Año       |
-| `exportacion_gas`   | REAL    | Gas natural como % del total de hidrocarburos                    | Porcentaje|
-| `otros_hidrocarburos`| REAL   | Otros hidrocarburos como % del total de hidrocarburos            | Porcentaje|
-
-## 📌 Período y Unidades
-- **Período:** 1980 – 2023  
-- **Unidad base:** Porcentaje  
-
-## 📌 Fuente
-- Archivo Excel: `db/pruebas.xlsx`  
-
----
-
-# Tabla: participacion_hidrocarburos_minerales_exportaciones_tradicionales
-
-## 📌 Descripción de la Tabla `participacion_hidrocarburos_minerales_exportaciones_tradicionales`
-Registra la participación porcentual de hidrocarburos y minerales en las exportaciones tradicionales (1980–2023).
+### 2. Estructura
 
-### 📄 Columnas:
-| Columna      | Tipo    | Descripción                                                    | Unidad    |
-|--------------|---------|----------------------------------------------------------------|-----------|
-| `año`        | INTEGER | Año del registro                                               | Año       |
-| `minerales`  | REAL    | Minerales como % del total de exportaciones tradicionales      | Porcentaje|
-| `hidrocarburos`| REAL  | Hidrocarburos como % del total de exportaciones tradicionales  | Porcentaje|
+- **Descripción:** Deflactor implícito del PIB desagregado por componentes de gasto (base 1990).
+- **Periodo:** 1980–2023
+- **Unidad base:** Índice (1990 = 100)
+- **Fuente original:** UDAPE: https://dossier.udape.gob.bo/res/DEFLACTOR%20IMPL%C3%8DCITO%20DEL%20PIB%20POR%20TIPO%20DE%20GASTO
+- **Notas:** Datos preliminares 2017–2023; base en 1990.
 
-## 📌 Período y Unidades
-- **Período:** 1980 – 2023  
-- **Unidad base:** Porcentaje  
-
-## 📌 Fuente
-- Archivo Excel: `db/pruebas.xlsx`  
-
----
-
-# Tabla: composicion_importaciones_uso_destino
-
-## 📌 Descripción de la Tabla `composicion_importaciones_uso_destino`
-Clasifica el valor anual de las importaciones según uso económico: bienes de consumo, materias primas/productos intermedios, bienes de capital y otros usos. Datos expresados en CIF frontera (1980–2024).
-
-### 📄 Columnas:
-| Columna                             | Tipo    | Descripción                                         | Unidad         |
-|-------------------------------------|---------|-----------------------------------------------------|----------------|
-| `año`                               | INTEGER | Año del registro                                    | Año            |
-| `bienes_consumo`                    | REAL    | Bienes de consumo                                   | Millones USD (CIF) |
-| `materias_primas_productos_intermedios` | REAL    | Materias primas / productos intermedios             | Millones USD (CIF) |
-| `bienes_capital`                    | REAL    | Bienes de capital                                   | Millones USD (CIF) |
-| `diversos`                          | REAL    | Otros usos                                          | Millones USD (CIF) |
-| `total_valor_oficial_cif`           | REAL    | Total valor oficial CIF                             | Millones USD (CIF) |
-
-## 📌 Período y Unidades
-- **Período:** 1980 – 2024  
-- **Unidad base:** Millones de dólares (CIF)  
-
-## 📌 Fuente
-- INE: https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/importaciones-cuadros-estadisticos/  
-
----
-
-# Tabla: participacion_composicion_importaciones_uso_destino
-
-## 📌 Descripción de la Tabla `participacion_composicion_importaciones_uso_destino`
-Almacena la participación porcentual de cada categoría de importaciones sobre el total CIF frontera (1980–2024).
-
-### 📄 Columnas:
-| Columna                             | Tipo    | Descripción                                         | Unidad    |
-|-------------------------------------|---------|-----------------------------------------------------|-----------|
-| `año`                               | INTEGER | Año del registro                                    | Año       |
-| `bienes_consumo`                    | REAL    | Bienes de consumo (% del total CIF)                 | Porcentaje|
-| `materias_primas_productos_intermedios` | REAL    | Materias primas/productos intermedios (% del total) | Porcentaje|
-| `bienes_capital`                    | REAL    | Bienes de capital (% del total CIF)                 | Porcentaje|
-| `diversos`                          | REAL    | Otros usos (% del total CIF)                        | Porcentaje|
-| `total_cif`                         | REAL    | Total importaciones CIF (siempre 100%)               | Porcentaje|
-
-## 📌 Período y Unidades
-- **Período:** 1980 – 2024  
-- **Unidad base:** Porcentaje  
-
-## 📌 Fuente
-- Archivo Excel: `db/pruebas.xlsx`  
-
----
-
-# Tabla: tu
-
-## 📌 Descripción de la Tabla `tu`
-Registra exportaciones no tradicionales desglosadas por producto (1992–2024).
-
-### 📄 Columnas:
-| Columna            | Tipo    | Descripción                                | Unidad         |
-|--------------------|---------|--------------------------------------------|----------------|
-| `año`              | INTEGER | Año del registro                           | Año            |
-| `total`            | REAL    | Total exportaciones no tradicionales        | Millones USD   |
-| `castaña`          | REAL    | Exportaciones de castaña                   | Millones USD   |
-| `café`             | REAL    | Exportaciones de café                      | Millones USD   |
-| `cacao`            | REAL    | Exportaciones de cacao                     | Millones USD   |
-| `azúcar`           | REAL    | Exportaciones de azúcar                    | Millones USD   |
-| `bebidas`          | REAL    | Exportaciones de bebidas                   | Millones USD   |
-| `gomas`            | REAL    | Exportaciones de gomas                      | Millones USD   |
-| `cueros`           | REAL    | Exportaciones de cueros                     | Millones USD   |
-| `maderas`          | REAL    | Exportaciones de maderas                    | Millones USD   |
-| `algodón`          | REAL    | Exportaciones de algodón                    | Millones USD   |
-| `soya`             | REAL    | Exportaciones de soya                       | Millones USD   |
-| `joyería`          | REAL    | Exportaciones de joyería                    | Millones USD   |
-| `joyería_con_oro_imp` | REAL | Exportaciones de joyería con oro importado | Millones USD   |
-| `otros`            | REAL    | Exportaciones de otros productos            | Millones USD   |
-
-## 📌 Período y Unidades
-- **Período:** 1992 – 2024  
-- **Unidad base:** Millones de dólares (USD)  
-
-## 📌 Fuente
-- INE: https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/  
-
----
-
-# Tabla: precio_minerales
-
-## 📌 Descripción de la Tabla `precio_minerales`
-Registra el precio anual de minerales principales expresado en USD según la unidad de medida específica (1980–2015).
-
-### 📄 Columnas:
-| Columna    | Tipo      | Descripción                                               | Unidad                        |
-|------------|-----------|-----------------------------------------------------------|-------------------------------|
-| `año`      | INTEGER   | Año del registro                                          | Año                           |
-| `Zinc`     | REAL      | Precio del Zinc (Libras Finas – L.F)                      | USD (L.F.)                    |
-| `Estaño`   | REAL      | Precio del Estaño (Libras Finas – L.F)                    | USD (L.F.)                    |
-| `Oro`      | REAL      | Precio del Oro (Onzas Troy – O.T.)                        | USD (O.T.)                    |
-| `Plata`    | REAL      | Precio de la Plata (Onzas Troy – O.T.)                    | USD (O.T.)                    |
-| `Antimonio`| REAL      | Precio del Antimonio (Toneladas Métricas Finas – T.M.F.)  | USD (T.M.F.)                  |
-| `Plomo`    | REAL      | Precio del Plomo (Libras Finas – L.F)                     | USD (L.F.)                    |
-| `Wólfram`  | REAL      | Precio del Wólfram (Libras Finas – L.F)                    | USD (L.F.)                    |
-| `Cobre`    | REAL      | Precio del Cobre (Libras Finas – L.F)                     | USD (L.F.)                    |
-
-### 🛠 Unidades de Medida  
-- **L.F. (Libras Finas)** → Zinc, Estaño, Plomo, Cobre  
-- **O.T. (Onzas Troy)** → Oro, Plata  
-- **T.M.F. (Toneladas Métricas Finas)** → Antimonio  
-
-## ⚠️ Notas  
-- **Frecuencia:** Datos anuales desde 1980 hasta 2015.  
-- **Fuente:** Ministerio de Minería y Metalurgia: https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf  
-
----
-
-# Tabla: precio_oficial_minerales
-
-## 📌 Descripción de la Tabla `precio_oficial_minerales`
-Registra el precio oficial anual de minerales principales en USD (1950–2024).
-
-### 📄 Columnas:
-| Columna   | Tipo  | Descripción                                | Unidad  |
-|-----------|-------|--------------------------------------------|---------|
-| `año`     | INTEGER | Año del registro                         | Año     |
-| `zinc`    | REAL  | Precio oficial del Zinc en USD            | USD     |
-| `estaño`  | REAL  | Precio oficial del Estaño en USD          | USD     |
-| `oro`     | REAL  | Precio oficial del Oro en USD             | USD     |
-| `plata`   | REAL  | Precio oficial de la Plata en USD         | USD     |
-| `antimonio` | REAL | Precio oficial del Antimonio en USD       | USD     |
-| `plomo`   | REAL  | Precio oficial del Plomo en USD           | USD     |
-| `wolfram` | REAL  | Precio oficial del Wólfram en USD         | USD     |
-| `cobre`   | REAL  | Precio oficial del Cobre en USD           | USD     |
-| `bismuto` | REAL  | Precio oficial del Bismuto en USD         | USD     |
-| `cadmio`  | REAL  | Precio oficial del Cadmio en USD          | USD     |
-| `manganeso` | REAL | Precio oficial del Manganeso en USD       | USD     |
-
-## 📌 Período y Unidades
-- **Período:** 1950 – 2024  
-- **Unidad base:** Dólares Americanos (USD)  
-
-## 📌 Fuente
-- 1950–1980: Informes del Banco Central de Bolivia  
-- 1980–2015: Ministerio de Minería y Metalurgia  
-- 2015–2024: Ministerio de Minería y Metalurgia (Dossier 1980–2023)
-
----
-
-# Tabla: precio_petroleo_wti
-
-## 📌 Descripción de la Tabla `precio_petroleo_wti`
-Registra el precio anual del petróleo WTI en USD por barril (1996–2023).
-
-### 📄 Columnas:
-| Columna  | Tipo   | Descripción                  | Unidad     |
-|----------|--------|------------------------------|------------|
-| `año`    | INTEGER| Año del registro             | Año        |
-| `precio` | REAL   | Precio del petróleo WTI      | USD/barril |
-
-## 📌 Período y Unidades
-- **Período:** 1996 – 2023  
-- **Unidad base:** Dólares Americanos (USD)  
-
-## 📌 Fuente
-- UDAPE: https://dossier.udape.gob.bo/res/PRECIO%20INTERNACIONAL%20DEL%20PETR%C3%93LEO%20(WTI)
-
----
-
-# Tabla: produccion_minerales
-
-## 📌 Descripción de la Tabla `produccion_minerales`
-Almacena la producción anual de minerales principales en toneladas finas para el período 1985–2021.
-
-### 📄 Columnas:
-| Columna    | Tipo    | Descripción                              | Unidad            |
-|------------|---------|------------------------------------------|-------------------|
-| `año`      | INTEGER | Año de la producción minera              | Año               |
-| `zinc`     | REAL    | Producción de Zinc                       | Toneladas finas   |
-| `estaño`   | REAL    | Producción de Estaño                     | Toneladas finas   |
-| `oro`      | REAL    | Producción de Oro                        | Toneladas finas   |
-| `plata`    | REAL    | Producción de Plata                      | Toneladas finas   |
-| `antimonio`| REAL    | Producción de Antimonio                  | Toneladas finas   |
-| `plomo`    | REAL    | Producción de Plomo                      | Toneladas finas   |
-| `wolfram`  | REAL    | Producción de Wólfram                    | Toneladas finas   |
-| `cobre`    | REAL    | Producción de Cobre                      | Toneladas finas   |
-
-## 📌 Período y Unidades
-- **Período:** 1985 – 2021  
-- **Unidad base:** Toneladas finas  
-
-## 📌 Fuente
-- Ministerio de Minería y Metalurgia: https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf  
-
----
-
-# Tabla: consolidado_spnf
-
-## 📌 Descripción de la Tabla `consolidado_spnf`
-Registra las operaciones consolidadas del Sector Público No Financiero (SPNF): ingresos, egresos, superávit/deficit global y primario, y financiamiento, para el período 1990–2023.
-
-### 📄 Columnas:
-| Columna             | Tipo    | Descripción                                            | Unidad             |
-|---------------------|---------|--------------------------------------------------------|--------------------|
-| `año`               | INTEGER | Año del registro                                       | Año                |
-| `ingresos_totales`  | REAL    | Ingresos totales del SPNF                              | Millones BOB       |
-| `egresos_totales`   | REAL    | Egresos totales del SPNF                               | Millones BOB       |
-| `sup_o_def_global`  | REAL    | Superávit o déficit global                             | Millones BOB       |
-| `financiamiento`    | REAL    | Financiamiento neto                                    | Millones BOB       |
-| `sup_o_def_primario`| REAL    | Superávit o déficit primario                           | Millones BOB       |
-
-## 📌 Período y Unidades
-- **Período:** 1990 – 2023  
-- **Unidad base:** Millones de bolivianos (BOB)  
-
-## 📌 Fuente
-- UDAPE: https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector  
-
----
-
-# Tabla: operaciones_empresas_publicas
-
-## 📌 Descripción de la Tabla `operaciones_empresas_publicas`
-Registra los ingresos, egresos y resultado fiscal global de empresas públicas como porcentaje del PIB (1990–2020).
-
-### 📄 Columnas:
-| Columna            | Tipo    | Descripción                                        | Unidad    |
-|--------------------|---------|----------------------------------------------------|-----------|
-| `año`              | INTEGER | Año del registro                                   | Año       |
-| `ingresos_totales` | REAL    | Ingresos totales de empresas públicas (% PIB)      | Porcentaje|
-| `egresos_totales`  | REAL    | Egresos totales de empresas públicas (% PIB)       | Porcentaje|
-| `resultado_fiscal_global` | REAL | Resultado fiscal global (% PIB)                | Porcentaje|
+### 3. Esquema de la tabla
 
-## 📌 Período y Unidades
-- **Período:** 1990 – 2020  
-- **Unidad base:** Porcentaje del PIB  
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año de referencia |
+| consumo_publico | REAL | Deflactor de consumo público |
+| consumo_hogares | REAL | Deflactor de consumo de los hogares e ISFLSH |
+| variacion_existencias | REAL | Deflactor de variación de existencias |
+| formacion_capital_fijo | REAL | Deflactor de formación bruta de capital fijo |
+| exportaciones | REAL | Deflactor de exportaciones de bienes y servicios |
+| importaciones | REAL | Deflactor de importaciones de bienes y servicios |
+| pib_precios_mercado | REAL | Deflactor implícito del PIB a precios de mercado (índice) |
 
-## 📌 Fuente
-- Excel interno (pendiente de fuente exacta en USB)  
-
----
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Oferta total y componentes
+
+### 1. Listado
+
+- **Nombre de tabla:** `oferta_total`
+- **Nombre descriptivo:** Oferta total y sus componentes (a precios de mercado)
+
+### 2. Estructura
+
+- **Descripción:** Serie anual de la oferta total de la economía boliviana, desglosada en producción bruta (VBP), importaciones y ajustes impositivos/logísticos.
+- **Periodo:** 1988–2023
+- **Unidad base:** Miles de bolivianos constantes de 1990
+- **Fuente original:** INE – Oferta total y demanda total https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/producto-interno-bruto-anual/oferta-total-y-demanda-total/
+- **Notas:** cifras preliminares etiquetadas “(p)” a partir de 2017
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| oferta_total | REAL | Oferta total a precios de mercado |
+| produccion_bruta | REAL | Valor Bruto de la Producción (VBP) |
+| importaciones | REAL | Importaciones de bienes y servicios |
+| derechos_imp | REAL | Derechos sobre importaciones |
+| impuestos_ind | REAL | IVA, IT y otros impuestos indirectos |
+| margenes_transp | REAL | Márgenes de comercialización y transporte |
+
+### 4. Procesamiento aplicado
+
+- Conversión manual de cifras con separador de miles “,” a números puros.
+- Tipado `REAL` para permitir promedios y tasas de crecimiento.
+- Valores preliminares (2017–2023) marcados con sufijo “p”.
+
+## Demanda total y componentes
+
+### 1. Listado
+
+- **Nombre de tabla:** `demanda_total`
+- **Nombre descriptivo:** Demanda total y sus componentes (a precios de mercado)
+
+### 2. Estructura
+
+- **Descripción:** Serie anual de la demanda total de la economía boliviana, desglosada en consumo intermedio, consumo final, formación bruta de capital fijo, variación de existencias y exportaciones de bienes y servicios.
+- **Periodo:** 1988–2023
+- **Unidad base:** Miles de bolivianos constantes de 1990
+- **Fuente original:** INE – Oferta total y demanda total https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/producto-interno-bruto-anual/oferta-total-y-demanda-total/
+- **Notas:** cifras preliminares etiquetadas “(p)” a partir de 2017
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| anio | INTEGER PRIMARY KEY | Año del registro |
+| demanda_total | REAL | Demanda total a precios de mercado |
+| consumo_intermedio | REAL | Consumo intermedio |
+| consumo_final | REAL | Consumo final |
+| fbcf | REAL | Formación Bruta de Capital Fijo |
+| variacion_existencias | REAL | Variación de existencias |
+| exportaciones_bienes_serv | REAL | Exportaciones de bienes y servicios |
+
+### 4. Procesamiento aplicado
+
+- Eliminación manual de separadores de miles (“,”) en cifras.
+- Tipado `REAL` para facilitar cálculos de tasas y promedios.
+- Valores preliminares marcados con sufijo “(p)”.
+
+## VBP por ramas de actividad económica (`vbp_sector_2006_2014`)
+
+### 1. Listado
+
+- **Nombre de tabla:** `vbp_sector_2006_2014`
+- **Nombre descriptivo:** Valor Bruto de Producción por rama de actividad económica, 2006--2014
+
+### 2. Estructura
+
+- **Descripción:** Serie anual del Valor Bruto de Producción (VBP) desagregado en 35 ramas de actividad económica, expresado en miles de bolivianos de 1990.
+- **Periodo:** 2006--2014
+- **Unidad base:** Miles de bolivianos constantes de 1990
+- **Fuente original:** INE – Matrices de insumo-producto https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/matrices/matrices-de-insumo-producto/
+- **Notas:** Ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER PRIMARY KEY | Año |
+| `productos_agricolas_no_industriales` | REAL | VBP |
+| `productos_agricolas_industriales` | REAL | VBP |
+| `coca` | REAL | VBP |
+| `productos_pecuarios` | REAL | VBP |
+| `silvicultura_caza_y_pesca` | REAL | VBP |
+| `petroleo_crudo_y_gas_natural` | REAL | VBP |
+| `minerales_metalicos_y_no_metalicos` | REAL | VBP |
+| `carnes_frescas_y_elaboradas` | REAL | VBP |
+| `productos_lacteos` | REAL | VBP |
+| `productos_de_molineria_y_panaderia` | REAL | VBP |
+| `azucar_y_confiteria` | REAL | VBP |
+| `productos_alimenticios_diversos` | REAL | VBP |
+| `bebidas` | REAL | VBP |
+| `tabaco_elaborado` | REAL | VBP |
+| `textiles_prendas_vestir_y_productos_del_cuero` | REAL | VBP |
+| `madera_y_productos_de_madera` | REAL | VBP |
+| `papel_y_productos_de_papel` | REAL | VBP |
+| `substancias_y_productos_quimicos` | REAL | VBP |
+| `productos_de_refinacion_del_petroleo` | REAL | VBP |
+| `productos_de_minerales_no_metalicos` | REAL | VBP |
+| `productos_basicos_de_metales` | REAL | VBP |
+| `productos_metalicos_maquinaria_y_equipo` | REAL | VBP |
+| `productos_manufacturados_diversos` | REAL | VBP |
+| `electricidad_gas_y_agua` | REAL | VBP |
+| `construccion` | REAL | VBP |
+| `comercio` | REAL | VBP |
+| `transporte_y_almacenamiento` | REAL | VBP |
+| `comunicaciones` | REAL | VBP |
+| `servicios_financieros` | REAL | VBP |
+| `servicios_a_las_empresas` | REAL | VBP |
+| `propiedad_de_vivienda` | REAL | VBP |
+| `servicios_comunales_sociales_y_personales` | REAL | VBP |
+| `restaurantes_y_hoteles` | REAL | VBP |
+| `servicios_domesticos` | REAL | VBP |
+| `servicios_de_la_administracion_publica` | REAL | VBP |
 
-# Tabla: inversion_publica_total
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Balanza de Pagos (`balanza_de_pagos`)
+
+### 1. Listado
+
+- **Nombre de tabla:** `balanza_de_pagos`
+- **Nombre descriptivo:** Balanza de pagos — resumen de cuentas principales
+
+### 2. Estructura
+
+- **Descripción:** Registro anual de las cinco partidas contables principales de la balanza de pagos boliviana: cuenta corriente, cuenta capital, errores y omisiones, saldo global y financiamiento.
+- **Periodo:** 1980--2023
+- **Unidad base:** Millones de dólares estadounidenses (USD)
+- **Fuente original:** https://dossier.udape.gob.bo/res/balanza%20de%20pagos
+- **Notas:** Ninguna
+
+### 3. Esquema de la tabla
 
-## 📌 Descripción de la Tabla `inversion_publica_total`
-Registra el monto anual de la inversión pública total en Bolivia, en miles de dólares (1990–2023).
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `current_account` | REAL | I. Cuenta corriente (1+2+3+4) |
+| `capital_account` | REAL | II. Cuenta capital (1+2+3+4+5+6+7) |
+| `errors_omissions` | REAL | III. Errores y omisiones |
+| `bop_balance` | REAL | IV. Superávit o déficit de BdeP (I + II + III) |
+| `financing` | REAL | V. Financiamiento (1+2+3) |
 
-### 📄 Columnas:
-| Columna | Tipo    | Descripción                            | Unidad        |
-|---------|---------|----------------------------------------|---------------|
-| `año`   | INTEGER | Año del registro                       | Año           |
-| `valor` | REAL    | Inversión pública total                | Miles USD     |
+### 4. Procesamiento aplicado
 
-## 📌 Período y Unidades
-- **Período:** 1990 – 2023  
-- **Unidad base:** Miles de dólares (USD)  
+Ninguno.
+## PIB per cápita (US$ corrientes) — Bolivia
+
+### 1. Listado
 
-## 📌 Fuente
-- UDAPE: https://dossier.udape.gob.bo/res/INVERSIÓN%20PÚBLICA%20POR%20SECTORES  
+- **Nombre de tabla:** `pib_percapita`
+- **Nombre descriptivo:** PIB per cápita (US$ a precios actuales)
 
----
+### 2. Estructura
+
+- **Descripción:** Serie anual del PIB per cápita de Bolivia en dólares corrientes (indicador del Banco Mundial NY.GDP.PCAP.CD).
+- **Periodo:** 1960--2024
+- **Unidad base:** US$ corrientes por habitante
+- **Fuente original:** Banco Mundial, indicador `NY.GDP.PCAP.CD`. https://datos.bancomundial.org/indicator/NY.GDP.PCAP.CD?locations=BOL
+- **Notas:** Valores tal como los provee el Banco Mundial (sin ajustes locales). Posibles revisiones históricas; el dato de 2024 puede ser preliminar.
 
-# Tabla: inversion_publica_por_sectores
+### 3. Esquema de la tabla
 
-## 📌 Descripción de la Tabla `inversion_publica_por_sectores`
-Distribuye el monto anual de inversión pública entre sectores: extractivo, apoyo a la producción, infraestructura y sector social (1990–2014).
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `pib_percapita` | REAL | PIB per cápita (US$ corrientes) |
 
-### 📄 Columnas:
-| Columna                         | Tipo    | Descripción                                  | Unidad        |
-|---------------------------------|---------|----------------------------------------------|---------------|
-| `año`                           | INTEGER | Año del registro                             | Año           |
-| `extractivo`                    | REAL    | Inversión en sector extractivo               | Miles USD     |
-| `apoyo_a_la_produccion`         | REAL    | Inversión en apoyo a la producción           | Miles USD     |
-| `infraestructura`               | REAL    | Inversión en infraestructura                  | Miles USD     |
-| `sociales`                      | REAL    | Inversión en sector social                    | Miles USD     |
-| `total`                         | REAL    | Inversión pública total                       | Miles USD     |
+### 4. Procesamiento aplicado
 
-## 📌 Período y Unidades
-- **Período:** 1990 – 2014  
-- **Unidad base:** Miles de dólares (USD)  
+- Filtrado de la fila con `Country Code = BOL`.
+- Selección de columnas anuales 1960--2024 y pivoteo a formato `(año, pib_percapita)`.
+- Conversión de tipos: `año` textrightarrow{} INTEGER, `pib_percapita` textrightarrow{} REAL.
+- Sin imputación ni suavizado; se preservan los valores originales del Banco Mundial.
 
-## 📌 Fuente
-- UDAPE: https://dossier.udape.gob.bo/res/INVERSIÓN%20PÚBLICA%20POR%20SECTORES  
+# Sector Externo / Balanza Comercial
 
----
+## 1. Listado
 
-# Tabla: deuda_externa_total
+- **Nombre de tabla:** `balanza_comercial`
+- **Nombre descriptivo:** Balanza comercial en millones de USD
 
-## 📌 Descripción de la Tabla `deuda_externa_total`
-Registra el monto anual de la deuda externa total de Bolivia en millones de dólares (1951–2020).
+## 2. Estructura
 
-### 📄 Columnas:
-| Columna   | Tipo    | Descripción                         | Unidad         |
-|-----------|---------|-------------------------------------|----------------|
-| `año`     | INTEGER | Año del registro                    | Año            |
-| `deuda`   | REAL    | Monto de deuda externa total        | Millones USD   |
+- **Descripción:** Registro anual del valor de exportaciones, importaciones y saldo comercial de Bolivia.
+- **Periodo:** 1949--2024
+- **Unidad base:** Millones de dólares
+- **Fuente original:**
+  - https://nube.ine.gob.bo/index.php/s/nMPCP2wBQqnx7c1/download
+  - Memorias del Banco Central de Bolivia
+- **Notas:** Los valores no fueron modificados.
 
-## 📌 Período y Unidades
-- **Período:** 1951 – 2020  
-- **Unidad base:** Millones de dólares (USD)  
+## 3. Esquema de la tabla
 
-## 📌 Fuente
-- 1951–1996: Informes del Banco Central de Bolivia  
-- 1996–2020: UDAPE (https://dossier.udape.gob.bo/res/DEUDA%20PÚBLICA%20EXTERNA%20DE%20MEDIANO)  
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `exportaciones` | REAL | Valor de exportaciones (millones USD) |
+| `importaciones` | REAL | Valor de importaciones (millones USD) |
+| `saldo_comercial` | REAL | Exportaciones -- Importaciones (millones USD) |
 
----
+## 4. Procesamiento aplicado
 
-# Tabla: deuda_interna
+Ninguno.
+## Flujo de Divisas del Sector Externo (`flujo_divisas`)
 
-## 📌 Descripción de la Tabla `deuda_interna`
-Registra el valor anual del stock de deuda interna manejada por el Tesoro General de la Nación (1993–2022).
+### 1. Listado
 
-### 📄 Columnas:
-| Columna | Tipo    | Descripción                         | Unidad         |
-|---------|---------|-------------------------------------|----------------|
-| `año`   | INTEGER | Año del registro (PK)               | Año            |
-| `valor` | REAL    | Stock de deuda interna              | Millones USD   |
+- **Nombre de tabla:** `flujo_divisas`
+- **Nombre descriptivo:** Flujo de divisas: ingresos, egresos y flujo neto
 
-## 📌 Período y Unidades
-- **Período:** 1993 – 2022  
-- **Unidad base:** Millones de dólares (USD)  
+### 2. Estructura
 
-## 📌 Fuente
-- UDAPE: https://dossier.udape.gob.bo/res/STOCK%20DE%20LA%20DEUDA%20PÚBLICA%20INTERNA%20DEL%20TESORO%20GENERAL%20DE%20LA%20NACIÓN  
+- **Descripción:** Registra anualmente los ingresos y egresos de divisas en Bolivia, así como el flujo neto, para evaluar la balanza de transacciones internacionales.
+- **Periodo:** 1985--2023
+- **Unidad base:** Millones de dólares
+- **Fuente original:** https://dossier.udape.gob.bo/res/balanza%20cambiaria
+- **Notas:** Ninguna
 
-# Tabla: pobreza_extrema
+### 3. Esquema de la tabla
 
-## 📌 Descripción de la Tabla `pobreza_extrema`
-Porcentaje anual de la población en situación de pobreza extrema en Bolivia (2007–2022).  
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `ingreso_divisas` | REAL | Ingresos de divisas (millones USD) |
+| `egreso_divisas` | REAL | Egresos de divisas (millones USD) |
+| `flujo_neto_divisas` | REAL | Flujo neto (Ingresos – Egresos) |
 
-### 📄 Columnas:
-| Columna             | Tipo    | Descripción                                   | Unidad      |
-|---------------------|---------|-----------------------------------------------|-------------|
-| `año`               | INTEGER | Año del registro                              | Año         |
-| `pobreza_extrema`   | REAL    | Porcentaje de población en pobreza extrema    | Porcentaje  |
+### 4. Procesamiento aplicado
 
-## 📌 Período y Unidades
-- **Período:** 2007 – 2022  
-- **Unidad base:** Porcentaje  
+Ninguno.
+## Grado de Apertura Económica (`grado_de_apertura`)
 
-## 📌 Fuente
-- INE: Encuesta de Hogares :contentReference[oaicite:16]{index=16}  
+### 1. Listado
 
----
+- **Nombre de tabla:** `grado_de_apertura`
+- **Nombre descriptivo:** Grado de apertura económica de Bolivia
 
-# Tabla: pobreza
+### 2. Estructura
 
-## 📌 Descripción de la Tabla `pobreza`
-Porcentaje anual de la población en situación de pobreza general en Bolivia (2007–2022).  
+- **Descripción:** Indicador que mide la apertura económica como la suma de exportaciones e importaciones en relación al PIB anual.
+- **Periodo:** 1950--2022
+- **Unidad base:** Porcentaje
+- **Fuente original:**
+  - Archivo Excel `db/pruebas.xlsx` 1960--2022  Fuente que se utilizó para calcular los datos de 2023 y 2024
+  - Banco Mundial, https://datos.bancomundial.org/indicador/NY.GDP.MKTP.CD?end=2024&locations=BO&start=2016
+  - tabla: grado_de_apertura
+- **Notas:** desde para calcular los valores de 2023 se usaron los datos de la tabla balanza_comercial (para obtener X y M) y los datos que el banco mundial proporciona sobre pib en dolares
 
-### 📄 Columnas:
-| Columna           | Tipo    | Descripción                               | Unidad      |
-|-------------------|---------|-------------------------------------------|-------------|
-| `año`             | INTEGER | Año del registro                          | Año         |
-| `pobreza`         | REAL    | Porcentaje de población en pobreza        | Porcentaje  |
+### 3. Esquema de la tabla
 
-## 📌 Período y Unidades
-- **Período:** 2007 – 2022  
-- **Unidad base:** Porcentaje  
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `grado` | REAL | Grado de apertura económica (% del PIB) |
 
-## 📌 Fuente
-- INE: Encuesta de Hogares :contentReference[oaicite:17]{index=17}  
+### 4. Procesamiento aplicado
 
----
+Ninguno.
+## Reservas Internacionales de Oro y Divisas (`Reservas_oro_divisas`)
 
-# Tabla: balanza_de_pagos
+### 1. Listado
 
-## 📌 Descripción de la Tabla `balanza_de_pagos`
-Resumen anual de la balanza de pagos de Bolivia, con saldos de cuenta corriente, capital y financiera (1980–2023).  
+- **Nombre de tabla:** `Reservas_oro_divisas`
+- **Nombre descriptivo:** Reservas internacionales de oro y otras divisas
 
-### 📄 Columnas:
-| Columna               | Tipo    | Descripción                                    | Unidad         |
-|-----------------------|---------|------------------------------------------------|----------------|
-| `año`                 | INTEGER | Año del registro                               | Año            |
-| `cuenta_corriente`    | REAL    | Saldo de la cuenta corriente                   | Millones USD   |
-| `cuenta_capital`      | REAL    | Saldo de la cuenta de capital                  | Millones USD   |
-| `cuenta_financiera`   | REAL    | Saldo de la cuenta financiera                  | Millones USD   |
+### 2. Estructura
 
-## 📌 Período y Unidades
-- **Período:** 1980 – 2023  
-- **Unidad base:** Millones de dólares (USD)  
+- **Descripción:** Volumen anual de reservas internacionales en oro y divisas, expresado en millones de dólares.
+- **Periodo:** 1950--2023
+- **Unidad base:** Millones de dólares
+- **Fuente original:**
+  - 1960--2023: Banco Mundial, https://datos.bancomundial.org/indicador/FI.RES.TOTL.CD?locations=BO
+  - 1950--1960: Informes del Banco Central de Bolivia (páginas específicas pendientes)
+- **Notas:** Falta insertar detalles de informes y páginas exactas para 1950–1960.
 
-## 📌 Fuente
-- Banco Central de Bolivia: Estadísticas de Balanza de Pagos :contentReference[oaicite:18]{index=18}  
+### 3. Esquema de la tabla
 
----
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `reservas_totales` | REAL | Reservas totales en oro y divisas (millones USD) |
 
-# Tabla: inflacion_general_acumulada
+### 4. Procesamiento aplicado
 
-## 📌 Descripción de la Tabla `inflacion_general_acumulada`
-Variación porcentual acumulada anual del Índice de Precios al Consumidor (diciembre a diciembre), serie general (1982–2024).  
+Los datos originalmente estaban en unidades; se procesaron para convertirlos a millones de dólares.
+## Venta de Divisas al Banco Central
 
-### 📄 Columnas:
-| Columna        | Tipo    | Descripción                                                 | Unidad     |
-|----------------|---------|-------------------------------------------------------------|------------|
-| `año`          | INTEGER | Año calendario                                              | Año        |
-| `inflacion`    | REAL    | Porcentaje acumulado anual del IPC                          | Porcentaje |
+(`venta_de_divisas_al_banco_central`)}
+### 1. Listado
 
-## 📌 Período y Unidades
-- **Período:** 1982 – 2024  
-- **Unidad base:** Porcentaje  
+- **Nombre de tabla:** `venta_de_divisas_al_banco_central`
+- **Nombre descriptivo:** Valor real de las exportaciones y divisas vendidas al BCB
 
-## 📌 Fuente
-- BCB (1982–1992) / INE (1993–2024) :contentReference[oaicite:19]{index=19}  
+### 2. Estructura
 
----
+- **Descripción:** Serie anual que compara el valor real de las exportaciones bolivianas con las divisas efectivamente vendidas al Banco Central de Bolivia (BCB), para analizar la disponibilidad de liquidez externa y su canalización hacia las reservas internacionales.
+- **Periodo:** 1947--1964
+- **Unidad base:** Millones de dólares (USD)
+- **Fuente original:**
+  - 1947--1951: *Memoria del Banco Central de Bolivia, 1956*, págs. 69--71
+  - 1952--1963: *Memoria del Banco Central de Bolivia, 1953*, págs. 117 y 141
+  - 1964: *Memoria del Banco Central de Bolivia, 1954*, págs. 133 y 151
+- **Notas:** El año base del deflactor para *exportaciones reales* no se especifica en la fuente original; se mantiene la denominación empleada en el cuadro.
 
-# Tabla: exportaciones_no_tradicionales
+### 3. Esquema de la tabla
 
-## 📌 Descripción de la Tabla `exportaciones_no_tradicionales`
-Valor anual de exportaciones no tradicionales desagregadas por producto (1992–2024).  
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `exportaciones_reales` | REAL | Valor real de las exportaciones (USD constantes) |
+| `divisas_vendidas` | REAL | Divisas vendidas al BCB (USD) |
 
-### 📄 Columnas:
-| Columna      | Tipo    | Descripción                                      | Unidad       |
-|--------------|---------|--------------------------------------------------|--------------|
-| `año`        | INTEGER | Año del registro                                 | Año          |
-| `soya`       | REAL    | Exportaciones de soya                            | Millones USD |
-| `otros`      | REAL    | Exportaciones de otros productos                 | Millones USD |
-| `castaña`    | REAL    | Exportaciones de castaña                         | Millones USD |
+### 4. Procesamiento aplicado
 
-## 📌 Período y Unidades
-- **Período:** 1992 – 2024  
-- **Unidad base:** Millones de dólares (USD)  
+Ninguno.
+# Exportaciones
 
-## 📌 Fuente
-- INE: Estadísticas de Comercio Exterior   
+## Exportaciones Totales (`exportaciones_totales`)
 
----
+### 1. Listado
 
-# Tabla: exportaciones_por_pais_de_destino
+- **Nombre de tabla:** `exportaciones_totales`
+- **Nombre descriptivo:** Valor total de exportaciones tradicionales y no tradicionales
 
-## 📌 Descripción de la Tabla `exportaciones_por_pais_de_destino`
-Serie anual de exportaciones de gas natural y minerales por país de destino (1992–2023).  
+### 2. Estructura
 
-### 📄 Columnas:
-| Columna       | Tipo    | Descripción                                      | Unidad       |
-|---------------|---------|--------------------------------------------------|--------------|
-| `año`         | INTEGER | Año del registro                                 | Año          |
-| `Argentina`   | REAL    | Exportaciones hacia Argentina                    | Millones USD |
-| `Brasil`      | REAL    | Exportaciones hacia Brasil                       | Millones USD |
-| `total`       | REAL    | Total de exportaciones por destino               | Millones USD |
+- **Descripción:** Registro anual de exportaciones desagregadas entre productos tradicionales y no tradicionales, junto con su valor total oficial.
+- **Periodo:** 1980--2023
+- **Unidad base:** Millones de dólares
+- **Fuente original:**
+  - 1980--1992: Archivo Excel `db/pruebas.xlsx`
+  - 1992--2023: INE, https://nube.ine.gob.bo/index.php/s/zUQc65wIGkw1KUy/download
+- **Notas:** En INE aparece como exportaciones por producto, tradicionales y no tradicionales.
 
-## 📌 Período y Unidades
-- **Período:** 1992 – 2023  
-- **Unidad base:** Millones de dólares (USD)  
+### 3. Esquema de la tabla
 
-## 📌 Fuente
-- Base Proyectomacro (SQLite) :contentReference[oaicite:21]{index=21}  
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `productos_tradicionales` | REAL | Valor de exportaciones tradicionales (millones USD) |
+| `productos_no_tradicionales` | REAL | Valor de exportaciones no tradicionales (millones USD) |
+| `total_valor_oficial` | REAL | Suma oficial de todas las exportaciones (millones USD) |
 
----
+### 4. Procesamiento aplicado
 
-# Tabla: inflacion_acumulada
+Ninguno.
+## Volumen y Valor de Exportaciones de Minerales (`exportaciones_minerales_totales`)
 
-## 📌 Descripción de la Tabla `inflacion_acumulada`
-Variación porcentual acumulada anual del Índice de Precios al Consumidor (diciembre a diciembre) 1982–2024.  
+### 1. Listado
 
-### 📄 Columnas:
-| Columna    | Tipo    | Descripción                                        | Unidad     |
-|------------|---------|----------------------------------------------------|------------|
-| `año`      | INTEGER | Año calendario                                     | Año        |
-| `inflacion`| REAL    | Variación porcentual acumulada del IPC             | Porcentaje |
+- **Nombre de tabla:** `exportaciones_minerales_totales`
+- **Nombre descriptivo:** Volumen y valor de exportaciones de minerales
 
-## 📌 Período y Unidades
-- **Período:** 1982 – 2024  
-- **Unidad base:** Porcentaje  
+### 2. Estructura
 
-## 📌 Fuente
-- BCB / INE :contentReference[oaicite:22]{index=22}  
+- **Descripción:** Registra anualmente el volumen (en kilos finos) y el valor (en miles de dólares) de las exportaciones de minerales para evaluar la evolución del sector minero.
+- **Periodo:** 1952--2023
+- **Unidad base:** Volumen en kilos finos; valor en miles de dólares
+- **Fuente original:**
+  - 1952--1987: Informes del Banco Central de Bolivia
+  - 1987--2023: UDAPE, https://dossier.udape.gob.bo/res/VOLUMEN%20Y%20VALOR%20DE%20EXPORTACIONES%20DE%20MINERALES
+- **Notas:** Datos preliminares para 2018--2023
 
----
+### 3. Esquema de la tabla
 
-# Tabla: cotizacion_oficial_dolar
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `estaño_volumen` | REAL | Volumen de estaño (kilos finos) |
+| `estaño_valor` | REAL | Valor de estaño (miles USD) |
+| `plomo_volumen` | REAL | Volumen de plomo (kilos finos) |
+| `plomo_valor` | REAL | Valor de plomo (miles USD) |
+| `zinc_volumen` | REAL | Volumen de zinc (kilos finos) |
+| `zinc_valor` | REAL | Valor de zinc (miles USD) |
+| `plata_volumen` | REAL | Volumen de plata (kilos finos) |
+| `plata_valor` | REAL | Valor de plata (miles USD) |
+| `wolfram_volumen` | REAL | Volumen de wólfram (kilos finos) |
+| `wolfram_valor` | REAL | Valor de wólfram (miles USD) |
+| `cobre_volumen` | REAL | Volumen de cobre (kilos finos) |
+| `cobre_valor` | REAL | Valor de cobre (miles USD) |
+| `antimonio_volumen` | REAL | Volumen de antimonio (kilos finos) |
+| `antimonio_valor` | REAL | Valor de antimonio (miles USD) |
+| `oro_volumen` | REAL | Volumen de oro (kilos finos) |
+| `oro_valor` | REAL | Valor de oro (miles USD) |
 
-## 📌 Descripción de la Tabla `cotizacion_oficial_dolar`
-Serie histórica del tipo de cambio oficial (compra y venta) del dólar estadounidense (1958–2023).  
+### 4. Procesamiento aplicado
 
-### 📄 Columnas:
-| Columna           | Tipo    | Descripción                          | Unidad   |
-|-------------------|---------|--------------------------------------|----------|
-| `año`             | INTEGER | Año de referencia                    | Año      |
-| `oficial_compra`  | REAL    | Tipo de cambio oficial – compra      | Bs/USD   |
-| `oficial_venta`   | REAL    | Tipo de cambio oficial – venta       | Bs/USD   |
+Ninguno.
+## Exportaciones Tradicionales (`exportaciones_tradicionales`)
 
-## 📌 Período y Unidades
-- **Período:** 1958 – 2023  
-- **Unidad base:** Bolivianos por dólar  
+### 1. Listado
 
-## 📌 Fuente
-- UDAPE: Cotización oficial mensual :contentReference[oaicite:23]{index=23}  
+- **Nombre de tabla:** `exportaciones_tradicionales`
+- **Nombre descriptivo:** Exportaciones tradicionales de minerales e hidrocarburos
 
----
+### 2. Estructura
 
-# Tabla: mercado_laboral
+- **Descripción:** Registra el valor anual de las exportaciones tradicionales, desglosadas en minerales e hidrocarburos, para evaluar su participación en el comercio exterior.
+- **Periodo:** 1992--2024
+- **Unidad base:** Millones de dólares
+- **Fuente original:** INE — https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/
+- **Notas:** Datos preliminares para 2023 y 2024
 
-## 📌 Descripción de la Tabla `mercado_laboral`
-Indicadores claves del mercado laboral boliviano: población, PEA, ocupados, desocupados e inactivos (1999–2017).  
+### 3. Esquema de la tabla
 
-### 📄 Columnas:
-| Columna            | Tipo    | Descripción                                 | Unidad     |
-|--------------------|---------|---------------------------------------------|------------|
-| `año`              | INTEGER | Año de referencia                           | Año        |
-| `total_poblacion`  | INTEGER | Población total                             | Personas   |
-| `pea`              | INTEGER | Población económicamente activa             | Personas   |
-| `po`               | INTEGER | Ocupados                                    | Personas   |
-| `pd`               | INTEGER | Desocupados                                 | Personas   |
-| `pei`              | INTEGER | Población económicamente inactiva           | Personas   |
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `minerales` | REAL | Valor de exportaciones de minerales (millones USD) |
+| `hidrocarburos` | REAL | Valor de exportaciones de hidrocarburos (millones USD) |
 
-## 📌 Período y Unidades
-- **Período:** 1999 – 2017  
-- **Unidad base:** Personas :contentReference[oaicite:24]{index=24}  
+### 4. Procesamiento aplicado
 
----
+Ninguno.
+## Exportaciones Tradicionales y No Tradicionales
 
-# Tabla: pib_nominal_gasto
+(`exportaciones_tradicionales_no_tradicionales`)}
+### 1. Listado
 
-## 📌 Descripción de la Tabla `pib_nominal_gasto`
-Desglose anual del PIB nominal por tipo de gasto: consumo, inversión, exportaciones e importaciones (1950–2023).  
+- **Nombre de tabla:** `exportaciones_tradicionales_no_tradicionales`
+- **Nombre descriptivo:** Desglose de exportaciones tradicionales y no tradicionales
 
-### 📄 Columnas:
-| Columna                 | Tipo    | Descripción                                | Unidad                                   |
-|-------------------------|---------|--------------------------------------------|------------------------------------------|
-| `año`                   | INTEGER | Año del registro                           | Año                                      |
-| `consumo_publico`       | REAL    | Consumo del gobierno                       | Miles de Bs constantes de 1990          |
-| `consumo_hogares`       | REAL    | Consumo de hogares                         | Miles de Bs constantes de 1990          |
-| `formacion_capital_fijo`| REAL    | Formación bruta de capital fijo (FBCF)     | Miles de Bs constantes de 1990          |
-| `exportaciones`         | REAL    | Exportaciones de bienes y servicios        | Miles de Bs constantes de 1990          |
-| `importaciones`         | REAL    | Importaciones de bienes                    | Miles de Bs constantes de 1990          |
-| `pib_precios_mercado`   | REAL    | PIB a precios de mercado                   | Miles de Bs constantes de 1990          |
+### 2. Estructura
 
-## 📌 Período y Unidades
-- **Período:** 1950 – 2023  
-- **Unidad base:** Miles de bolivianos constantes de 1990  
+- **Descripción:** Valor anual de exportaciones divididas en categorías tradicionales y no tradicionales, para analizar su evolución y peso relativo.
+- **Periodo:** 1980--2024
+- **Unidad base:** Millones de dólares
+- **Fuente original:** INE — https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/
+- **Notas:** Datos preliminares para 2023 y 2024
 
-## 📌 Fuente
-- UDAPE: PIB a precios de mercado :contentReference[oaicite:25]{index=25}  
+### 3. Esquema de la tabla
 
----
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `tradicionales` | REAL | Exportaciones tradicionales (millones USD) |
+| `no_tradicionales` | REAL | Exportaciones no tradicionales (millones USD) |
 
-# Tabla: deflactor_implicito_pib_gasto
+### 4. Procesamiento aplicado
 
-## 📌 Descripción de la Tabla `deflactor_implicito_pib_gasto`
-Índices implícitos de precios del PIB por tipo de gasto (base 1990=100) (1980–2023).  
+Ninguno.
+## Participación de Exportaciones Tradicionales y No Tradicionales
 
-### 📄 Columnas:
-| Columna                | Tipo    | Descripción                              | Unidad    |
-|------------------------|---------|------------------------------------------|-----------|
-| `año`                  | INTEGER | Año del registro                         | Año       |
-| `consumo_publico`      | REAL    | Índice implícito de consumo público      | Índice    |
-| `consumo_hogares`      | REAL    | Índice implícito de consumo de hogares   | Índice    |
-| `variacion_existencias`| REAL    | Índice implícito de variación existencias| Índice    |
-| `formacion_capital_fijo`| REAL   | Índice implícito de FBCF                 | Índice    |
-| `exportaciones`        | REAL    | Índice implícito de exportaciones        | Índice    |
-| `importaciones`        | REAL    | Índice implícito de importaciones        | Índice    |
-| `pib_precios_mercado`  | REAL    | Índice implícito del PIB                 | Índice    |
+(`participacion_exp_trad_no_trad`)}
+### 1. Listado
 
-## 📌 Período y Unidades
-- **Período:** 1980 – 2023  
-- **Unidad base:** Índice (1990 = 100)  
+- **Nombre de tabla:** `participacion_exp_trad_no_trad`
+- **Nombre descriptivo:** Participación porcentual de exportaciones tradicionales y no tradicionales
 
-## 📌 Fuente
-- UDAPE: Índices implícitos del PIB :contentReference[oaicite:26]{index=26}  
+### 2. Estructura
 
----
+- **Descripción:** Porcentaje anual que representan las exportaciones tradicionales y no tradicionales sobre el total de exportaciones.
+- **Periodo:** 1980--2023
+- **Unidad base:** Porcentaje
+- **Fuente original:** Archivo Excel `db/pruebas.xlsx`
+- **Notas:** Ninguna
 
-# Tabla: oferta_total
+### 3. Esquema de la tabla
 
-## 📌 Descripción de la Tabla `oferta_total`
-Oferta total de la economía: producción bruta, importaciones y márgenes (1988–2023).  
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `exp_trad` | REAL | Exportaciones tradicionales (% del total) |
+| `exp_no_trad` | REAL | Exportaciones no tradicionales (% del total) |
 
-### 📄 Columnas:
-| Columna            | Tipo    | Descripción                                  | Unidad                                     |
-|--------------------|---------|----------------------------------------------|--------------------------------------------|
-| `año`              | INTEGER | Año del registro                             | Año                                        |
-| `oferta_total`     | REAL    | Oferta total a precios de mercado            | Miles de Bs constantes de 1990            |
-| `produccion_bruta` | REAL    | Valor Bruto de Producción (VBP)              | Miles de Bs constantes de 1990            |
-| `importaciones`    | REAL    | Importaciones                                 | Miles de Bs constantes de 1990            |
-| `derechos_imp`     | REAL    | Derechos de importación                      | Miles de Bs constantes de 1990            |
-| `impuestos_ind`    | REAL    | Impuestos indirectos                         | Miles de Bs constantes de 1990            |
-| `margenes_transp`  | REAL    | Márgenes de comercio y transporte            | Miles de Bs constantes de 1990            |
+### 4. Procesamiento aplicado
 
-## 📌 Período y Unidades
-- **Período:** 1988 – 2023  
-- **Unidad base:** Miles de bolivianos constantes de 1990  
+Ninguno.
+## Exportaciones Tradicionales de Hidrocarburos
 
-## 📌 Fuente
-- INE: Oferta y Demanda Total :contentReference[oaicite:27]{index=27}  
+(`exportaciones_tradicionales_hidrocarburos`)}
+### 1. Listado
 
----
+- **Nombre de tabla:** `exportaciones_tradicionales_hidrocarburos`
+- **Nombre descriptivo:** Exportaciones de hidrocarburos, gas natural y otros hidrocarburos
 
-# Tabla: demanda_total
+### 2. Estructura
 
-## 📌 Descripción de la Tabla `demanda_total`
-Demanda total de la economía: consumo, inversión, existencias y exportaciones (1988–2023).  
+- **Descripción:** Valores anuales de exportaciones de hidrocarburos, desglosados en gas natural y otros hidrocarburos, para evaluar su contribución al comercio exterior.
+- **Periodo:** 1992--2024
+- **Unidad base:** Millones de dólares
+- **Fuente original:** INE — https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/
+- **Notas:** Ninguna
 
-### 📄 Columnas:
-| Columna                    | Tipo    | Descripción                                  | Unidad                                     |
-|----------------------------|---------|----------------------------------------------|--------------------------------------------|
-| `anio`                     | INTEGER | Año del registro                             | Año                                        |
-| `demanda_total`            | REAL    | Demanda total                                | Miles de Bs constantes de 1990            |
-| `consumo_intermedio`       | REAL    | Consumo intermedio                           | Miles de Bs constantes de 1990            |
-| `consumo_final`            | REAL    | Consumo final                                | Miles de Bs constantes de 1990            |
-| `fbcf`                     | REAL    | Formación Bruta de Capital Fijo              | Miles de Bs constantes de 1990            |
-| `variacion_existencias`    | REAL    | Variación de existencias                     | Miles de Bs constantes de 1990            |
-| `exportaciones_bienes_serv`| REAL    | Exportaciones de bienes y servicios          | Miles de Bs constantes de 1990            |
+### 3. Esquema de la tabla
 
-## 📌 Período y Unidades
-- **Período:** 1988 – 2023  
-- **Unidad base:** Miles de bolivianos constantes de 1990  
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `hidrocarburos` | REAL | Total hidrocarburos (millones USD) |
+| `gas_natural` | REAL | Gas natural (millones USD) |
+| `otros_hidrocarburos` | REAL | Otros hidrocarburos (millones USD) |
 
-## 📌 Fuente
-- INE: Oferta y Demanda Total :contentReference[oaicite:28]{index=28}  
+### 4. Procesamiento aplicado
 
----
+Ninguno.
+## Exportación de Gas Natural
 
-# Tabla: vbp_sector_2006_2014
+(`exportacion_gas_natural`)}
+### 1. Listado
 
-## 📌 Descripción de la Tabla `vbp_sector_2006_2014`
-Valor Bruto de Producción por rama de actividad para 2006–2014.  
+- **Nombre de tabla:** `exportacion_gas_natural`
+- **Nombre descriptivo:** Volumen, precio y valor de exportación de gas natural
 
-### 📄 Columnas:
-| Columna               | Tipo    | Descripción                                 | Unidad                                     |
-|-----------------------|---------|---------------------------------------------|--------------------------------------------|
-| `año`                 | INTEGER | Año del registro                            | Año                                        |
-| *(35 columnas)*       | REAL    | VBP desagregado en 35 actividades           | Miles de Bs constantes de 1990            |
+### 2. Estructura
 
-## 📌 Período y Unidades
-- **Período:** 2006 – 2014  
-- **Unidad base:** Miles de bolivianos constantes de 1990  
+- **Descripción:** Porcentaje anual de volumen (MMmc y MMPC), precio (USD por MPC) y valor (miles de USD) de las exportaciones de gas natural.
+- **Periodo:** 1987--2023
+- **Unidad base:**
+  - Volumen: Millones de metros cúbicos (MMmc) y Millones de pies cúbicos (MMPC)
+  - Precio: Dólares por mil pie cúbico (USD/MPC)
+  - Valor: Miles de dólares (miles USD)
+- **Fuente original:** UDAPE https://dossier.udape.gob.bo/res/EXPORTACIÓN%20DE%20GAS%20NATURAL
+- **Notas:** Datos preliminares para 2021–2023
 
-## 📌 Fuente
-- INE: Desagregación del PIB por ramas :contentReference[oaicite:29]{index=29}  
+### 3. Esquema de la tabla
 
----
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `volumen_MMMc` | REAL | Volumen en millones de metros cúbicos (MMmc) |
+| `volumen_MMPC` | REAL | Volumen en millones de pies cúbicos (MMPC) |
+| `precio_usd_MPC` | REAL | Precio en USD por mil pie cúbico (USD/MPC) |
+| `valor` | REAL | Valor en miles de dólares |
 
-# Tabla: ingresos_nacionales
+### 4. Procesamiento aplicado
 
-## 📌 Descripción de la Tabla `ingresos_nacionales`
-Ingresos del gobierno central: coparticipación, regalías e impuestos especiales (2001–2023).  
+Ninguno.
+## Exportación de Gas Natural por Contrato
 
-### 📄 Columnas:
-| Columna                     | Tipo    | Descripción                                     | Unidad             |
-|-----------------------------|---------|-------------------------------------------------|--------------------|
-| `año`                       | INTEGER | Año del registro                                | Año                |
-| `coparticipacion_tributaria`| REAL   | Recaudación por coparticipación tributaria      | Millones de BOB    |
-| `total_idh`                 | REAL   | Asignación del IDH                              | Millones de BOB    |
-| `total_hipc_ii`             | REAL   | Asignación HIPC II                              | Millones de BOB    |
-| `total_regalias_depart`     | REAL   | Regalías departamentales                        | Millones de BOB    |
-| `total_iehd`                | REAL   | Impuesto Especial a Hidrocarburos y Depósitos   | Millones de BOB    |
+(`exportacion_gas_natural_contratos`)}
+### 1. Listado
 
-## 📌 Período y Unidades
-- **Período:** 2001 – 2023  
-- **Unidad base:** Millones de bolivianos (BOB)  
+- **Nombre de tabla:** `exportacion_gas_natural_contratos`
+- **Nombre descriptivo:** Exportación de gas natural detallada por contrato
 
-## 📌 Fuente
-- UDAPE: Ingresos Nacionales :contentReference[oaicite:30]{index=30}  
+### 2. Estructura
 
+- **Descripción:** Valor anual de exportación de gas natural desglosado por contrato y destino, para analizar obligaciones y volúmenes por mercado.
+- **Periodo:** 1992--2023
+- **Unidad base:** Millones de dólares
+- **Fuente original:** https://dossier.udape.gob.bo/res/VALOR%20DE%20EXPORTACI%C3%93N%20DE%20GAS%20NATURAL%20POR%20CONTRATO
+- **Notas:** Ninguna
 
-> **Fin del documento**  
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `contrato` | TEXT | Nombre del contrato de exportación |
+| `destino` | TEXT | Destino del gas (Argentina o Brasil) |
+| `monto` | REAL | Valor exportado (millones USD) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Participación del Gas Natural y Otros Hidrocarburos en el Total de Exportaciones de Hidrocarburos
+
+(`participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos`)}
+### 1. Listado
+
+- **Nombre de tabla:** `participacion_gas_hidrocarburos_total_exportaciones_hidrocarburos`
+- **Nombre descriptivo:** Participación porcentual del gas natural y otros hidrocarburos en el total exportado de hidrocarburos
+
+### 2. Estructura
+
+- **Descripción:** Porcentaje anual que representan las exportaciones de gas natural y de otros hidrocarburos sobre el total de exportaciones de hidrocarburos.
+- **Periodo:** 1980--2023
+- **Unidad base:** Porcentaje
+- **Fuente original:** Archivo Excel `db/pruebas.xlsx`
+- **Notas:** Ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `exportacion_gas` | REAL | Gas natural (% del total de hidrocarburos) |
+| `otros_hidrocarburos` | REAL | Otros hidrocarburos (% del total de hidrocarburos) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+subsection[Participación Hidrocarburos vs Minerales]{%
+Participación de Hidrocarburos y Minerales en Exportaciones Tradicionales
+{(`participacion_hidrocarburos_minerales_exportaciones_tradicionales`)}%
+}
+### 1. Listado
+
+- **Nombre de tabla:** `participacion_hidrocarburos_minerales_exportaciones_tradicionales`
+- **Nombre descriptivo:** Participación porcentual de hidrocarburos y minerales en exportaciones tradicionales
+
+### 2. Estructura
+
+- **Descripción:** Porcentaje anual que representan las exportaciones de hidrocarburos y de minerales dentro del total de exportaciones tradicionales.
+- **Periodo:** 1980--2023
+- **Unidad base:** Porcentaje
+- **Fuente original:** Archivo Excel `db/pruebas.xlsx`
+- **Notas:** Ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `minerales` | REAL | Exportaciones de minerales (% del total tradicional) |
+| `hidrocarburos` | REAL | Exportaciones de hidrocarburos (% del total tradicional) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Exportaciones No Tradicionales
+
+### 1. Listado
+
+- **Nombre de tabla:** `exportaciones_no_tradicionales`
+- **Nombre descriptivo:** Exportaciones No Tradicionales de Bolivia
+
+### 2. Estructura
+
+- **Descripción:** Serie histórica anual de las exportaciones no tradicionales de Bolivia, desagregada por producto, en millones de dólares.
+- **Periodo:** 1992--2024
+- **Unidad base:** Millones de dólares
+- **Fuente original:** https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/cuadros-estadisticos-exportaciones/
+- **Notas:** 2023 y 2024 datos preliminares
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER PRIMARY KEY | Año del registro |
+| `total` | REAL | Total exportaciones no tradicionales (millones de dólares) |
+| `castaña` | REAL | Exportaciones de castaña |
+| `café` | REAL | Exportaciones de café |
+| `cacao` | REAL | Exportaciones de cacao |
+| `azúcar` | REAL | Exportaciones de azúcar |
+| `bebidas` | REAL | Exportaciones de bebidas |
+| `gomas` | REAL | Exportaciones de gomas |
+| `cueros` | REAL | Exportaciones de cueros |
+| `maderas` | REAL | Exportaciones de maderas |
+| `algodón` | REAL | Exportaciones de algodón |
+| `soya` | REAL | Exportaciones de soya |
+| `joyería` | REAL | Exportaciones de joyería |
+| `joyería_con_oro_imp` | REAL | Exportaciones de joyería con oro importado |
+| `otros` | REAL | Exportaciones de otros productos |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+# Importaciones
+
+## Composición de Importaciones por Uso y Destino
+
+### 1. Listado
+
+- **Nombre de tabla:** `composicion_importaciones_uso_destino`
+- **Nombre descriptivo:** Distribución de importaciones según uso o destino económico
+
+### 2. Estructura
+
+- **Descripción:** Clasifica el valor anual de las importaciones por bienes de consumo, materias primas/productos intermedios, bienes de capital y otros usos, en valor CIF frontera.
+- **Periodo:** 1980--2024
+- **Unidad base:** Valor CIF frontera (millones de dólares)
+- **Fuente original:**
+  - 1980--1992: Archivo Excel `db/pruebas.xlsx`
+  - 1992--2024: INE, https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/importaciones-cuadros-estadisticos/
+- **Notas:** Ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `bienes_consumo` | REAL | Bienes de consumo (millones USD) |
+| `materias_primas_productos_intermedios` | REAL | Materias primas / productos intermedios (millones USD) |
+| `bienes_capital` | REAL | Bienes de capital (millones USD) |
+| `diversos` | REAL | Otros usos (millones USD) |
+| `total_valor_oficial_cif` | REAL | Total valor oficial CIF (millones USD) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Participación de la Composición de Importaciones por Uso y Destino
+
+### 1. Listado
+
+- **Nombre de tabla:** `participacion_composicion_importaciones_uso_destino`
+- **Nombre descriptivo:** Participación porcentual de categorías de importaciones sobre el total CIF
+
+### 2. Estructura
+
+- **Descripción:** Porcentaje anual de bienes de consumo, materias primas/productos intermedios, bienes de capital y otros usos en el total de importaciones valor CIF frontera.
+- **Periodo:** 1980--2024
+- **Unidad base:** Porcentaje
+- **Fuente original:** Archivo Excel `db/pruebas.xlsx`
+- **Notas:** Ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `bienes_consumo` | REAL | Bienes de consumo (% del total CIF) |
+| `materias_primas_productos_intermedios` | REAL | Materias primas/productos intermedios (% del total CIF) |
+| `bienes_capital` | REAL | Bienes de capital (% del total CIF) |
+| `diversos` | REAL | Otros usos (% del total CIF) |
+| `total_cif` | REAL | Total importaciones CIF (porcentaje, siempre 100%) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+# Precios y Producción
+
+## Precio real de minerales
+
+### 1. Listado
+
+- **Nombre de tabla:** `precio_minerales`
+- **Nombre descriptivo:** Precios de minerales principales
+
+### 2. Estructura
+
+- **Descripción:** Precio anual de minerales principales expresado en USD según unidad de medida de cada columna.
+- **Periodo:** 1980 a 2015
+- **Unidad base:** USD
+- **Fuente original:** MINISTRO DE MINERÍA Y METALURGIA: https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf
+- **Notas:** ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| Zinc | REAL | Precio del Zinc (Libras Finas -- L.F) |
+| Estaño | REAL | Precio del Estaño (Libras Finas -- L.F) |
+| Oro | REAL | Precio del Oro (Onzas Troy -- O.T.) |
+| Plata | REAL | Precio de la Plata (Onzas Troy -- O.T.) |
+| Antimonio | REAL | Precio del Antimonio (Toneladas Métricas) |
+| Plomo | REAL | Precio del Plomo (Libras Finas -- L.F) |
+| Wólfram | REAL | Precio del Wólfram (Libras Finas) |
+| Cobre | REAL | Precio del Cobre (Libras Finas -- L.F) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Precios oficiales de minerales principales
+
+### 1. Listado
+
+- **Nombre de tabla:** `precio_oficial_minerales`
+- **Nombre descriptivo:** Precios oficiales de minerales principales
+
+### 2. Estructura
+
+- **Descripción:** Precio oficial anual de minerales principales en USD.
+- **Periodo:** 1950 a 2023
+- **Unidad base:** USD
+- **Fuente original:**
+  - 1950–1980: Informes del Banco Central de Bolivia
+  - 1980–2015: Ministerio de Minería y Metalurgia https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf
+  - 2015–2023: Ministerio de Minería y Metalurgia https://mineria.gob.bo/documentos/dossier_1980_2023.pdf small{(pendiente insertar referencias de página específicas)}
+- **Notas:** ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Precio en USD por** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| zinc | REAL | libra fina (L.F.) |
+| estaño | REAL | libra fina (L.F.) |
+| oro | REAL | onza troy (O.T.) |
+| plata | REAL | onza troy (O.T.) |
+| antimonio | REAL | tonelada métrica fina (T.M.F.) |
+| plomo | REAL | libra fina (L.F.) |
+| wolfram | REAL | libra fina (U.L.F.) |
+| cobre | REAL | libra fina (L.F.) |
+| bismuto | REAL | libra fina (L.F.) |
+| cadmio | REAL | libra fina (L.F.) |
+| manganeso | REAL | libra fina (U.L.F.) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Precio internacional del petróleo WTI
+
+### 1. Listado
+
+- **Nombre de tabla:** `precio_petroleo_wti`
+- **Nombre descriptivo:** Precio internacional del petróleo WTI
+
+### 2. Estructura
+
+- **Descripción:** Precio anual del petróleo WTI en dólares por barril.
+- **Periodo:** 1996 a 2023
+- **Unidad base:** Dólares por barril
+- **Fuente original:** UDAPE: https://dossier.udape.gob.bo/res/PRECIO%20INTERNACIONAL%20DEL%20PETR%C3%93LEO%20(WTI)
+- **Notas:** ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| precio | REAL | Precio del petróleo WTI (USD por barril) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Producción de minerales principales
+
+### 1. Listado
+
+- **Nombre de tabla:** `produccion_minerales`
+- **Nombre descriptivo:** Producción de minerales principales
+
+### 2. Estructura
+
+- **Descripción:** Producción anual de minerales principales en toneladas finas.
+- **Periodo:** 1985 a 2021
+- **Unidad base:** Toneladas finas
+- **Fuente original:** Ministerio de Minería y Metalurgia: https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf
+- **Notas:** ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| zinc | REAL | Producción de Zinc (toneladas finas) |
+| estaño | REAL | Producción de Estaño (toneladas finas) |
+| oro | REAL | Producción de Oro (toneladas finas) |
+| plata | REAL | Producción de Plata (toneladas finas) |
+| antimonio | REAL | Producción de Antimonio (toneladas finas) |
+| plomo | REAL | Producción de Plomo (toneladas finas) |
+| wolfram | REAL | Producción de Wólfram (toneladas finas) |
+| cobre | REAL | Producción de Cobre (toneladas finas) |
+
+### 4. Procesamiento aplicado
+
+Se reconvirtieron algunas series para expresarlas en toneladas finas según especificación de fuente.
+## Inflación acumulada
+
+### 1. Listado
+
+- **Nombre de tabla:** `inflacion_acumulada`
+- **Nombre descriptivo:** Variación porcentual acumulada anual del Índice de Precios al Consumidor (Diciembre a diciembre)
+
+### 2. Estructura
+
+- **Descripción:** Serie histórica de la variación porcentual acumulada anual del IPC para Bolivia.
+- **Periodo:** 1982–2024
+- **Unidad base:** Porcentaje
+- **Fuente original:**
+  - Banco Central de Bolivia (1982–1992): `reports/inflacion_acumulada/`
+  - INE (1993–2007): https://nube.ine.gob.bo/index.php/s/LzucAyViXN7ikbL/download
+  - INE (2009–2017): https://nube.ine.gob.bo/index.php/s/kVGgyqtobYRsZwv/download
+  - INE (2018–2024): https://nimbus.ine.gob.bo/index.php/s/KDwe4CYNtL4GPfq/download
+- **Notas:** Ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año calendario |
+| inflacion | REAL | Variación porcentual acumulada (Diciembre a diciembre) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Cotización oficial del dólar
+
+### 1. Listado
+
+- **Nombre de tabla:** `cotizacion_oficial_dolar`
+- **Nombre descriptivo:** Tipo de cambio oficial del dólar estadounidense
+
+### 2. Estructura
+
+- **Descripción:** Serie histórica del tipo de cambio oficial (compra y venta) del dólar estadounidense.
+- **Periodo:** 1958–2023
+- **Unidad base:** Bolivianos por dólar
+- **Fuente original:** UDAPE – Cotización oficial del dólar: https://dossier.udape.gob.bo/res/COTIZACI%C3%93N%20MENSUAL%20OFICIAL%20Y%20PARALELA%20DEL%20D%C3%93LAR%20NORTEAMERICANO
+- **Notas:** Ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año de referencia |
+| oficial_compra | REAL | Tipo de cambio oficial (compra) |
+| oficial_venta | REAL | Tipo de cambio oficial (venta) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Poder Adquisitivo y Coste de la Vida
+
+(`poder_adquisitivo_coste_vida`)}
+### 1. Listado
+
+- **Nombre de tabla:** `poder_adquisitivo_coste_vida`
+- **Nombre descriptivo:** Poder adquisitivo de la población y coste de la vida
+
+### 2. Estructura
+
+- **Descripción:** Mide anualmente la liquidez disponible (efectivo,+,depósitos) en millones de bolivianos, junto con dos índices base 100 en 1951: uno de poder adquisitivo y otro de coste de la vida.
+- **Periodo:** 1951--1964
+- **Unidad base:**
+  - Billetes, depósitos y poder adquisitivo: millones de bolivianos
+  - Índices: base 100 = 1951
+- **Fuente original:** *Memorias del Banco Central de Bolivia* (años 1956, 1963 y 1964)
+  - 1951--1956 en “Memoria BCB, 1956” (pp.,69--71)
+  - 1957--1963 en “Memoria BCB, 1963”
+  - 1964 en “Memoria BCB, 1964” (pp.,133, 151)
+- **Notas:** Se omiten las columnas de incremento anual.
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `billetes_publico` | REAL | Efectivo en poder del público (millones Bs) |
+| `depositos_publico` | REAL | Depósitos a la vista del público (millones Bs) |
+| `poder_adquisitivo` | REAL | Suma de billetes y depósitos (millones Bs) |
+| `indice_poder_adquisitivo` | REAL | Índice de poder adquisitivo (base 100=1951) |
+| `indice_coste_vida` | REAL | Índice de coste de la vida (base 100=1951) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Cotización del Dólar en Mercado Libre
+
+(`cotizacion_dolar_mercado_libre`)}
+### 1. Listado
+
+- **Nombre de tabla:** `cotizacion_dolar_mercado_libre`
+- **Nombre descriptivo:** Cotización del boliviano en relación al dólar (Mercado Libre)
+
+### 2. Estructura
+
+- **Descripción:** Valor anual de cuántos bolivianos cuesta un dólar estadounidense en el Mercado Libre al cierre de cada año (diciembre).
+- **Periodo:** 1950--1960
+- **Unidad base:** Bolivianos por dólar (Bs/USD)
+- **Fuente original:** Banco Central de Bolivia — *El Trimestre Económico*, Cuadro 2
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro (diciembre) |
+| `valor` | REAL | Cotización (Bs por USD) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+# Sector Fiscal
+
+## Consolidado de operaciones del SPNF
+
+### 1. Listado
+
+- **Nombre de tabla:** `consolidado_spnf`
+- **Nombre descriptivo:** Consolidado de operaciones del Sector Público No Financiero (SPNF)
+
+### 2. Estructura
+
+- **Descripción:** Operaciones consolidadas del SPNF: ingresos, egresos, superávit/deficit global y primario, y financiamiento.
+- **Periodo:** 1990 a 2023
+- **Unidad base:** Millones de bolivianos
+- **Fuente original:** UDAPE: https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector
+- **Notas:** ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| ingresos_totales | REAL | Ingresos totales del SPNF (Millones de BOB) |
+| egresos_totales | REAL | Egresos totales del SPNF (Millones de BOB) |
+| sup_o_def_global | REAL | Superávit o déficit global (Millones de BOB) |
+| financiamiento | REAL | Financiamiento neto (Millones de BOB) |
+| sup_o_def_primario | REAL | Superávit o déficit primario (Millones de BOB) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Operaciones de empresas públicas
+
+### 1. Listado
+
+- **Nombre de tabla:** `operaciones_empresas_publicas`
+- **Nombre descriptivo:** Operaciones de empresas públicas
+
+### 2. Estructura
+
+- **Descripción:** Ingresos, egresos y resultado fiscal global de empresas públicas como porcentaje del PIB.
+- **Periodo:** 1990 a 2020
+- **Unidad base:** % del PIB
+- **Fuente original:** Pendiente (Excel en USB)
+- **Notas:** la fuente pendiente se encuentra en un Excel en el USB
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| ingresos_totales | REAL | Ingresos totales de empresas públicas (% PIB) |
+| egresos_totales | REAL | Egresos totales de empresas públicas (% PIB) |
+| resultado_fiscal_global | REAL | Resultado fiscal global (% PIB) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Inversión pública total
+
+### 1. Listado
+
+- **Nombre de tabla:** `inversion_publica_total`
+- **Nombre descriptivo:** Inversión pública total
+
+### 2. Estructura
+
+- **Descripción:** Monto anual de la inversión pública total en miles de dólares.
+- **Periodo:** 1990 a 2023
+- **Unidad base:** Miles de dólares
+- **Fuente original:** UDAPE: https://dossier.udape.gob.bo/res/INVERSI%C3%93N%20P%C3%9ABLICA%20POR%20SECTORES
+- **Notas:** Datos preliminares desde 2018
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| valor | REAL NOT NULL | Inversión pública total (miles de USD) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Inversión pública por sectores
+
+### 1. Listado
+
+- **Nombre de tabla:** `inversion_publica_por_sectores`
+- **Nombre descriptivo:** Inversión pública por sectores
+
+### 2. Estructura
+
+- **Descripción:** Distribución anual de la inversión pública entre sectores en miles de dólares.
+- **Periodo:** 1990 a 2014
+- **Unidad base:** Miles de dólares
+- **Fuente original:** UDAPE: https://dossier.udape.gob.bo/res/INVERSI%C3%93N%20P%C3%9ABLICA%20POR%20SECTORES
+- **Notas:** No se agregaron registros posteriores a 2014, pues la estructura de columnas cambia drásticamente.
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| extractivo | REAL | Inversión en sector extractivo (miles de USD) |
+| apoyo_a_la_produccion | REAL | Inversión en apoyo a la producción (miles de USD) |
+| infraestructura | REAL | Inversión en infraestructura (miles de USD) |
+| sociales | REAL | Inversión en sector social (miles de USD) |
+| total | REAL | Inversión pública total (miles de USD) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Ingresos Nacionales
+
+### 1. Listado
+
+- **Nombre de tabla:** `ingresos_nacionales`
+- **Nombre descriptivo:** Ingresos Nacionales
+
+### 2. Estructura
+
+- **Descripción:** Totales anuales de transferencias estatales: coparticipación tributaria, IDH, HIPC II, regalías departamentales e IEHD.
+- **Periodo:** 2001–2023 (proyecciones 2020(p)–2023(p))
+- **Unidad base:** Millones de bolivianos
+- **Fuente original:** UDAPE – Dossier: Ingresos por IDH, IEHD, regalías, coparticipación y HIPC II: https://dossier.udape.gob.bo/res/BOLIVIA%20RESUMEN:%20INGRESOS%20POR%20IDH,%20IEHD,%20REGALÍAS,%20COPARTICIPACIÓN%20Y%20HIPC%20II
+- **Notas:** Los sufijos “(p)” indican datos preliminares o proyectados.
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año |
+| ingresos_nacionales_total | REAL | Total ingresos |
+| total_copart_tributaria | REAL | Copart. tributaria |
+| total_idh | REAL | IDH total |
+| total_hipc_ii | REAL | HIPC II |
+| total_regalias_depart | REAL | Regalías dept. |
+| total_iehd | REAL | IEHD |
+
+### 4. Procesamiento aplicado
+
+- Uniformización de nombres de columnas y manejo de indicadores preliminares “(p)”.
+
+## Ingresos Corrientes
+
+### 1. Listado
+
+- **Nombre de tabla:** `ingresos_corrientes`
+- **Nombre descriptivo:** Ingresos corrientes del SPNF
+
+### 2. Estructura
+
+- **Descripción:** Desagregación de los ingresos corrientes del Sector Público No Financiero en ingresos tributarios e impuestos sobre hidrocarburos, con su total.
+- **Periodo:** 1990–2023 (proyecciones 2019(p)–2023(p))
+- **Unidad base:** Millones de bolivianos
+- **Fuente original:** UDAPE – Consolidado de operaciones del SPNF: https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector
+- **Notas:** Los sufijos “(p)” indican datos preliminares o proyectados.
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| ingresos_tributarios | REAL | Ingresos tributarios del SPNF (Millones de BOB) |
+| ingresos_hidrocarburos | REAL | Impuestos directos a los hidrocarburos (Millones de BOB) |
+| total_ingresos_corrientes | REAL | Suma de ingresos tributarios e hidrocarburos (Millones de BOB) |
+
+### 4. Procesamiento aplicado
+
+- Extracción y limpieza de los datos originales de UDAPE.
+- Conversión de comas miles a puntos decimales para tipo `REAL`.
+- Cálculo explícito de la columna `total_ingresos_corrientes`.
+
+## Ingresos Tributarios
+
+### 1. Listado
+
+- **Nombre de tabla:** `ingresos_tributarios`
+- **Nombre descriptivo:** Ingresos tributarios del SPNF
+
+### 2. Estructura
+
+- **Descripción:** Desglose de los ingresos tributarios del Sector Público No Financiero en renta interna, renta aduanera y regalías mineras, con su total consolidado.
+- **Periodo:** 1990–2023 (proyecciones 2019(p)–2023(p))
+- **Unidad base:** Millones de bolivianos
+- **Fuente original:** UDAPE – Consolidado de operaciones del SPNF: https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector UDAPE-Bolivia resumen: ingresos por idh, iehd, regalías, coparticipación y hipc II: https://dossier.udape.gob.bo/res/BOLIVIA%20RESUMEN:%20INGRESOS%20POR%20IDH,%20IEHD,%20REGALÍAS,%20COPARTICIPACIÓN%20Y%20HIPC%20II
+- **Notas:** Los sufijos “(p)” indican datos preliminares o proyectados. La columna impuesto_directo_hidrocarburos fue extraida de bolivia resumen: ingresos por idh 
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PK | Año del registro |
+| renta_interna | REAL | Renta interna (Millones de BOB) |
+| renta_aduanera | REAL | Renta aduanera (Millones de BOB) |
+| regalias_mineras | REAL | Regalías mineras (Millones de BOB) |
+| impuesto_directo_hidrocarburos | REAL | IDH (Millones de BOB) |
+| ingresos_tributarios_total | REAL | (Millones de BOB) |
+
+### 4. Procesamiento aplicado
+
+- Limpieza de separadores de miles (coma → punto decimal).
+- Cálculo y verificación de la columna `ingresos_tributarios_total` como suma de los componentes.
+
+## Ingresos por Hidrocarburos
+
+### 1. Listado
+
+- **Nombre de tabla:** `ingresos_hidrocarburos`
+- **Nombre descriptivo:** Ingresos por hidrocarburos (IDH, IEHD y Regalías)
+
+### 2. Estructura
+
+- **Descripción:** Desglose anual de los ingresos fiscales provenientes del sector hidrocarburos: Impuesto Directo a los Hidrocarburos (IDH), Impuesto Especial a los Hidrocarburos y Derivados (IEHD) y regalías, junto con su total consolidado.
+- **Periodo:** 1996–2023 (proyecciones 2019(p)–2023(p))
+- **Unidad base:** Millones de bolivianos
+- **Fuente original:** UDAPE – Consolidado de operaciones del SPNF: https://dossier.udape.gob.bo/res/operaciones%20consolidadas%20del%20sector
+- **Notas:**
+  1. Desde junio de 2005 se recauda el Impuesto Directo a los Hidrocarburos (IDH) según la Nueva Ley de Hidrocarburos.
+  2. Los sufijos “(p)” indican datos preliminares o proyectados.
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| idh | REAL | Impuesto Directo a los Hidrocarburos (Millones BOB) |
+| iehd | REAL | Impuesto Especial a los Hidrocarburos y Derivados (Millones BOB) |
+| regalias | REAL | Regalías sobre hidrocarburos (Millones BOB) |
+| ingresos_hidrocarburos_total | REAL | Total ingresos por hidrocarburos (Millones BOB) |
+
+### 4. Procesamiento aplicado
+
+- Conversión de valores a formato numérico (`REAL`), eliminando separadores de miles.
+- Cálculo de `ingresos_hidrocarburos_total` como suma de IDH, IEHD y regalías.
+- Marcado de filas preliminares “(p)” de acuerdo con la fuente.
+
+## Evolución de las Finanzas Públicas
+
+(`finanzas_publicas`)}
+### 1. Listado
+
+- **Nombre de tabla:** `finanzas_publicas`
+- **Nombre descriptivo:** Evolución de recaudaciones, egresos y déficit fiscal
+
+### 2. Estructura
+
+- **Descripción:** Registra anualmente los ingresos fiscales totales, los egresos fiscales, el déficit (o superávit), y su conversión a dólares junto al tipo de cambio oficial al cierre de cada año.
+- **Periodo:** 1947--1964
+- **Unidad base:**
+  - Ingresos, egresos y déficit: millones de bolivianos (Bs)
+  - Conversión del déficit a USD: millones de dólares (USD)
+  - Cotización del dólar: bolivianos por dólar (Bs/USD)
+- **Fuente original:** *Memoria del Banco Central de Bolivia*, ediciones 1956, 1963 y 1964
+  - 1947–1953: “Memoria BCB, 1956”, pág. 78
+  - 1954–1960: “Memoria BCB, 1963”
+  - 1961–1964: “Memoria BCB, 1964”, págs. 160–162
+- **Notas:**
+  - El signo negativo en `deficit` y `conversion_deficit_usd` indica déficit; sin signo.
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| `año` | INTEGER | Año del registro |
+| `ingresos_fiscales` | REAL | Recaudaciones fiscales totales (millones Bs) |
+| `egresos_fiscales` | REAL | Gasto público total (millones Bs) |
+| `deficit` | REAL | Déficit (negativo) o superávit (positivo) en Bs |
+| `conversion_deficit_usd` | REAL | Déficit/superávit convertido a USD (millones USD) |
+| `cotizacion_dolar` | REAL | Tipo de cambio oficial (Bs por USD al 31-XII) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+# Deuda
+
+## Deuda externa total
+
+### 1. Listado
+
+- **Nombre de tabla:** `deuda_externa_total`
+- **Nombre descriptivo:** Deuda externa total
+
+### 2. Estructura
+
+- **Descripción:** Monto anual de la deuda externa total de Bolivia.
+- **Periodo:** 1951 a 2024
+- **Unidad base:** Millones de dólares
+- **Fuente original:**
+  - 1951-1989: Memorias del banco central
+  - 1990–2018: UDAPE https://dossier.udape.gob.bo/res/DEUDA%20P%C3%9ABLICA%20EXTERNA%20DE%20MEDIANO
+  - 2019–2024: Banco Central de Bolivia: Deuda externa pública por acreedor https://www.bcb.gob.bo/webdocs/publicacionesbcb/2025/06/36/%C3%8Dndice%20Boletin%20del%20Sector%20Externo%202024.pdf
+- **Notas:**
+  - Para 2020: No considera el instrumento de Financiamiento Rápido (IFR) del FMI debido a que esta operación vulneró los procedimientos establecidos en la Constitución Política del Estado para la contratación de deuda pública externa (artículo 158 y 322).
+  - Desde 2022 hasta 2024: Datos preliminares.
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| deuda | REAL | Deuda externa total (Millones de USD) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+## Deuda interna pública
+
+### 1. Listado
+
+- **Nombre de tabla:** `deuda_interna`
+- **Nombre descriptivo:** Stock de deuda interna del Tesoro General de la Nación
+
+### 2. Estructura
+
+- **Descripción:** Valor anual del stock de deuda interna manejada por el Tesoro General de la Nación.
+- **Periodo:** 1993 a 2022
+- **Unidad base:** Millones de dólares
+- **Fuente original:** UDAPE: https://dossier.udape.gob.bo/res/STOCK%20DE%20LA%20DEUDA%20P%C3%9ABLICA%20INTERNA%20DEL%20TESORO%20GENERAL%20DE%20LA%20NACI%C3%93N
+- **Notas:** ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año del registro |
+| valor | REAL NOT NULL | Stock de deuda interna (Millones de USD) |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+# Empleo
+
+## Mercado laboral
+
+### 1. Listado
+
+- **Nombre de tabla:** `mercado_laboral`
+- **Nombre descriptivo:** Indicadores del mercado laboral
+
+### 2. Estructura
+
+- **Descripción:** Serie anual de principales indicadores del mercado laboral en Bolivia.
+- **Periodo:** 1999–2017
+- **Unidad base:** Personas
+- **Fuente original:** INE – Empleo: https://nube.ine.gob.bo/index.php/s/9nY0sTnKJK42cDM/download
+- **Notas:** Ninguna
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción** |
+|---|---|---|
+| año | INTEGER PRIMARY KEY | Año de referencia |
+| total_poblacion | INTEGER | Población total (todas las personas) |
+| pent | INTEGER | Población en Edad de No Trabajar (PENT) |
+| pet | INTEGER | Población en Edad de Trabajar (PET) |
+| pea | INTEGER | Población Económicamente Activa (PEA) |
+| po | INTEGER | Ocupados |
+| pd | INTEGER | Desocupados |
+| cesantes | INTEGER | Cesantes |
+| aspirantes | INTEGER | Aspirantes |
+| pei | INTEGER | Población Económicamente Inactiva (PEI) |
+| temporales | INTEGER | Inactivos temporales |
+| permanentes | INTEGER | Inactivos permanentes |
+
+### 4. Procesamiento aplicado
+
+Ninguno.
+# Pobreza
+
+## Pobreza (`pobreza`)
+
+### 1. Listado
+
+- **Nombre de tabla:** `pobreza`
+- **Nombre descriptivo:** Indicadores de pobreza (FGT) y población por ámbito (Bolivia, urbano, rural)
+
+### 2. Estructura
+
+- **Descripción:** Serie anual de indicadores Foster–Greer–Thorbecke (FGT0 incidencia, FGT1 brecha, FGT2 severidad) y tamaños poblacionales total y pobre, reportados para el total nacional (Bolivia), área urbana y área rural.
+- **Periodo:** 2005--2023
+- **Unidad base:**
+  - **FGT0/FGT1/FGT2:** Porcentaje (%).
+  - **Población total / Población pobre:** Personas.
+- **Fuente original:** INE – Encuestas de Hogares: https://www.ine.gob.bo/index.php/estadisticas-economicas/encuestas-de-hogares/
+- **Notas:**
+  1. FGT0: incidencia (proporción de personas en pobreza); FGT1: brecha promedio respecto a la línea de pobreza; FGT2: severidad (pondera más las brechas grandes).
+  2. FGT en % (0–100). `pop_poor_*` $leq$ `pop_total_*`.
+  3. en el excel original no se proporcionan datos para 2010
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción / Unidad** |
+|---|---|---|
+| `año` | INTEGER PRIMARY KEY | Año del registro |
+| `fgt0_bol` | REAL | Incidencia de pobreza (FGT0), Bolivia [%] |
+| `fgt1_bol` | REAL | Brecha de pobreza (FGT1), Bolivia [%] |
+| `fgt2_bol` | REAL | Severidad de pobreza (FGT2), Bolivia [%] |
+| `pop_total_bol` | INTEGER | Población total, Bolivia [personas] |
+| `pop_poor_bol` | INTEGER | Población en pobreza, Bolivia [personas] |
+| `fgt0_urb` | REAL | Incidencia de pobreza (FGT0), Urbano [%] |
+| `fgt1_urb` | REAL | Brecha de pobreza (FGT1), Urbano [%] |
+| `fgt2_urb` | REAL | Severidad de pobreza (FGT2), Urbano [%] |
+| `pop_total_urb` | INTEGER | Población total, Urbano [personas] |
+| `pop_poor_urb` | INTEGER | Población en pobreza, Urbano [personas] |
+| `fgt0_rur` | REAL | Incidencia de pobreza (FGT0), Rural [%] |
+| `fgt1_rur` | REAL | Brecha de pobreza (FGT1), Rural [%] |
+| `fgt2_rur` | REAL | Severidad de pobreza (FGT2), Rural [%] |
+| `pop_total_rur` | INTEGER | Población total, Rural [personas] |
+| `pop_poor_rur` | INTEGER | Población en pobreza, Rural [personas] |
+
+### 4. Procesamiento aplicado
+
+Ninguna
+## Pobreza extrema (`pobreza_extrema`)
+
+### 1. Listado
+
+- **Nombre de tabla:** `pobreza_extrema`
+- **Nombre descriptivo:** Indicadores de pobreza extrema (FGT) y población por ámbito (Bolivia, urbano, rural)
+
+### 2. Estructura
+
+- **Descripción:** Serie anual de indicadores Foster--Greer--Thorbecke para *pobreza extrema*: FGT0 (incidencia), FGT1 (brecha) y FGT2 (severidad), junto con población total y población en pobreza extrema, para el total nacional (Bolivia), área urbana y área rural.
+- **Periodo:** 2005--2023
+- **Unidad base:**
+  - **FGT0/FGT1/FGT2:** Porcentaje (%).
+  - **Población total / Población en pobreza extrema:** Personas.
+- **Fuente original:** INE -- Encuestas de Hogares:; https://www.ine.gob.bo/index.php/estadisticas-economicas/encuestas-de-hogares/
+- **Notas:**
+  1. FGT0: proporción de personas en pobreza extrema; FGT1: brecha promedio respecto a la línea de pobreza extrema; FGT2: severidad (mayor peso a brechas grandes).
+  2. Los indicadores FGT se expresan en el rango 0--100,%.
+  3. Para 2010 no existe dato oficial reportado por INE; el registro se deja nulo y se documenta la discontinuidad.
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción / Unidad** |
+|---|---|---|
+| `año` | INTEGER PRIMARY KEY | Año del registro |
+| `fgt0_urb` | REAL | Incidencia de pobreza extrema (FGT0), Urbano [%] |
+| `fgt1_urb` | REAL | Brecha de pobreza extrema (FGT1), Urbano [%] |
+| `fgt2_urb` | REAL | Severidad de pobreza extrema (FGT2), Urbano [%] |
+| `pop_total_urb` | INTEGER | Población total, Urbano [personas] |
+| `pop_extreme_urb` | INTEGER | Población en pobreza extrema, Urbano [personas] |
+| `fgt0_rur` | REAL | Incidencia de pobreza extrema (FGT0), Rural [%] |
+| `fgt1_rur` | REAL | Brecha de pobreza extrema (FGT1), Rural [%] |
+| `fgt2_rur` | REAL | Severidad de pobreza extrema (FGT2), Rural [%] |
+| `pop_total_rur` | INTEGER | Población total, Rural [personas] |
+| `pop_extreme_rur` | INTEGER | Población en pobreza extrema, Rural [personas] |
+| `fgt0_bol` | REAL | Incidencia de pobreza extrema (FGT0), Bolivia [%] |
+| `fgt1_bol` | REAL | Brecha de pobreza extrema (FGT1), Bolivia [%] |
+| `fgt2_bol` | REAL | Severidad de pobreza extrema (FGT2), Bolivia [%] |
+| `pop_total_bol` | INTEGER | Población total, Bolivia [personas] |
+| `pop_extreme_bol` | INTEGER | Población en pobreza extrema, Bolivia [personas] |
+
+### 4. Procesamiento aplicado
+
+Ninguna
+# Sector Monetario
+
+## Agregados monetarios y emisión (`agregados_monetarios`)
+
+### 1. Listado
+
+- **Nombre de tabla:** `agregados_monetarios`
+- **Nombre descriptivo:** Agregados monetarios (M0, M1, M2, M3) y emisión monetaria
+
+### 2. Estructura
+
+- **Descripción:** Serie anual de la base monetaria (M0), agregados monetarios (M1, M2, M3) y emisión monetaria para Bolivia. Los valores son niveles (stocks) anuales.
+- **Periodo:**
+  - Agregados monetarios y emisión monetaria: 1980--2022
+  - M0, M1, M2 y M3: 1990--2022
+- **Unidad base:** Miles de bolivianos (BOB).
+- **Fuente original:** UDAPE — Dossier Monetaria:
+  - *Base monetaria por origen y destino*
+  - *Variables monetarias*
+  - https://dossier.udape.gob.bo/res/monetaria
+- **Notas:**
+  - Donde no existe dato oficial, el registro se deja en `NULL` (p.,ej., M1--M3 antes de 1990).
+  - Definiciones operativas: $M0=B=C+R$; $M1=C+D$; $M2=M1+F$; $M3=M2+G$; *Emisión* $E=C+CB$.
+  - Series construidas con promedios anuales (renglón *PROMEDIO* en las tablas mensuales UDAPE/BCB).
+
+### 3. Esquema de la tabla
+
+| **Columna** | **Tipo** | **Descripción / Unidad** |
+|---|---|---|
+| `año` | REAL | Año del registro (AAAA) |
+| `m0` | REAL | Base monetaria, miles de BOB |
+| `m1` | REAL | Agregado M1, miles de BOB |
+| `m2` | REAL | Agregado M2, miles de BOB |
+| `m3` | REAL | Agregado M3, miles de BOB |
+| `emision_monetaria` | REAL | Emisión monetaria ($E$), miles de BOB |
+
+### 4. Procesamiento aplicado
+
+- Extracción desde tablas UDAPE; selección del renglón *PROMEDIO* anual.
+- Limpieza de separadores de miles y conversión a numérico.
+- Alineación por año; inserción de `NULL` en ausencias (especialmente M1--M3 antes de 1990).
