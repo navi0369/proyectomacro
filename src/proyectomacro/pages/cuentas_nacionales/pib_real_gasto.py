@@ -17,7 +17,7 @@ from dash import callback_context
 
 dash.register_page(
     __name__,
-    path="/cuentas-nacionales/pib-real-gasto",
+    path="/cuentas-nacionales/PIB-Real-Gasto",
     name="PIB real (base 1990) desagregado por componentes de gasto",
     title="PIB real (base 1990) desagregado por componentes de gasto",
     metadata={"section": "Cuentas Nacionales"},
