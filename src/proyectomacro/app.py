@@ -23,6 +23,8 @@ server = app.server
 ########################################################################
 SECCIONES = [
     "Inicio",
+    "Documentos",
+    "Calculadora",
     "Cuentas Nacionales",
     "Sector Externo",
     "Exportaciones",

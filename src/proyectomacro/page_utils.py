@@ -491,7 +491,7 @@ def build_image_gallery_card(
 def build_data_table(
     df,
     table_id: str,
-    table_styles: dict = {},
+    table_styles: Optional[Dict[str, Any]] = None,
     page_size: int = 10
 ):
     """
@@ -504,7 +504,7 @@ def build_data_table(
     table_id : str
         Identificador para el componente (se usa en id="{table_id}-table").
     table_styles : dict, opcional
-        Diccionario con estilos personalizados. Si es None, usa los estilos predeterminados.
+        Diccionario con estilos personalizados. Si es None o vacío, usa los estilos predeterminados.
         Estructura esperada: {"style_table": {...}, "style_cell": {...}, "style_header": {...}}
     page_size : int, opcional
         Número de filas por página (por defecto 10).
@@ -513,25 +513,67 @@ def build_data_table(
     -------
     dash_table.DataTable
     """
-    # Usar estilos predeterminados si no se proporcionan personalizados
-    if table_styles is None:
-        table_styles = get_table_styles()
+    import pandas as pd
     
-    # Preparar datos y columnas
-    data = df.reset_index().to_dict("records") if not df.empty else []
-    columns = (
-        [{"name": c, "id": c} for c in df.reset_index().columns]
-        if not df.empty else []
-    )
+    # Validar que el DataFrame sea válido
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("df debe ser un pandas.DataFrame")
+    
+    # Usar estilos predeterminados si no se proporcionan personalizados o están vacíos
+    if not table_styles:  # None o dict vacío
+        table_styles = get_table_styles()
+    else:
+        # Mezclar con estilos predeterminados para asegurar que todos los estilos necesarios estén presentes
+        default_styles = get_table_styles()
+        merged_styles = default_styles.copy()
+        merged_styles.update(table_styles)
+        table_styles = merged_styles
+    
+    # Manejar DataFrames vacíos
+    if df.empty:
+        return dash_table.DataTable(
+            id=f"{table_id}-table",
+            data=[],
+            columns=[],
+            page_size=page_size,
+            **table_styles,
+            style_data_conditional=[
+                {"if": {"row_index": "odd"}, "background-color": "#f1f3f5"},
+            ],
+        )
+    
+    # Preparar datos y columnas (llamar reset_index una sola vez)
+    df_reset = df.reset_index()
+    
+    # Convertir datos asegurando tipos compatibles
+    data = []
+    for _, row in df_reset.iterrows():
+        row_dict = {}
+        for col in df_reset.columns:
+            value = row[col]
+            # Convertir a tipos compatible con dash_table
+            if pd.isna(value):
+                row_dict[str(col)] = None
+            elif isinstance(value, (int, float, str, bool)):
+                row_dict[str(col)] = value
+            else:
+                row_dict[str(col)] = str(value)
+        data.append(row_dict)
+    
+    # Preparar columnas
+    columns = [{"name": str(c), "id": str(c)} for c in df_reset.columns]
+    
     # Tooltips como texto plano
-    tooltip_data = (
-        [
-            {c: {"value": str(v), "type": "text"} for c, v in row.items()}
-            for row in df.reset_index().to_dict("records")
-        ]
-        if not df.empty else []
-    )
-
+    tooltip_data = []
+    for row_dict in data:
+        tooltip_row = {}
+        for col, value in row_dict.items():
+            tooltip_row[col] = {"value": str(value) if value is not None else "", "type": "text"}
+        tooltip_data.append(tooltip_row)
+    
+    # Determinar la columna del índice para el estilo condicional
+    index_column = str(df.index.name) if df.index.name else str(df_reset.columns[0])
+    
     return dash_table.DataTable(
         id=f"{table_id}-table",
         data=data,
@@ -554,6 +596,6 @@ def build_data_table(
             {"if": {"row_index": "odd"}, "backgroundColor": "#f1f3f5"},
         ],
         style_cell_conditional=[
-            {"if": {"column_id": df.index.name or "año"}, "textAlign": "left", "fontWeight": "600"},
+            {"if": {"column_id": index_column}, "text-align": "left", "font-weight": "600"},
         ],
     ) 
