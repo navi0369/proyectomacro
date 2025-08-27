@@ -17,7 +17,7 @@ from dash import callback_context
 
 dash.register_page(
     __name__,
-    path="/precios-produccion/cotizacion-oficial-dolar",
+    path="/precios-y-produccion/cotizacion-oficial-dolar",
     name="Cotización oficial del dólar",
     title="Cotización oficial del dólar",
     metadata={"section": "Precios y Producción"},

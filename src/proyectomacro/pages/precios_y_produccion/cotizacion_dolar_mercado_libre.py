@@ -17,7 +17,7 @@ from dash import callback_context
 
 dash.register_page(
     __name__,
-    path="/precios-produccion/cotizacion-dolar-mercado-libre",
+    path="/precios-y-produccion/cotizacion-dolar-mercado-libre",
     name="Cotización del Dólar en Mercado Libre",
     title="Cotización del Dólar en Mercado Libre",
     metadata={"section": "Precios y Producción"},

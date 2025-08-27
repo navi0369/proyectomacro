@@ -17,7 +17,7 @@ from dash import callback_context
 
 dash.register_page(
     __name__,
-    path="/precios-produccion/inflacion-acumulada",
+    path="/precios-y-produccion/inflacion-acumulada",
     name="Inflación acumulada",
     title="Inflación acumulada",
     metadata={"section": "Precios y Producción"},

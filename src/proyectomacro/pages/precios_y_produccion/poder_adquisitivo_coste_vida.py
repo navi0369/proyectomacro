@@ -17,7 +17,7 @@ from dash import callback_context
 
 dash.register_page(
     __name__,
-    path="/precios-produccion/poder-adquisitivo-coste-vida",
+    path="/precios-y-produccion/poder-adquisitivo-coste-vida",
     name="Poder Adquisitivo y Coste de la Vida",
     title="Poder Adquisitivo y Coste de la Vida",
     metadata={"section": "Precios y Producción"},

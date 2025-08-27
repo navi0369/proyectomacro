@@ -17,7 +17,7 @@ from dash import callback_context
 
 dash.register_page(
     __name__,
-    path="/precios-produccion/precio-minerales",
+    path="/precios-y-produccion/precio-minerales",
     name="Precio real de minerales",
     title="Precio real de minerales",
     metadata={"section": "Precios y Producción"},

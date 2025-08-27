@@ -17,7 +17,7 @@ from dash import callback_context
 
 dash.register_page(
     __name__,
-    path="/precios-produccion/precio-petroleo-wti",
+    path="/precios-y-produccion/precio-petroleo-wti",
     name="Precio internacional del petróleo WTI",
     title="Precio internacional del petróleo WTI",
     metadata={"section": "Precios y Producción"},
