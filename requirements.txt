@@ -1,0 +1,81 @@
+# ========================================================================
+# REQUIREMENTS.TXT - Dashboard Macroeconómico de Bolivia
+# ========================================================================
+# Dependencias principales identificadas en el análisis del código fundamental
+
+# ──────────────────────── DASHBOARD WEB (CORE) ─────────────────────────
+# Framework principal para el dashboard web interactivo
+dash>=2.14.0
+dash-bootstrap-components>=1.5.0
+
+# ─────────────────── MANIPULACIÓN Y ANÁLISIS DE DATOS ───────────────────
+# Bibliotecas core para manejo de datos
+pandas>=2.0.0
+numpy>=1.24.0
+
+# ─────────────────────── VISUALIZACIÓN DE DATOS ────────────────────────
+# Gráficos interactivos y estáticos
+plotly>=5.15.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# ────────────────────────── BASE DE DATOS ───────────────────────────────
+# No requiere instalación adicional (sqlite3 incluido en Python estándar)
+
+# ────────────────────── CONFIGURACIÓN Y UTILIDADES ─────────────────────
+# Manejo de archivos de configuración YAML
+PyYAML>=6.0
+
+# Manejo de rutas y utilidades del sistema
+pathlib2>=2.3.7; python_version<"3.4"
+
+# ─────────────────────── ANÁLISIS ESTADÍSTICO ───────────────────────────
+# Modelos estadísticos y análisis de series temporales
+statsmodels>=0.14.0
+
+# ─────────────────────────── LOGS Y DEBUGGING ───────────────────────────
+# Sistema de logging (incluido en Python estándar)
+
+# ─────────────────────────── TIPOS Y VALIDACIÓN ─────────────────────────
+# Anotaciones de tipos (incluido en Python 3.8+)
+
+# ─────────────────────────── NOTEBOOKS (OPCIONAL) ───────────────────────
+# Para desarrollo y análisis exploratorio
+jupyter>=1.0.0
+notebook>=6.5.0
+
+# Sincronización de notebooks con scripts Python
+jupytext>=1.15.0
+
+# ────────────────────── DEPENDENCIAS DE DESARROLLO ─────────────────────
+# Para testing y desarrollo (opcional)
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# ─────────────────────── COMPATIBILIDAD MULTIPLATAFORMA ─────────────────
+# Para manejo avanzado de rutas (ya incluido en Python 3.4+)
+
+# ──────────────────────── SERVICIOS WEB (OPCIONAL) ───────────────────────
+# Para despliegue en producción
+gunicorn>=21.0.0; platform_system!="Windows"
+waitress>=2.1.0; platform_system=="Windows"
+
+# ════════════════════════════════════════════════════════════════════════
+# NOTAS DE INSTALACIÓN:
+# ════════════════════════════════════════════════════════════════════════
+#
+# INSTALACIÓN BÁSICA (mínima para funcionalidad core):
+# pip install dash dash-bootstrap-components pandas numpy plotly matplotlib PyYAML
+#
+# INSTALACIÓN COMPLETA (incluye análisis estadístico):
+# pip install -r requirements.txt
+#
+# PARA DESARROLLO:
+# pip install -r requirements.txt
+# pip install -e .  # Instalar en modo desarrollo
+#
+# VERIFICACIÓN DE VERSIONES:
+# - Python: 3.8 o superior
+# - Sistema: Linux/Windows/macOS
+#
+# ════════════════════════════════════════════════════════════════════════

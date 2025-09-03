@@ -17,7 +17,7 @@ from dash import callback_context
 
 dash.register_page(
     __name__,
-    path="/sector-externo/reservas-oro-divisas",
+    path="/sector-externo/Reservas-oro-divisas",
     name="Reservas internacionales de oro y divisas",
     title="Reservas internacionales de oro y divisas",
     metadata={"section": "Sector Externo"},

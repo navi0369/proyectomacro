@@ -9,7 +9,7 @@ DB_PATH = PROJECT_ROOT / "db" / "proyectomacro.db"
 
 #  ── Carpeta base de salida de gráficas
 ASSETS_DIR = PROJECT_ROOT / "assets" / "tesis"
-# config.py
+# config.py 
 
 #constantes para la primera grafica
 

@@ -23,16 +23,6 @@ secciones:
           fuentes:
             - "Archivo Excel db/pruebas.xlsx"
 
-      participacion_pib:
-        tabla: "Participacion_PIB"
-        label: "Participación de exportaciones e importaciones en el PIB"
-        metadata:
-          nombre_descriptivo: "Exportaciones e importaciones expresadas como porcentaje del PIB - mide el peso relativo de X y M en la actividad económica"
-          periodo: "1950 – 2023"
-          unidad: "Porcentaje"
-          fuentes:
-            - "Archivo Excel reports/pruebas.xls"
-
       tasa_crecimiento_pib:
         tabla: "tasa_crecimiento_pib"
         label: "Tasa de crecimiento anual del PIB"
@@ -198,17 +188,6 @@ secciones:
     name: "Exportaciones"
     path: "/exportaciones"
     tablas:
-      exportaciones_totales:
-        tabla: "exportaciones_totales"
-        label: "Exportaciones totales"
-        metadata:
-          nombre_descriptivo: "Registro anual de exportaciones desagregadas entre productos tradicionales y no tradicionales, junto con su valor total oficial"
-          periodo: "1980 – 2023"
-          unidad: "Millones de dólares"
-          fuentes:
-            - "1980–1992: Archivo Excel db/pruebas.xlsx"
-            - "1992–2023: INE, https://nube.ine.gob.bo/index.php/s/zUQc65wIGkw1KUy/download"
-
       exportaciones_minerales_totales:
         tabla: "exportaciones_minerales_totales"
         label: "Volumen y valor de exportaciones de minerales"
