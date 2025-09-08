@@ -30,6 +30,13 @@ setup(
         "gunicorn>=21.0.0",
         "jupyter>=1.0.0",
         "jupytext>=1.15.0",
+        "fpdf2>=2.7.0",
+        "seaborn>=0.12.0",
+        "statsmodels>=0.14.0",
+        "scipy>=1.11.0",
+        "openpyxl>=3.1.0",
+        "xlrd>=2.0.0",
+        "Werkzeug>=2.3.0",
     ],
     
     # Configuración correcta de packages
