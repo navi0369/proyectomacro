@@ -26,14 +26,8 @@ setup(
         "numpy>=1.24.0",
         "plotly>=5.15.0",
         "matplotlib>=3.7.0",
-        "seaborn>=0.12.0",
         "PyYAML>=6.0",
-        "statsmodels>=0.14.0",
-        "scipy>=1.11.0",
-        "openpyxl>=3.1.0",
-        "xlrd>=2.0.0",
         "gunicorn>=21.0.0",
-        "Werkzeug>=2.3.0",
         "jupyter>=1.0.0",
         "jupytext>=1.15.0",
     ],
@@ -41,6 +35,7 @@ setup(
     # Configuración correcta de packages
     packages=[
         "func_auxiliares",
+        "validation",
         "proyectomacro", 
         "proyectomacro.config",
         "proyectomacro.pages", 
@@ -61,6 +56,7 @@ setup(
     package_dir={
         "proyectomacro": "src/proyectomacro",
         "func_auxiliares": "func_auxiliares",
+        "validation": "src/proyectomacro/validation",
     },
     
     # Incluir archivos de datos y configuración

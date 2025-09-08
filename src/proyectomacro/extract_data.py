@@ -1,6 +1,6 @@
 #src/proyectomacro/extract_data.py
 import os
-from validation.validate_all import validate_database
+from .validation.validate_all import validate_database
 import sqlite3
 import pandas as pd
 from func_auxiliares.config import ASSETS_DIR, DB_PATH
