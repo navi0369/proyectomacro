@@ -2,7 +2,10 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import html, page_container, page_registry
+import os
+import sys
 from func_auxiliares.config import ASSETS_DIR
+
 ########################################################################
 # 1. Crear la aplicación y habilitar Dash pages
 ########################################################################

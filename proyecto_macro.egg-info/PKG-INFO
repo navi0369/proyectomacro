@@ -1,14 +1,38 @@
 Metadata-Version: 2.4
 Name: proyecto_macro
 Version: 0.1.0
-Summary: Dashboard macroeconómico y utilitarios
+Summary: Dashboard macroeconómico de Bolivia - Análisis de ciclos económicos
 Author: Juan
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
 Requires-Python: >=3.8
-Requires-Dist: dash
-Requires-Dist: dash-bootstrap-components
-Requires-Dist: pandas
-Requires-Dist: plotly
+Requires-Dist: dash>=2.14.0
+Requires-Dist: dash-bootstrap-components>=1.5.0
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: plotly>=5.15.0
+Requires-Dist: matplotlib>=3.7.0
+Requires-Dist: seaborn>=0.12.0
+Requires-Dist: PyYAML>=6.0
+Requires-Dist: statsmodels>=0.14.0
+Requires-Dist: scipy>=1.11.0
+Requires-Dist: openpyxl>=3.1.0
+Requires-Dist: xlrd>=2.0.0
+Requires-Dist: gunicorn>=21.0.0
+Requires-Dist: Werkzeug>=2.3.0
+Requires-Dist: jupyter>=1.0.0
+Requires-Dist: jupytext>=1.15.0
 Dynamic: author
+Dynamic: classifier
+Dynamic: description
 Dynamic: requires-dist
 Dynamic: requires-python
 Dynamic: summary
+
+Sistema integral para análisis macroeconómico de Bolivia con visualizaciones interactivas

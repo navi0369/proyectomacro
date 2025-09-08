@@ -1,2 +1,2 @@
 [console_scripts]
-run-dashboard = proyectomacro.app:main
+proyecto-macro = proyectomacro.app:main
