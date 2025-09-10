@@ -1,0 +1,704 @@
+# tables_metadata.yml
+# Metadata detallada para generación de gráficas personalizadas
+# Estructura: tabla -> columna -> {unit, scale, currency, type, description}
+
+tables:
+  # ══════════════════════════════════════════════════════════════════
+  # CUENTAS NACIONALES
+  # ══════════════════════════════════════════════════════════════════
+  PIB_Real_Gasto:
+    año:
+      type: "year"
+    consumo_privado:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+    consumo_gobierno:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+    inversion_bruta_fija:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+    exportaciones:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+    importaciones:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+    pib_real:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+
+  pib_ramas:
+    año:
+      type: "year"
+    agropecuario:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+    mineria:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+    manufactura:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+    construccion:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+    servicios:
+      unit: "Miles de Bs 1990"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      base_year: 1990
+
+  tasa_crecimiento_pib:
+    año:
+      type: "year"
+    tasa_crecimiento:
+      unit: "%"
+      scale: 1
+      type: "percentage"
+      description: "Variación porcentual anual del PIB"
+
+  participacion_x_m_pib:
+    año:
+      type: "year"
+    exportaciones_pib:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+      description: "Exportaciones como porcentaje del PIB"
+    importaciones_pib:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+      description: "Importaciones como porcentaje del PIB"
+
+  participacion_pib_ramas:
+    año:
+      type: "year"
+    agropecuario:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+    mineria:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+    manufactura:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+    construccion:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+    servicios:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+
+  pib_nominal_gasto:
+    año:
+      type: "year"
+    consumo_privado:
+      unit: "Miles de Bs"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+    consumo_gobierno:
+      unit: "Miles de Bs"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+    inversion_bruta_fija:
+      unit: "Miles de Bs"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+    exportaciones:
+      unit: "Miles de Bs"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+    importaciones:
+      unit: "Miles de Bs"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+    pib_nominal:
+      unit: "Miles de Bs"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+
+  deflactor_implicito_pib_gasto:
+    año:
+      type: "year"
+    consumo_privado:
+      unit: "Índice (1990=100)"
+      scale: 1
+      type: "index"
+      base_year: 1990
+    consumo_gobierno:
+      unit: "Índice (1990=100)"
+      scale: 1
+      type: "index"
+      base_year: 1990
+    inversion_bruta_fija:
+      unit: "Índice (1990=100)"
+      scale: 1
+      type: "index"
+      base_year: 1990
+    exportaciones:
+      unit: "Índice (1990=100)"
+      scale: 1
+      type: "index"
+      base_year: 1990
+    importaciones:
+      unit: "Índice (1990=100)"
+      scale: 1
+      type: "index"
+      base_year: 1990
+
+  balanza_de_pagos:
+    año:
+      type: "year"
+    cuenta_corriente:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    cuenta_capital:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    errores_omisiones:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    saldo_global:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+
+  pib_percapita:
+    año:
+      type: "year"
+    pib_percapita:
+      unit: "USD por habitante"
+      scale: 1
+      currency: "USD"
+      type: "monetary"
+      description: "PIB per cápita en dólares corrientes"
+
+  # ══════════════════════════════════════════════════════════════════
+  # SECTOR EXTERNO
+  # ══════════════════════════════════════════════════════════════════
+  balanza_comercial:
+    año:
+      type: "year"
+    exportaciones:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    importaciones:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    saldo_comercial:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+
+  flujo_divisas:
+    año:
+      type: "year"
+    ingresos:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    egresos:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    flujo_neto:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+
+  grado_de_apertura:
+    año:
+      type: "year"
+    grado_apertura:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+      description: "(X+M)/PIB"
+
+  Reservas_oro_divisas:
+    año:
+      type: "year"
+    reservas:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+
+  # ══════════════════════════════════════════════════════════════════
+  # EXPORTACIONES
+  # ══════════════════════════════════════════════════════════════════
+  exportaciones_minerales_totales:
+    año:
+      type: "year"
+    estaño_volumen:
+      unit: "Kilos finos"
+      scale: 1
+      type: "volume"
+    estaño_valor:
+      unit: "Miles USD"
+      scale: 1000
+      currency: "USD"
+      type: "monetary"
+    plomo_volumen:
+      unit: "Kilos finos"
+      scale: 1
+      type: "volume"
+    plomo_valor:
+      unit: "Miles USD"
+      scale: 1000
+      currency: "USD"
+      type: "monetary"
+    zinc_volumen:
+      unit: "Kilos finos"
+      scale: 1
+      type: "volume"
+    zinc_valor:
+      unit: "Miles USD"
+      scale: 1000
+      currency: "USD"
+      type: "monetary"
+    oro_volumen:
+      unit: "Kilos finos"
+      scale: 1
+      type: "volume"
+    oro_valor:
+      unit: "Miles USD"
+      scale: 1000
+      currency: "USD"
+      type: "monetary"
+
+  exportaciones_tradicionales:
+    año:
+      type: "year"
+    minerales:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    hidrocarburos:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    total_tradicionales:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+
+  exportacion_gas_natural:
+    año:
+      type: "year"
+    volumen_MMMc:
+      unit: "Millones de m³"
+      scale: 1000000
+      type: "volume"
+    volumen_MMPC:
+      unit: "Millones de pies³"
+      scale: 1000000
+      type: "volume"
+    precio_usd_MPC:
+      unit: "USD/MPC"
+      scale: 1
+      currency: "USD"
+      type: "price"
+    valor:
+      unit: "Miles USD"
+      scale: 1000
+      currency: "USD"
+      type: "monetary"
+
+  exportaciones_no_tradicionales:
+    año:
+      type: "year"
+    soya:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    castañas:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    quinua:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    textiles:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    total_no_tradicionales:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+
+  # ══════════════════════════════════════════════════════════════════
+  # IMPORTACIONES
+  # ══════════════════════════════════════════════════════════════════
+  composicion_importaciones_uso_destino:
+    año:
+      type: "year"
+    bienes_consumo:
+      unit: "Millones USD CIF"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    materias_primas:
+      unit: "Millones USD CIF"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    bienes_capital:
+      unit: "Millones USD CIF"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    otros:
+      unit: "Millones USD CIF"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+    total_cif:
+      unit: "Millones USD CIF"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+
+  participacion_composicion_importaciones_uso_destino:
+    año:
+      type: "year"
+    bienes_consumo:
+      unit: "% del total CIF"
+      scale: 1
+      type: "percentage"
+    materias_primas:
+      unit: "% del total CIF"
+      scale: 1
+      type: "percentage"
+    bienes_capital:
+      unit: "% del total CIF"
+      scale: 1
+      type: "percentage"
+    otros:
+      unit: "% del total CIF"
+      scale: 1
+      type: "percentage"
+
+  # ══════════════════════════════════════════════════════════════════
+  # PRECIOS Y PRODUCCIÓN
+  # ══════════════════════════════════════════════════════════════════
+  precio_minerales:
+    año:
+      type: "year"
+    zinc:
+      unit: "USD/lb"
+      scale: 1
+      currency: "USD"
+      type: "price"
+    estaño:
+      unit: "USD/lb"
+      scale: 1
+      currency: "USD"
+      type: "price"
+    oro:
+      unit: "USD/oz"
+      scale: 1
+      currency: "USD"
+      type: "price"
+    plata:
+      unit: "USD/oz"
+      scale: 1
+      currency: "USD"
+      type: "price"
+    cobre:
+      unit: "USD/lb"
+      scale: 1
+      currency: "USD"
+      type: "price"
+
+  precio_petroleo_wti:
+    año:
+      type: "year"
+    precio:
+      unit: "USD/barril"
+      scale: 1
+      currency: "USD"
+      type: "price"
+      description: "Precio internacional del petróleo WTI"
+
+  inflacion_acumulada:
+    año:
+      type: "year"
+    inflacion:
+      unit: "%"
+      scale: 1
+      type: "percentage"
+      description: "Variación porcentual acumulada del IPC"
+
+  cotizacion_oficial_dolar:
+    año:
+      type: "year"
+    tipo_cambio_compra:
+      unit: "Bs/USD"
+      scale: 1
+      type: "exchange_rate"
+      from_currency: "BOB"
+      to_currency: "USD"
+    tipo_cambio_venta:
+      unit: "Bs/USD"
+      scale: 1
+      type: "exchange_rate"
+      from_currency: "BOB"
+      to_currency: "USD"
+
+  # ══════════════════════════════════════════════════════════════════
+  # SECTOR FISCAL
+  # ══════════════════════════════════════════════════════════════════
+  consolidado_spnf:
+    año:
+      type: "year"
+    ingresos_totales:
+      unit: "Millones Bs"
+      scale: 1000000
+      currency: "BOB"
+      type: "monetary"
+    egresos_totales:
+      unit: "Millones Bs"
+      scale: 1000000
+      currency: "BOB"
+      type: "monetary"
+    superavit_deficit_global:
+      unit: "Millones Bs"
+      scale: 1000000
+      currency: "BOB"
+      type: "monetary"
+    superavit_deficit_primario:
+      unit: "Millones Bs"
+      scale: 1000000
+      currency: "BOB"
+      type: "monetary"
+
+  operaciones_empresas_publicas:
+    año:
+      type: "year"
+    ingresos_totales:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+    egresos_totales:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+    resultado_fiscal_global:
+      unit: "% del PIB"
+      scale: 1
+      type: "percentage"
+
+  inversion_publica_total:
+    año:
+      type: "year"
+    inversion_total:
+      unit: "Miles USD"
+      scale: 1000
+      currency: "USD"
+      type: "monetary"
+
+  # ══════════════════════════════════════════════════════════════════
+  # DEUDA
+  # ══════════════════════════════════════════════════════════════════
+  deuda_externa_total:
+    año:
+      type: "year"
+    deuda_externa:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+
+  deuda_interna:
+    año:
+      type: "year"
+    deuda_interna:
+      unit: "Millones USD"
+      scale: 1000000
+      currency: "USD"
+      type: "monetary"
+
+  # ══════════════════════════════════════════════════════════════════
+  # EMPLEO
+  # ══════════════════════════════════════════════════════════════════
+  mercado_laboral:
+    año:
+      type: "year"
+    poblacion_total:
+      unit: "Personas"
+      scale: 1
+      type: "count"
+    pea:
+      unit: "Personas"
+      scale: 1
+      type: "count"
+      description: "Población Económicamente Activa"
+    ocupados:
+      unit: "Personas"
+      scale: 1
+      type: "count"
+    desocupados:
+      unit: "Personas"
+      scale: 1
+      type: "count"
+    tasa_desocupacion:
+      unit: "%"
+      scale: 1
+      type: "percentage"
+
+  # ══════════════════════════════════════════════════════════════════
+  # POBREZA
+  # ══════════════════════════════════════════════════════════════════
+  pobreza:
+    año:
+      type: "year"
+    fgt0_bol:
+      unit: "%"
+      scale: 1
+      type: "percentage"
+      description: "Incidencia de pobreza (Bolivia)"
+    fgt1_bol:
+      unit: "%"
+      scale: 1
+      type: "percentage"
+      description: "Brecha de pobreza (Bolivia)"
+    fgt2_bol:
+      unit: "%"
+      scale: 1
+      type: "percentage"
+      description: "Severidad de pobreza (Bolivia)"
+    pop_total_bol:
+      unit: "Personas"
+      scale: 1
+      type: "count"
+    pop_poor_bol:
+      unit: "Personas"
+      scale: 1
+      type: "count"
+
+  # ══════════════════════════════════════════════════════════════════
+  # SECTOR MONETARIO
+  # ══════════════════════════════════════════════════════════════════
+  agregados_monetarios:
+    año:
+      type: "year"
+    m0:
+      unit: "Miles Bs"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      description: "Base monetaria"
+    m1:
+      unit: "Miles Bs"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      description: "Oferta monetaria M1"
+    m2:
+      unit: "Miles Bs"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      description: "Oferta monetaria M2"
+    m3:
+      unit: "Miles Bs"
+      scale: 1000
+      currency: "BOB"
+      type: "monetary"
+      description: "Oferta monetaria M3"
+
+# ══════════════════════════════════════════════════════════════════
+# CONFIGURACIÓN GLOBAL PARA GRÁFICAS
+# ══════════════════════════════════════════════════════════════════
+plot_config:
+  compatible_pairs:
+    # Pares de tipos compatibles para dual-axis
+    - ["percentage", "percentage"]  # Ambos porcentajes
+    - ["index", "index"]            # Ambos índices
+    - ["price", "price"]            # Ambos precios (misma moneda)
+    
+  currency_conversion:
+    # Factores de conversión aproximados (actualizar según necesidad)
+    "BOB_to_USD": 0.14  # 1 BOB = ~0.14 USD (ejemplo)
+    "USD_to_BOB": 7.0   # 1 USD = ~7 BOB (ejemplo)
+  
+  normalization_options:
+    - "raw"           # Sin normalización
+    - "index_100"     # Índice base 100 (primer año)
+    - "z_score"       # Estandarización
+    - "percent_change" # Variación porcentual
+  
+  default_colors:
+    primary: "#2E4B8A"
+    secondary: "#8B0000"
+    tertiary: "#228B22"

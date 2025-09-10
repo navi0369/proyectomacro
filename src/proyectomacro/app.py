@@ -28,6 +28,7 @@ SECCIONES = [
     "Inicio",
     "Documentos",
     "Calculadora",
+    "Generador de Gráficas",
     "Cuentas Nacionales",
     "Sector Externo",
     "Exportaciones",
