@@ -6,9 +6,10 @@ import pandas as pd
 import numpy as np
 
 from proyectomacro.extract_data import list_table_image_groups
-from proyectomacro.page_utils import build_breadcrumb, build_header, build_image_gallery_card, build_data_table, create_metadata_helper
+from proyectomacro.page_utils import build_breadcrumb, build_header, build_image_gallery_card, build_data_table, load_metadata_from_config
 from func_auxiliares.graficos_utils import get_df
 from func_auxiliares.config import DB_PATH
+
 
 from dash import MATCH, ALL
 from dash.exceptions import PreventUpdate
@@ -57,28 +58,7 @@ else:
 images = list_table_image_groups(TABLE_ID) if not df.empty else {"Serie completa": [], "Crisis": []}
 
 # Metadatos para balanza comercial
-metadata = create_metadata_helper(
-    nombre_descriptivo="Balanza comercial: exportaciones, importaciones y saldo comercial",
-    periodo="1952–2023",
-    unidades={
-        "Exportaciones": "Millones de dólares estadounidenses",
-        "Importaciones": "Millones de dólares estadounidenses",
-        "Saldo Comercial": "Millones de dólares estadounidenses",
-        "Términos de Intercambio": "Índice (base 2005=100)"
-    },
-    fuentes=[
-        "Banco Central de Bolivia (BCB) https://www.bcb.gob.bo",
-        "Instituto Nacional de Estadística (INE) https://www.ine.gob.bo",
-        "Ministerio de Desarrollo Productivo y Economía Plural"
-    ],
-    notas=[
-        "Datos preliminares para 2022–2023",
-        "Exportaciones incluyen reexportaciones",
-        "Importaciones CIF (Costo, Seguro y Flete)",
-        "Saldo comercial = Exportaciones - Importaciones"
-    ]
-)
-
+metadata = load_metadata_from_config(TABLE_ID)
 # ──────────────────────────────────────────────────────────────────────
 # 3. Layout final
 # ──────────────────────────────────────────────────────────────────────

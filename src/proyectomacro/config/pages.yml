@@ -135,8 +135,9 @@ secciones:
           periodo: "1949 – 2024"
           unidad: "Millones de dólares"
           fuentes:
-            - "https://nube.ine.gob.bo/index.php/s/nMPCP2wBQqnx7c1/download"
-            - "Memorias del Banco Central de Bolivia"
+            - "Bolivia – Comercio Exterior según Año:,
+              https://www.ine.gob.bo/index.php/estadisticas-economicas/comercio-exterior/
+              saldo-comercial-cuadros-estadisticos"
 
       flujo_divisas:
         tabla: "flujo_divisas"

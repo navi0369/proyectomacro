@@ -1,0 +1,3 @@
+pib_real_Gasto
+precio_petroleo_wti
+pib nominal
