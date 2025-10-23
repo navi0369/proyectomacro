@@ -13,21 +13,55 @@ from .config_loader import get_table_metadata
 # Estilos predeterminados para tablas
 # ──────────────────────────────────────────────────────────────────────
 DEFAULT_TABLE_STYLES = {
-    "style_table": {"overflowX": "auto"},
+    "style_table": {
+        "overflowX": "auto",
+        "borderRadius": "8px",
+        "boxShadow": "0 2px 8px rgba(0,0,0,0.1)",
+        "border": "1px solid #e1e4e8",
+    },
     "style_cell": {
         "textAlign": "center",
-        "padding": "8px",
+        "padding": "12px 16px",
         "minWidth": "100px",
         "width": "100px",
         "maxWidth": "180px",
-        "fontFamily": "Arial, sans-serif",
+        "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
         "fontSize": "14px",
+        "lineHeight": "1.5",
+        "border": "1px solid #e1e4e8",
+        "whiteSpace": "normal",
+        "height": "auto",
     },
     "style_header": {
-        "backgroundColor": "#007BFF",
-        "fontWeight": "bold",
-        "color": "white",
+        "backgroundColor": "#f6f8fa",
+        "fontWeight": "600",
+        "color": "#24292e",
+        "borderBottom": "2px solid #0366d6",
+        "textTransform": "uppercase",
+        "fontSize": "12px",
+        "letterSpacing": "0.5px",
+        "padding": "14px 16px",
     },
+    "style_data": {
+        "backgroundColor": "white",
+        "color": "#24292e",
+    },
+    "style_data_conditional": [
+        {
+            "if": {"row_index": "odd"},
+            "backgroundColor": "#f9fafb",
+        },
+        {
+            "if": {"state": "selected"},
+            "backgroundColor": "#e3f2fd",
+            "border": "1px solid #2196f3",
+        },
+        {
+            "if": {"state": "active"},
+            "backgroundColor": "#fff9e6",
+            "border": "1px solid #ffd700",
+        },
+    ],
 }
 
 def get_table_styles(
@@ -574,6 +608,14 @@ def build_data_table(
     # Determinar la columna del índice para el estilo condicional
     index_column = str(df.index.name) if df.index.name else str(df_reset.columns[0])
     
+    # Extraer style_data_conditional de table_styles si existe
+    base_data_conditional = table_styles.pop("style_data_conditional", [])
+    
+    # Combinar condiciones predeterminadas con las del índice
+    combined_conditional = base_data_conditional + [
+        {"if": {"column_id": index_column}, "textAlign": "left", "fontWeight": "600"},
+    ]
+    
     return dash_table.DataTable(
         id=f"{table_id}-table",
         data=data,
@@ -592,10 +634,15 @@ def build_data_table(
         # Estilos personalizados
         **table_styles,
         # Style_conditional para filas y celdas específicas
-        style_data_conditional=[
-            {"if": {"row_index": "odd"}, "backgroundColor": "#f1f3f5"},
-        ],
-        style_cell_conditional=[
-            {"if": {"column_id": index_column}, "text-align": "left", "font-weight": "600"},
+        style_data_conditional=combined_conditional,
+        css=[
+            {
+                "selector": ".dash-spreadsheet-container",
+                "rule": "border-radius: 8px; overflow: hidden;",
+            },
+            {
+                "selector": ".dash-spreadsheet tr:hover",
+                "rule": "background-color: #f0f7ff !important; transition: background-color 0.2s ease;",
+            },
         ],
     ) 

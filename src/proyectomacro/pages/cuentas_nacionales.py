@@ -14,7 +14,7 @@ dash.register_page(
 )
 
 # 2. Cargar config y extraer datos de esta sección
-PAGES = load_pages_config()
+PAGES = load_pages_config() 
 sec_cfg = PAGES["cuentas_nacionales"]
 
 # 'tablas' es un dict de tabla_id -> { tabla, label }

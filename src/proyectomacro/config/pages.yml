@@ -81,7 +81,7 @@ secciones:
           periodo: "1988 – 2023"
           unidad: "Miles de bolivianos constantes de 1990"
           fuentes:
-            - "INE – Oferta total y demanda total https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/producto-interno-bruto-anual/oferta-total-y-demanda-total/"
+            - "INE – Oferta total y demanda total a precios constante por componente, https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/producto-interno-bruto-anual/oferta-total-y-demanda-total/"
 
       demanda_total:
         tabla: "demanda_total"
@@ -91,27 +91,27 @@ secciones:
           periodo: "1988 – 2023"
           unidad: "Miles de bolivianos constantes de 1990"
           fuentes:
-            - "INE – Oferta total y demanda total https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/producto-interno-bruto-anual/oferta-total-y-demanda-total/"
+            - "INE – Oferta total y demanda total a precios constante por componente, https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/producto-interno-bruto-anual/oferta-total-y-demanda-total/"
 
-      vbp_sector_2006_2014:
-        tabla: "vbp_sector_2006_2014"
-        label: "VBP por ramas de actividad económica 2006-2014"
-        metadata:
-          nombre_descriptivo: "Valor Bruto de Producción (VBP) desagregado en 35 ramas de actividad económica, expresado en miles de bolivianos de 1990"
-          periodo: "2006 – 2014"
-          unidad: "Miles de bolivianos constantes de 1990"
-          fuentes:
-            - "INE – Matrices de insumo-producto https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/matrices/matrices-de-insumo-producto/"
+      # vbp_sector_2006_2014:
+      #   tabla: "vbp_sector_2006_2014"
+      #   label: "VBP por ramas de actividad económica 2006-2014"
+      #   metadata:
+      #     nombre_descriptivo: "Valor Bruto de Producción (VBP) desagregado en 35 ramas de actividad económica, expresado en miles de bolivianos de 1990"
+      #     periodo: "2006 – 2014"
+      #     unidad: "Miles de bolivianos constantes de 1990"
+      #     fuentes:
+      #       - "INE – Matrices de insumo-producto https://www.ine.gob.bo/index.php/estadisticas-economicas/pib-y-cuentas-nacionales/matrices/matrices-de-insumo-producto/"
 
-      balanza_de_pagos:
-        tabla: "balanza_de_pagos"
-        label: "Balanza de pagos"
-        metadata:
-          nombre_descriptivo: "Registro anual de las cinco partidas contables principales de la balanza de pagos boliviana: cuenta corriente, cuenta capital, errores y omisiones, saldo global y financiamiento"
-          periodo: "1980 – 2023"
-          unidad: "Millones de dólares estadounidenses (USD)"
-          fuentes:
-            - "https://dossier.udape.gob.bo/res/balanza%20de%20pagos"
+      # balanza_de_pagos:
+      #   tabla: "balanza_de_pagos"
+      #   label: "Balanza de pagos"
+      #   metadata:
+      #     nombre_descriptivo: "Registro anual de las cinco partidas contables principales de la balanza de pagos boliviana: cuenta corriente, cuenta capital, errores y omisiones, saldo global y financiamiento"
+      #     periodo: "1980 – 2023"
+      #     unidad: "Millones de dólares estadounidenses (USD)"
+      #     fuentes:
+      #       - "https://dossier.udape.gob.bo/res/balanza%20de%20pagos"
 
       pib_percapita:
         tabla: "pib_percapita"
@@ -171,19 +171,19 @@ secciones:
             - "1960–2023: Banco Mundial, https://datos.bancomundial.org/indicador/FI.RES.TOTL.CD?locations=BO"
             - "1950–1960: Informes del Banco Central de Bolivia"
 
-      venta_de_divisas_al_banco_central:
-        tabla: "venta_de_divisas_al_banco_central"
-        label: "Venta de divisas al Banco Central"
-        metadata:
-          nombre_descriptivo: "Serie anual que compara el valor real de las exportaciones bolivianas con las divisas efectivamente vendidas al Banco Central de Bolivia (BCB), para analizar la disponibilidad de liquidez externa y su canalización hacia las reservas internacionales"
-          periodo: "1947 – 1964"
-          unidades:
-            "exportaciones_reales": "Millones de dólares (USD constantes)"
-            "divisas_vendidas": "Millones de dólares (USD)"
-          fuentes:
-            - "1947–1951: Memoria del Banco Central de Bolivia, 1956, págs. 69–71"
-            - "1952–1963: Memoria del Banco Central de Bolivia, 1953, págs. 117 y 141"
-            - "1964: Memoria del Banco Central de Bolivia, 1954, págs. 133 y 151"
+      # venta_de_divisas_al_banco_central:
+      #   tabla: "venta_de_divisas_al_banco_central"
+      #   label: "Venta de divisas al Banco Central"
+      #   metadata:
+      #     nombre_descriptivo: "Serie anual que compara el valor real de las exportaciones bolivianas con las divisas efectivamente vendidas al Banco Central de Bolivia (BCB), para analizar la disponibilidad de liquidez externa y su canalización hacia las reservas internacionales"
+      #     periodo: "1947 – 1964"
+      #     unidades:
+      #       "exportaciones_reales": "Millones de dólares (USD constantes)"
+      #       "divisas_vendidas": "Millones de dólares (USD)"
+      #     fuentes:
+      #       - "1947–1951: Memoria del Banco Central de Bolivia, 1956, págs. 69–71"
+      #       - "1952–1963: Memoria del Banco Central de Bolivia, 1953, págs. 117 y 141"
+      #       - "1964: Memoria del Banco Central de Bolivia, 1954, págs. 133 y 151"
 
   exportaciones:
     name: "Exportaciones"

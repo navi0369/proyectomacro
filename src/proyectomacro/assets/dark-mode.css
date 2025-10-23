@@ -1,0 +1,347 @@
+/* ================================================================
+   MODO NOCTURNO - Dashboard Macroeconómico de Bolivia
+   ================================================================ */
+
+/* Fondo general negro */
+body {
+    background-color: #000000 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Contenedores principales */
+.container-fluid {
+    background-color: #000000 !important;
+}
+
+/* Sidebar oscuro */
+.sidebar {
+    background-color: #0a0a0a !important;
+    border-right: 1px solid #333333;
+}
+
+.sidebar .nav-link {
+    color: #b0b0b0 !important;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
+.sidebar .nav-link.active {
+    background-color: #1976d2 !important;
+    color: #ffffff !important;
+}
+
+/* Tarjetas y contenido */
+.card {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333333 !important;
+    color: #e0e0e0 !important;
+}
+
+.card-header {
+    background-color: #0a0a0a !important;
+    border-bottom: 1px solid #333333 !important;
+    color: #ffffff !important;
+}
+
+.card-body {
+    background-color: #1a1a1a !important;
+}
+
+/* Tablas */
+table {
+    background-color: #1a1a1a !important;
+    color: #e0e0e0 !important;
+}
+
+thead th {
+    background-color: #0a0a0a !important;
+    color: #ffffff !important;
+    border-color: #333333 !important;
+}
+
+tbody tr {
+    background-color: #1a1a1a !important;
+    border-color: #333333 !important;
+}
+
+tbody tr:hover {
+    background-color: #252525 !important;
+}
+
+td, th {
+    border-color: #333333 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Inputs y formularios */
+.form-control, 
+input[type="text"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+    background-color: #0a0a0a !important;
+    border: 1px solid #333333 !important;
+    color: #e0e0e0 !important;
+}
+
+.form-control:focus,
+input:focus {
+    background-color: #1a1a1a !important;
+    border-color: #1976d2 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 0.2rem rgba(25, 118, 210, 0.25) !important;
+}
+
+.form-control::placeholder {
+    color: #666666 !important;
+}
+
+/* Botones */
+.btn-primary {
+    background-color: #1976d2 !important;
+    border-color: #1976d2 !important;
+    color: #ffffff !important;
+}
+
+.btn-primary:hover {
+    background-color: #1565c0 !important;
+    border-color: #1565c0 !important;
+}
+
+.btn-secondary {
+    background-color: #424242 !important;
+    border-color: #424242 !important;
+}
+
+.btn-secondary:hover {
+    background-color: #616161 !important;
+    border-color: #616161 !important;
+}
+
+/* Alertas */
+.alert {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333333 !important;
+    color: #e0e0e0 !important;
+}
+
+.alert-success {
+    background-color: #1b5e20 !important;
+    border-color: #2e7d32 !important;
+    color: #a5d6a7 !important;
+}
+
+.alert-danger {
+    background-color: #b71c1c !important;
+    border-color: #c62828 !important;
+    color: #ef9a9a !important;
+}
+
+.alert-warning {
+    background-color: #e65100 !important;
+    border-color: #ef6c00 !important;
+    color: #ffcc80 !important;
+}
+
+.alert-info {
+    background-color: #01579b !important;
+    border-color: #0277bd !important;
+    color: #81d4fa !important;
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+}
+
+/* Enlaces */
+a {
+    color: #64b5f6 !important;
+}
+
+a:hover {
+    color: #90caf9 !important;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333333 !important;
+}
+
+.dropdown-item {
+    color: #e0e0e0 !important;
+}
+
+.dropdown-item:hover {
+    background-color: #252525 !important;
+    color: #ffffff !important;
+}
+
+/* Modales */
+.modal-content {
+    background-color: #1a1a1a !important;
+    border: 1px solid #333333 !important;
+}
+
+.modal-header,
+.modal-footer {
+    background-color: #0a0a0a !important;
+    border-color: #333333 !important;
+}
+
+/* Badges */
+.badge {
+    background-color: #424242 !important;
+    color: #ffffff !important;
+}
+
+/* Componente de login específico */
+#login-container {
+    background-color: #000000 !important;
+}
+
+#login-container .card {
+    background-color: #1a1a1a !important;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Dashboard container */
+#dashboard-container {
+    background-color: #000000 !important;
+}
+
+/* Gráficas (Plotly) */
+.js-plotly-plot .plotly,
+.plotly {
+    background-color: #1a1a1a !important;
+}
+
+.js-plotly-plot .plotly .gtitle,
+.js-plotly-plot .plotly text {
+    fill: #e0e0e0 !important;
+}
+
+/* Scrollbars personalizados */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #424242;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #616161;
+}
+
+/* Selectores de DataTable (si se usan) */
+.dash-table-container {
+    background-color: #1a1a1a !important;
+}
+
+.dash-spreadsheet {
+    background-color: #1a1a1a !important;
+}
+
+.dash-spreadsheet-container {
+    background-color: #1a1a1a !important;
+}
+
+.dash-cell {
+    background-color: #1a1a1a !important;
+    color: #e0e0e0 !important;
+    border-color: #333333 !important;
+}
+
+.dash-header {
+    background-color: #0a0a0a !important;
+    color: #ffffff !important;
+}
+
+/* Navegación superior si existe */
+.navbar {
+    background-color: #0a0a0a !important;
+    border-bottom: 1px solid #333333 !important;
+}
+
+.navbar-brand,
+.navbar-text {
+    color: #ffffff !important;
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+    background-color: #1a1a1a !important;
+}
+
+.breadcrumb-item {
+    color: #b0b0b0 !important;
+}
+
+.breadcrumb-item.active {
+    color: #e0e0e0 !important;
+}
+
+/* Pestañas (tabs) */
+.nav-tabs {
+    border-bottom: 1px solid #333333 !important;
+}
+
+.nav-tabs .nav-link {
+    background-color: #0a0a0a !important;
+    border: 1px solid #333333 !important;
+    color: #b0b0b0 !important;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+    border-bottom-color: #1a1a1a !important;
+}
+
+/* Spinners y loaders */
+.spinner-border,
+.spinner-grow {
+    color: #1976d2 !important;
+}
+
+/* Tooltips */
+.tooltip-inner {
+    background-color: #424242 !important;
+    color: #ffffff !important;
+}
+
+/* Paginación */
+.pagination .page-link {
+    background-color: #1a1a1a !important;
+    border-color: #333333 !important;
+    color: #b0b0b0 !important;
+}
+
+.pagination .page-link:hover {
+    background-color: #252525 !important;
+    color: #ffffff !important;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #1976d2 !important;
+    border-color: #1976d2 !important;
+    color: #ffffff !important;
+}
