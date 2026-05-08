@@ -19,7 +19,7 @@ import pandas as pd
 import sys
 import matplotlib.pyplot as plt
 import sqlite3, os
-sys.path.append(os.path.abspath('../'))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from graficos_utils import add_hitos, add_period_growth_annotations_multi, add_cycle_means_multi, add_year_value_annotations
 
 # ── 0.  Tramos de ciclo (los mismos que usas en el resto de la tesis) ─────────
@@ -41,7 +41,8 @@ periods = {
 }
 
 # ── 1. Configuración general de la figura y salida ───────────────────────────
-output_dir = "../../../assets/tesis/serie_completa"
+script_dir = os.path.dirname(__file__)
+output_dir = os.path.abspath(os.path.join(script_dir, "../../../assets/tesis/serie_completa"))
 os.makedirs(output_dir, exist_ok=True)
 
 
@@ -58,7 +59,7 @@ plt.rcParams.update({
 })
 
 # ── 2. Carga de tabla grado_de_apertura ──────────────────────────────────────
-db_path = '../../../db/proyectomacro.db'
+db_path = os.path.abspath(os.path.join(script_dir, '../../../db/proyectomacro.db'))
 query   = "SELECT * FROM grado_de_apertura"        # columnas: año, grado
 with sqlite3.connect(db_path) as conn:
     df = pd.read_sql(query, conn, index_col='año')

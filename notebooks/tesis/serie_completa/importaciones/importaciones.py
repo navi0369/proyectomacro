@@ -18,7 +18,7 @@ import sys, os, sqlite3
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-sys.path.append(os.path.abspath('../'))          # utilidades propias
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))          # utilidades propias
 from graficos_utils import (
     add_hitos, add_cycle_means_multi,
     add_year_value_annotations, add_period_growth_annotations_multi, add_participation_cycle_boxes
@@ -39,7 +39,8 @@ periods = {
 }
 
 # ── 1. Configuración general ───────────────────────────────────────
-output_dir = "../../../../assets/tesis/serie_completa/importaciones"
+script_dir = os.path.dirname(__file__)
+output_dir = os.path.abspath(os.path.join(script_dir, "../../../../assets/tesis/serie_completa/importaciones"))
 os.makedirs(output_dir, exist_ok=True)
 
 plt.style.use('seaborn-v0_8-whitegrid')
@@ -51,7 +52,8 @@ plt.rcParams.update({
 })
 
 # ── 2. Carga de datos (valores absolutos) ───────────────────────────
-with sqlite3.connect('../../../../db/proyectomacro.db') as conn:
+db_path = os.path.abspath(os.path.join(script_dir, '../../../../db/proyectomacro.db'))
+with sqlite3.connect(db_path) as conn:
     df = (pd.read_sql('SELECT * FROM composicion_importaciones_uso_destino', conn)
             .set_index('año')
             .sort_index())

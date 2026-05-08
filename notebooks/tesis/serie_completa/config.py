@@ -77,23 +77,28 @@ periodos_tasas_sin_crisis = [
 
 
 #------------------------------------
-#constantes para la tercera grafica
+#constantes para la grafica principal
 #------------------------------------
+
 CYCLES_PERIODOS= {
-    "Intervensionismo-estatal 52-84":   slice(1952, 1984),
-    "Neoliberalismo 85-05":   slice(1985, 2005),
-    "Neodesarrollismo 06-24":   slice(2006, 2024),
+    "INTERVENSIONISMO ESTATAL":   slice(1952, 1984),
+    "NEOLIBERALISMO":   slice(1985, 2005),
+    "E.S.C.P (I)":   slice(2006, 2014),
+    "E.S.C.P (II)":   slice(2015, 2024),
 } 
 #hitos verticales hitos por periodo
 hitos_v_periodos = {
-    1952: "Intervensionismo-estatal",
-    1985: "Neoliberalismo",
-    2006: "Neodesarrollismo",
+    1952: "INTERVENSIONISMO ESTATAL",
+    1985: "NEOLIBERALISMO",
+    2006: "E.S.C.P (I)",
+    2015: "E.S.C.P (II)"
 }
-annot_years_periodos = [1952,1985,2006,2022]
+annot_years_periodos = [1952,1985,2006,2014,2022]
 #anotaciones de tasas con crisis
 periodos_tasas_periodos = [
     (1952, 1984),
     (1985, 2005),
-    (2006, 2022)
+    (2006, 2014),
+    (2015, 2022)
+
 ] 

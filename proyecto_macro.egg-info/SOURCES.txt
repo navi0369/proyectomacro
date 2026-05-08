@@ -15,8 +15,10 @@ src/proyectomacro/extract_data.py
 src/proyectomacro/page_utils.py
 src/proyectomacro/page_utils_fixed.py
 src/proyectomacro/assets/custom.css
+src/proyectomacro/assets/dark-mode.css
 src/proyectomacro/config/__init__.py
 src/proyectomacro/config/pages.yml
+src/proyectomacro/config/tables_metadata.yml
 src/proyectomacro/pages/__init__.py
 src/proyectomacro/pages/calculadora.py
 src/proyectomacro/pages/cuentas_nacionales.py
@@ -26,6 +28,7 @@ src/proyectomacro/pages/empleo.py
 src/proyectomacro/pages/exportaciones.py
 src/proyectomacro/pages/importaciones.py
 src/proyectomacro/pages/inicio.py
+src/proyectomacro/pages/plotter_matplotlib.py
 src/proyectomacro/pages/pobreza.py
 src/proyectomacro/pages/precios_produccion.py
 src/proyectomacro/pages/sector_externo.py

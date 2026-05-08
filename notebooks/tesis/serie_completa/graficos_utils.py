@@ -1,5 +1,6 @@
 import pandas as pd
 from matplotlib.lines import Line2D
+from matplotlib.axes import Axes
 import matplotlib.pyplot as plt
 import sqlite3
 from pathlib import Path
@@ -65,6 +66,95 @@ def update_dict(
             out[key] = sl
 
     return out
+
+
+def add_period_backgrounds(
+    ax: Axes,
+    periods: Sequence[Tuple[int, int]] | Sequence[slice],
+    colors: Mapping[Tuple[int, int] | str, str] | Sequence[str],
+    *,
+    index: Sequence[int] | None = None,
+    alpha: float = 0.08,
+    zorder: int = 0,
+    edgecolor: str | None = None,
+    linewidth: float = 0.0,
+    label_fmt: str | None = None,
+) -> None:
+    """
+    Dibuja fondos de color por periodo sobre el eje.
+
+    Parameters
+    ----------
+    ax : plt.Axes
+        Eje donde se pintan los fondos.
+    periods : Sequence[(ini, fin)] | Sequence[slice]
+        Periodos en años. Si se pasan slices, se usan start/stop.
+    colors : Mapping | Sequence
+        - Si es Mapping: puede usar claves (ini, fin) o "ini-fin".
+        - Si es Sequence: se asigna por orden a `periods`.
+    index : Sequence[int], opcional
+        Años disponibles para recortar los periodos al rango real.
+    alpha : float
+        Transparencia del fondo.
+    zorder : int
+        Orden de pintado (menor = más al fondo).
+    edgecolor : str | None
+        Color de borde del rectángulo (si None, sin borde).
+    linewidth : float
+        Grosor del borde.
+    label_fmt : str | None
+        Si se pasa, agrega label en leyenda usando el formato
+        (ej. "{start}-{end}").
+    """
+    if not periods:
+        return
+
+    use_map = isinstance(colors, Mapping)
+    if not use_map and len(colors) < len(periods):
+        raise ValueError("colors debe tener al menos un color por periodo")
+
+    idx_min = idx_max = None
+    if index is not None:
+        idx_vals = list(map(int, index))
+        if idx_vals:
+            idx_min, idx_max = min(idx_vals), max(idx_vals)
+
+    def _normalize_period(p: Tuple[int, int] | slice) -> Tuple[int, int]:
+        if isinstance(p, slice):
+            start, end = int(p.start), int(p.stop)
+        else:
+            start, end = map(int, p)
+        if idx_min is not None and idx_max is not None:
+            start = max(start, idx_min)
+            end = min(end, idx_max)
+        return start, end
+
+    for i, p in enumerate(periods):
+        start, end = _normalize_period(p)
+        if start > end:
+            continue
+
+        if use_map:
+            color = colors.get((start, end))
+            if color is None:
+                color = colors.get(f"{start}-{end}")
+        else:
+            color = colors[i]
+
+        if color is None:
+            continue
+
+        label = label_fmt.format(start=start, end=end) if label_fmt else None
+        ax.axvspan(
+            start,
+            end,
+            facecolor=color,
+            alpha=alpha,
+            zorder=zorder,
+            edgecolor=edgecolor,
+            linewidth=linewidth,
+            label=label,
+        )
 
 
 
@@ -369,6 +459,8 @@ def init_base_plot(
     title: str, 
     xlabel: str,
     ylabel: str,
+    color: str = "red",
+    fontsize: int = 17,
     figsize: tuple[int,int]=(13,8),
     legend_loc: str="upper left",
     legend_ncol: int=3,
@@ -387,10 +479,14 @@ def init_base_plot(
     for col, label in series:
         ax.plot(df.index, df[col], label=label, color=colors[col])
 
-    ax.set_title(title, fontweight='bold', color='red', fontsize=17)
+    ax.set_title(title, fontweight='bold', color=color,pad=20, fontsize=fontsize)
     ax.set_xlabel(xlabel, color='green',fontsize=17)
     ax.set_ylabel(ylabel, color='blue', fontsize=17)
-    ax.set_xticks(df.index[::max(1, len(df)//31)])
+    
+    num_ticks = min(31, len(df))
+    indices = np.linspace(0, len(df) - 1, num_ticks, dtype=int)
+    ax.set_xticks(df.index[indices])
+
     ax.tick_params(axis='x', rotation=45)
     ax.legend(loc=legend_loc, ncol=legend_ncol, fontsize=legend_fontsize)
 
@@ -659,9 +755,11 @@ def add_hitos(
     index,
     hitos_v: dict[int, str],
     hitos_offset: dict[int, float],
+    hitos_text_x: dict[int, float] = None,  # desplazamiento manual de X (fallback)
+    periodos_texto: dict[int, tuple[int, int]] = None,  # NUEVO: { yr: (inicio, fin) } para centrar el texto en el promedio del periodo
     *,
-    annotate_labels: tuple[str, ...] = ('Crisis',),
-    fallback_offset: float = 0.82,
+    annotate_labels: tuple[str, ...] = ('Crisis', 'Expansión', 'Recesión', 'Transición'),
+    fallback_offset: float = 1.02,
     line_kwargs: dict = None,
     text_kwargs: dict = None
 ):
@@ -669,49 +767,60 @@ def add_hitos(
     Dibuja líneas verticales en los años de `hitos_v` sobre el Axes `ax`.
     Solo anota con texto los hitos cuyo label esté en `annotate_labels`.
 
-    Parámetros
-    ----------
-    ax : matplotlib.axes.Axes
-    index : Sequence[int]
-        Índice de años disponibles (p. ej. df.index).
-    hitos_v : dict[int, str]
-        { año: etiqueta } para la línea vertical.
-    hitos_offset : dict[int, float]
-        { año: factor } para ubicar el texto en y (multiplica y_max).
-    annotate_labels : tupla de str, opcional
-        Etiquetas que se dibujarán como texto (por defecto ('Crisis',)).
-    fallback_offset : float, opcional
-        Offset por defecto si falta en `hitos_offset`.
-    line_kwargs : dict, opcional
-        kwargs para ax.axvline (color, ls, lw, zorder).
-    text_kwargs : dict, opcional
-        kwargs para ax.text (rotation, ha, va, fontsize, color, bbox, zorder).
+    Si se provee `periodos_texto`, la posición horizontal del texto de cada
+    hito será el promedio (punto medio) del periodo correspondiente:
+        x_texto = (inicio + fin) / 2
+    De lo contrario, se usa `yr + hitos_text_x.get(yr, 0)` como antes.
     """
+    if hitos_text_x is None:
+        hitos_text_x = {}
+    if periodos_texto is None:
+        periodos_texto = {}
+
     default_lk = {
         'color':'gray',
         'linestyle':'--',
-        'linewidth':1.1,
-        'zorder':5
+        'linewidth': 1.1,
+        'zorder': 5
     }
-    # valores por defecto
+
     if line_kwargs:
         default_lk.update(line_kwargs)
     line_kwargs = default_lk
+
     if text_kwargs is None:
         text_kwargs = {
-            'rotation': 90, 'ha':'right', 'va':'top',
-            'fontsize':14, 'color':'#1f77b4',
-            'bbox':{'facecolor':'#f0f0f0','alpha':0.85,'edgecolor':'none'},
-            'zorder':6
+            'rotation': 0,
+            'ha': 'center',
+            'va': 'bottom',
+            'fontsize': 12,
+            'color': 'black',
+            'bbox': {'facecolor': 'white', 'alpha': 0.85, 'edgecolor': 'none'},
+            'zorder': 6
         }
 
     for yr, lbl in hitos_v.items():
         if yr in index:
+            # 1. Dibuja la línea vertical
             ax.axvline(x=yr, **line_kwargs)
+
+            # 2. Calcula la posición Y
             y_max = ax.get_ylim()[1]
             offset = hitos_offset.get(yr, fallback_offset)
+
+            # 3. Calcula la posición X del texto:
+            #    - Si el hito tiene un periodo definido en periodos_texto,
+            #      usa el punto medio de ese periodo.
+            #    - En caso contrario, usa yr + desplazamiento manual.
+            if yr in periodos_texto:
+                inicio, fin = periodos_texto[yr]
+                x_texto = (inicio + fin) / 2
+            else:
+                x_texto = yr + hitos_text_x.get(yr, 0)
+
+            # 4. Agrega el texto
             if lbl in annotate_labels:
-                ax.text(yr, y_max * offset, lbl, **text_kwargs)
+                ax.text(x_texto, y_max * 1.01, lbl, **text_kwargs)
 
 # TASA DE CRECIMIENTO PARA UN SOLO COMPONENTE
 # graficos_utils.py  (versión con periodos = (vi, vf) )

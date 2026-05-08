@@ -1,5 +1,6 @@
 import pandas as pd
 from matplotlib.lines import Line2D
+from matplotlib.axes import Axes
 import matplotlib.pyplot as plt
 import sqlite3
 from pathlib import Path
@@ -8,6 +9,8 @@ import logging
 import numpy as np
 logger = logging.getLogger(__name__)
 # graficos_utils.py
+
+
 from typing import List, Tuple, Dict
 
 Period = Tuple[int, int]
@@ -63,6 +66,102 @@ def update_dict(
             out[key] = sl
 
     return out
+
+
+def add_period_backgrounds(
+    ax: Axes,
+    periods: Sequence[Tuple[int, int]] | Sequence[slice]=["Cyan","Magenta","green","Black"],
+    colors: Mapping[Tuple[int, int] | str, str] | Sequence[str]=["Cyan","Magenta","green","Black"],
+    *,
+    index: Sequence[int] | None = None,
+    alpha: float = 0.064,
+    zorder: int = 0,
+    edgecolor: str | None = None,
+    linewidth: float = 0.0,
+    label_fmt: str | None = None,
+) -> None:
+    """
+    Dibuja fondos de color por periodo sobre el eje.
+
+    Parameters
+    ----------
+    ax : plt.Axes
+        Eje donde se pintan los fondos.
+    periods : Sequence[(ini, fin)] | Sequence[slice]
+        Periodos en años. Si se pasan slices, se usan start/stop.
+    colors : Mapping | Sequence
+        - Si es Mapping: puede usar claves (ini, fin) o "ini-fin".
+        - Si es Sequence: se asigna por orden a `periods`.
+    index : Sequence[int], opcional
+        Años disponibles para recortar los periodos al rango real.
+    alpha : float
+        Transparencia del fondo.
+    zorder : int
+        Orden de pintado (menor = más al fondo).
+    edgecolor : str | None
+        Color de borde del rectángulo (si None, sin borde).
+    linewidth : float
+        Grosor del borde.
+    label_fmt : str | None
+        Si se pasa, agrega label en leyenda usando el formato
+        (ej. "{start}-{end}").
+    """
+    if not periods:
+        return
+
+    if isinstance(periods, Mapping):
+        period_items = list(periods.items())
+    else:
+        period_items = [(None, p) for p in periods]
+
+    use_map = isinstance(colors, Mapping)
+    if not use_map and len(colors) < len(period_items):
+        raise ValueError("colors debe tener al menos un color por periodo")
+
+    idx_min, idx_max = ax.get_xlim()
+    if index is not None:
+        idx_vals = list(map(int, index))
+        if idx_vals:
+            idx_min, idx_max = min(idx_vals), max(idx_vals)
+
+    def _normalize_period(p: Tuple[int, int] | slice) -> Tuple[int, int]:
+        if isinstance(p, slice):
+            start, end = int(p.start), int(p.stop)
+        else:
+            start, end = map(int, p)
+        if idx_min is not None and idx_max is not None:
+            start = max(start, int(idx_min))
+            end = min(end, int(idx_max))
+        return start, end
+
+    for i, (name, p) in enumerate(period_items):
+        start, end = _normalize_period(p)
+        if start >= end:
+            continue
+
+        if use_map:
+            color = colors.get(name)
+            if color is None:
+                color = colors.get((start, end))
+            if color is None:
+                color = colors.get(f"{start}-{end}")
+        else:
+            color = colors[i]
+
+        if color is None:
+            continue
+
+        label = label_fmt.format(start=start, end=end) if label_fmt else None
+        ax.axvspan(
+            start,
+            end,
+            facecolor=color,
+            alpha=alpha,
+            zorder=zorder,
+            edgecolor=edgecolor,
+            linewidth=linewidth,
+            label=label,
+        )
 
 
 
@@ -146,7 +245,8 @@ def add_cycle_means_barras(
                 **text_kwargs
             )
             cum += val
-def adjust_cycles(df: pd.DataFrame, cycles: dict[str, slice]) -> dict[str, slice]:
+def adjust_cycles(df: pd.DataFrame,
+ cycles: dict[str, slice]) -> dict[str, slice]:
     if df.empty:
         raise ValueError("DF vacío")
 
@@ -163,12 +263,7 @@ def adjust_cycles(df: pd.DataFrame, cycles: dict[str, slice]) -> dict[str, slice
 
         if start <= stop_incl:
             # Pandas .loc es inclusivo, así que usamos stop_incl tal cual
-            new_key = name
-            if start != sl.start or stop_incl != sl.stop:
-                base = name.rsplit(" ", 1)[0]
-                new_key = f"{base} {start%100:02d}-{stop_incl%100:02d}"
-
-            cycles_adj[new_key] = slice(start, stop_incl)
+            cycles_adj[name] = slice(start, stop_incl)
         else:
             logger.warning("Ciclo %s ignorado (fuera de rango)", name)
 
@@ -337,8 +432,7 @@ def get_df(
             missing = [c for c in cols if c not in df.columns]
             if not missing:
                 df[new_col] = df[cols].sum(axis=1)
-    numeric = df.select_dtypes(include="number").columns
-    df[numeric] = df[numeric].round(2)
+
     return df
 
 
@@ -365,9 +459,11 @@ def init_base_plot(
     df,
     series: list[tuple[str,str]],
     colors: dict[str,str],
-    title: str,
+    title: str, 
     xlabel: str,
     ylabel: str,
+    color: str = "red",
+    fontsize: int = 17,
     figsize: tuple[int,int]=(13,8),
     legend_loc: str="upper left",
     legend_ncol: int=3,
@@ -386,12 +482,42 @@ def init_base_plot(
     for col, label in series:
         ax.plot(df.index, df[col], label=label, color=colors[col])
 
-    ax.set_title(title, fontweight='bold', color='red', fontsize=17)
-    ax.set_xlabel(xlabel, color='green',fontsize=14)
-    ax.set_ylabel(ylabel, color='blue', fontsize=14)
-    ax.set_xticks(df.index[::max(1, len(df)//31)])
+    ax.set_title(title, fontweight='bold', color=color,pad=20, fontsize=fontsize)
+    ax.set_xlabel(xlabel, color='green',fontsize=17)
+    ax.set_ylabel(ylabel, color='blue', fontsize=17)
+    
+    # Paso dinámico según longitud de la serie
+    n = len(df)
+    if n <= 36:
+        step = 1
+    elif n <= 77:
+        step = 2
+    else:
+        step = 3
+    years = df.index.tolist()
+    last_year = years[-1]
+    first_year = years[0]
+    # Genera ticks regulares desde el primer año con el paso elegido
+    tick_years = list(range(first_year, last_year, step))
+    tick_positions = [float(y) for y in tick_years]
+    tick_labels = [str(y) for y in tick_years]
+    
+    # Garantiza que el último año esté siempre presente (sin duplicar)
+    if last_year not in tick_years:
+        if tick_years and (last_year - tick_years[-1] == 1) and step > 1:
+            # Desplaza un poco a la derecha para que no se solape con el año anterior
+            tick_positions.append(last_year + 0.35)
+        else:
+            tick_positions.append(float(last_year))
+        tick_labels.append(str(last_year))
+        
+    ax.set_xticks(tick_positions)
+    ax.set_xticklabels(tick_labels)
+
     ax.tick_params(axis='x', rotation=45)
-    ax.legend(loc=legend_loc, ncol=legend_ncol, fontsize=legend_fontsize)
+    
+    if len(series) > 1:
+        ax.legend(loc=legend_loc, ncol=legend_ncol, fontsize=legend_fontsize)
 
     fig.text(
         0.07, 0.005,
@@ -472,6 +598,107 @@ def plot_stacked_bar(
     plt.tight_layout()
     return fig, ax
 
+def init_dual_axis_plot(
+    df: pd.DataFrame,
+    left_series: list[tuple[str, str]],
+    right_series: list[tuple[str, str]],
+    colors: dict[str, str],
+    title: str,
+    xlabel: str,
+    left_ylabel: str,
+    right_ylabel: str,
+    figsize: tuple[int, int] = (13, 8),
+    legend_loc: str = "upper left",
+    legend_ncol: int = 2,
+    legend_fontsize: int = 12,
+    source_text: str = "Fuente: Elaboración propia",
+    notas: str | None = None
+):
+    """
+    Gráfica “dual axis” (dos ejes Y) reutilizando el mismo estilo
+    que `init_base_plot`.
+
+    Parámetros
+    ----------
+    df : DataFrame
+        Con índice en años y columnas suficientes para ambas listas.
+    left_series : list[(col, label)]
+        Series que se pintan en el eje Y izquierdo.
+    right_series : list[(col, label)]
+        Series que se pintan en el eje Y derecho.
+    colors : dict[col -> color]
+        Paleta para todas las series (tanto izquierda como derecha).
+    title, xlabel, left_ylabel, right_ylabel : str
+        Textos de títulos y ejes.
+    figsize, legend_loc, legend_ncol, legend_fontsize : estilos varios.
+    source_text : str
+        Pie de fuente.
+    notas : str | None
+        Texto opcional que aparece debajo de la fuente.
+
+    Devuelve
+    --------
+    fig, ax_left, ax_right
+    """
+
+    # 1) Figura y ejes (ax_left + ax_right)
+    fig, ax_left = plt.subplots(figsize=figsize)
+    ax_right = ax_left.twinx()
+
+    # 2) Traza series del eje izquierdo
+    for col, label in left_series:
+        ax_left.plot(df.index, df[col], label=label, color=colors[col])
+
+    # 3) Traza series del eje derecho
+    for col, label in right_series:
+        ax_right.plot(df.index, df[col], label=label, color=colors[col])
+
+    # 4) Títulos y ejes
+    ax_left.set_title(title, fontweight="bold", fontsize=17, color="red")
+    ax_left.set_xlabel(xlabel, fontsize=15)
+    ax_left.set_ylabel(left_ylabel, color="tab:blue", fontsize=14)
+    ax_right.set_ylabel(right_ylabel, color="tab:red", fontsize=14)
+
+    # 5) Estilo de ticks
+    ax_left.tick_params(axis="y", labelcolor="tab:blue")
+    ax_right.tick_params(axis="y", labelcolor="tab:red")
+    ax_left.set_xticks(df.index[::max(1, len(df)//31)])
+    ax_left.tick_params(axis="x", rotation=45)
+
+    # 6) Leyenda combinada (sin duplicados)
+    h_left, l_left = ax_left.get_legend_handles_labels()
+    h_right, l_right = ax_right.get_legend_handles_labels()
+    h_comb, l_comb = [], []
+    for h, l in zip(h_left + h_right, l_left + l_right):
+        if l not in l_comb:          # evita duplicados
+            h_comb.append(h)
+            l_comb.append(l)
+
+    ax_left.legend(
+        h_comb, l_comb,
+        loc=legend_loc,
+        ncol=legend_ncol,
+        fontsize=legend_fontsize
+    )
+
+    # 7) Pie de fuente
+    fig.text(
+        0.07, 0.005, source_text,
+        ha="left", va="bottom",
+        fontsize=11, transform=fig.transFigure
+    )
+
+    # 8) Nota opcional
+    if notas:
+        fig.text(
+            0.07, -0.02, notas,
+            ha="left", va="bottom",
+            fontsize=10.5, transform=fig.transFigure
+        )
+
+    plt.tight_layout()
+    return fig, ax_left, ax_right
+
 
 
 def add_hitos_barras(
@@ -551,85 +778,118 @@ def add_hitos_barras(
         )
 
 
-# guarda esto en, por ejemplo, graficos_utils.py
 def add_hitos(
     ax,
     index,
     hitos_v: dict[int, str],
-    hitos_offset: dict[int, float],
+    hitos_offset: dict[int, float] = None,
+    hitos_text_x: dict[int, float] = None,
     *,
-    annotate_labels: tuple[str, ...] = ('Crisis',),
-    fallback_offset: float = 0.82,
+    annotate_labels: tuple[str, ...] = ('INTERVENSIONISMO ESTATAL', 'NEOLIBERALISMO', 'E.S.C.P (I)', 'E.S.C.P (II)'),
+    fallback_offset: float = 1.02,
     line_kwargs: dict = None,
-    text_kwargs: dict = None,
-    vertical_labels: bool = True,
-    hitos_x_text: Optional[Dict[int, float]] = None,
+    text_kwargs: dict = None
 ):
     """
-    Dibuja líneas verticales en los años de `hitos_v` sobre el Axes `ax`.
-    Solo anota con texto los hitos cuyo label esté en `annotate_labels`.
+    Dibuja líneas verticales en los años de ``hitos_v`` sobre el Axes ``ax``.
+    Solo anota con texto los hitos cuyo label esté en ``annotate_labels``.
+
+    Los periodos sobre los que se promedia la posición X del texto se derivan
+    **automáticamente** de ``hitos_v``:
+
+    * El periodo de cada hito comienza en su propio año de inicio y termina
+      un año antes del siguiente hito (o en el último año disponible en
+      ``index`` para el hito final).
+    * Si el periodo está incompleto (el año de inicio no aparece en los datos
+      pero sí hay datos dentro del rango), el texto se coloca en el punto
+      medio entre el primer año disponible y el fin del periodo.
 
     Parámetros
     ----------
     ax : matplotlib.axes.Axes
-    index : Sequence[int]
-        Índice de años disponibles (p. ej. df.index).
+    index : sequence of int
+        Años presentes en el DataFrame (p.ej. ``df.index``).
     hitos_v : dict[int, str]
-        { año: etiqueta } para la línea vertical.
+        ``{ año_inicio: etiqueta }`` — **debe estar ordenado** (Python 3.7+).
     hitos_offset : dict[int, float]
-        { año: factor } para ubicar el texto en y (multiplica y_max).
-    annotate_labels : tupla de str, opcional
-        Etiquetas que se dibujarán como texto (por defecto ('Crisis',)).
-    fallback_offset : float, opcional
-        Offset por defecto si falta en `hitos_offset`.
-    line_kwargs : dict, opcional
-        kwargs para ax.axvline (color, ls, lw, zorder).
-    text_kwargs : dict, opcional
-        kwargs para ax.text (rotation, ha, va, fontsize, color, bbox, zorder).
-    vertical_labels : bool, opcional (True)
-        Si True, el texto se dibuja vertical (rotation=90).
-        Si False, horizontal (rotation=0). Solo aplica si 'rotation'
-        no se especifica en text_kwargs (no se sobreescribe al usuario).
-    hitos_x_text : dict[int, float], opcional
-        Desplazamiento horizontal del texto por año en coordenadas de datos.
-        Ej.: {2006: 0.3, 2014: -0.2}. Si no se da, se asume 0.0.
+        ``{ año: fracción_y }`` — multiplicador de ``y_max`` para la altura
+        del texto. Se usa el ``fallback_offset`` si el año no está.
+    hitos_text_x : dict[int, float], opcional
+        Desplazamiento manual en X para casos sin datos en el rango.
+        Solo se aplica como último recurso.
+    annotate_labels : tuple[str]
+        Solo se agrega texto para los hitos cuyo label esté en esta tupla.
+    fallback_offset : float
+        Fracción de ``y_max`` por defecto cuando el año no está en
+        ``hitos_offset``.
+    line_kwargs, text_kwargs : dict, opcional
+        Kwargs extra para ``axvline`` y ``ax.text`` respectivamente.
     """
-     # kwargs por defecto para las líneas
-    default_lk = {'color': 'gray', 'linestyle': '--', 'linewidth': 1.1, 'zorder': 5}
+    if hitos_text_x is None:
+        hitos_text_x = {}
+
+    default_lk = {
+        'color': 'gray',
+        'linestyle': '--',
+        'linewidth': 1.1,
+        'zorder': 5
+    }
     if line_kwargs:
         default_lk.update(line_kwargs)
     line_kwargs = default_lk
 
-    # kwargs por defecto para el texto
     if text_kwargs is None:
         text_kwargs = {
-            'ha': 'right', 'va': 'top',
-            'fontsize': 14, 'color': '#1f77b4',
-            'bbox': {'facecolor': '#f0f0f0', 'alpha': 0.85, 'edgecolor': 'none'},
+            'rotation': 0,
+            'ha': 'center',
+            'va': 'bottom',
+            'fontsize': 12,
+            'color': 'black',
+            'bbox': {'facecolor': 'white', 'alpha': 0.85, 'edgecolor': 'none'},
             'zorder': 6
         }
-    # si el usuario NO definió rotation, aplicamos según vertical_labels
-    if 'rotation' not in text_kwargs:
-        text_kwargs = text_kwargs.copy()
-        text_kwargs['rotation'] = 90 if vertical_labels else 0
 
-    # dict de desplazamientos horizontales para el texto
-    hitos_x_text = hitos_x_text or {}
+    index_list = sorted(index)          # lista ordenada de años disponibles
+    index_set  = set(index_list)
+    last_year  = index_list[-1] if index_list else None
 
+    # ── Derivar los rangos de periodo desde hitos_v ──────────────────────────
+    # hitos_v = { yr0: lbl0, yr1: lbl1, ... } ordenado por año
+    hito_years = sorted(hitos_v.keys())
+    periodos: dict[int, tuple[int, int]] = {}
+    for i, yr in enumerate(hito_years):
+        fin = (hito_years[i + 1] - 1) if i + 1 < len(hito_years) else last_year
+        periodos[yr] = (yr, fin)
+
+    # ── Dibujar cada hito ─────────────────────────────────────────────────────
     for yr, lbl in hitos_v.items():
-        if yr in index:
-            
-            # línea vertical en el año
+        yr_in_data = yr in index_set
+
+        inicio, fin = periodos.get(yr, (yr, yr))
+        available   = [y for y in index_list if inicio <= y <= fin]
+
+        # Si no hay el año de inicio NI datos dentro del rango, saltar
+        if not yr_in_data and not available:
+            continue
+
+        y_max  = ax.get_ylim()[1]
+
+        # 1. Línea vertical (solo si el año de inicio existe en los datos)
+        if yr_in_data:
             ax.axvline(x=yr, **line_kwargs)
-            if yr not in hitos_offset:
-                continue
-            # posición del texto
-            y_max = ax.get_ylim()[1]
-            y = y_max * hitos_offset.get(yr, fallback_offset)
-            x = yr + hitos_x_text.get(yr, 0.0)
-            # anotar solo si la etiqueta está listada
-            if lbl in annotate_labels:
-                ax.text(x, y, lbl, **text_kwargs)
+
+        # 2. Posición X del texto
+        if available:
+            # Punto medio entre el primer y último año disponible del periodo
+            x_texto = (available[0] + available[-1]) / 2
+        elif yr_in_data:
+            x_texto = yr + hitos_text_x.get(yr, 0)
+        else:
+            continue
+
+        # 3. Texto (solo para etiquetas configuradas)
+        if lbl in annotate_labels:
+            ax.text(x_texto, y_max * 1.01, lbl, **text_kwargs)
 
 # TASA DE CRECIMIENTO PARA UN SOLO COMPONENTE
 # graficos_utils.py  (versión con periodos = (vi, vf) )
@@ -686,7 +946,7 @@ def add_period_growth_annotations_multi(
         y0 = y_max * y_frac
 
         # 1) Header
-        ax.text(x0, y0, f"{vi}→{vf}", **header_kwargs)
+        ax.text(x0, y0, fr"$\%\Delta$ {vi}$\rightarrow${vf}", **header_kwargs)
 
         # 2) Bloque de tasas (una línea por componente)
         for i, col in enumerate(cols):
@@ -707,7 +967,7 @@ def add_period_growth_annotations_multi(
             ax.text(
                 x0,
                 y,
-                fr"$r_{{{abbr}}}$: {tasa:.0f}%",
+                fr"{abbr}: {tasa:.0f}%",
                 **kw
             )
 
@@ -765,7 +1025,7 @@ def add_cycle_means_multi(
         y_max = ax.get_ylim()[1]
         x0, y0 = text_offsets[ciclo]
         # 1) Título del ciclo
-        ax.text(x0, y_max*y0, ciclo, **header_kwargs)
+        ax.text(x0, y_max*y0, "MEDIAS", **header_kwargs)
         # 2) Una línea por cada componente
         for i, comp in enumerate(stats):
             raw_val = stats[comp]
@@ -777,7 +1037,7 @@ def add_cycle_means_multi(
             ax.text(
                 x0,
                 y,
-                fr"$\bar{{x}}_{{{abbr}}}$: {val}",
+                f"{abbr}: {val}",
                 **params
             )
 
@@ -958,5 +1218,3 @@ def add_participation_cycle_boxes(
             kw = text_kwargs.copy()
             kw['color'] = colors.get(comp, kw.get('color'))
             ax.text(x0, y, txt, **kw)
-
-
