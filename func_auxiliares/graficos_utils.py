@@ -927,7 +927,7 @@ def add_period_growth_annotations_multi(
     header_kwargs = header_kwargs or {
         'ha':'left','va':'top',
         'fontsize':11.5,'fontweight':'bold',
-        'color':'black','zorder':7
+        'color':'green','zorder':7
     }
     text_kwargs   = text_kwargs   or {
         'ha':'left','va':'top',
@@ -946,7 +946,7 @@ def add_period_growth_annotations_multi(
         y0 = y_max * y_frac
 
         # 1) Header
-        ax.text(x0, y0, fr"$\%\Delta$ {vi}$\rightarrow${vf}", **header_kwargs)
+        ax.text(x0, y0, fr"TASA DE CRECIMIENTO", **header_kwargs)
 
         # 2) Bloque de tasas (una línea por componente)
         for i, col in enumerate(cols):
