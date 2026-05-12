@@ -4,3 +4,5 @@ __pycache__
 /reports/
 reports/
 db/tablas_excel/
+*.db
+*.sqlite
