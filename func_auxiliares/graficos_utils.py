@@ -654,7 +654,7 @@ def init_dual_axis_plot(
         ax_right.plot(df.index, df[col], label=label, color=colors[col])
 
     # 4) Títulos y ejes
-    ax_left.set_title(title, fontweight="bold", fontsize=17, color="red")
+    ax_left.set_title(title, fontweight="bold", fontsize=17,pad=20, color="red")
     ax_left.set_xlabel(xlabel, fontsize=15)
     ax_left.set_ylabel(left_ylabel, color="tab:blue", fontsize=14)
     ax_right.set_ylabel(right_ylabel, color="tab:red", fontsize=14)
@@ -705,9 +705,10 @@ def add_hitos_barras(
     ax: plt.Axes,
     index: Sequence[int],
     hitos_v: Dict[int, str],
-    hitos_offset: Dict[int, Tuple[float, float]],
-    hitos_text_x: Dict[int, float] = {},
+    hitos_offset: Dict[int, Tuple[float, float]] = None,
+    hitos_text_x: Dict[int, float] = None,
     *,
+    annotate_labels: tuple[str, ...] = ('INTERVENSIONISMO ESTATAL', 'NEOLIBERALISMO', 'E.S.C.P (I)', 'E.S.C.P (II)'),
     bar_width: float = 0.8,
     fallback_offset: Tuple[float, float] = (0.0, 0.82),
     line_kwargs: Optional[Dict] = None,
@@ -715,30 +716,13 @@ def add_hitos_barras(
 ):
     """
     Dibuja verticales y etiquetas de hitos sobre un gráfico de barras.
-
-    Parameters
-    ----------
-    ax : plt.Axes
-    index : Sequence[int]
-        La secuencia de años (p.ej. df.index).
-    hitos_v : dict[int, str]
-        { año: etiqueta }.
-    hitos_offset : dict[int, (dx, dy)]
-        { año: (offset_x, offset_y_factor) }.
-    hitos_text_x : dict[int, float]
-        { año: offset_x_text } para ajustar la posición del texto.
-    bar_width : float
-        Ancho de barra (para centrar las líneas).
-    annotate_labels : tuple[str]
-        Qué etiquetas mostrar.
-    fallback_offset : (dx, dy)
-        Offset por defecto si un año no está en hitos_offset.
-    line_kwargs : dict
-        Parámetros para `ax.axvline`.
-    text_kwargs : dict
-        Parámetros para `ax.text`.
+    Alinea el texto en el centro del período (como add_hitos).
     """
-    # defaults
+    if hitos_offset is None:
+        hitos_offset = {}
+    if hitos_text_x is None:
+        hitos_text_x = {}
+
     lk = {'color':'black','linewidth':2.5,'linestyle':'-','zorder':10}
     if line_kwargs:
         lk.update(line_kwargs)
@@ -747,35 +731,52 @@ def add_hitos_barras(
         'fontsize':12, 'color':'black',
         'ha':'center','va':'bottom',
         'rotation':0, 'zorder':6,
-        'bbox':{'facecolor':'white','alpha':0.85,'edgecolor':'none'}
     }
     if text_kwargs:
         tk.update(text_kwargs)
 
-    # iterate over your hitos
+    index_list = sorted(list(index))
+    index_set  = set(index_list)
+    last_year  = index_list[-1] if index_list else None
+
+    # Derivar los rangos de periodo
+    hito_years = sorted(hitos_v.keys())
+    periodos: dict[int, tuple[int, int]] = {}
+    for i, yr in enumerate(hito_years):
+        fin = (hito_years[i + 1] - 1) if i + 1 < len(hito_years) else last_year
+        periodos[yr] = (yr, fin)
+
     for yr, lbl in hitos_v.items():
-        if yr not in index:
+        yr_in_data = yr in index_set
+        inicio, fin = periodos.get(yr, (yr, yr))
+        available = [y for y in index_list if inicio <= y <= fin]
+
+        if not yr_in_data and not available:
             continue
 
-        # unpack offsets (dx in data‐coords, dy as fraction of y_max)
-        dx, dy = hitos_offset.get(yr, fallback_offset)
-
-        # compute the x position: bar index + half‐width + dx
-        pos = list(index).index(yr)
-        x = pos + bar_width/2 + dx
-
-        # vertical line
-        ax.axvline(x=x,**lk)
-
         y_max = ax.get_ylim()[1]
-        dx_text = hitos_text_x.get(yr, 0)
-        ax.text(
-            x+dx_text,
-            y_max * dy,
-            lbl,
-            transform=ax.transData,
-            **tk
-        )
+
+        # 1. Línea vertical
+        if yr_in_data:
+            dx, dy = hitos_offset.get(yr, fallback_offset)
+            pos = list(index).index(yr)
+            x_line = pos + bar_width/2 + dx
+            ax.axvline(x=x_line, **lk)
+
+        # 2. Posición X del texto
+        if available:
+            pos_first = list(index).index(available[0])
+            pos_last = list(index).index(available[-1])
+            x_texto = (pos_first + pos_last) / 2
+        elif yr_in_data:
+            pos = list(index).index(yr)
+            x_texto = pos + hitos_text_x.get(yr, 0)
+        else:
+            continue
+
+        # 3. Texto
+        if lbl in annotate_labels:
+            ax.text(x_texto, y_max * 1.01, lbl, transform=ax.transData, **tk)
 
 
 def add_hitos(
@@ -946,8 +947,8 @@ def add_period_growth_annotations_multi(
         y0 = y_max * y_frac
 
         # 1) Header
-        ax.text(x0, y0, fr"TASA DE CRECIMIENTO", **header_kwargs)
-
+        ax.text(x0, y0, f"TASA DE\nCRECIMIENTO", **header_kwargs)
+        offset_header = 1
         # 2) Bloque de tasas (una línea por componente)
         for i, col in enumerate(cols):
             v_ini = df.loc[vi, col]
@@ -958,7 +959,7 @@ def add_period_growth_annotations_multi(
             if pd.isna(v_ini) or pd.isna(v_fin) or v_ini == 0 or v_fin == 0:
                 continue        # salta esta columna si falta dato útil
             tasa = round((df.loc[vf, col] / df.loc[vi, col] - 1) * 100)
-            y = y0 - (i + 1) * line_spacing
+            y = y0 - (i + 1 + offset_header) * line_spacing
 
             kw = text_kwargs.copy()
             kw['color'] = colors.get(col, kw.get('color'))
@@ -984,6 +985,7 @@ def add_cycle_means_multi(
     header_kwargs: dict | None = None,
     text_kwargs: dict | None = None,
     value_fmt: str = "{:,.0f}",
+    extra_line_space: int = 0,
 ):
     """
     Anota en `ax` las medias por ciclo para múltiples componentes.
@@ -1008,6 +1010,9 @@ def add_cycle_means_multi(
     value_fmt : str, opcional
         Formato para representar el valor numérico
         (default = "{:,.0f}"  →  sin decimales; usa p. ej. "{:,.2f}" para 2 decimales).
+    extra_line_space : int, opcional
+        Extra line space between the means.
+        (default = 0)
     """
     # valores por defecto
     header_kwargs = header_kwargs or {
@@ -1030,7 +1035,7 @@ def add_cycle_means_multi(
         for i, comp in enumerate(stats):
             raw_val = stats[comp]
             val = value_fmt.format(raw_val)
-            y = y_max*y0 - (i + 1) * line_spacing
+            y = y_max*y0 - (i + 1 + extra_line_space) * line_spacing
             params = text_kwargs.copy()
             params['color'] = colors.get(comp, params.get('color'))
             abbr = abbr_map.get(comp, comp)
