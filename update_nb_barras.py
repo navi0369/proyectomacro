@@ -1,6 +1,6 @@
 import nbformat
 
-nb_path = "/home/navi/Desktop/proyectomacro-main/notebooks/tesis/serie_completa/participacion_composicion_importaciones_uso_destino/participacion_composicion_importaciones_uso_destino.ipynb"
+nb_path = "notebooks/tesis/serie_completa/participacion_composicion_importaciones_uso_destino/participacion_composicion_importaciones_uso_destino.ipynb"
 
 code = """# ═══════════════════════════════════════════════════════════════════
 # GRÁFICA DE PERÍODOS ESTRUCTURALES (BARRAS) — COMPOSICIÓN DE IMPORTACIONES
@@ -33,15 +33,10 @@ set_style()
 # ─────────────────────────── 2. CARGA DE DATOS ──────────────────────
 with sqlite3.connect(str(DB_PATH)) as conn:
     df = pd.read_sql(
-        "SELECT año, bienes_consumo, materias_primas_productos_intermedios, bienes_capital FROM participacion_composicion_importaciones_uso_destino", 
+        "SELECT año, bienes_consumo, materias_primas_productos_intermedios, bienes_capital FROM composicion_importaciones_uso_destino", 
         conn, 
         index_col="año"
     )
-
-cycles_adj = adjust_cycles(df, CYCLES_PERIODOS)
-
-# Para la gráfica base usaremos data_plot como el DataFrame final.
-data_plot = df 
 
 # ──────────────── 3. COMPONENTES Y ESTADÍSTICAS ────────────
 componentes = [
@@ -50,6 +45,15 @@ componentes = [
     ("bienes_consumo", "Bienes de Consumo"),
 ]
 cols = [c for c, _ in componentes]
+
+# Sumar cada categoría para obtener el total, y realizar la tabla de participación
+total = df[cols].sum(axis=1)
+df_participacion = df[cols].div(total, axis=0) * 100
+
+cycles_adj = adjust_cycles(df_participacion, CYCLES_PERIODOS)
+
+# Para la gráfica base usaremos data_plot como el DataFrame final de participación.
+data_plot = df_participacion 
 
 # Cálculo de estadísticas promedio por ciclo
 cycle_stats = {
@@ -73,18 +77,18 @@ hitos_text_x = {
 
 # Offsets manuales para mover las anotaciones de la media de alguna columna
 MEAN_OFFSETS_BY_NAME = {
-    "INTERVENSIONISMO ESTATAL": {'bienes_consumo': (0.0, 12.0)}, 
-    "NEOLIBERALISMO":           {'bienes_consumo': (0.0, 14.5)},
-    "E.S.C.P (I)":              {'bienes_consumo': (0.0, 12.0)},
-    "E.S.C.P (II)":             {'bienes_consumo': (0.0, 12.0)},
+    "INTERVENSIONISMO ESTATAL": {}, 
+    "NEOLIBERALISMO":           {},
+    "E.S.C.P (I)":              {},
+    "E.S.C.P (II)":             {},
 }
 
 # Componentes de las que NO se quiere mostrar el promedio en el gráfico
 SKIP_MEANS_BY_NAME = {
-    "INTERVENSIONISMO ESTATAL": {'bienes_capital'}, 
-    "NEOLIBERALISMO":           {'bienes_capital'},
-    "E.S.C.P (I)":              {'bienes_capital'},
-    "E.S.C.P (II)":             {'bienes_capital'},
+    "INTERVENSIONISMO ESTATAL": set(), 
+    "NEOLIBERALISMO":           set(),
+    "E.S.C.P (I)":              set(),
+    "E.S.C.P (II)":             set(),
 }
 
 # ────────────────────────── 5. PLOT Y ANOTACIONES ─────────────────────────

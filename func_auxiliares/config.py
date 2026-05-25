@@ -77,7 +77,7 @@ periodos_tasas_sin_crisis = [
 
 
 #------------------------------------
-#constantes para la tercera grafica
+#grafica principal
 #------------------------------------
 CYCLES_PERIODOS= {
     "INTERVENSIONISMO ESTATAL":   slice(1952, 1984),

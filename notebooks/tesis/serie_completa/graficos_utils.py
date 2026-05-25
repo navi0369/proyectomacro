@@ -219,25 +219,38 @@ def add_cycle_means_barras(
         x_mid     = (start_idx + end_idx) / 2 + bar_width / 2        # centro
 
         # ---------------- iterar columnas en orden de apilado -------------
-        cum = 0                                    # acumulado para stacked
+        cum_pos = 0.0                               # acumulado para positivos
+        cum_neg = 0.0                               # acumulado para negativos
         for col in cols:
             if skip and col in skip.get(name, set()):
-                cum += stats[col]
+                val = stats[col]
+                if val >= 0:
+                    cum_pos += val
+                else:
+                    cum_neg += val
                 continue
 
             val = stats[col]
             dx, dy = (0.0, 0.0)
             if offsets:
-                dx, dy = offsets.get(name, {}).get(col, (0.0, 0.0))
+                off_val = offsets.get(name, {}).get(col, (0.0, 0.0))
+                if isinstance(off_val, tuple) and len(off_val) == 2:
+                    dx, dy = off_val
+
+            if val >= 0:
+                y_pos = cum_pos + val / 2
+                cum_pos += val
+            else:
+                y_pos = cum_neg + val / 2
+                cum_neg += val
 
             ax.text(
                 x_mid + dx,
-                cum + val/2 + dy,
+                y_pos + dy,
                 fmt.format(val=val),
                 transform=ax.transData,
                 **text_kwargs
             )
-            cum += val
 def adjust_cycles(df: pd.DataFrame, cycles: dict[str, slice]) -> dict[str, slice]:
     if df.empty:
         raise ValueError("DF vacío")
