@@ -29,8 +29,6 @@ PASSWORD = "macro2024"  # Cambia esto a la contraseña que prefieras
 ########################################################################
 SECCIONES = [
     "Inicio",
-    "Calculadora",
-    "Generador de Gráficas",
     "Cuentas Nacionales",
     "Sector Externo",
     "Exportaciones",
