@@ -675,7 +675,34 @@ def init_dual_axis_plot(
     # 5) Estilo de ticks
     ax_left.tick_params(axis="y", labelcolor="tab:blue")
     ax_right.tick_params(axis="y", labelcolor="tab:red")
-    ax_left.set_xticks(df.index[::max(1, len(df)//31)])
+    
+    # Paso dinámico según longitud de la serie
+    n = len(df)
+    if n <= 36:
+        step = 1
+    elif n <= 77:
+        step = 2
+    else:
+        step = 3
+    years = df.index.tolist()
+    last_year = years[-1]
+    first_year = years[0]
+    # Genera ticks regulares desde el primer año con el paso elegido
+    tick_years = list(range(first_year, last_year, step))
+    tick_positions = [float(y) for y in tick_years]
+    tick_labels = [str(y) for y in tick_years]
+    
+    # Garantiza que el último año esté siempre presente (sin duplicar)
+    if last_year not in tick_years:
+        if tick_years and (last_year - tick_years[-1] == 1) and step > 1:
+            # Desplaza un poco a la derecha para que no se solape con el año anterior
+            tick_positions.append(last_year + 0.35)
+        else:
+            tick_positions.append(float(last_year))
+        tick_labels.append(str(last_year))
+        
+    ax_left.set_xticks(tick_positions)
+    ax_left.set_xticklabels(tick_labels)
     ax_left.tick_params(axis="x", rotation=45)
 
     # 6) Leyenda combinada (sin duplicados)
