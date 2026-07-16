@@ -1096,6 +1096,7 @@ def add_year_value_annotations(
     columnas: list[str],
     annotation_offsets: dict[str, dict[int, tuple[float, float]]],
     colors: dict[str, str],
+    extra_years: list[int] | None = None,
     *,
     value_fmt: str = "{:,.0f}",
     arrow_lw: float = 1.1,
@@ -1119,6 +1120,8 @@ def add_year_value_annotations(
         Offsets de texto personalizados: {col: {año: (dx, dy)}}.
     colors : dict[str, str]
         {col: color_hex} para cada sector.
+    extra_years : list[int], opcional
+        Años adicionales que se desean anotar además de los de la lista `years`.
     value_fmt : str, opcional
         Formato del texto numérico.
     arrow_lw : float, opcional
@@ -1147,7 +1150,13 @@ def add_year_value_annotations(
         base.update(arrowprops_extra)
         return base
 
-    for yr in years:
+    combined_years = list(years)
+    if extra_years is not None:
+        for yr in extra_years:
+            if yr not in combined_years:
+                combined_years.append(yr)
+
+    for yr in combined_years:
         if yr not in df.index:
             continue
 
