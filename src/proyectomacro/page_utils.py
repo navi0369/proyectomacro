@@ -5,7 +5,7 @@ from typing import Dict, List, Optional, Any
 import dash
 import dash_bootstrap_components as dbc
 from dash import html, dash_table, get_asset_url
-from .extract_data import load_validated_tables, list_table_image_groups
+from .extract_data import load_validated_tables, list_table_image_groups, TABLE_ID_TO_ASSET_FOLDER
 from typing import Dict, List
 from .config_loader import get_table_metadata
 
@@ -368,7 +368,7 @@ def build_header(
     collapse_id: str = "meta-panel"
 ) -> html.Div:
     """
-    Construye el bloque de título, subtítulo y metadatos colapsables.
+    Construye el bloque de título y subtítulo.
 
     Parameters
     ----------
@@ -377,11 +377,11 @@ def build_header(
     desc : str
         Subtítulo o descripción breve.
     metadata : dict
-        Diccionario de metadatos que será pasado a build_metadata_panel().
+        Diccionario de metadatos (reservado para uso futuro).
     toggle_id : str
-        ID para el botón que abre/cierra el panel.
+        Parámetro conservado por compatibilidad (sin efecto).
     collapse_id : str
-        ID para el componente Collapse del panel.
+        Parámetro conservado por compatibilidad (sin efecto).
 
     Returns
     -------
@@ -392,17 +392,6 @@ def build_header(
         [
             html.H2(title),
             html.P(desc),
-            dbc.Button(
-                "Mostrar detalles de la tabla",
-                id=toggle_id,
-                color="link",
-                className="p-0 mb-1",
-            ),
-            dbc.Collapse(
-                build_metadata_panel(metadata),
-                id=collapse_id,
-                is_open=False,
-            ),
         ],
         className="mb-3",
     )
@@ -454,6 +443,8 @@ def build_image_gallery_card(
 
     # Construir Tabs (una por grupo)
     tabs = []
+    # Resolver el nombre real de la carpeta en assets
+    resolved_folder = TABLE_ID_TO_ASSET_FOLDER.get(table_id, table_id)
     for label, imgs in groups.items():
         if not imgs:
             content = html.P("No hay imágenes disponibles.", className="text-muted")
@@ -461,7 +452,7 @@ def build_image_gallery_card(
             rows = []
             folder = _infer_folder(label)
             for img in imgs:
-                asset_path = f"{folder}/{table_id}/{img}"  # relativo a assets/
+                asset_path = f"{folder}/{resolved_folder}/{img}"  # relativo a assets/
                 src = dash.get_asset_url(asset_path)
                 rows.append(
                     dbc.Row(

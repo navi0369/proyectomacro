@@ -339,24 +339,6 @@ secciones:
     name: "Precios y Producción"
     path: "/precios-y-produccion"
     tablas:
-      precio_minerales:
-        tabla: "precio_minerales"
-        label: "Precio real de minerales"
-        metadata:
-          nombre_descriptivo: "Precio anual de minerales principales expresado en USD según unidad de medida de cada columna"
-          periodo: "1980 – 2015"
-          unidades:
-            "Zinc": "USD por libra fina (L.F)"
-            "Estaño": "USD por libra fina (L.F)"
-            "Oro": "USD por onza troy (O.T.)"
-            "Plata": "USD por onza troy (O.T.)"
-            "Antimonio": "USD por tonelada métrica"
-            "Plomo": "USD por libra fina (L.F)"
-            "Wólfram": "USD por libra fina"
-            "Cobre": "USD por libra fina (L.F)"
-          fuentes:
-            - "MINISTERIO DE MINERÍA Y METALURGIA: https://mineria.gob.bo/revista/pdf/20170817-10-15-28.pdf"
-
       precio_oficial_minerales:
         tabla: "precio_oficial_minerales"
         label: "Precios oficiales de minerales principales"

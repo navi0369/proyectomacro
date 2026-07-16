@@ -71,8 +71,6 @@ layout = dbc.Container([
         title="Balanza de pagos",
         desc=metadata["Nombre descriptivo"],
         metadata=metadata,
-        toggle_id=f"{TABLE_ID}-btn-toggle-meta",
-        collapse_id=f"{TABLE_ID}-meta-panel"
     ),
 
     # Alerta si hubo error de carga
@@ -100,15 +98,6 @@ layout = dbc.Container([
 # ──────────────────────────────────────────────────────────────────────
 # Callbacks
 # ──────────────────────────────────────────────────────────────────────
-@callback(
-    Output(f"{TABLE_ID}-meta-panel", "is_open"),
-    Input(f"{TABLE_ID}-btn-toggle-meta", "n_clicks"),
-    State(f"{TABLE_ID}-meta-panel", "is_open"),
-    prevent_initial_call=True,
-)
-def toggle_meta(n_clicks, is_open):
-    return not is_open
-
 @callback(
     Output(f"{TABLE_ID}-img-panel", "is_open"),
     Input(f"{TABLE_ID}-btn-toggle-img", "n_clicks"),
